@@ -8,6 +8,26 @@ module.exports = (sequelize) => {
       type: DataTypes.STRING,
       allowNull: false,
     },
+    size: {
+      type: DataTypes.ENUM(["XS", "S", "M", "L", "XL", "XXL"]),
+      allowNull: false,
+    },
+    price: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    color: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    },
+    stock: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    genre: {
+      type: DataTypes.ENUM(["Masculino", "Femenino", "Otros"]),
+      allowNull: false,
+    },
   });
   return Clothe;
 };
