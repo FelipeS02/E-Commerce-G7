@@ -16,3 +16,5 @@ router.get('/clothes/:id', async (req, res) => {
 		return res.status(404).json({error: error})
 	}
 })
+
+module.exports = router
