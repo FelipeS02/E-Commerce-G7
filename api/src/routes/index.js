@@ -2,12 +2,13 @@ const { Router } = require('express');
 const router = Router();
 
 // Traemos Routes
-const clotheDetail = require('./clotheDetail.js')
-
+const clotheDetail = require('./clothe/clotheDetail.js')
+const allClothe = require('./clothe/allClothe.js')
 // Usamos Routes
 
 // Routes Users
-router.use('/clothes', clotheDetail)
+router.use('/clothe', clotheDetail)
+router.use('/clothe', allClothe)
 
 // Admin
 

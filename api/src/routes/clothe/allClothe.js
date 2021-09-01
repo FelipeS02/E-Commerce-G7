@@ -4,7 +4,7 @@ const { Clothe, Category } = require("../../db");
 
 let currentOffset = 0 + currentOffset;
 
-router.get("/allClothes", async (_req, res) => {
+router.get('/allClothes', async (_req, res) => {
   try {
     const allClothes = await Clothe.findAll({ limit: 10, offset: 0, include: Category });
     if (allClothes === []) {
