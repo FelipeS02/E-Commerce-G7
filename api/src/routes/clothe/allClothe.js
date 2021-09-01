@@ -4,7 +4,7 @@ const Category = require("../../models/Category");
 const Clothe = require("../../models/Clothe");
 
 router.get("/allClothes", async (req, res) => {
-  const { currentOffset } = req.query;
+  const {currentOffset} = req.query
   try {
     const countClothes = await Clothe.count({ col: "id" });
     const allClothes = await Clothe.findAll({
