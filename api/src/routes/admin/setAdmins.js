@@ -2,7 +2,7 @@ const { Router } = require("express");
 const User = require("../../models/User");
 const router = Router();
 
-router.get("/admin/usersControl/:idUsuario", async (req, res) => {
+router.get("/usersControl/:idUsuario", async (req, res) => {
   try {
     const { idUsuario } = req.params;
     const user = await User.findByPk(idUsuario);

@@ -34,7 +34,7 @@ const setCategories = async (categoriesArray, clothe) => {
   }
 };
 
-router.post("/admin/create-clothe", async (req, res) => {
+router.post("/create-clothe", async (req, res) => {
   try {
     const { data } = req.body;
     const { categories } = data;
