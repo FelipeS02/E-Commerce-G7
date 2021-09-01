@@ -6,7 +6,7 @@ const allClothe = require('./clothe/allClothe.js')
 // Usamos Routes
 
 // Routes Users
-router.use('/clothe/allClothe', allClothe)
+router.use('/clothe/allClothes', allClothe)
 router.use('/clothe/:id', clotheDetail)
 
 // Admin
