@@ -1,9 +1,10 @@
-const initialState = {
-   
-} ;
+import { combineReducers } from "redux";
+import authReducer from "./authReducer";
+import productReducer from "./ProductReducer";
 
-rootReducer (state = initialState, action) {
-
-};
+const rootReducer = combineReducers({
+  authReducer,
+  productReducer,
+});
 
 export default rootReducer;
