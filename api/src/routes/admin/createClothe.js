@@ -35,9 +35,9 @@ const setCategories = async (categoriesArray, clothe) => {
 };
 
 router.post("/admin/create-clothe", async (req, res) => {
+  const { data } = req.body;
+  const { categories } = data;
   try {
-    const { data } = req.body;
-    const { categories } = data;
     if (validateReq(data)) {
       const newClothe = await Clothe.create(data);
       await setCategories(categories, newClothe);

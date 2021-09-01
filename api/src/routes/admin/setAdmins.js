@@ -3,8 +3,8 @@ const User = require("../../models/User");
 const router = Router();
 
 router.get("/admin/usersControl/:idUsuario", async (req, res) => {
+  const { idUsuario } = req.params;
   try {
-    const { idUsuario } = req.params;
     const user = await User.findByPk(idUsuario);
     if (user) {
       const { name } = user;
