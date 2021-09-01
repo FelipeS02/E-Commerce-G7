@@ -9,5 +9,4 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
   });
-  return Category;
 };

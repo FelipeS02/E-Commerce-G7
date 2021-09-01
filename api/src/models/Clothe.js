@@ -29,5 +29,4 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
   });
-  return Clothe;
 };
