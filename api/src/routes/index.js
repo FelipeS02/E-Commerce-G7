@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const router = Router();
+
 // Traemos Routes
 const clotheDetail = require("./clothe/clotheDetail.js");
 const allClothe = require("./clothe/allClothe.js");
