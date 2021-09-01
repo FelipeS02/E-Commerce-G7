@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const { Clothe, Category } = require("../../db");
 
-router.get("/allClothes/:id", async (req, res) => {
+router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const finalClothe = await Clothe.findByPk(id, { include: Category });
@@ -10,7 +10,7 @@ router.get("/allClothes/:id", async (req, res) => {
       res.status(200).json({ finalClothe });
       return;
     } else {
-      res.status(404).json({ errMessage: "ID inexistente" });
+      res.status(404).json({ errMessage: "Articulo no encontrado" });
       return;
     }
   } catch (err) {
