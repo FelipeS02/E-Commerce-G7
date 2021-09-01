@@ -1,9 +1,8 @@
 const router = require('express').Router();
-const axios = require('axios');
 const sequelize = require('sequelize');
 const { Clothe, Category } = require('../db.js');
 
-router.get('/clothes/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
 	const id = req.params
 
 	try{

@@ -5,6 +5,10 @@ const router = Router();
 const clotheDetail = require('./clotheDetail.js')
 
 // Usamos Routes
-router.use('/', clotheDetail)
+
+// Routes Users
+router.use('/clothes', clotheDetail)
+
+// Admin
 
 module.exports = router;

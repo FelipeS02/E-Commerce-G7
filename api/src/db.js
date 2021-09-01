@@ -38,6 +38,7 @@ User.belongsToMany(Clothe, {through: "user_clothes"})
 Clothe.belongsToMany(User, {through: "user_clothes"})
 // Ropa y Categorias
 Category.belongsToMany(Clothe, {through: "clothe_category"})
+Clothe.belongsToMany(Category, {through: "clothe_category"})
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');
