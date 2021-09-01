@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
-const { Clothe, Category } = require("../../db");
+const Category = require("../../models/Category");
+const Clothe = require("../../models/Clothe");
 
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
