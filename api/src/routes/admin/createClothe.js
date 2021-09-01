@@ -1,6 +1,5 @@
 const { Router } = require("express");
-const Category = require("../../models/Category");
-const Clothe = require("../../models/Clothe");
+const { Category, Clothe } = require("../../db");
 const router = Router();
 
 const validateReq = (data) => {
@@ -34,13 +33,9 @@ const setCategories = async (categoriesArray, clothe) => {
   }
 };
 
-<<<<<<< HEAD
 router.post("/create-clothe", async (req, res) => {
-=======
-router.post("/admin/create-clothe", async (req, res) => {
   const { data } = req.body;
   const { categories } = data;
->>>>>>> b9ba78fe5ede3f6af3c38c435cc812b74f4c9b43
   try {
     if (validateReq(data)) {
       const newClothe = await Clothe.create(data);

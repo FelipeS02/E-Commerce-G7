@@ -1,15 +1,11 @@
 const { Router } = require("express");
-const User = require("../../models/User");
+const { User } = require("../../db");
 const router = Router();
 
-<<<<<<< HEAD
-router.get("/usersControl/:idUsuario", async (req, res) => {
-=======
-router.get("/admin/usersControl/:idUsuario", async (req, res) => {
-  const { idUsuario } = req.params;
->>>>>>> b9ba78fe5ede3f6af3c38c435cc812b74f4c9b43
+router.get("/set-admin/:userId", async (req, res) => {
+  const { userId } = req.params;
   try {
-    const user = await User.findByPk(idUsuario);
+    const user = await User.findByPk(userId);
     if (user) {
       const { name } = user;
       await user.update({ isAdmin: true });
