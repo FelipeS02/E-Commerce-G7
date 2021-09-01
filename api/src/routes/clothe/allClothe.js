@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const { Category, Clothe } = require("../../db");
 
-router.get("/allClothes", (req, res) => {
+router.get("/allClothe", async (req, res) => {
   const { currentOffset } = req.query;
   try {
     const countClothes = await Clothe.count({ col: "id" });
@@ -11,20 +11,17 @@ router.get("/allClothes", (req, res) => {
       offset: currentOffset,
       include: { model: Category },
     });
-    if (allClothes === []) {
-      res.status(404).json({ noClothes: "Aun no existe ninguna prenda" });
-      return;
+    if (allClothes.length === 0) {
+      return res.status(404).json({ noClothes: "Aun no existe ninguna prenda" });
     } else {
-      res.status(200).json({
+      return res.status(200).json({
         total: countClothes,
         allClothes,
       });
-      return;
     }
   } catch (err) {
     const { message } = err;
-    res.status(400).json({ message });
-    return;
+    return res.status(400).json({ message });
   }
 });
 

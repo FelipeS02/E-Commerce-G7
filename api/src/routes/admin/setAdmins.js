@@ -9,16 +9,16 @@ router.get("/set-admin/:userId", async (req, res) => {
     if (user) {
       const { name } = user;
       await user.update({ isAdmin: true });
-      res.status(200).json({
+      return res.status(200).json({
         Success: "El usuario es ahora un administrador",
         Datos: { name, idUsuario },
       });
     } else {
-      res.status(400).json({ Error: "El ID no pertenece a ningun usuario" });
+      return res.status(400).json({ Error: "El ID no pertenece a ningun usuario" });
     }
   } catch (err) {
     const { message } = err;
-    res.status(400).json({ message });
+    return res.status(400).json({ message });
   }
 });
 

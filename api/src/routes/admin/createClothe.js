@@ -40,16 +40,15 @@ router.post("/create-clothe", async (req, res) => {
     if (validateReq(data)) {
       const newClothe = await Clothe.create(data);
       await setCategories(categories, newClothe);
-      res.status(200).json({ Success: "Prenda creada correctamente!" });
-      return;
+      return res.status(200).json({ Success: "Prenda creada correctamente!" });
     } else {
-      res
+      return res
         .status(400)
         .json({ Error: "Uno de los datos es erroneo / esta vacio" });
     }
   } catch (err) {
     const { message } = err;
-    res.status(400).json({ message });
+    return res.status(400).json({ message });
   }
 });
 

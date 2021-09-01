@@ -9,11 +9,9 @@ router.get("/:id", async (req, res) => {
       include: { model: Category },
     });
     if (finalClothe) {
-      res.status(200).json({ data: finalClothe });
-      return;
+      return res.status(200).json({ data: finalClothe });
     } else {
-      res.status(404).json({ errMessage: "Articulo no encontrado" });
-      return;
+      return res.status(404).json({ errMessage: "Articulo no encontrado" });
     }
   } catch (err) {
     const { message } = err;
