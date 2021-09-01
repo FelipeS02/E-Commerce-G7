@@ -3,12 +3,12 @@ const router = Router();
 const { Category, Clothe } = require("../../db");
 
 router.get("/allClothe", async (req, res) => {
-  const { currentOffset } = req.query;
+  const { offset, limit } = req.query;
   try {
     const countClothes = await Clothe.count({ col: "id" });
     const allClothes = await Clothe.findAll({
-      limit: 10,
-      offset: currentOffset,
+      limit: limit,
+      offset: offset,
       include: { model: Category },
     });
     if (allClothes.length === 0) {
