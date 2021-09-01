@@ -34,8 +34,8 @@ const { User, Clothe, Category } = sequelize.models;
 
 // Aca vendrian las relaciones
 // Usuarios y Ropa
-User.belongsToMany(Clothe, {through: "user_clothes"})
-Clothe.belongsToMany(User, {through: "user_clothes"})
+User.belongsToMany(Clothe, {through: "user_clothe"})
+Clothe.belongsToMany(User, {through: "user_clothe"})
 // Ropa y Categorias
 Category.belongsToMany(Clothe, {through: "clothe_category"})
 Clothe.belongsToMany(Category, {through: "clothe_category"})
