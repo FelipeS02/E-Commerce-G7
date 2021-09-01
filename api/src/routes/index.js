@@ -5,6 +5,6 @@ const router = Router();
 const clotheDetail = require('./clotheDetail.js')
 
 // Usamos Routes
-router.use('/clotheDetail', clotheDetail)
+router.use('/', clotheDetail)
 
 module.exports = router;
