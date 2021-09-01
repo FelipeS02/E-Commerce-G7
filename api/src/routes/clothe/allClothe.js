@@ -2,10 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const { Category, Clothe } = require("../../db");
 
-let currentOffset = 0 + currentOffset;
-
-router.get('/allClothe', async (_req, res) => {
-  try {
+try {
     const countClothes = await Clothe.count({ col: "id" });
     const allClothes = await Clothe.findAll({
       limit: 10,

@@ -1,8 +1,8 @@
 const { Router } = require("express");
-const User = require("../../models/User");
+const { User } = require("../../db")
 const router = Router();
 
-router.get("/usersControl", async (_req, res) => {
+router.get("/user-control", async (_req, res) => {
   try {
     const allUsers = await User.findAll();
     res.status(200).json({ allUsers });

@@ -5,7 +5,9 @@ const { Category, Clothe } = require("../../db");
 router.get("/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const finalClothe = await Clothe.findByPk(id, { include: { model: Category } });
+    const finalClothe = await Clothe.findByPk(id, {
+      include: { model: Category },
+    });
     if (finalClothe) {
       res.status(200).json({ data: finalClothe });
       return;
