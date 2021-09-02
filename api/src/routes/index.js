@@ -7,7 +7,8 @@ const allClothe = require("./clothe/allClothe.js");
 const userControls = require("./admin/userControls") 
 const setAdmins = require("./admin/setAdmins.js");
 const createClothe = require("./admin/createClothe.js");
-const clothesByName = require("./clothe/clothesByName")
+const clothesByName = require("./clothe/clothesByName.js")
+const mediaUpload = require("./admin/mediaUpload.js")
 // Usamos Routes
 
 // Routes Users
@@ -20,6 +21,7 @@ router.use("/clothe", clothesByName)
 router.use("/admin", createClothe);
 router.use("/admin", userControls);
 router.use("/admin", setAdmins);
+router.use("/admin", mediaUpload)
 
 
 

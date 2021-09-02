@@ -1,6 +1,11 @@
 const { Router } = require("express");
 const { Category, Clothe } = require("../../db");
 const router = Router();
+const multer = require("multer");
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 
 const validateReq = (data) => {
   const { name, size, price, color, stock, genre, categories } = data;
@@ -10,9 +15,10 @@ const validateReq = (data) => {
     typeof size === "string" &&
     typeof price === "number" &&
     typeof color === "string" &&
-    typeof stock === "string" &&
+    typeof stock === "number" &&
     typeof genre === "string" &&
-    Array.isArray(categories)
+    Array.isArray(categories) &&
+    categories.length > 0
   ) {
     return true;
   }
@@ -22,10 +28,11 @@ const validateReq = (data) => {
 const setCategories = async (categoriesArray, clothe) => {
   try {
     const clotheCategory = categoriesArray.map(async (c) => {
-      const currentCategory = await Category.findOrCreate({
+      await Category.findOrCreate({
         where: { name: c },
       });
       currentCategory && (await clothe.addCategory(currentCategory));
+      return
     });
     await Promise.all(clotheCategory);
   } catch (err) {
@@ -33,7 +40,8 @@ const setCategories = async (categoriesArray, clothe) => {
   }
 };
 
-router.post("/create-clothe", async (req, res) => {
+router.post("/create-clothe", upload.array('pictures', 8), async (req, res) => {
+  console.log(req)
   const { data } = req.body;
   const { categories } = data;
   try {
