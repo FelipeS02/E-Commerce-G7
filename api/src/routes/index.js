@@ -9,6 +9,7 @@ const clothesByCategory = require("./clothe/filterByCategory.js");
 const userControls = require("./admin/userControls.js")
 const setAdmins = require("./admin/setAdmins.js");
 const createClothe = require("./admin/createClothe.js");
+const chargeDatabase = require('./admin/chargeDb')
 // Usamos Routes
 // Routes Users
 router.use("/clothe", allClothes);
@@ -20,5 +21,6 @@ router.use("/clothe", clothesByCategory);
 router.use("/admin", createClothe);
 router.use("/admin", userControls);
 router.use("/admin", setAdmins);
+router.use("/admin", chargeDatabase);
 
 module.exports = router;
