@@ -13,7 +13,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     data: {
-      type: DataTypes.BLOB('long'),
+      type: DataTypes.STRING,
       allowNull: true,
     },
     link: {

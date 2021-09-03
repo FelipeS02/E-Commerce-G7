@@ -6,7 +6,6 @@ const multer = require("multer");
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-
 const validateReq = (data) => {
   const { name, size, price, color, stock, genre, categories } = data;
   if (
@@ -26,28 +25,27 @@ const validateReq = (data) => {
 };
 
 const setCategories = async (categoriesArray, clothe) => {
-  try {
-    const clotheCategory = categoriesArray.map(async (c) => {
-      await Category.findOrCreate({
-        where: { name: c },
-      });
-      currentCategory && (await clothe.addCategory(currentCategory));
-      return
-    });
-    await Promise.all(clotheCategory);
-  } catch (err) {
-    console.log(err);
-  }
+  const clotheCategory = categoriesArray.map(async (c) => {
+    const findCategory = await Category.findOne({ where: { name: c } });
+    if (!findCategory) {
+      const newCategory = await Category.create({ name: c });
+      await clothe.addCategory(newCategory.id);
+    } else {
+      await clothe.addCategory(findCategory.id);
+    }
+  });
+  await Promise.all(clotheCategory);
 };
 
-router.post("/create-clothe", upload.array('pictures', 8), async (req, res) => {
-  console.log(req)
+
+router.post("/create-clothe", upload.array("pictures", 8), async (req, res) => {
   const { data } = req.body;
   const { categories } = data;
   try {
     if (validateReq(data)) {
       const newClothe = await Clothe.create(data);
       await setCategories(categories, newClothe);
+
       return res.status(200).json({ Success: "Prenda creada correctamente!" });
     } else {
       return res
