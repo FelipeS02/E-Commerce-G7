@@ -2,6 +2,7 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
+const Order = require("./models/Order");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 const sequelize = new Sequelize(
@@ -41,15 +42,22 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Clothe, Category, Clothe_category } = sequelize.models;
-// Aca vendrian las relaciones
-// Usuarios y Ropa
-User.belongsToMany(Clothe, { through: "user_clothe" });
-Clothe.belongsToMany(User, { through: "user_clothe" });
+const { User, Clothe, Category, Order, Media, Direction } = sequelize.models;
 
+//Carrito de usuario
+User.belongsToMany(Order, { through: "user_orders" });
+User.belongsToMany(Direction, { through: "user_directions" });
+
+// Aca vendrian las relaciones
 // Ropa y Categorias
-Category.belongsToMany(Clothe, { through: Clothe_category });
-Clothe.belongsToMany(Category, { through: Clothe_category });
+Category.belongsToMany(Clothe, { through: "clothe_category" });
+Clothe.belongsToMany(Category, { through: "clothe_category " });
+Clothe.belongsToMany(Media, { through: "clothe_media" });
+
+//Orden
+Clothe.belongsToMany(Order, { through: "order_clothes" });
+Clothe.belongsToMany(Order, { through: "order_clothes" });
+Direction.belongsTo(Order, { through: "order_directions" });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

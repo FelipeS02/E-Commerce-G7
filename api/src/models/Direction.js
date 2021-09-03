@@ -3,10 +3,11 @@ const { DataTypes } = require("sequelize");
 // Luego le injectamos la conexion a sequelize.
 module.exports = (sequelize) => {
   // defino el modelo
-  const Clothe_category = sequelize.define(
-    "clothe_category",
-    {},
-    { timestamps: false }
-  );
-  return Clothe_category;
+  const Direction = sequelize.define("direction", {
+    data: {
+      type: DataTypes.STRING,
+      allowNull: false,
+    }
+  }, { timestamps: false });
+  return Direction;
 };

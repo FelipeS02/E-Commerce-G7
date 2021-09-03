@@ -5,15 +5,10 @@ module.exports = (sequelize) => {
   // defino el modelo
   const Order = sequelize.define("order", {
     state: {
-      type: DataTypes.ENUM(["EN PROCESO", "CONFIRMADO", "DESPACHADO", "CANCELADO"]),
+      type: DataTypes.ENUM(["EN PROCESO", "CONFIRMADO", "DESPACHADO", "CANCELADO", "ENTREGADO"]),
       defaultValue: "EN PROCESO",
       allowNull: true,
     },
-    direction: {
-      type: DataTypes.STRING,
-      defaultValue: "RECIBE EN EL LOCAL",
-      allowNull: false,
-    }
-  }, { timestamps: false });
+  });
   return Order;
 };
