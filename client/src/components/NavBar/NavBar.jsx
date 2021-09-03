@@ -21,9 +21,12 @@ const NavBar = () => {
       <Container>
         <Navbar.Brand href="#home">Logo</Navbar.Brand>
         <Nav className="justify-content-center">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#features">Features</Nav.Link>
-          <Nav.Link href="#pricing">Pricing</Nav.Link>
+          <Nav.Link href="#home">Categorias</Nav.Link>
+          <Nav.Link href="#features">Hombre</Nav.Link>
+          <Nav.Link href="#pricing">Mujer</Nav.Link>
+          <Nav.Link href="#pricing">Ofertas</Nav.Link>
+        </Nav>
+        <Nav>
           <SearchBar />
         </Nav>
         <Nav className="justify-content-end align-items-center">
