@@ -37,7 +37,6 @@ const setCategories = async (categoriesArray, clothe) => {
   await Promise.all(clotheCategory);
 };
 
-
 router.post("/create-clothe", upload.array("pictures", 8), async (req, res) => {
   const { data } = req.body;
   const { categories } = data;
