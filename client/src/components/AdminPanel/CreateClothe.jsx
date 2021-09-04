@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { createClothe } from "../../actions/ProductActions";
 
-const AdminPanel = () => {
+function AdminPanel(){
     
     const disptach = useDispatch();
     const [input, setInput] = useState({
@@ -23,12 +24,32 @@ const AdminPanel = () => {
 
     function handleSubmit(e){
         e.preventDefault();
-        disptach()
+        disptach(createClothe({
+            data: {
+                name: input.name,
+                size: input.size,
+                price: parseInt(input.price,10),
+                color: input.color,
+                stock: parseInt(input.stock,10),
+                genre: input.genre,
+                categories: [input.categories]
+            }
+        }));
+        alert('Product created succesfully');
+        setInput({
+            name: '',
+            size: '',
+            price: 0,
+            color: '',
+            stock: 0,
+            genre: '',
+            categories: []
+        })
     }
 
     return (
         <div>
-            <form action="submit">
+            <form onSubmit={handleSubmit}>
                 <label>Name:</label>
                 <input
                     type="text"
@@ -41,6 +62,13 @@ const AdminPanel = () => {
                     type="text"
                     name='size'
                     value={input.size}
+                    onChange={handleInput}
+                />
+                <label>Price:</label>
+                <input
+                    type="number"
+                    name='price'
+                    value={input.price}
                     onChange={handleInput}
                 />
                 <label>Color:</label>
@@ -66,12 +94,15 @@ const AdminPanel = () => {
                 />
                 <label>Categories:</label>
                 <input
-                    type="number"
-                    name='stock'
-                    value={input.stock}
+                    type="text"
+                    name='categories'
+                    value={input.categories}
                     onChange={handleInput}
                 />
+                <button type='submit'>SUBMIT</button>
             </form>
         </div>
     )
 }
+
+export default AdminPanel;

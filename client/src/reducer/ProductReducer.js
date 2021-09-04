@@ -2,9 +2,12 @@ import {
   PRODUCT_FAIL,
   PRODUCT_REQUEST,
   PRODUCT_SUCCESS,
+  CREATE_CLOTHE
 } from "../constants/productConstants";
 
-const initialState = { products: [] };
+const initialState = { 
+  products: []
+};
 
 function productReducer(state = initialState, action) {
   switch (action.type) {
@@ -25,7 +28,11 @@ function productReducer(state = initialState, action) {
         loadingRequest: false,
         error: action.payload,
       };
-
+    case CREATE_CLOTHE:
+      return {
+        ...state,
+        products: action.payload,
+      };
     default:
       return state;
   }

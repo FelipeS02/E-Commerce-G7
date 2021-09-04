@@ -1,8 +1,10 @@
+import axios from "axios";
 import Axios from "axios";
 import {
   PRODUCT_FAIL,
   PRODUCT_REQUEST,
   PRODUCT_SUCCESS,
+  CREATE_CLOTHE
 } from "../constants/productConstants";
 
 export const getProducts =
@@ -27,3 +29,19 @@ export const getProducts =
       });
     }
   };
+
+  export  function createClothe(form){
+    console.log(form);
+    return async function(dispatch){
+      try {
+        await axios.post('http://localhost:3001/admin/create-clothe', form);
+        return dispatch({
+            type: CREATE_CLOTHE,
+            payload: form
+        });
+      } catch (error) {
+        console.log(error)
+      }
+
+    }
+}
