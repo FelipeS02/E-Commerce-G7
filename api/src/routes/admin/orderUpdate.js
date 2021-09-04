@@ -1,11 +1,11 @@
 const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
-const { User, Payment, Direction, Order } = require("../../../db");
+const { User, Payment, Direction, Order } = require("../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
-} = require("../../../controller/responseMessages");
+} = require("../../controller/responseMessages");
 
 router.get("/order-update/:orderId", async (req, res) => {
   try {
