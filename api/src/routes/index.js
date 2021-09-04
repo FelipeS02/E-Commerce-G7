@@ -12,6 +12,8 @@ const createClothe = require("./clothe/createClothe.js");
 const getUserOrders = require("./admin/order/getUserOrders.js")
 const orderAdd = require("./admin/order/orderAdd.js");
 const orderUpdate= require("./admin/order/orderUpdate.js");
+const getOrderById= require("./admin/order/getOrderById.js")
+
 // Usamos Routes
 // Routes Users
 router.use("/clothe", allClothes);
@@ -26,5 +28,6 @@ router.use("/admin", setAdmins);
 router.use("/admin", getUserOrders)
 router.use("/admin", orderAdd)
 router.use("/admin", orderUpdate);
+router.use("/admin", getOrderById)
 
 module.exports = router;

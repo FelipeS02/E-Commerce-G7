@@ -4,7 +4,7 @@ const { validate } = require("uuid");
 const { Clothe, User, Order } = require("../../../db");
 
 const clotheRelation = async (clothes, order) => {
-  let clothesPromises = clothes.map((e) => {
+  let clothesPromises = clothes.map(async (e) => {
     const newRelation = await Clothe.findByPk(e.id);
     await order.addClothe(newRelation);
   });

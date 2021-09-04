@@ -2,7 +2,6 @@ require("dotenv").config();
 const { Sequelize } = require("sequelize");
 const fs = require("fs");
 const path = require("path");
-const Order = require("./models/Order");
 const { DB_USER, DB_PASSWORD, DB_HOST } = process.env;
 
 const sequelize = new Sequelize(
@@ -10,6 +9,7 @@ const sequelize = new Sequelize(
   {
     logging: false, // set to console.log to see the raw SQL queries
     native: false, // lets Sequelize know we can use pg-native for ~30% more speed
+    timestamps: false,
   }
 );
 const basename = path.basename(__filename);
@@ -42,7 +42,16 @@ sequelize.models = Object.fromEntries(capsEntries);
 
 // En sequelize.models están todos los modelos importados como propiedades
 // Para relacionarlos hacemos un destructuring
-const { User, Clothe, Category, Order, Media, Direction, Payment} = sequelize.models;
+const {
+  User,
+  Clothe,
+  Category,
+  Order,
+  Media,
+  Direction,
+  Payment,
+  Order_clothes,
+} = sequelize.models;
 
 // Aca vendrian las relaciones
 
@@ -50,21 +59,20 @@ User.belongsToMany(Direction, { through: "user_directions" });
 
 // Ropa y Categorias
 Category.belongsToMany(Clothe, { through: "clothe_category" });
-Clothe.belongsToMany(Category, { through: "clothe_category " });
+Clothe.belongsToMany(Category, { through: "clothe_category" });
 Clothe.belongsToMany(Media, { through: "clothe_media" });
 
 //Orden y ropa
 User.belongsToMany(Order, { through: "user_orders" });
-Clothe.belongsToMany(Order, { through: "order_clothes" });
+Clothe.belongsToMany(Order, { through: Order_clothes });
 
 // Orden y direccion
 Direction.belongsToMany(Order, { through: "order_directions" });
-Order.belongsTo(Direction, {through: "order_directions"});
+Order.belongsTo(Direction, { through: "order_directions" });
 
 // Orden y Pago
-Payment.belongsToMany(Order, {through: "order_payment"});
-Order.belongsTo(Payment, {through: "order_payment"});
-
+Payment.belongsToMany(Order, { through: "order_payment" });
+Order.belongsTo(Payment, { through: "order_payment" });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

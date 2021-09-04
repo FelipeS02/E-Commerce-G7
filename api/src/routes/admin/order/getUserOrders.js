@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
+const { Op } = require("sequelize");
 const { User, Order } = require("../../../db");
 
 router.get("/user-orders", async (req, res) => {
@@ -12,7 +13,7 @@ router.get("/user-orders", async (req, res) => {
     "DESPACHADO",
     "CANCELADO",
     "ENTREGADO",
-    ""
+    "",
   ];
   try {
     if (validStatus.includes(orderStatus)) {
@@ -28,8 +29,7 @@ router.get("/user-orders", async (req, res) => {
             },
           },
         });
-      }
-      else if (userId === "") {
+      } else if (userId === "") {
         response = await User.findAll({
           include: {
             model: Order,
@@ -39,7 +39,12 @@ router.get("/user-orders", async (req, res) => {
           },
         });
       } else {
-        return res.status(400).json({Error: "El query 'userId' debe ser un UUID valido o un string vacio"})
+        return res
+          .status(400)
+          .json({
+            Error:
+              "El query 'userId' debe ser un UUID valido o un string vacio",
+          });
       }
       if (response.length > 0) {
         return res.status(200).json({ data: response });
@@ -49,12 +54,10 @@ router.get("/user-orders", async (req, res) => {
         });
       }
     } else {
-      return res
-        .status(400)
-        .json({
-          Error:
-            "El status debe ser de tipo CARRITO, CONFIRMADO, DESPACHADO, CANCELADO, ENTREGADO o debe ser un string vacio",
-        });
+      return res.status(400).json({
+        Error:
+          "El status debe ser de tipo CARRITO, CONFIRMADO, DESPACHADO, CANCELADO, ENTREGADO o debe ser un string vacio",
+      });
     }
   } catch (err) {
     const { message } = err;
