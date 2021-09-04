@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
-const { User, Payment, Direction, Order } = require("../../db");
+const { User, Payment, Direction, Order } = require("../../../db");
 
 router.get("/order-update/:orderId", async (req, res) => {
   const { orderId } = req.params;

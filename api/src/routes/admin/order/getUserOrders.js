@@ -1,9 +1,9 @@
 const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
-const { User, Order } = require("../../db");
+const { User, Order } = require("../../../db");
 
-router.get("user-orders", async (req, res) => {
+router.get("/user-orders", async (req, res) => {
   const { userId, orderStatus } = req.query;
   let response;
   const validStatus = [

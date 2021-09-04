@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
-const { Clothe, User, Order } = require("../../db");
+const { Clothe, User, Order } = require("../../../db");
 
 const clotheRelation = async (clothes, order) => {
   let clothesPromises = clothes.map((e) => {

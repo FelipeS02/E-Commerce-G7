@@ -5,20 +5,26 @@ const router = Router();
 const clotheDetail = require("./clothe/clotheDetail.js");
 const allClothes = require("./clothe/allClothes.js");
 const clothesByName = require("./clothe/clothesByName.js");
-const clothesByCategory = require("./clothe/filterByCategory.js");
+const filterByCategory = require("./clothe/filterByCategory.js");
 const userControls = require("./admin/userControls.js")
 const setAdmins = require("./admin/setAdmins.js");
 const createClothe = require("./admin/createClothe.js");
+const getUserOrders = require("./admin/order/getUserOrders.js")
+const orderAdd = require("./admin/order/orderAdd.js");
+const orderUpdate= require("./admin/order/orderUpdate.js");
 // Usamos Routes
 // Routes Users
 router.use("/clothe", allClothes);
 router.use("/clothe", clotheDetail);
 router.use("/clothe", clothesByName);
-router.use("/clothe", clothesByCategory);
+router.use("/clothe", filterByCategory);
 
 // Admin
 router.use("/admin", createClothe);
 router.use("/admin", userControls);
 router.use("/admin", setAdmins);
+router.use("/admin", getUserOrders)
+router.use("/admin", orderAdd)
+router.use("/admin", orderUpdate);
 
 module.exports = router;
