@@ -16,9 +16,9 @@ const validateReq = (data) => {
     typeof name === "string" &&
     name !== "" &&
     typeof size === "string" &&
-    typeof price === "number" &&
+    typeof price === "string" &&
     typeof color === "string" &&
-    typeof stock === "number" &&
+    typeof stock === "string" &&
     typeof genre === "string" &&
     Array.isArray(categories) &&
     categories.length > 0
@@ -40,13 +40,13 @@ const setCategories = async (categoriesArray, clothe) => {
 
 router.post("/create-clothe", upload.array("pictures", 8), async (req, res) => {
   try {
-    console.log(req.body);
     const {
-      data,
-      data: { categories },
-    } = req.body;
-    if (validateReq(data)) {
-      const newClothe = await Clothe.create(data);
+      body: { categories },
+      files,
+    } = req;
+    console.log(files);
+    if (validateReq(req.body)) {
+      const newClothe = await Clothe.create(req.body);
       await setCategories(categories, newClothe);
       return res.json(responseMessage(SUCCESS, newClothe));
     } else {
@@ -56,6 +56,7 @@ router.post("/create-clothe", upload.array("pictures", 8), async (req, res) => {
     }
   } catch (err) {
     const { message } = err;
+    console.log("Error: ", err);
     return res.json(responseMessage(ERROR, message));
   }
 });
