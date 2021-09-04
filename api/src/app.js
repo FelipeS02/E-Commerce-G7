@@ -4,6 +4,22 @@ const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
 
+// Auth0
+var jwt = require('express-jwt');
+var jwks = require('jwks-rsa');
+var jwtCheck = jwt({
+      secret: jwks.expressJwtSecret({
+          cache: true,
+          rateLimit: true,
+          jwksRequestsPerMinute: 5,
+          jwksUri: 'https://dev-1ik4n80w.us.auth0.com/.well-known/jwks.json'
+    }),
+    audience: 'https://ecommerce7',
+    issuer: 'https://dev-1ik4n80w.us.auth0.com/',
+    algorithms: ['RS256']
+});
+app.use(jwtCheck);
+
 require('./db.js');
 
 const server = express();
@@ -33,3 +49,5 @@ server.use((err, req, res, next) => { // eslint-disable-line no-unused-vars
 });
 
 module.exports = server;
+
+

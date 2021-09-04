@@ -12,7 +12,6 @@ router.get("/user-orders", async (req, res) => {
     "DESPACHADO",
     "CANCELADO",
     "ENTREGADO",
-    ""
   ];
   try {
     if (validStatus.includes(orderStatus)) {
