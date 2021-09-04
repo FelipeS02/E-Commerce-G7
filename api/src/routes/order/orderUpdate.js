@@ -3,7 +3,39 @@ const router = Router();
 const { validate } = require("uuid");
 const { User, Payment, Direction, Order } = require("../../db");
 
-router.post("/order-confirm/:userId", async (req, res) => {
+router.get("/order-update/:orderId", async (req, res) => {
+  const { orderId } = req.params;
+  const { state } = req.query;
+  const validStates = [
+    "CARRITO",
+    "CONFIRMADO",
+    "DESPACHADO",
+    "CANCELADO",
+    "ENTREGADO",
+  ];
+  try {
+    if (validStates.includes(state) && typeof orderId === "number") {
+      const order = await Order.update({ state: state }, orderId);
+      if (order[0] === 1) {
+        res.status(200).json({ Success: "Estado actualizado correctamente" });
+      } else {
+        res.status(400).json({
+          Error: "Se produjo un error al actualizar el estado de la orden",
+        });
+      }
+    } else {
+      res.status(400).json({
+        Error:
+          "Alguno de los parametros es incorrecto (status === CARRITO, CONFIRMADO, DESPACHADO, CANCELADO, ENTREGADO && typeof orderId === 'number')",
+      });
+    }
+  } catch (err) {
+    const { message } = err;
+    res.status(400).json({ message });
+  }
+});
+
+router.post("/order-update/:userId", async (req, res) => {
   const { userId } = req.params;
   const { payment, direction } = req.body.data;
   if (

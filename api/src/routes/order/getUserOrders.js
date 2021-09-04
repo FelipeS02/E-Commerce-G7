@@ -6,15 +6,16 @@ const { User, Order } = require("../../db");
 router.get("user-orders", async (req, res) => {
   const { userId, orderStatus } = req.query;
   let response;
-  const validStates = [
+  const validStatus = [
     "CARRITO",
     "CONFIRMADO",
     "DESPACHADO",
     "CANCELADO",
     "ENTREGADO",
+    ""
   ];
   try {
-    if (validStates.includes(orderStatus)) {
+    if (validStatus.includes(orderStatus)) {
       if (validate(userId)) {
         response = await User.findAll({
           where: {
@@ -52,7 +53,7 @@ router.get("user-orders", async (req, res) => {
         .status(400)
         .json({
           Error:
-            "El status debe ser de tipo CARRITO, CONFIRMADO, DESPACHADO, CANCELADO, ENTREGADO",
+            "El status debe ser de tipo CARRITO, CONFIRMADO, DESPACHADO, CANCELADO, ENTREGADO o debe ser un string vacio",
         });
     }
   } catch (err) {
