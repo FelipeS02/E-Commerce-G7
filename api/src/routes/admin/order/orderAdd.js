@@ -1,19 +1,21 @@
 const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
-const { Clothe, User, Order } = require("../../../db");
+const { OrderProduct, Clothe, User, Order } = require("../../../db");
 
 const clotheRelation = async (clothes, order) => {
   let clothesPromises = clothes.map(async (e) => {
-    const newRelation = await Clothe.findByPk(e.id);
-    await order.addClothe(newRelation);
+    const currentClothe = await Clothe.findByPk(e.id);
+    await newRelation.decrement(["stock"], { by: e.quantity });
+    const newProduct = await OrderProduct.create({quantity: e.quantity, clotheId: currentClothe.id});
+    await order.addOrderProduct(newProduct);
   });
   await Promise.all(clothesPromises);
 };
 
 router.post("/order-add/:userId", async (req, res) => {
   const { userId } = req.params;
-  const { clothes } = req.body.data;
+  const { clothes, total } = req.body.data;
   if (clothes && userId && validate(userId) && Array.isArray(clothes)) {
     try {
       let userOrder = await User.findAll({
@@ -28,10 +30,9 @@ router.post("/order-add/:userId", async (req, res) => {
       if (userOrder.length === 0) {
         // Si ninguna orden tiene status CARRITO, la creo
         const user = User.findByPk(userId);
-        const orderTotal = clothes.forEach((e) => (orderTotal += e.price)); // Precio total de la orden
         const newOrder = await Order.create({
           // Creo un carro nuevo
-          total: orderTotal,
+          total: total,
         });
         await clotheRelation(clothes, newOrder); // Itero el array de ropa que me pasaron y le agrego a la orden cada prenda
         await user.addOrder(newOrder); // Le agrego al usuario el carrito creado
@@ -41,6 +42,7 @@ router.post("/order-add/:userId", async (req, res) => {
         // Busco la orden
         const currentOrder = Order.findByPk(userOrder[0].orders[0].id);
         // Agrego cada prenda
+        await Order.update({});
         await clotheRelation(clothes, currentOrder);
         return res.status(200).json({
           Success: "Orden actualizada correctamente!",

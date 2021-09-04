@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
 const { Op } = require("sequelize");
-const { User, Order } = require("../../../db");
+const { User, Order, OrderProduct } = require("../../../db");
 
 router.get("/user-orders", async (req, res) => {
   const { userId, orderStatus } = req.query;
@@ -26,6 +26,9 @@ router.get("/user-orders", async (req, res) => {
             model: Order,
             where: {
               status: { [Op.iLike]: `%${orderStatus}%` },
+              include: {
+                model: OrderProduct
+              }
             },
           },
         });

@@ -13,6 +13,7 @@ const getUserOrders = require("./admin/order/getUserOrders.js")
 const orderAdd = require("./admin/order/orderAdd.js");
 const orderUpdate= require("./admin/order/orderUpdate.js");
 const getOrderById= require("./admin/order/getOrderById.js")
+const deleteFromOrder= require("./admin/order/deleteFromOrder.js")
 
 // Usamos Routes
 // Routes Users
