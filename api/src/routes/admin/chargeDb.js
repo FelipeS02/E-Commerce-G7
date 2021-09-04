@@ -2,7 +2,7 @@ const { Router } = require("express");
 const { Category, Clothe } = require("../../db");
 const router = Router();
 const multer = require("multer");
-const { dataBase } = require('../../database/DataBase')
+const { dataBase } = require("../../database/DataBase");
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
@@ -38,26 +38,31 @@ const setCategories = async (categoriesArray, clothe) => {
   await Promise.all(clotheCategory);
 };
 
+router.post(
+  "/charge-database",
+  upload.array("pictures", 8),
+  async (req, res) => {
+    dataBase.forEach(async (data) => {
+      try {
+        if (validateReq(data)) {
+          const { categories } = data;
+          const newClothe = await Clothe.create(data);
+          await setCategories(categories, newClothe);
 
-router.post("/charge-database", upload.array("pictures", 8), async (req, res) => {
-  dataBase.forEach(async (data)=>{
-    try {
-      if (validateReq(data)) {
-        const { categories } = data;
-        const newClothe = await Clothe.create(data);
-        await setCategories(categories, newClothe);
-  
-        return res.status(200).json({ Success: "Prenda creada correctamente!" });
-      } else {
-        return res
-          .status(400)
-          .json({ Error: "Uno de los datos es erroneo / esta vacio" });
+          return res
+            .status(200)
+            .json({ Success: "Prenda creada correctamente!" });
+        } else {
+          return res
+            .status(400)
+            .json({ Error: "Uno de los datos es erroneo / esta vacio" });
+        }
+      } catch (err) {
+        // const { message } = err;
+        // return res.status(400).json({ message });
       }
-    } catch (err) {
-      // const { message } = err;
-      // return res.status(400).json({ message });
-    }
-  })
-});
+    });
+  }
+);
 
 module.exports = router;

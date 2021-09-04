@@ -1,21 +1,27 @@
 const { Router } = require("express");
 const router = Router();
 const { Category, Clothe } = require("../../db");
+const {
+  responseMessage,
+  statusCodes: { SUCCESS, ERROR },
+} = require("../../controller/responseMessages");
 
 router.get("/:id", async (req, res) => {
-  const { id } = req.params;
   try {
+    const { id } = req.params;
+
     const finalClothe = await Clothe.findByPk(id, {
       include: { model: Category },
     });
+
     if (finalClothe) {
-      return res.status(200).json({ data: finalClothe });
+      return res.json(responseMessage(SUCCESS, finalClothe));
     } else {
-      return res.status(404).json({ errMessage: "Articulo no encontrado" });
+      return res.json(responseMessage(ERROR, "Articulo no encontrado"));
     }
   } catch (err) {
     const { message } = err;
-    return res.status(404).json({ message });
+    return res.json(responseMessage(ERROR, message));
   }
 });
 

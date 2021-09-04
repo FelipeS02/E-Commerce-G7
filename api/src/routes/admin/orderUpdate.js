@@ -42,14 +42,17 @@ router.get("/order-update/:orderId", async (req, res) => {
 
 router.post("/order-update/:userId", async (req, res) => {
   try {
-    const { params: { userId },
-      body: {data: {payment, direction}} 
-    }
-      if (
-        (payment === "MercadoPago" || payment === "Efectivo") &&
-        direction.length > 0 &&
-        validate(userId)
-      ) {
+    const {
+      params: { userId },
+      body: {
+        data: { payment, direction },
+      },
+    } = req;
+    if (
+      (payment === "MercadoPago" || payment === "Efectivo") &&
+      direction.length > 0 &&
+      validate(userId)
+    ) {
       let userOrder = await User.findAll({
         where: { id: userId },
         include: {
@@ -60,23 +63,32 @@ router.post("/order-update/:userId", async (req, res) => {
         },
       });
       if (userOrder.length > 0) {
-        const [currentOrder, newPayment, newDirection] = await Promise.all ([await Order.findByPk(userOrder[0].orders[0].id),
-        await Payment.create({ payment: payment }),
-        await Direction.create({ data: direction })])
-        
-        await Promise.all([await currentOrder.addPayment(newPayment),
-        await currentOrder.addDirection(newDirection),
-        await currentOrder.update({ state: "CONFIRMADA" })])
-        
+        const [currentOrder, newPayment, newDirection] = await Promise.all([
+          await Order.findByPk(userOrder[0].orders[0].id),
+          await Payment.create({ payment: payment }),
+          await Direction.create({ data: direction }),
+        ]);
+
+        await Promise.all([
+          await currentOrder.addPayment(newPayment),
+          await currentOrder.addDirection(newDirection),
+          await currentOrder.update({ state: "CONFIRMADA" }),
+        ]);
+
         res.json(responseMessage(SUCCESS, currentOrder));
       }
     } else {
-      res.json(responseMessage(ERROR, "El metodo de pago es incorrecto o el usuario no es valido"))
+      res.json(
+        responseMessage(
+          ERROR,
+          "El metodo de pago es incorrecto o el usuario no es valido"
+        )
+      );
     }
-    } catch (err) {
-      const { message } = err;
-      res.json(responseMessage(ERROR, message))
-    }
+  } catch (err) {
+    const { message } = err;
+    res.json(responseMessage(ERROR, message));
+  }
 });
 
 module.exports = router;

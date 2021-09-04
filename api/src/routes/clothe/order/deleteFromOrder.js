@@ -58,3 +58,5 @@ router.delete("/order-delete/:orderId/:clotheId", async (req, res) => {
     res.json(responseMessage(ERROR, message));
   }
 });
+
+module.exports = router;

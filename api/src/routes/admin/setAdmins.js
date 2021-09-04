@@ -1,6 +1,10 @@
 const { Router } = require("express");
 const { User } = require("../../db");
 const router = Router();
+const {
+  responseMessage,
+  statusCodes: { SUCCESS, ERROR },
+} = require("../../controller/responseMessages");
 
 router.get("/set-admin/:userId", async (req, res) => {
   const { userId } = req.params;
@@ -9,16 +13,13 @@ router.get("/set-admin/:userId", async (req, res) => {
     if (user) {
       const { name } = user;
       await user.update({ isAdmin: true });
-      return res.status(200).json({
-        Success: "El usuario es ahora un administrador",
-        Datos: { name, idUsuario },
-      });
+      return res.json(responseMessage(SUCCESS, user))
     } else {
-      return res.status(400).json({ Error: "El ID no pertenece a ningun usuario" });
+      return res.json(responseMessage(ERROR, "No existe ningun usuario con ese ID"))
     }
   } catch (err) {
     const { message } = err;
-    return res.status(400).json({ message });
+    return res.json(responseMessage(ERROR, message));
   }
 });
 

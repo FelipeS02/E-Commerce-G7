@@ -13,7 +13,6 @@ const getUserOrders = require("./clothe/order/getUserOrders.js");
 const orderAdd = require("./clothe/order/orderAdd.js");
 const orderUpdate = require("./admin/orderUpdate.js");
 const getOrderById = require("./clothe/order/getOrderById.js");
-const createClothe = require("./admin/createClothe.js");
 const chargeDatabase = require("./admin/chargeDb.js");
 const deleteFromOrder = require("./clothe/order/deleteFromOrder.js");
 
