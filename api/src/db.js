@@ -51,7 +51,7 @@ User.belongsToMany(Direction, { through: "user_directions" });
 // Aca vendrian las relaciones
 // Ropa y Categorias
 Category.belongsToMany(Clothe, { through: "clothe_category" });
-Clothe.belongsToMany(Category, { through: "clothe_category " });
+Clothe.belongsToMany(Category, { through: "clothe_category" });
 Clothe.belongsToMany(Media, { through: "clothe_media" });
 
 //Orden

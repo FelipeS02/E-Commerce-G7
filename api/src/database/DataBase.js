@@ -106,7 +106,7 @@ const dataBase = [
         color:"beige",
         stock:123,
         genre:'Masculino',
-        categories:['Caps', ''],
+        categories:['Caps'],
         ditail:"- Cap O'Neill 6 paneles de corderoy\n- Vicera curva.\n- Parche de PU.\n- Ajuste de tela.\n- Calce regular.\nMaterial \n100% Algodon."
     },
     {
