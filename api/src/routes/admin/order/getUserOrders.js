@@ -2,20 +2,25 @@ const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
 const { Op } = require("sequelize");
-const { User, Order, OrderProduct } = require("../../../db");
+const { User, Order, Clothe } = require("../../../db");
+const {
+  responseMessage,
+  statusCodes: { SUCCESS, ERROR },
+} = require("../../../controller/responseMessages");
 
 router.get("/user-orders", async (req, res) => {
-  const { userId, orderStatus } = req.query;
-  let response;
-  const validStatus = [
-    "CARRITO",
-    "CONFIRMADO",
-    "DESPACHADO",
-    "CANCELADO",
-    "ENTREGADO",
-    "",
-  ];
   try {
+    const { userId, orderStatus } = req.query;
+
+    const validStatus = [
+      "CARRITO",
+      "CONFIRMADO",
+      "DESPACHADO",
+      "CANCELADO",
+      "ENTREGADO",
+      "",
+    ];
+    let response;
     if (validStatus.includes(orderStatus)) {
       if (validate(userId)) {
         response = await User.findAll({
@@ -26,10 +31,8 @@ router.get("/user-orders", async (req, res) => {
             model: Order,
             where: {
               status: { [Op.iLike]: `%${orderStatus}%` },
-              include: {
-                model: OrderProduct
-              }
             },
+            include: { Model: Clothe },
           },
         });
       } else if (userId === "") {
@@ -39,32 +42,30 @@ router.get("/user-orders", async (req, res) => {
             where: {
               name: { [Op.iLike]: `%${orderStatus}%` },
             },
+            include: { Model: Clothe },
           },
         });
       } else {
-        return res
-          .status(400)
-          .json({
-            Error:
-              "El query 'userId' debe ser un UUID valido o un string vacio",
-          });
+        return res.json(responseMessage(ERROR, "Usuario no valido"));
       }
       if (response.length > 0) {
-        return res.status(200).json({ data: response });
+        return res.json(responseMessage(SUCCESS, response));
       } else {
-        return res.status(404).json({
-          NotFound: "No existe ninguna orden con ese estado dentro del usuario",
-        });
+        return res.json(
+          responseMessage(ERROR, "No existen ordenes con ese estado")
+        );
       }
     } else {
-      return res.status(400).json({
-        Error:
-          "El status debe ser de tipo CARRITO, CONFIRMADO, DESPACHADO, CANCELADO, ENTREGADO o debe ser un string vacio",
-      });
+      return res.json(
+        responseMessage(
+          ERROR,
+          "El estado debe ser de tipo CARRITO - CONFIRMADO - DESPACHADO - CANCELADO - ENTREGADO. En caso de querer ver todas las ordenes, seleccionar TODOS."
+        )
+      );
     }
   } catch (err) {
     const { message } = err;
-    return res.status(400).json({ message });
+    return res.json(responseMessage(ERROR, message));
   }
 });
 
