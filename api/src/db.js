@@ -50,11 +50,10 @@ const {
   Media,
   Direction,
   Payment,
-  OrderProduct,
-  Order_clothes
+  Order_clothes,
 } = sequelize.models;
 
-console.log(sequelize.models)
+console.log(sequelize.models);
 // Aca vendrian las relaciones
 User.belongsToMany(Direction, { through: "user_directions" });
 
@@ -65,8 +64,7 @@ Clothe.belongsToMany(Media, { through: "clothe_media" });
 
 //Orden y ropa
 User.belongsToMany(Order, { through: "user_orders" });
-Order.belongsToMany(OrderProduct, { through: Order_clothes });
-Clothe.belongsToMany(OrderProduct, {through: "product_clothe"})
+Clothe.belongsToMany(Order, { through: Order_clothes });
 
 // Orden y direccion
 Direction.belongsToMany(Order, { through: "order_directions" });

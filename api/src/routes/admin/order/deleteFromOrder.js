@@ -1,10 +1,10 @@
 const { Router } = require("express");
-const { Order_clothes, OrderProduct, Clothe } = require("../../../db");
+const { Order_clothes, Order, Clothe } = require("../../../db");
 const { Op } = require("sequelize");
 const router = Router();
 
-router.delete("/order-delete/:orderId/:orderProductId", async (req, res) => {
-  const { orderId, orderProductId } = req.params;
+router.delete("/order-delete/:orderId/:clotheId", async (req, res) => {
+  const { orderId, clotheId } = req.params;
   if (
     orderId &&
     typeof orderId === "number" &&
@@ -13,7 +13,7 @@ router.delete("/order-delete/:orderId/:orderProductId", async (req, res) => {
   ) {
     const orderClothe = await Order_clothes.findOne({
       where: {
-        [Op.and]: [{ orderId: orderId }, { orderProductId: orderProductId }],
+        [Op.and]: [{ orderId: orderId }, { clotheId: clotheId }],
       },
     });
     if (!orderClothe) {

@@ -42,7 +42,7 @@ router.post("/order-add/:userId", async (req, res) => {
         // Busco la orden
         const currentOrder = Order.findByPk(userOrder[0].orders[0].id);
         // Agrego cada prenda
-        await Order.update({});
+      
         await clotheRelation(clothes, currentOrder);
         return res.status(200).json({
           Success: "Orden actualizada correctamente!",
