@@ -32,7 +32,7 @@ router.get("/user-orders", async (req, res) => {
             where: {
               status: { [Op.iLike]: `%${orderStatus}%` },
             },
-            include: { Model: Clothe },
+            include: { all: true },
           },
         });
       } else if (userId === "") {
@@ -42,7 +42,7 @@ router.get("/user-orders", async (req, res) => {
             where: {
               name: { [Op.iLike]: `%${orderStatus}%` },
             },
-            include: { Model: Clothe },
+            include: { all: true },
           },
         });
       } else {

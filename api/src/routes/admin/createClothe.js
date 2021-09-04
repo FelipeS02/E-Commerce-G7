@@ -1,27 +1,24 @@
 const { Router } = require("express");
-const { Category, Clothe } = require("../../db");
+const { Category, Clothe, Media } = require("../../db");
 const router = Router();
-const multer = require("multer");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
 } = require("../../controller/responseMessages");
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
-
-const validateReq = (data) => {
+const validateReq = (data, files) => {
   const { name, size, price, color, stock, genre, categories } = data;
   if (
-    typeof name === "string" &&
-    name !== "" &&
-    typeof size === "string" &&
-    typeof price === "string" &&
-    typeof color === "string" &&
-    typeof stock === "string" &&
-    typeof genre === "string" &&
-    Array.isArray(categories) &&
-    categories.length > 0
+    (typeof name === "string" &&
+      name !== "" &&
+      typeof size === "string" &&
+      typeof price === "string" &&
+      typeof color === "string" &&
+      typeof stock === "string" &&
+      typeof genre === "string" &&
+      Array.isArray(categories) &&
+      categories.length > 0,
+    Array.isArray(files))
   ) {
     return true;
   }
@@ -38,16 +35,30 @@ const setCategories = async (categoriesArray, clothe) => {
   await Promise.all(clotheCategory);
 };
 
-router.post("/create-clothe", upload.array("pictures", 8), async (req, res) => {
+const setMedia = async (mediaArray, clothe) => {
+  const clotheMedia = mediaArray.map(async (m) => {
+    const newMedia = await Media.create({
+      type: m.mimetype,
+      name: m.originalname,
+      data: m.path,
+    });
+    await clothe.addMedia(newMedia.id);
+  });
+  await Promise.all(clotheMedia);
+};
+
+router.post("/create-clothe", async (req, res) => {
   try {
     const {
       body: { categories },
       files,
     } = req;
-    console.log(files);
-    if (validateReq(req.body)) {
+    if (validateReq(req.body, files)) {
       const newClothe = await Clothe.create(req.body);
-      await setCategories(categories, newClothe);
+      await Promise.all([
+        await setCategories(categories, newClothe),
+        await setMedia(files, newClothe),
+      ]);
       return res.json(responseMessage(SUCCESS, newClothe));
     } else {
       return res.json(
@@ -56,7 +67,6 @@ router.post("/create-clothe", upload.array("pictures", 8), async (req, res) => {
     }
   } catch (err) {
     const { message } = err;
-    console.log("Error: ", err);
     return res.json(responseMessage(ERROR, message));
   }
 });

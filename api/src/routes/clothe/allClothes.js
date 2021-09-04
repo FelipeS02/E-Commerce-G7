@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { Category, Clothe } = require("../../db");
+const { Category, Clothe, Media } = require("../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
@@ -13,7 +13,7 @@ router.get("/all-clothes", async (req, res) => {
     const allClothes = await Clothe.findAll({
       limit,
       offset,
-      include: { model: Category },
+      include: [{ Model: Category }, { Model: Media }],
     });
     if (allClothes.length === 0) {
       return res.json(

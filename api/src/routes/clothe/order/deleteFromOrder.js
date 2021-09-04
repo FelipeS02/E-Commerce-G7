@@ -28,7 +28,6 @@ router.delete("/order-delete/:orderId/:clotheId", async (req, res) => {
       } else {
         await Clothe.increment(["stock"], { by: orderClothe.quantity });
         const result = await orderClothe.destroy();
-
         if (result === 1) {
           return res.json(
             responseMessage(

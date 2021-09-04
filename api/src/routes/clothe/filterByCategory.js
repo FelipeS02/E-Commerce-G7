@@ -7,11 +7,10 @@ const {
   statusCodes: { SUCCESS, ERROR },
 } = require("../../controller/responseMessages");
 
-//Busca el producto ingresado en el searchBar
 router.get("/category/:name", async (req, res) => {
   try {
     const { name } = req.params;
-    const response = await Category.findOne({
+    const response = await Category.findAll({
       where: { name: { [Op.iLike]: `%${name}%` } },
       include: { model: Clothe },
     });

@@ -18,10 +18,6 @@ module.exports = (sequelize) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
-      link: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-      },
     },
     { timestamps: false }
   );
