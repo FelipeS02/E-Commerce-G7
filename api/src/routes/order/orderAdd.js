@@ -54,7 +54,7 @@ router.post("/order-add/:userId", async (req, res) => {
   } else {
     return res.status(400).json({
       Error:
-        "Uno de los datos enviados es incorrecto (checkear que el array clothes contenga IDs y userId userId !== undefined)",
+        "Uno de los datos enviados es incorrecto (checkear que el array clothes contenga objetos con id de prenda y precio, y userId sea de tipo uuid)",
     });
   }
 });
