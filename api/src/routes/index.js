@@ -12,6 +12,7 @@ const createClothe = require("./admin/createClothe.js");
 const getUserOrders = require("./clothe/order/getUserOrders.js");
 const orderAdd = require("./clothe/order/orderAdd.js");
 const orderUpdate = require("./admin/orderUpdate.js");
+const orderConfirm = require("./clothe/order/orderConfirm")
 const getOrderById = require("./clothe/order/getOrderById.js");
 const chargeDatabase = require("./admin/chargeDb.js");
 const deleteFromOrder = require("./clothe/order/deleteFromOrder.js");
@@ -26,7 +27,7 @@ router.use("/clothe", orderAdd);
 router.use("/clothe", getOrderById);
 router.use("/clothe", getUserOrders);
 router.use("/clothe", deleteFromOrder);
-
+router.use("/clothe", orderConfirm)
 // Admin
 router.use("/admin", createClothe);
 router.use("/admin", userControls);

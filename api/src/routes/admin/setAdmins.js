@@ -14,7 +14,6 @@ router.get("/set-admin/:userId", checkScopes(['read:admin']), async (req, res) =
   try {
     const user = await User.findByPk(userId);
     if (user) {
-      const { name } = user;
       await user.update({ isAdmin: true });
       return res.json(responseMessage(SUCCESS, user))
     } else {

@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const router = Router();
+const { validate } = require("uuid");
 const { Order } = require("../../../db");
 const {
   responseMessage,
@@ -9,7 +10,7 @@ const {
 router.get("/order-detail/:orderId", async (req, res) => {
   try {
     const { orderId } = req.params;
-    if (typeof orderId === "number") {
+    if (validate(orderId)) {
       const response = await Order.findOne({
         where: { id: orderId },
         include: { all: true },

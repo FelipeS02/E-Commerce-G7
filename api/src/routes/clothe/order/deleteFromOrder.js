@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const router = Router();
+const { validate } = require("uuid");
 const { Order_clothes, Order, Clothe } = require("../../../db");
 const { Op } = require("sequelize");
 const {
@@ -10,7 +11,7 @@ const {
 router.delete("/order-delete/:orderId/:clotheId", async (req, res) => {
   try {
     const { orderId, clotheId } = req.params;
-    if (typeof orderId === "number" && typeof clotheId === "number") {
+    if (validate(orderId) && typeof clotheId === "number") {
       //? En la tabla relacional, busco una seccion donde se encuentran relacionados la orden y el producto
       const orderClothe = await Order_clothes.findOne({
         where: {

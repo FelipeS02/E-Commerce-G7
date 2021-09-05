@@ -1,15 +1,14 @@
 const { Router } = require("express");
 const router = Router();
-const { validate } = require("uuid");
 const { Order } = require("../../../db");
 
 const jwtAuthz = require('express-jwt-authz');
 const checkScopes = permissions => jwtAuthz(permissions);
 
-router.get("/order-detail/:orderId", checkScopes(['read:admin']), async (req, res) => {
+router.get("/order-detail/:orderId", async (req, res) => {
   const { orderId } = req.params;
   try {
-    if (validate(orderId)) {
+    if (orderId && typeof orderId === "number") {
       const response = await Order.findOne({
         where: { id: orderId },
         include: { all: true },

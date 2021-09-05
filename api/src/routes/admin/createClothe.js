@@ -6,6 +6,9 @@ const {
   statusCodes: { SUCCESS, ERROR },
 } = require("../../controller/responseMessages");
 
+const jwtAuthz = require("express-jwt-authz");
+const checkScopes = (permissions) => jwtAuthz(permissions);
+
 const validateReq = (data, files) => {
   const { name, size, price, color, stock, genre, categories } = data;
   if (
@@ -47,7 +50,7 @@ const setMedia = async (mediaArray, clothe) => {
   await Promise.all(clotheMedia);
 };
 
-router.post("/create-clothe", async (req, res) => {
+router.post("/create-clothe", checkScopes(['read:admin']), async (req, res) => {
   try {
     const {
       body: { categories },
