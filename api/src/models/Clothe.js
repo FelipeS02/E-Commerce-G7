@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
       allowNull: false,
     },
     size: {
-      type: DataTypes.ENUM(["XS", "S", "M", "L", "XL", "XXL"]),
+      type: DataTypes.ENUM(["XS", "S", "M", "L", "XL", "XXL", "Unico", "28", "30", "32", "34", "36"]),
       allowNull: false,
     },
     price: {
@@ -28,6 +28,10 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM(["Masculino", "Femenino", "Otro"]),
       allowNull: false,
     },
+    detail: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    }
   });
   return Clothe;
 };

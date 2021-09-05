@@ -3,6 +3,9 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const routes = require('./routes/index.js');
+const multer = require("multer");
+const path = require('path')
+
 
 // Auth0
 var jwt = require('express-jwt');
@@ -25,6 +28,18 @@ require('./db.js');
 const server = express();
 
 server.name = 'API';
+
+const storage = multer.diskStorage({
+  destination: path.join(__dirname, 'public/uploads'),
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
+})
+
+server.use(multer({
+  storage,
+  dest: path.join(__dirname, 'public/uploads')
+}).array("media", 8))
 
 server.use(bodyParser.urlencoded({ extended: true, limit: '50mb' }));
 server.use(bodyParser.json({ limit: '50mb' }));

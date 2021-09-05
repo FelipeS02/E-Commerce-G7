@@ -1,27 +1,38 @@
 const { Router } = require("express");
 const router = Router();
-const { Category, Clothe } = require("../../db");
+const { Category, Clothe, Media } = require("../../db");
+const {
+  responseMessage,
+  statusCodes: { SUCCESS, ERROR },
+} = require("../../controller/responseMessages");
 
 router.get("/all-clothes", async (req, res) => {
-  const { offset, limit } = req.query;
   try {
+    const { offset, limit } = req.query;
     const countClothes = await Clothe.count({ col: "id" });
     const allClothes = await Clothe.findAll({
+      order: [["id", "ASC"]],
       limit: limit,
       offset: offset,
-      include: { model: Category },
+      include: [{ model: Category }, { model: Media }],
     });
     if (allClothes.length === 0) {
-      return res.status(400).json({ noClothes: "Aun no existe ninguna prenda" });
+      return res.json(
+        responseMessage(ERROR, "No existe ninguna prenda actualmente.")
+      );
     } else {
-      return res.status(200).json({
-        total: countClothes,
-        allClothes,
-      });
+      return res.json(
+        responseMessage(SUCCESS, {
+          offset,
+          limit,
+          total: countClothes,
+          allClothes,
+        })
+      );
     }
   } catch (err) {
     const { message } = err;
-    return res.status(400).json({ message });
+    return res.json(responseMessage(ERROR, message));
   }
 });
 
