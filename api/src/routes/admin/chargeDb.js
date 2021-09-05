@@ -1,24 +1,27 @@
 const { Router } = require("express");
-const { Category, Clothe } = require("../../db");
+const { Category, Clothe, Media } = require("../../db");
 const router = Router();
-const multer = require("multer");
-const { dataBase } = require("../../database/DataBase");
+const {
+  responseMessage,
+  statusCodes: { SUCCESS, ERROR },
+  } = require("../../controller/responseMessages");
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+const { dataBase, categorySet } = require("../../database/DataBase");
 
-const validateReq = (data) => {
+const validateReq = (data, files) => {
   const { name, size, price, color, stock, genre, categories } = data;
   if (
-    typeof name === "string" &&
-    name !== "" &&
-    typeof size === "string" &&
-    typeof price === "number" &&
-    typeof color === "string" &&
-    typeof stock === "number" &&
-    typeof genre === "string" &&
-    Array.isArray(categories) &&
-    categories.length > 0
+    (typeof name === "string" &&
+      name !== "" &&
+      typeof size === "string" &&
+      typeof price === "string" &&
+      typeof color === "string" &&
+      typeof stock === "string" &&
+      typeof genre === "string" &&
+      typeof detail === "string" &&
+      Array.isArray(categories) &&
+      categories.length > 0,
+    Array.isArray(files))
   ) {
     return true;
   }
@@ -27,42 +30,56 @@ const validateReq = (data) => {
 
 const setCategories = async (categoriesArray, clothe) => {
   const clotheCategory = categoriesArray.map(async (c) => {
-    const findCategory = await Category.findOne({ where: { name: c } });
-    if (!findCategory) {
-      const newCategory = await Category.create({ name: c });
-      await clothe.addCategory(newCategory.id);
-    } else {
-      await clothe.addCategory(findCategory.id);
-    }
+    const [category, created] = await Category.findOrCreate({
+      where: { name: c },
+    });
+    await clothe.addCategory(category.id);
   });
   await Promise.all(clotheCategory);
 };
 
-router.post(
-  "/charge-database",
-  upload.array("pictures", 8),
-  async (req, res) => {
-    dataBase.forEach(async (data) => {
-      try {
-        if (validateReq(data)) {
-          const { categories } = data;
-          const newClothe = await Clothe.create(data);
-          await setCategories(categories, newClothe);
-
-          return res
-            .status(200)
-            .json({ Success: "Prenda creada correctamente!" });
-        } else {
-          return res
-            .status(400)
-            .json({ Error: "Uno de los datos es erroneo / esta vacio" });
-        }
-      } catch (err) {
-        // const { message } = err;
-        // return res.status(400).json({ message });
-      }
+const setMedia = async (mediaArray, clothe) => {
+  const clotheMedia = mediaArray.map(async (m) => {
+    const newMedia = await Media.create({
+      type: m.mimetype,
+      name: m.originalname,
+      data: m.path,
     });
-  }
-);
+    await clothe.addMedia(newMedia.id);
+  });
+  await Promise.all(clotheMedia);
+};
+
+router.post("/charge-database", async (req, res) => {
+try {  
+  const initialCategory = categorySet.map(async (c) => {
+    await Category.findOrCreate({
+      where: { name: c }
+    });
+    await Promise.all(initialCategory)
+  });
+  const chargeDatabase = dataBase.map(async (data) => {
+    const { categories, files } = data;
+    if (validateReq(data, files)) {
+      const newClothe = await Clothe.create(data);
+      await Promise.all([
+        await setCategories(categories, newClothe),
+        await setMedia(files, newClothe),
+      ]);
+    } else {
+      return res.json(
+        responseMessage(ERROR, "Uno de los datos es erroneo / esta vacio")
+      );
+    }
+  });
+  await Promise.all(chargeDatabase)
+  return res.json(responseMessage(SUCCESS, "Base de datos cargada corectamente"));
+}
+catch (err){
+  const { message } = err;
+  return res.json(responseMessage(ERROR, message));
+}
+});
+
 
 module.exports = router;
