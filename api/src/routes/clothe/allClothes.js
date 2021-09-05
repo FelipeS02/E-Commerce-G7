@@ -11,19 +11,24 @@ router.get("/all-clothes", async (req, res) => {
     const { offset, limit } = req.query;
     const countClothes = await Clothe.count({ col: "id" });
     const allClothes = await Clothe.findAll({
-      limit,
-      offset,
-      include: [{ Model: Category }, { Model: Media }],
+      order: [["id", "ASC"]],
+      limit: limit,
+      offset: offset,
+      include: [{ model: Category }, { model: Media }],
     });
     if (allClothes.length === 0) {
       return res.json(
         responseMessage(ERROR, "No existe ninguna prenda actualmente.")
       );
     } else {
-      return res.status(200).json({
-        total: countClothes,
-        allClothes,
-      });
+      return res.json(
+        responseMessage(SUCCESS, {
+          offset,
+          limit,
+          total: countClothes,
+          allClothes,
+        })
+      );
     }
   } catch (err) {
     const { message } = err;

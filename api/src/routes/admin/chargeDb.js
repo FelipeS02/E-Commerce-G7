@@ -50,7 +50,7 @@ const setMedia = async (mediaArray, clothe) => {
   await Promise.all(clotheMedia);
 };
 
-router.post("/charge-database", async (req, res) => {
+router.get("/charge-database", async (req, res) => {
 try {  
   const initialCategory = categorySet.map(async (c) => {
     await Category.findOrCreate({

@@ -9,7 +9,6 @@ const {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-
     const finalClothe = await Clothe.findByPk(id, {
       include: [{ model: Category }, { model: Media }],
     });
