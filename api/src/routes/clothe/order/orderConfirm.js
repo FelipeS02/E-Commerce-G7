@@ -18,7 +18,8 @@ router.post("/order-confirm/:userId/:orderId", async (req, res) => {
     if (
       (payment === "MercadoPago" || payment === "Efectivo") &&
       direction.length > 0 &&
-      validate(userId) && validate(orderId)
+      validate(userId) &&
+      validate(orderId)
     ) {
       let userOrder = await User.findAll({
         where: { id: userId },
@@ -44,7 +45,9 @@ router.post("/order-confirm/:userId/:orderId", async (req, res) => {
 
         res.json(responseMessage(SUCCESS, currentOrder));
       } else {
-        res.json(responseMessage(ERROR, "El usuario no tiene asignada esa orden"))
+        res.json(
+          responseMessage(ERROR, "El usuario no tiene asignada esa orden")
+        );
       }
     } else {
       res.json(
