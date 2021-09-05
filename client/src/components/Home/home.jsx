@@ -1,7 +1,9 @@
 import React, { useEffect } from "react";
-import { Carousel, Container } from "react-bootstrap";
+import { Carousel, Container, Col, Row } from "react-bootstrap";
 import Footer from "../Footer/Footer";
+import PaginationC from "../Pagination/PaginationC";
 import CardP from "../ProductCard/CardP";
+import SideBarFilter from "../SideBarFilter/SideBarFilter";
 
 const Home = (props) => {
   const imgUrl = [
@@ -20,9 +22,26 @@ const Home = (props) => {
         ))}
       </Carousel>
 
-      <Container>
-        <CardP />
-      </Container>
+      <PaginationC />
+      <Row className="mx-3">
+        <Col lg="2" className="justify-content-center">
+          <h4>Categorías:</h4>
+          <SideBarFilter></SideBarFilter>
+        </Col>
+        <Col className="d-flex align-content-center flex-wrap justify-content-between">
+          <CardP />
+          <CardP />
+          <CardP />
+          <CardP />
+          <CardP />
+          <CardP />
+          <CardP />
+          <CardP />
+          <CardP />
+        </Col>
+      </Row>
+
+      <PaginationC />
       <Footer />
     </div>
   );

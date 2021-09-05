@@ -1,10 +1,17 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
-import { FaFacebook, FaInstagram, FaTwitter } from "react-icons/fa";
+import {
+  FaFacebook,
+  FaInstagram,
+  FaTwitter,
+  FaLocationArrow,
+  FaPhoneSquareAlt,
+  FaEnvelope,
+} from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <Container>
+    <Container fluid className="mt-5 ">
       <Row>
         <Col>
           <Row className="mb-4">
@@ -47,7 +54,33 @@ const Footer = () => {
           </Row>
         </Col>
         <Col>
-          <h4>Contáctanos</h4>
+          <Row className="mb-4">
+            <h4>Contáctanos</h4>
+          </Row>
+          <Row className="mb-4">
+            <Col xs={2}>
+              <FaLocationArrow size="1.5rem" />
+            </Col>
+            <Col>
+              <p>3448, La Rioja, Buenos Aires</p>
+            </Col>
+          </Row>
+          <Row className="mb-4">
+            <Col xs={2}>
+              <FaPhoneSquareAlt size="1.6rem" />
+            </Col>
+            <Col>
+              <p>1142 52 4336</p>
+            </Col>
+          </Row>
+          <Row className="mb-4">
+            <Col xs={2}>
+              <FaEnvelope size="1.6rem" />
+            </Col>
+            <Col>
+              <p>contacto@something.com</p>
+            </Col>
+          </Row>
         </Col>
       </Row>
     </Container>
