@@ -16,26 +16,29 @@ const CardP = (props) => {
     setItemNumber(e.target.value);
   };
   return (
-    <Card style={{ width: "20rem" }}>
+    <Card style={{ width: "20rem" }} className="my-4">
       <Card.Img
         variant="top"
         src="https://chilangoskate.com/shop/17858-large_default/sudadera-vans-x-se-bikes.jpg"
       />
 
-      <Card.Body className="justify-content-cente card text-center">
+      <Card.Body className="justify-content-center card text-center">
         <Card.Title>Card Title</Card.Title>
         <Card.Text>$000000</Card.Text>
-        <DropdownButton id="dropdown-basic-button" title="Talle">
-          {size.map((item, index) => (
-            <Dropdown.Item href="#/action-3">{item}</Dropdown.Item>
+
+        <Form.Control as="select" aria-label="Default select example">
+          <option>Talle</option>
+          {size.map((item) => (
+            <option value={item}>{item}</option>
           ))}
-        </DropdownButton>
+        </Form.Control>
       </Card.Body>
       <Card.Footer>
         <Row>
           <Col xs={3}>
             <Form.Control
               type="number"
+              min="1"
               value={itemNumber}
               onChange={itemHandler}
             />

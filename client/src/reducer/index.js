@@ -1,9 +1,9 @@
 import { combineReducers } from "redux";
-import authReducer from "./authReducer";
-import productReducer from "./ProductReducer";
+import { productReducer, categoryReducer } from "./ProductReducer";
 
 const rootReducer = combineReducers({
   productsState: productReducer,
+  productCategories: categoryReducer,
 });
 
 export default rootReducer;
