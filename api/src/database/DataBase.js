@@ -1,3 +1,4 @@
+const categorySet = ['remeras', 'camperas', 'clasico', 'pantalones', 'mochilas', 'gorros', 'caps', 'camisas', 'urbano', 'buzos']
 const dataBase = [
     {
         name:"REMERA RETRO O'NEILL Y",
@@ -6,8 +7,9 @@ const dataBase = [
         color:"blanco",
         stock:39,
         genre:"Femenino",
-        categories:["Camperas", 'Clasico'],
-        ditail:"- Remera manga corta, escote redondo con ribb a tono, Estampa 1 color en frente.\n- Calce: Clasica Oversize\n\nMaterial\nAlgodon / Viscosa"
+        categories:["camperas", 'clasico'],
+        detail:"- Remera manga corta, escote redondo con ribb a tono, Estampa 1 color en frente.\n- Calce: Clasica Oversize\nMaterial\nAlgodon / Viscosa",
+        files: []
     },
     {
         name:"REMERA RETRO O'NEILL",
@@ -16,8 +18,9 @@ const dataBase = [
         color:"blanco",
         stock:39,
         genre:'Femenino',
-        categories:['Remeras', 'Clasico'],
-        ditail:"- Remera manga corta, escote redondo con ribb a tono, Estampa 1 color en frente.\n- Calce: Clasica Oversize\n\nMaterial\nAlgodon / Viscosa"
+        categories:['remeras', 'clasico'],
+        detail:"- Remera manga corta, escote redondo con ribb a tono, Estampa 1 color en frente.\n- Calce: Clasica Oversize\nMaterial\nAlgodon / Viscosa",
+        files: []
     },
     {
         name:"REMERA OK STAR O'NEILL",
@@ -26,8 +29,9 @@ const dataBase = [
         color:"negro",
         stock:35,
         genre:'Masculino',
-        categories:['Remeras'],
-        ditail:"Remera manga corta, escote redondo con ribb a tono.\nEstampa en el pecho y en la espalda.\nCalce regular."
+        categories:['remeras'],
+        detail:"Remera manga corta, escote redondo con ribb a tono.\nEstampa en el pecho y en la espalda.\nCalce regular.",
+        files: []
     },
     {
         name:"REMERA LEFT COAST O'NEILL",
@@ -36,8 +40,9 @@ const dataBase = [
         color:"negro",
         stock:50,
         genre:'Masculino',
-        categories:['Remeras'],
-        ditail:"Remera manga corta, escote redondo con ribb a tono. Estampa en el frente.\nMaterial\n100% algodón.\nCalce regular"
+        categories:['remeras'],
+        detail:"Remera manga corta, escote redondo con ribb a tono. Estampa en el frente.\nMaterial\n100% algodón.\nCalce regular",
+        files: []
     },
     {
         name:"PANTALÓN CORD O'NEILL",
@@ -46,8 +51,9 @@ const dataBase = [
         color:"negro",
         stock:15,
         genre:'Masculino',
-        categories:['Pantalones'],
-        ditail:"Pantalón tipo jogger con 2 bolsillos laterales.\nCintura elastizada, cordón para ajustar.\nPuños elastizados.\nCalce regular"
+        categories:['pantalones'],
+        detail:"Pantalón tipo jogger con 2 bolsillos laterales.\nCintura elastizada, cordón para ajustar.\nPuños elastizados.\nCalce regular",
+        files: []
     },
     {
         name:"MOCHILA EASY RIDER O'NEILL",
@@ -56,8 +62,9 @@ const dataBase = [
         color:"gris",
         stock:25,
         genre:'Masculino',
-        categories:['Mochilas'],
-        ditail:"- Compartimiento interno para laptop.\n- Tiras de hombros acolchonadas.\n- Bolsillo lateral de mesh.\n- Logo reflectivo.\n- Bolsillo externo frontal.\n-Dimensiones: 48 x 31 x 21.\n- Capacidad 30 L."
+        categories:['mochilas'],
+        detail:"- Compartimiento interno para laptop.\n- Tiras de hombros acolchonadas.\n- Bolsillo lateral de mesh.\n- Logo reflectivo.\n- Bolsillo externo frontal.\n-Dimensiones: 48 x 31 x 21.\n- Capacidad 30 L.",
+        files: []
     },
     {
         name:"JOGGER ELENA PRINTED O'NEIL",
@@ -66,8 +73,9 @@ const dataBase = [
         color:"azul marino",
         stock:36,
         genre:'Femenino',
-        categories:['Pantalones'],
-        ditail:"Jogger con bolsillos, cintura ajustable y puños elastizados.\nEstampa en pierna.\nMaterial\n60 % Algodón - 40 % Poliester."
+        categories:['pantalones'],
+        detail:"Jogger con bolsillos, cintura ajustable y puños elastizados.\nEstampa en pierna.\nMaterial\n60 % Algodón - 40 % Poliester.",
+        files: []
     },
     {
         name:"PANTALÓN LAVIN O'NEILL",
@@ -76,8 +84,9 @@ const dataBase = [
         color:"bordo",
         stock:42,
         genre:'Masculino',
-        categories:['Pantalones'],
-        ditail:"Pantalón de jean 5 bolsillos con lavado stonewash.\nCalce Regular\nmateriales\n97% Algodón - 3% Elastano."
+        categories:['pantalones'],
+        detail:"Pantalón de jean 5 bolsillos con lavado stonewash.\nCalce Regular\nmateriales\n97% Algodón - 3% Elastano.",
+        files: []
     },
     {
         name:"GORRO BRIX BEANIE O'NEILL",
@@ -86,8 +95,9 @@ const dataBase = [
         color:"azul marino",
         stock:26,
         genre:'Femenino',
-        categories:['Gorros'],
-        ditail:"Gorro tejido largo, con lurex.\nCalce relajado.\nMaterial\n100% Acrílico."
+        categories:['gorros'],
+        detail:"Gorro tejido largo, con lurex.\nCalce relajado.\nMaterial\n100% Acrílico.",
+        files: []
     },
     {
         name:"GORRO BLOKE II O'NEILL",
@@ -96,8 +106,9 @@ const dataBase = [
         color:"bordo",
         stock:30,
         genre:'Masculino',
-        categories:['Gorros'],
-        ditail:"- Gorro tejido con doblez.\n- Etiqueta externa\n- Calce Relaxed.\n- Talle Unico."
+        categories:['gorros'],
+        detail:"- Gorro tejido con doblez.\n- Etiqueta externa\n- Calce Relaxed.\n- Talle Unico.",
+        files: []
     },
     {
         name:"CAP STOWELL II O'NEILL",
@@ -106,8 +117,9 @@ const dataBase = [
         color:"beige",
         stock:123,
         genre:'Masculino',
-        categories:['Caps'],
-        ditail:"- Cap O'Neill 6 paneles de corderoy\n- Vicera curva.\n- Parche de PU.\n- Ajuste de tela.\n- Calce regular.\nMaterial \n100% Algodon."
+        categories:['caps'],
+        detail:"- Cap O'Neill 6 paneles de corderoy\n- Vicera curva.\n- Parche de PU.\n- Ajuste de tela.\n- Calce regular.\nMaterial \n100% Algodon.",
+        files: []
     },
     {
         name:"CAMPERA ONTARIO O'NEILL",
@@ -116,8 +128,9 @@ const dataBase = [
         color:"amarillo",
         stock:6,
         genre:'Femenino',
-        categories:['Camperas', 'Urbano'],
-        ditail:"Campera urbana femenina con canelones y capucha.\nAbertura cierre plástico.\nCintura y puños con elástico.\nCalce: regular a la cadera.\nMaterial\n100% Poliester."
+        categories:['camperas', 'urbano'],
+        detail:"Campera urbana femenina con canelones y capucha.\nAbertura cierre plástico.\nCintura y puños con elástico.\nCalce: regular a la cadera.\nMaterial\n100% Poliester.",
+        files: []
     },
     {
         name:"CAMPERA KENAI O'NEILL",
@@ -126,8 +139,9 @@ const dataBase = [
         color:"verde",
         stock:35,
         genre:'Masculino',
-        categories:['Camperas'],
-        ditail:"Campera tipo parka con capucha forrada en micropolar y piel sintética.\n4 bolsillos.\nInterior acanalado con cordón para ajustar.\nMangas con puños y velcro."
+        categories:['camperas'],
+        detail:"Campera tipo parka con capucha forrada en micropolar y piel sintética.\n4 bolsillos.\nInterior acanalado con cordón para ajustar.\nMangas con puños y velcro.",
+        files: []
     },
     {
         name:"CAMPERA GALA O'NEILL",
@@ -136,8 +150,9 @@ const dataBase = [
         color:"azul marino",
         stock:8,
         genre:'Masculino',
-        categories:['Camperas'],
-        ditail:"Campera con capucha ajustable.\nCanelones anchos y cierre central plástico.\nDos bolsillos con botones a presión y puños regulables con velcro.\nMATERIALES\nRelleno 100% Silicona."
+        categories:['camperas'],
+        detail:"Campera con capucha ajustable.\nCanelones anchos y cierre central plástico.\nDos bolsillos con botones a presión y puños regulables con velcro.\nMATERIALES\nRelleno 100% Silicona.",
+        files: []
     },
     {
         name:"CAMPERA BANDALE O'NEILL",
@@ -146,8 +161,9 @@ const dataBase = [
         color:"rojo",
         stock:5,
         genre:'Femenino',
-        categories:['Camperas'],
-        ditail:"-Campera clásica larga, con relleno y canelones.\n-Cierre frontal, bolsillos laterales y cuello alto.\n-Interior de frente, espalda y capucha forrado en piel sintética.\n-Calce: Regular\nMaterial\n100% Poliester."
+        categories:['camperas'],
+        detail:"-Campera clásica larga, con relleno y canelones.\n-Cierre frontal, bolsillos laterales y cuello alto.\n-Interior de frente, espalda y capucha forrado en piel sintética.\n-Calce: Regular\nMaterial\n100% Poliester.",
+        files: []
     },
     {
         name:"CAMISA LUMBER O'NEILL",
@@ -156,8 +172,9 @@ const dataBase = [
         color:"ladrillo gris",
         stock:10,
         genre:'Masculino',
-        categories:['Camisas'],
-        ditail:"Camisa manga larga, tipo leñadora, de viyela peinada.\nMATERIALES\n100% Algodón"
+        categories:['camisas'],
+        detail:"Camisa manga larga, tipo leñadora, de viyela peinada.\nMATERIALES\n100% Algodón",
+        files: []
     },
     {
         name:"CAMISA HAMPTON O'NEILL",
@@ -166,8 +183,9 @@ const dataBase = [
         color:"azul",
         stock:2,
         genre:'Femenino',
-        categories:['Camisas'],
-        ditail:"Camisa de mujer manga larga de fibrana rayada.\nBolsillos en el pecho y cartera con botones.\nCalce: Overzise."
+        categories:['camisas'],
+        detail:"Camisa de mujer manga larga de fibrana rayada.\nBolsillos en el pecho y cartera con botones.\nCalce: Overzise.",
+        files: []
     },
     {
         name:"CAMISA DORY O'NEILL",
@@ -176,8 +194,9 @@ const dataBase = [
         color:"azul",
         stock:10,
         genre:'Masculino',
-        categories:['Camisas'],
-        ditail:"Camisa manga larga tipo leñadora de viyela\nMATERIALES\n100% Algodón"
+        categories:['camisas'],
+        detail:"Camisa manga larga tipo leñadora de viyela\nMATERIALES\n100% Algodón",
+        files: []
     },
     {
         name:"BUZO CANGURO COAST",
@@ -186,8 +205,9 @@ const dataBase = [
         color:"lila",
         stock:89,
         genre:'Masculino',
-        categories:['Buzos'],
-        ditail:"Buzo canguro con capucha. estampa en el frente. Cordón redondo con ojalillos y puntera metálicos."
+        categories:['buzos'],
+        detail:"Buzo canguro con capucha. estampa en el frente. Cordón redondo con ojalillos y puntera metálicos.",
+        files: []
     },
 ]
-module.exports = {dataBase}
+module.exports = {dataBase,categorySet}

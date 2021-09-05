@@ -28,6 +28,10 @@ module.exports = (sequelize) => {
       type: DataTypes.ENUM(["Masculino", "Femenino", "Otro"]),
       allowNull: false,
     },
+    detail: {
+      type: DataTypes.TEXT,
+      allowNull: false,
+    }
   });
   return Clothe;
 };
