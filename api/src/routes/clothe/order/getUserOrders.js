@@ -21,7 +21,9 @@ router.get("/user-orders", async (req, res) => {
       "",
     ];
     let response;
+    //Si el status es valido
     if (validStatus.includes(orderStatus)) {
+      //Si userId es un UUID valido
       if (validate(userId)) {
         response = await User.findAll({
           where: {
@@ -36,6 +38,7 @@ router.get("/user-orders", async (req, res) => {
           },
         });
       } else if (userId === "") {
+        //Si userId esta vacio trae TODAS las ordenes segun el status solicitado
         response = await User.findAll({
           include: {
             model: Order,

@@ -19,17 +19,22 @@ router.post("/order-add/:userId", async (req, res) => {
     } = req;
 
     if (clothe && userId && validate(userId) && typeof clothe === "object") {
-      const currentClothe = await Clothe.findByPk(clotheId);
-      //? Busco dentro del usuario las ordenes que tengan status 'CARRITO'
-      const userOrder = await User.findAll({
-        where: { id: userId },
-        include: {
-          model: Order,
-          where: {
-            status: "CARRITO",
+      const [currentClothe, userOrder] = await Promise.all([
+        await Clothe.findByPk(clotheId),
+        await User.findAll({
+          where: { id: userId },
+          include: {
+            model: Order,
+            where: {
+              status: "CARRITO",
+            },
           },
-        },
-      });
+        }),
+      ]);
+      //Decremento el stock por la cantidad
+      await currentClothe.decrement(["stock"], { by: quantity });
+      //Calculo el precio por las unidades
+      const price = currentClothe.price * quantity;
 
       if (userOrder.length === 0) {
         //? Si no la encuentra devuelve []
@@ -37,7 +42,7 @@ router.post("/order-add/:userId", async (req, res) => {
           await User.findByPk(userId),
           //Creo la orden con valor inicial del producto que me llego por id.
           await Order.create({
-            total: currentClothe.price,
+            total: price,
           }),
         ]);
 
@@ -50,9 +55,9 @@ router.post("/order-add/:userId", async (req, res) => {
         return res.json(responseMessage(SUCCESS, user));
       } else {
         //? Si existe la orden la busco por el id que me trae la relacion
-        await Order.findByPk(userOrder[0].orders[0].id);
+        const currentOrder = await Order.findByPk(userOrder[0].orders[0].id);
+
         await Promise.all([
-          await currentClothe.decrement(["stock"], { by: quantity }),
           await currentOrder.increment(["total"], { by: price }),
           await currentOrder.addClothe(currentClothe, { quantity: quantity }),
         ]);

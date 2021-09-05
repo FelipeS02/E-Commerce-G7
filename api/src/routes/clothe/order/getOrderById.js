@@ -9,7 +9,7 @@ const {
 router.get("/order-detail/:orderId", async (req, res) => {
   try {
     const { orderId } = req.params;
-    if (orderId && typeof orderId === "number") {
+    if (typeof orderId === "number") {
       const response = await Order.findOne({
         where: { id: orderId },
         include: { all: true },
