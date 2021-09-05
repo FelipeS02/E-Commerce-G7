@@ -2,7 +2,10 @@ const { Router } = require("express");
 const { User } = require("../../db");
 const router = Router();
 
-router.get("/set-admin/:userId", async (req, res) => {
+const jwtAuthz = require('express-jwt-authz');
+const checkScopes = permissions => jwtAuthz(permissions);
+
+router.get("/set-admin/:userId", checkScopes(['read:admin']), async (req, res) => {
   const { userId } = req.params;
   try {
     const user = await User.findByPk(userId);

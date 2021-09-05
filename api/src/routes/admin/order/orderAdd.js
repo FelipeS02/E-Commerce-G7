@@ -3,6 +3,9 @@ const router = Router();
 const { validate } = require("uuid");
 const { Clothe, User, Order } = require("../../../db");
 
+const jwtAuthz = require('express-jwt-authz');
+const checkScopes = permissions => jwtAuthz(permissions);
+
 const clotheRelation = async (clothes, order) => {
   let clothesPromises = clothes.map((e) => {
     const newRelation = await Clothe.findByPk(e.id);
@@ -11,7 +14,7 @@ const clotheRelation = async (clothes, order) => {
   await Promise.all(clothesPromises);
 };
 
-router.post("/order-add/:userId", async (req, res) => {
+router.post("/order-add/:userId", checkScopes(['write:admin']), async (req, res) => {
   const { userId } = req.params;
   const { clothes } = req.body.data;
   if (clothes && userId && validate(userId) && Array.isArray(clothes)) {

@@ -2,7 +2,10 @@ const { Router } = require("express");
 const router = Router();
 const { Order } = require("../../../db");
 
-router.get("/order-detail/:orderId", async (req, res) => {
+const jwtAuthz = require('express-jwt-authz');
+const checkScopes = permissions => jwtAuthz(permissions);
+
+router.get("/order-detail/:orderId", checkScopes(['read:admin']), async (req, res) => {
   const { orderId } = req.params;
   try {
     if (orderId && typeof orderId === "number") {

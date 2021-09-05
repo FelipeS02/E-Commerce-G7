@@ -3,7 +3,10 @@ const router = Router();
 const { validate } = require("uuid");
 const { User, Order } = require("../../../db");
 
-router.get("/user-orders", async (req, res) => {
+const jwtAuthz = require('express-jwt-authz');
+const checkScopes = permissions => jwtAuthz(permissions);
+
+router.get("/user-orders", checkScopes(['read:admin']), async (req, res) => {
   const { userId, orderStatus } = req.query;
   let response;
   const validStatus = [

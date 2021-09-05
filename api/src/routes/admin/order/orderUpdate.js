@@ -3,7 +3,10 @@ const router = Router();
 const { validate } = require("uuid");
 const { User, Payment, Direction, Order } = require("../../../db");
 
-router.get("/order-update/:orderId", async (req, res) => {
+const jwtAuthz = require('express-jwt-authz');
+const checkScopes = permissions => jwtAuthz(permissions);
+
+router.get("/order-update/:orderId", checkScopes(['read:admin']), async (req, res) => {
   const { orderId } = req.params;
   const { state } = req.query;
   const validStates = [
@@ -35,7 +38,7 @@ router.get("/order-update/:orderId", async (req, res) => {
   }
 });
 
-router.post("/order-update/:userId", async (req, res) => {
+router.post("/order-update/:userId", checkScopes(['write:admin']), async (req, res) => {
   const { userId } = req.params;
   const { payment, direction } = req.body.data;
   if (

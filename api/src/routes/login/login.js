@@ -4,15 +4,14 @@ const { User } = require("../../db");
 
 
 router.post('/login', async (req, res) => {
-	const { name, email, token } = req.body;
+	const { name, email } = req.body;
 
 	try{
 		userExists = User.findByPk(email)
 		if(!userExists){
 			const newUser = User.create({
 				name: name,
-				email: email,
-				isAdmin: isAdmin
+				email: email
 			})
 			return res.status(200).json({message: "Usuario creado", userData: })
 		}
