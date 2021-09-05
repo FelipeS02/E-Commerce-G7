@@ -8,9 +8,6 @@ const {
 
 const { dataBase, categorySet } = require("../../database/DataBase");
 
-const jwtAuthz = require("express-jwt-authz");
-const checkScopes = (permissions) => jwtAuthz(permissions);
-
 const validateReq = (data, files) => {
   const { name, size, price, color, stock, genre, categories } = data;
   if (
@@ -53,8 +50,14 @@ const setMedia = async (mediaArray, clothe) => {
   await Promise.all(clotheMedia);
 };
 
+// Auth0
+const jwtAuthz = require("express-jwt-authz");
+const checkScopes = (permissions) => jwtAuthz(permissions);
+
 router.get(
   "/charge-database",
+  // Auth0
+  checkScopes(['write:admin']),
   async (_req, res) => {
     try {
       const initialCategory = categorySet.map(async (c) => {

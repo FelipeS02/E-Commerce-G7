@@ -7,7 +7,11 @@ const {
   statusCodes: { SUCCESS, ERROR },
 } = require("../../controller/responseMessages");
 
-router.get("/order-update/:orderId", async (req, res) => {
+// Auth0
+const jwtAuthz = require("express-jwt-authz");
+const checkScopes = (permissions) => jwtAuthz(permissions);
+
+router.get("/order-update/:orderId", checkScopes(['read:admin']), async (req, res) => {
   try {
     const {
       params: { orderId },
