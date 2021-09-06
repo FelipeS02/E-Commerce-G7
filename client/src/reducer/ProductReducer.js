@@ -24,7 +24,7 @@ export function productReducer(
       return {
         ...state,
         loading: false,
-        products: action.payload,
+        products: action.payload.data,
       };
     case PRODUCT_FAIL:
       return {
