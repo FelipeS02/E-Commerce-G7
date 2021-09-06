@@ -13,7 +13,7 @@ import AddToCar from "../AddToCar/AddToCar";
 
 import Talle from "../Talle/Talle";
 const CardP = (props) => {
-  const { name, price, picture, id } = props;
+  const { name, price, picture, id, size } = props;
 
   return (
     <Card style={{ width: "20rem" }} className="my-4">
@@ -28,7 +28,7 @@ const CardP = (props) => {
         </Card.Title>
         <Card.Text>${price}</Card.Text>
 
-        <Talle />
+        <Talle size={size} />
       </Card.Body>
       <Card.Footer>
         <AddToCar />

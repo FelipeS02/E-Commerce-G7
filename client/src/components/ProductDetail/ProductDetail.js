@@ -19,7 +19,7 @@ const ProductDetail = () => {
   if (loading) {
     return <div>Loading..</div>;
   }
-  const { name, price, detail, media } = productsState.detail;
+  const { name, price, detail, media, sizes } = productsState.detail;
 
   return (
     <Container className="my-5">
@@ -39,13 +39,13 @@ const ProductDetail = () => {
           </Carousel>
         </Col>
         <Col>
-          <h1 className="my-5 text-center">Nombre del producto</h1>
+          <h1 className="my-5 text-center">{name}</h1>
           <h2 className="my-5 text-center">${price}</h2>
           <Row className="my-5">
             <h1>Descripción</h1>
             <p>{detail}</p>
           </Row>
-          <Talle className="my-3" />
+          <Talle className="my-3" size={sizes} />
           <AddToCar className="my-3" />
         </Col>
       </Row>
