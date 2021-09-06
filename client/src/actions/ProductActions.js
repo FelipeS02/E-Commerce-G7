@@ -25,12 +25,21 @@ export const getProducts =
             `http://localhost:3001/clothe/all-clothes?limit=10&offset=${offset}`
           )
         : Axios.get(`http://localhost:3001/clothe?name=${name}`));
+
       response = data;
 
-      dispatch({
-        type: PRODUCT_SUCCESS,
-        payload: response,
-      });
+      if (response.statusCode === 400) {
+        console.log("response", response);
+        dispatch({
+          type: PRODUCT_FAIL,
+          payload: response.data,
+        });
+      } else {
+        dispatch({
+          type: PRODUCT_SUCCESS,
+          payload: response,
+        });
+      }
     } catch (error) {
       dispatch({
         type: PRODUCT_FAIL,
