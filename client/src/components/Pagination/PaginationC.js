@@ -1,30 +1,38 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Pagination } from "react-bootstrap";
+import { useDispatch } from "react-redux";
+import { getProducts } from "../../actions/ProductActions";
 
 const PaginationC = ({ total }) => {
-  let items = [];
-
+  const dispatch = useDispatch();
   const [current, setCurrent] = useState(1);
 
-  const validateCurrent = (value) => {
-    let flag;
-    value === current ? flag = true : flag = false
-    return flag
-  };
+  let recipesPerPage = 10;
+  let totalPaginate = Math.ceil(total / recipesPerPage);
 
   const handleClick = (e) => {
     e.preventDefault();
-    setCurrent(e.target.value);
-
+    const newCurrent = parseInt(e.target.id)
+    setCurrent(newCurrent)
+    dispatch(getProducts("", "", e.target.id));
   };
 
-  for (let i = 1; i <= total; i++) {
+  let items = [];
+  let currentOffset = 0;
+  for (let i = 1; i <= totalPaginate; i++) {
     items.push(
-      <Pagination.Item key={i} value={i} active={validateCurrent} onClick={handleClick}>
+      <Pagination.Item
+        key={i}
+        id={currentOffset}
+        className={i === current ? "active" : ""}
+        onClick={handleClick}
+      >
         {i}
       </Pagination.Item>
     );
+    currentOffset += 10;
   }
+
   return (
     <Pagination className="justify-content-center my-3">{items}</Pagination>
   );

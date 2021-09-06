@@ -10,7 +10,7 @@ import {
 } from "../constants/productConstants";
 
 export const getProducts =
-  (name = "", category = "") =>
+  (name = "", category = "", offset = 0) =>
   async (dispatch) => {
     dispatch({
       type: PRODUCT_REQUEST,
@@ -24,8 +24,8 @@ export const getProducts =
         response = data;
       } else {
         const { data } = await (name === ""
-          ? Axios.get(`http://localhost:3000/clothesByName/${name}`)
-          : Axios.get("http://localhost:3001/clothe/all-clothes"));
+          ? Axios.get(`http://localhost:3001/clothe/all-clothes?limit=10&offset=${offset}`)
+          : Axios.get(`http://localhost:3001/clothesByName/${name}`));
         response = data;
       }
 
@@ -40,20 +40,19 @@ export const getProducts =
       });
     }
   };
-  export function createClothe(form){
-    console.log(form);
-    return async function(dispatch){
-      try {
-        await Axios.post('http://localhost:3001/admin/create-clothe', form);
-        return dispatch({
-            type: CREATE_CLOTHE,
-            payload: form
-        });
-      } catch (error) {
-        console.log(error)
-      }
-
+export function createClothe(form) {
+  console.log(form);
+  return async function (dispatch) {
+    try {
+      await Axios.post("http://localhost:3001/admin/create-clothe", form);
+      return dispatch({
+        type: CREATE_CLOTHE,
+        payload: form,
+      });
+    } catch (error) {
+      console.log(error);
     }
+  };
 }
 export const getCategories = () => async (dispatch) => {
   dispatch({
