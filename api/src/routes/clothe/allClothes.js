@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { Category, Clothe, Media, Size } = require("../../db");
+const { Category, Clothe, Media, Size, Type } = require("../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },

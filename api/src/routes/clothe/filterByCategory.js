@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { Op } = require("sequelize");
-const { Clothe, Category } = require("../../db");
+const { Clothe, Category, Type, Size } = require("../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },

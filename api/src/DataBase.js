@@ -80,7 +80,8 @@ const dataBase = [
     price: "2990",
     color: "rosado",
     genre: "Masculino",
-    categories: ["remeras"],
+    type: "remeras",
+    categories: ["clasico"],
     detail:
       "Remera manga corta, escote redondo con ribb a tono.\nEstampa en el pecho y en la espalda.\nCalce regular.",
     files: [

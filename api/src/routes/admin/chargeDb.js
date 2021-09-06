@@ -11,7 +11,6 @@ const { dataBase, categorySet } = require("../../DataBase.js");
 const validateReq = (data, files) => {
   const {
     name,
-    size,
     price,
     color,
     stock,
@@ -24,7 +23,6 @@ const validateReq = (data, files) => {
   if (
     (typeof name === "string" &&
       name !== "" &&
-      typeof size === "string" &&
       typeof price === "string" &&
       typeof color === "string" &&
       typeof stock === "string" &&
@@ -97,7 +95,8 @@ router.get(
         await Promise.all(initialCategory);
       });
       const chargeDatabase = dataBase.map(async (data) => {
-        const { categories, files } = data;
+        const { categories, files, type, sizes } = data;
+        console.log(validateReq(data, files));
         if (validateReq(data, files)) {
           const newClothe = await Clothe.create(data);
           await Promise.all([
