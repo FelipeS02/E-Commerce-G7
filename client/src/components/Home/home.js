@@ -48,6 +48,7 @@ const Home = (props) => {
               name={product.name}
               price={product.price}
               picture={product.media[0].name}
+              size={product.sizes}
             />
           ))}
         </Col>
