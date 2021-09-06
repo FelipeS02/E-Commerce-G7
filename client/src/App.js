@@ -8,6 +8,8 @@ import { useDispatch } from "react-redux";
 import { getCategories } from "./actions/ProductActions";
 import SideBarFilter from "./components/SideBarFilter/SideBarFilter";
 import { Button } from "react-bootstrap";
+import AdminPanel from './components/AdminPanel/AdminPanel'
+
 function App() {
   const dispatch = useDispatch();
 
@@ -21,7 +23,6 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/search/name/:name?" component={SearchResults} />
         <Route exact path="/admin/createProduct" component={AdminPanel} />
-
         <Route
           exact
           path="/search/category/:category"

@@ -56,7 +56,7 @@ export function categoryReducer(
       return {
         ...state,
         loading: false,
-        categories: action.payload,
+        categories: action.payload.data,
       };
     case CATEGORY_FAIL:
       return {

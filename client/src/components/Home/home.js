@@ -1,11 +1,19 @@
 import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Carousel, Container, Col, Row } from "react-bootstrap";
+import { getCategories, getProducts } from "../../actions/ProductActions";
 import Footer from "../Footer/Footer";
 import PaginationC from "../Pagination/PaginationC";
 import CardP from "../ProductCard/CardP";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
 
 const Home = (props) => {
+  const dispatch = useDispatch();
+  const diets = useSelector((state) => state.allDiets);
+  useEffect(() => {
+    dispatch(getProducts());
+  }, [dispatch]);
+
   const imgUrl = [
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dw5ea30e6a/01sept/full1lotto.jpg?sw=1440&sfrm=png",
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dwbd6473ec/01sept/full2futbol.jpg?sw=1440&sfrm=png",
@@ -40,7 +48,6 @@ const Home = (props) => {
           <CardP />
         </Col>
       </Row>
-
       <PaginationC />
       <Footer />
     </div>

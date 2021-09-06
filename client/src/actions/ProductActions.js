@@ -2,6 +2,7 @@ import Axios from "axios";
 import {
   CATEGORY_FAIL,
   CATEGORY_REQUEST,
+  CREATE_CLOTHE,
   CATEGORY_SUCCESS,
   PRODUCT_FAIL,
   PRODUCT_REQUEST,
@@ -39,11 +40,11 @@ export const getProducts =
       });
     }
   };
-  export  function createClothe(form){
+  export function createClothe(form){
     console.log(form);
     return async function(dispatch){
       try {
-        await axios.post('http://localhost:3001/admin/create-clothe', form);
+        await Axios.post('http://localhost:3001/admin/create-clothe', form);
         return dispatch({
             type: CREATE_CLOTHE,
             payload: form
