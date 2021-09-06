@@ -591,8 +591,23 @@ const dataBase = [
     files: [
       {
         mimetype: "image/jpeg",
-        originalname: "BUZO-CANGURO-COAST-lila.jpg",
-        path: BASE_URL+"BUZO-CANGURO-COAST-lila.jpg",
+        originalname: "BUZO-CANGURO-COAST-lila1.jpg",
+        path: BASE_URL+"BUZO-CANGURO-COAST-lila1.jpg",
+      },
+      {
+        mimetype: "image/jpeg",
+        originalname: "BUZO-CANGURO-COAST-lila2.jpg",
+        path: BASE_URL+"BUZO-CANGURO-COAST-lila2.jpg",
+      },
+      {
+        mimetype: "image/jpeg",
+        originalname: "BUZO-CANGURO-COAST-lila3.jpg",
+        path: BASE_URL+"BUZO-CANGURO-COAST-lila3.jpg",
+      },
+      {
+        mimetype: "image/jpeg",
+        originalname: "BUZO-CANGURO-COAST-lila4.jpg",
+        path: BASE_URL+"BUZO-CANGURO-COAST-lila4.jpg",
       }
     ],
   },
