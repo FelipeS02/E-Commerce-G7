@@ -12,8 +12,8 @@ router.get("/all-clothes", async (req, res) => {
     const countClothes = await Clothe.count({ col: "id" });
     const allClothes = await Clothe.findAll({
       order: [["id", "ASC"]],
-      limit: limit,
       offset: offset,
+      limit: limit,
       include: [{ model: Category }, { model: Media }],
     });
     if (allClothes.length === 0) {

@@ -16,9 +16,11 @@ const orderConfirm = require("./clothe/order/orderConfirm")
 const getOrderById = require("./clothe/order/getOrderById.js");
 const chargeDatabase = require("./admin/chargeDb.js");
 const deleteFromOrder = require("./clothe/order/deleteFromOrder.js");
-
+const allCategories = require("./clothe/allCategories.js");
 // Usamos Routes
+
 // Routes Users
+router.use("/clothe", allCategories);
 router.use("/clothe", allClothes);
 router.use("/clothe", clotheDetail);
 router.use("/clothe", clothesByName);
@@ -27,7 +29,8 @@ router.use("/clothe", orderAdd);
 router.use("/clothe", getOrderById);
 router.use("/clothe", getUserOrders);
 router.use("/clothe", deleteFromOrder);
-router.use("/clothe", orderConfirm)
+router.use("/clothe", orderConfirm);
+
 // Admin
 router.use("/admin", createClothe);
 router.use("/admin", userControls);
