@@ -96,69 +96,138 @@ const dataBase = [
         mimetype: "image/jpeg",
         originalname: "REMERA-OK-STAR-ONEILL-rosado3.jpg",
         path: BASE_URL+"REMERA-OK-STAR-ONEILL-rosado3.jpg",
-      },
+      }
   ],
   },
-  // {
-  //   name: "REMERA LEFT COAST O'NEILL",
-  //   size: "M",
-  //   price: 2138,
-  //   color: "negro",
-  //   stock: 50,
-  //   genre: "Masculino",
-  //   categories: ["remeras"],
-  //   detail:
-  //     "Remera manga corta, escote redondo con ribb a tono. Estampa en el frente.\nMaterial\n100% algodón.\nCalce regular",
-  //   files: [],
-  // },
-  // {
-  //   name: "PANTALÓN CORD O'NEILL",
-  //   size: "L",
-  //   price: 7300,
-  //   color: "negro",
-  //   stock: 15,
-  //   genre: "Masculino",
-  //   categories: ["pantalones"],
-  //   detail:
-  //     "Pantalón tipo jogger con 2 bolsillos laterales.\nCintura elastizada, cordón para ajustar.\nPuños elastizados.\nCalce regular",
-  //   files: [],
-  // },
-  // {
-  //   name: "MOCHILA EASY RIDER O'NEILL",
-  //   size: "Unico",
-  //   price: 1500,
-  //   color: "gris",
-  //   stock: 25,
-  //   genre: "Masculino",
-  //   categories: ["mochilas"],
-  //   detail:
-  //     "- Compartimiento interno para laptop.\n- Tiras de hombros acolchonadas.\n- Bolsillo lateral de mesh.\n- Logo reflectivo.\n- Bolsillo externo frontal.\n-Dimensiones: 48 x 31 x 21.\n- Capacidad 30 L.",
-  //   files: [],
-  // },
-  // {
-  //   name: "JOGGER ELENA PRINTED O'NEIL",
-  //   size: "S",
-  //   price: 4200,
-  //   color: "azul marino",
-  //   stock: 36,
-  //   genre: "Femenino",
-  //   categories: ["pantalones"],
-  //   detail:
-  //     "Jogger con bolsillos, cintura ajustable y puños elastizados.\nEstampa en pierna.\nMaterial\n60 % Algodón - 40 % Poliester.",
-  //   files: [],
-  // },
-  // {
-  //   name: "PANTALÓN LAVIN O'NEILL",
-  //   size: "36",
-  //   price: 1500,
-  //   color: "bordo",
-  //   stock: 42,
-  //   genre: "Masculino",
-  //   categories: ["pantalones"],
-  //   detail:
-  //     "Pantalón de jean 5 bolsillos con lavado stonewash.\nCalce Regular\nmateriales\n97% Algodón - 3% Elastano.",
-  //   files: [],
-  // },
+  {
+    name: "REMERA LEFT COAST O'NEILL",
+    size: "M",
+    price: 2138,
+    color: "negro",
+    stock: 50,
+    genre: "Masculino",
+    categories: ["remeras"],
+    detail:
+      "Remera manga corta, escote redondo con ribb a tono. Estampa en el frente.\nMaterial\n100% algodón.\nCalce regular",
+    files: [
+      {
+        mimetype: "image/jpeg",
+        originalname: "REMERA-LEFT-COAST-ONEILL-negro1.jpg",
+        path: BASE_URL+"REMERA-LEFT-COAST-ONEILL-negro1.jpg",
+      },
+      {
+        mimetype: "image/jpeg",
+        originalname: "REMERA-LEFT-COAST-ONEILL-negro2.jpg",
+        path: BASE_URL+"REMERA-LEFT-COAST-ONEILL-negro2.jpg",
+      },
+      {
+        mimetype: "image/jpeg",
+        originalname: "REMERA-LEFT-COAST-ONEILL-negro3.jpg",
+        path: BASE_URL+"REMERA-LEFT-COAST-ONEILL-negro3.jpg",
+      },
+      {
+        mimetype: "image/jpeg",
+        originalname: "REMERA-LEFT-COAST-ONEILL-negro4.jpg",
+        path: BASE_URL+"REMERA-LEFT-COAST-ONEILL-negro4.jpg",
+      }
+    ],
+  },
+  {
+    name: "PANTALÓN CORD O'NEILL",
+    size: "L",
+    price: 7300,
+    color: "negro",
+    stock: 15,
+    genre: "Masculino",
+    categories: ["pantalones"],
+    detail:
+      "Pantalón tipo jogger con 2 bolsillos laterales.\nCintura elastizada, cordón para ajustar.\nPuños elastizados.\nCalce regular",
+    files: [
+      {
+        mimetype: "image/jpeg",
+        originalname: "PANTALON-CORD-ONEILL-negro1.jpg",
+        path: BASE_URL+"PANTALON-CORD-ONEILL-negro1.jpg",
+      },
+      {
+        mimetype: "image/jpeg",
+        originalname: "PANTALON-CORD-ONEILL-negro2.jpg",
+        path: BASE_URL+"PANTALON-CORD-ONEILL-negro2.jpg",
+      },
+      {
+        mimetype: "image/jpeg",
+        originalname: "PANTALON-CORD-ONEILL-negro3.jpg",
+        path: BASE_URL+"PANTALON-CORD-ONEILL-negro3.jpg",
+      },
+      {
+        mimetype: "image/jpeg",
+        originalname: "PANTALON-CORD-ONEILL-negro4.jpg",
+        path: BASE_URL+"PANTALON-CORD-ONEILL-negro4.jpg",
+      },
+    ],
+  },
+  {
+    name: "MOCHILA EASY RIDER O'NEILL",
+    size: "Unico",
+    price: 1500,
+    color: "gris",
+    stock: 25,
+    genre: "Masculino",
+    categories: ["mochilas"],
+    detail:
+      "- Compartimiento interno para laptop.\n- Tiras de hombros acolchonadas.\n- Bolsillo lateral de mesh.\n- Logo reflectivo.\n- Bolsillo externo frontal.\n-Dimensiones: 48 x 31 x 21.\n- Capacidad 30 L.",
+    files: [
+      {
+        mimetype: "image/jpeg",
+        originalname: "MOCHILA-EASY-RIDER-ONEILL-gris1.jpg",
+        path: BASE_URL+"MOCHILA-EASY-RIDER-ONEILL-gris1.jpg",
+      },
+      {
+        mimetype: "image/jpeg",
+        originalname: "MOCHILA-EASY-RIDER-ONEILL-gris2.jpg",
+        path: BASE_URL+"MOCHILA-EASY-RIDER-ONEILL-gris2.jpg",
+      }
+    ],
+  },
+  {
+    name: "JOGGER ELENA PRINTED O'NEIL",
+    size: "S",
+    price: 4200,
+    color: "negro",
+    stock: 36,
+    genre: "Femenino",
+    categories: ["pantalones"],
+    detail:
+      "Jogger con bolsillos, cintura ajustable y puños elastizados.\nEstampa en pierna.\nMaterial\n60 % Algodón - 40 % Poliester.",
+    files: [
+      {
+        mimetype: "image/jpeg",
+        originalname: "JOGGER-ELENA-PRINTED-ONEIL-negro1.jpg",
+        path: BASE_URL+"JOGGER-ELENA-PRINTED-ONEIL-negro1.jpg",
+      },
+      {
+        mimetype: "image/jpeg",
+        originalname: "JOGGER-ELENA-PRINTED-ONEIL-negro2.jpg",
+        path: BASE_URL+"JOGGER-ELENA-PRINTED-ONEIL-negro2.jpg",
+      },
+      {
+        mimetype: "image/jpeg",
+        originalname: "JOGGER-ELENA-PRINTED-ONEIL-negro3.jpg",
+        path: BASE_URL+"JOGGER-ELENA-PRINTED-ONEIL-negro3.jpg",
+      },
+    ],
+  },
+  {
+    name: "PANTALÓN LAVIN O'NEILL",
+    size: "36",
+    price: 1500,
+    color: "bordo",
+    stock: 42,
+    genre: "Masculino",
+    categories: ["pantalones"],
+    detail:
+      "Pantalón de jean 5 bolsillos con lavado stonewash.\nCalce Regular\nmateriales\n97% Algodón - 3% Elastano.",
+    files: [],
+  },
   // {
   //   name: "GORRO BRIX BEANIE O'NEILL",
   //   size: "Unico",
