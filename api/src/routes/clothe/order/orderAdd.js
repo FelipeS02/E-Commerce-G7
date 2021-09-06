@@ -6,7 +6,6 @@ const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
 } = require("../../../controller/responseMessages");
-const { where } = require("sequelize/types");
 
 router.post("/order-add/:userId", async (req, res) => {
   try {

@@ -1,5 +1,5 @@
 const { Router } = require("express");
-const { Category, Clothe, Media } = require("../../db");
+const { Category, Clothe, Media, Type, Size } = require("../../db");
 const router = Router();
 const {
   responseMessage,
@@ -9,7 +9,18 @@ const {
 const { dataBase, categorySet } = require("../../DataBase.js");
 
 const validateReq = (data, files) => {
-  const { name, size, price, color, stock, genre, categories } = data;
+  const {
+    name,
+    size,
+    price,
+    color,
+    stock,
+    genre,
+    categories,
+    sizes,
+    type,
+    detail,
+  } = data;
   if (
     (typeof name === "string" &&
       name !== "" &&
@@ -18,10 +29,12 @@ const validateReq = (data, files) => {
       typeof color === "string" &&
       typeof stock === "string" &&
       typeof genre === "string" &&
-      typeof detail === "string" &&
       Array.isArray(categories) &&
-      categories.length > 0,
-    Array.isArray(files))
+      typeof detail === "string" &&
+      categories.length > 0 &&
+      Array.isArray(files) &&
+      typeof sizes === "object",
+    typeof type === "string")
   ) {
     return true;
   }
@@ -38,12 +51,29 @@ const setCategories = async (categoriesArray, clothe) => {
   await Promise.all(clotheCategory);
 };
 
+const setType = async (type, clothe) => {
+  const [currentType, created] = await Type.findOrCreate({
+    where: { name: type },
+  });
+  await clothe.addType(currentType.id);
+};
+
+const setSizes = async (sizeObject, clothe) => {
+  const claves = Object.keys(sizeObject);
+  const clotheSizes = claves.map(async (e) => {
+    if (sizeObject[e] > 0) {
+      const currentSize = await Size.create({ size: e, stock: sizeObject[e] });
+      await clothe.addSize(currentSize.id);
+    }
+  });
+  await Promise.all(clotheSizes);
+};
+
 const setMedia = async (mediaArray, clothe) => {
   const clotheMedia = mediaArray.map(async (m) => {
     const newMedia = await Media.create({
       type: m.mimetype,
       name: m.originalname,
-      data: m.path,
     });
     await clothe.addMedia(newMedia.id);
   });
@@ -71,6 +101,8 @@ router.get(
         if (validateReq(data, files)) {
           const newClothe = await Clothe.create(data);
           await Promise.all([
+            await setType(type, newClothe),
+            await setSizes(sizes, newClothe),
             await setCategories(categories, newClothe),
             await setMedia(files, newClothe),
           ]);

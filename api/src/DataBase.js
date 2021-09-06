@@ -1,6 +1,5 @@
 const path = require("path");
-const BASE_URL = path.join(__dirname, "public/uploads/")
-
+const BASE_URL = path.join(__dirname, "public/uploads/");
 
 const categorySet = [
   "remeras",
@@ -17,66 +16,69 @@ const categorySet = [
 const dataBase = [
   {
     name: "REMERA RETRO O'NEILL Y",
-    size: "XS",
-    price: 2138,
+    sizes: {
+      XS: 28,
+      XL: 11,
+      S: 0,
+    },
+    price: "2138",
     color: "amarillo",
-    stock: 39,
     genre: "Femenino",
-    categories: ["camperas", "clasico"],
+    type: "camperas",
+    categories: ["clasico"],
     detail:
       "- Remera manga corta, escote redondo con ribb a tono, Estampa 1 color en frente.\n- Calce: Clasica Oversize\nMaterial\nAlgodon / Viscosa",
     files: [
       {
         mimetype: "image/jpeg",
         originalname: "REMERA-RETRO-ONEILL-Y-amarillo1.jpg",
-        path: BASE_URL+"REMERA-RETRO-ONEILL-Y-amarillo1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "REMERA-RETRO-ONEILL-Y-amarillo2.jpg",
-        path: BASE_URL+"REMERA-RETRO-ONEILL-Y-amarillo2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "REMERA-RETRO-ONEILL-Y-amarillo3.jpg",
-        path: BASE_URL+"REMERA-RETRO-ONEILL-Y-amarillo3.jpg",
-      }
+      },
     ],
   },
   {
     name: "REMERA RETRO O'NEILL",
-    size: "M",
-    price: 2138,
+    sizes: {
+      M: 1,
+      L: 22,
+    },
+    price: "2138",
     color: "blanco",
-    stock: 39,
     genre: "Femenino",
-    categories: ["remeras", "clasico"],
+    type: "remeras",
+    categories: ["clasico"],
     detail:
       "- Remera manga corta, escote redondo con ribb a tono, Estampa 1 color en frente.\n- Calce: Clasica Oversize\nMaterial\nAlgodon / Viscosa",
     files: [
       {
         mimetype: "image/jpeg",
         originalname: "REMERA-RETRO-ONEILL-blanco1.jpg",
-        path: BASE_URL+"REMERA-RETRO-ONEILL-blanco1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "REMERA-RETRO-ONEILL-blanco2.jpg",
-        path: BASE_URL+"REMERA-RETRO-ONEILL-blanco2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "REMERA-RETRO-ONEILL-blanco3.jpg",
-        path: BASE_URL+"REMERA-RETRO-ONEILL-blanco3.jpg",
-      }
+      },
     ],
   },
   {
     name: "REMERA OK STAR O'NEILL",
-    size: "L",
-    price: 2990,
+    sizes: {
+      M: 20,
+      XS: 10,
+    },
+    price: "2990",
     color: "rosado",
-    stock: 35,
     genre: "Masculino",
     categories: ["remeras"],
     detail:
@@ -85,19 +87,16 @@ const dataBase = [
       {
         mimetype: "image/jpeg",
         originalname: "REMERA-OK-STAR-ONEILL-rosado1.jpg",
-        path: BASE_URL+"REMERA-OK-STAR-ONEILL-rosado1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "REMERA-OK-STAR-ONEILL-rosado2.jpg",
-        path: BASE_URL+"REMERA-OK-STAR-ONEILL-rosado2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "REMERA-OK-STAR-ONEILL-rosado3.jpg",
-        path: BASE_URL+"REMERA-OK-STAR-ONEILL-rosado3.jpg",
       },
-  ],
+    ],
   },
   // {
   //   name: "REMERA LEFT COAST O'NEILL",

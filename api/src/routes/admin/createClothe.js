@@ -7,8 +7,18 @@ const {
 } = require("../../controller/responseMessages");
 
 const validateReq = (data, files) => {
-  const { name, size, price, color, stock, genre, categories, sizes, type, detail } =
-    data;
+  const {
+    name,
+    size,
+    price,
+    color,
+    stock,
+    genre,
+    categories,
+    sizes,
+    type,
+    detail,
+  } = data;
   if (
     (typeof name === "string" &&
       name !== "" &&
