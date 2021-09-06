@@ -39,7 +39,21 @@ export const getProducts =
       });
     }
   };
+  export  function createClothe(form){
+    console.log(form);
+    return async function(dispatch){
+      try {
+        await axios.post('http://localhost:3001/admin/create-clothe', form);
+        return dispatch({
+            type: CREATE_CLOTHE,
+            payload: form
+        });
+      } catch (error) {
+        console.log(error)
+      }
 
+    }
+}
 export const getCategories = () => async (dispatch) => {
   dispatch({
     type: CATEGORY_REQUEST,

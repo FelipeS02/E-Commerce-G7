@@ -20,6 +20,8 @@ function App() {
         <Route path="/" component={NavBar} />
         <Route exact path="/" component={Home} />
         <Route exact path="/search/name/:name?" component={SearchResults} />
+        <Route exact path="/admin/createProduct" component={AdminPanel} />
+
         <Route
           exact
           path="/search/category/:category"

@@ -5,6 +5,7 @@ import {
   PRODUCT_FAIL,
   PRODUCT_REQUEST,
   PRODUCT_SUCCESS,
+  CREATE_CLOTHE
 } from "../constants/productConstants";
 
 const initialState = { loading: true, products: [] };
@@ -31,7 +32,11 @@ export function productReducer(
         loading: false,
         error: action.payload,
       };
-
+    case CREATE_CLOTHE:
+      return {
+        ...state,
+        products: action.payload,
+      };
     default:
       return state;
   }
