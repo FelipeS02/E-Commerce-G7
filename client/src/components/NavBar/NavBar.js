@@ -10,6 +10,7 @@ import {
   Container,
   NavDropdown,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 
 import { useAuth0 } from "@auth0/auth0-react";
@@ -20,7 +21,9 @@ const NavBar = () => {
   return (
     <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
       <Container>
-        <Navbar.Brand href="#">Logo</Navbar.Brand>
+        <Navbar.Brand as={Link} to="/">
+          Logo
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
@@ -30,10 +33,15 @@ const NavBar = () => {
           ></Nav>
           <Container>
             <Nav className="justify-content-center align-content-center">
-              <Nav.Link href="#home">Categorias</Nav.Link>
-              <Nav.Link href="#features">Hombre</Nav.Link>
-              <Nav.Link href="#pricing">Mujer</Nav.Link>
-              <Nav.Link href="#pricing">Ofertas</Nav.Link>
+              <Nav.Link as={Link} to="/Hombre">
+                Hombre
+              </Nav.Link>
+              <Nav.Link as={Link} to="/Mujer">
+                Mujer
+              </Nav.Link>
+              <Nav.Link as={Link} to="/Ofertas">
+                Ofertas
+              </Nav.Link>
             </Nav>
           </Container>
           <Container>

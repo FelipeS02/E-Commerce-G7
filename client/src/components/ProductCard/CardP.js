@@ -12,16 +12,15 @@ import AddToCar from "../AddToCar/AddToCar";
 
 import Talle from "../Talle/Talle";
 const CardP = (props) => {
+  const { name, price, picture } = props;
+  console.log(picture);
   return (
     <Card style={{ width: "20rem" }} className="my-4">
-      <Card.Img
-        variant="top"
-        src="https://chilangoskate.com/shop/17858-large_default/sudadera-vans-x-se-bikes.jpg"
-      />
+      <Card.Img variant="top" src={`${picture}`} />
 
       <Card.Body className="justify-content-center card text-center">
-        <Card.Title>Card Title</Card.Title>
-        <Card.Text>$000000</Card.Text>
+        <Card.Title>{name}</Card.Title>
+        <Card.Text>${price}</Card.Text>
 
         <Talle />
       </Card.Body>

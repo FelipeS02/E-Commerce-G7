@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import { getProducts } from "../../actions/ProductActions";
 import { Row, Col } from "react-bootstrap";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
+import PaginationC from "../Pagination/PaginationC";
 
 const SearchResults = () => {
   const { name = "all", category = "all" } = useParams();
@@ -18,17 +19,9 @@ const SearchResults = () => {
   } = productCategories;
 
   useEffect(() => {
-    dispatch(
-      getProducts({
-        name: name !== "all" ? name : "",
-        category: category !== "all" ? category : "",
-      })
-    );
+    let param = name !== "all" ? name : "";
+    dispatch(getProducts(param));
   }, [dispatch, name, category]);
-  const getFilterUrl = (filter) => {
-    const filterCategory = filter.category || category;
-    return `/search/category/${filterCategory}`;
-  };
 
   return (
     <div>
@@ -38,7 +31,8 @@ const SearchResults = () => {
         <h1>{error}</h1>
       ) : (
         <>
-          <Row>
+          <PaginationC total={products.total} />
+          <Row className="mx-3">
             <Col lg="2">
               <h4>Categorías:</h4>
               {loadingCategories ? (
@@ -56,6 +50,7 @@ const SearchResults = () => {
               <Row>mapear los resultados aqui</Row>
             </Col>
           </Row>
+          <PaginationC total={products.total} />
         </>
       )}
     </div>

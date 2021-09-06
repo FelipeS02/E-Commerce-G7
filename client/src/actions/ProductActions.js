@@ -17,17 +17,13 @@ export const getProducts =
     });
     try {
       let response;
-      if (category !== "") {
-        const { data } = await Axios.get(
-          `http://localhost:3000/filterByCategory`
-        );
-        response = data;
-      } else {
-        const { data } = await (name === ""
-          ? Axios.get(`http://localhost:3001/clothe/all-clothes?limit=10&offset=${offset}`)
-          : Axios.get(`http://localhost:3001/clothesByName/${name}`));
-        response = data;
-      }
+      console.log("name", name);
+      const { data } = await (name === ""
+        ? Axios.get(
+            `http://localhost:3001/clothe/all-clothes?limit=10&offset=${offset}`
+          )
+        : Axios.get(`http://localhost:3001/clothe?name=${name}`));
+      response = data;
 
       dispatch({
         type: PRODUCT_SUCCESS,
