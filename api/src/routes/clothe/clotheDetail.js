@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { Category, Clothe, Media } = require("../../db");
+const { Category, Clothe, Media, Type, Size } = require("../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
@@ -10,7 +10,24 @@ router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const finalClothe = await Clothe.findByPk(id, {
-      include: [{ model: Category }, { model: Media }],
+      include: [
+        {
+          model: Category,
+          attributes: ["id", "name"],
+        },
+        {
+          model: Media,
+          attributes: ["type", "name"],
+        },
+        {
+          model: Size,
+          attributes: ["id", "size", "stock"],
+        },
+        {
+          model: Type,
+          attributes: ["id", "name"]
+        },
+      ],
     });
 
     if (finalClothe) {

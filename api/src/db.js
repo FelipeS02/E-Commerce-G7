@@ -51,9 +51,9 @@ const {
   Direction,
   Payment,
   Order_clothes,
+  Size,
+  Type,
 } = sequelize.models;
-
-console.log(sequelize.models);
 // Aca vendrian las relaciones
 User.belongsToMany(Direction, { through: "user_directions" });
 
@@ -61,6 +61,14 @@ User.belongsToMany(Direction, { through: "user_directions" });
 Category.belongsToMany(Clothe, { through: "clothe_category" });
 Clothe.belongsToMany(Category, { through: "clothe_category" });
 Clothe.belongsToMany(Media, { through: "clothe_media" });
+
+// Ropa y talles
+Size.belongsTo(Clothe, { through: "clothe_size" });
+Clothe.belongsToMany(Size, { through: "clothe_size" });
+
+// Ropa y tipos
+Clothe.belongsToMany(Type, { through: "clothe_type" });
+Type.belongsToMany(Clothe, {through: "clothe_type"})
 
 //Orden y ropa
 User.belongsToMany(Order, { through: "user_orders" });

@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { Category, Clothe, Media } = require("../../db");
+const { Category, Clothe, Media, Size, Type } = require("../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
@@ -14,7 +14,24 @@ router.get("/all-clothes", async (req, res) => {
       order: [["id", "ASC"]],
       offset: offset,
       limit: limit,
-      include: [{ model: Category }, { model: Media }],
+      include: [
+        {
+          model: Category,
+          attributes: ["id", "name"],
+        },
+        {
+          model: Media,
+          attributes: ["type", "name"],
+        },
+        {
+          model: Size,
+          attributes: ["id", "size", "stock"],
+        },
+        {
+          model: Type,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     if (allClothes.length === 0) {
       return res.json(

@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { Op } = require("sequelize");
-const { Clothe, Category } = require("../../db");
+const { Clothe, Category, Type, Size } = require("../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
@@ -12,8 +12,29 @@ router.get("/category/:name", async (req, res) => {
     const { name } = req.params;
     const response = await Category.findAll({
       where: { name: { [Op.iLike]: `%${name}%` } },
-      include: { model: Clothe },
+      include: {
+        model: Clothe,
+        include: [
+          {
+            model: Category,
+            attributes: ["id", "name"],
+          },
+          {
+            model: Media,
+            attributes: ["type", "name"],
+          },
+          {
+            model: Size,
+            attributes: ["id", "size", "stock"],
+          },
+          {
+            model: Type,
+            attributes: ["id", "name"],
+          },
+        ],
+      },
     });
+    
     if (response.length > 0) {
       return res.json(responseMessage(SUCCESS, response));
     } else {

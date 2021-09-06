@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
-const { Clothe, User, Order } = require("../../../db");
+const { Clothe, User, Order, Size } = require("../../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
@@ -12,7 +12,7 @@ router.post("/order-add/:userId", async (req, res) => {
     const {
       body: {
         data: {
-          clothe: { quantity, clotheId },
+          clothe: { size, quantity, clotheId },
         },
       },
       params: { userId },
@@ -32,10 +32,20 @@ router.post("/order-add/:userId", async (req, res) => {
         }),
       ]);
       //Decremento el stock por la cantidad
-      await currentClothe.decrement(["stock"], { by: quantity });
+      const sizeOfClothe = await Size.findOne({
+        where: {
+          size: size,
+        },
+        include: {
+          model: Clothe,
+          where: {
+            id: clotheId,
+          },
+        },
+      });
+      await sizeOfClothe.decrement(["stock"], { By: quantity });
       //Calculo el precio por las unidades
       const price = currentClothe.price * quantity;
-
       if (userOrder.length === 0) {
         //? Si no la encuentra devuelve []
         const [user, newOrder] = await Promise.all([
@@ -48,7 +58,7 @@ router.post("/order-add/:userId", async (req, res) => {
 
         await Promise.all([
           //Reduzco el stock por la cantidad
-          await newOrder.addClothe(currentClothe, { quantity: quantity }),
+          await newOrder.addClothe(currentClothe, { quantity, size }),
           await user.addOrder(newOrder),
         ]);
 
@@ -59,7 +69,7 @@ router.post("/order-add/:userId", async (req, res) => {
 
         await Promise.all([
           await currentOrder.increment(["total"], { by: price }),
-          await currentOrder.addClothe(currentClothe, { quantity: quantity }),
+          await currentOrder.addClothe(currentClothe, { quantity, size }),
         ]);
 
         return res.json(responseMessage(SUCCESS, currentOrder));

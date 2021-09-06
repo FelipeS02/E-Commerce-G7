@@ -10,12 +10,12 @@ const {
 
 router.delete("/order-delete/:orderId/:clotheId", async (req, res) => {
   try {
-    const { orderId, clotheId } = req.params;
+    const { orderId, clotheId, size } = req.params;
     if (validate(orderId) && typeof clotheId === "number") {
       //? En la tabla relacional, busco una seccion donde se encuentran relacionados la orden y el producto
       const orderClothe = await Order_clothes.findOne({
         where: {
-          [Op.and]: [{ orderId: orderId }, { clotheId: clotheId }],
+          [Op.and]: [{ orderId: orderId }, { clotheId: clotheId }, {size: size}],
         },
       });
 
@@ -25,19 +25,28 @@ router.delete("/order-delete/:orderId/:clotheId", async (req, res) => {
         );
       } else {
         //Si existe
-        const [currentClothe, currentOrder] = await Promise.all([
+        const [currentClothe, currentOrder, sizeOfClothe] = await Promise.all([
           await Clothe.findByPk(clotheId),
           await Order.findByPk(orderId),
+          await Size.findOne({
+            where: {
+              size: size,
+            },
+            include: {
+              model: Clothe,
+              where: {
+                id: clotheId,
+              },
+            },
+          }),
         ]);
 
         const price = currentClothe.price * orderClothe.quantity;
 
         //Incremento el stock de la prenda y decremento el valor total de la orden
         await Promise.all([
-          await currentClothe.increment(["stock"], {
-            by: orderClothe.quantity,
-          }),
           await currentOrder.decrement(["total"], { by: price }),
+          await sizeOfClothe.increment(["stock"], { by: orderClothe.quantity})
         ]);
 
         //Y destruyo la relacion, por lo tanto ya no figura dentro de la orden
