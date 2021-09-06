@@ -14,10 +14,13 @@ const ProductDetail = () => {
     dispatch(getProductDetail(id));
   }, [dispatch]);
 
-  const productsStateDetail = useSelector(
-    (state) => state.productsState.detail
-  );
-  const { name, price, detail, media } = productsStateDetail;
+  const productsState = useSelector((state) => state.productsState);
+  const { loading } = productsState;
+  if (loading) {
+    return <div>Loading..</div>;
+  }
+  const { name, price, detail, media } = productsState.detail;
+
   return (
     <Container className="my-5">
       <Row>
