@@ -11,10 +11,12 @@ const {
 router.get("/", async (req, res) => {
   try {
     const { name } = req.query;
+    
     const response = await Clothe.findAll({
       where: { name: { [Op.iLike]: `%${name}%` } },
       include: [{ model: Category }, { model: Media }],
     });
+    
     if (response.length > 0) {
       return res.json(responseMessage(SUCCESS, response));
     } else {

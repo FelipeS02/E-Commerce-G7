@@ -34,7 +34,7 @@ const storage = multer.diskStorage({
   },
 });
 
-server.use(jwtCheck);
+// server.use(jwtCheck);
 server.use(
   multer({
     storage,
