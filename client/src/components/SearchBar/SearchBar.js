@@ -4,7 +4,7 @@ import { FaSearch } from "react-icons/fa";
 import { withRouter } from "react-router-dom";
 
 const SearchBar = (props) => {
-  const [userInput, setUserInput] = useState(" ");
+  const [userInput, setUserInput] = useState("");
   const submitHandler = (e) => {
     e.preventDefault();
     props.history.push(`/search/name/${userInput}`);
