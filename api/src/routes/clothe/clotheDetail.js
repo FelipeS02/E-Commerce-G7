@@ -17,7 +17,7 @@ router.get("/:id", async (req, res) => {
         },
         {
           model: Media,
-          attributes: ["type", "name", "data"],
+          attributes: ["type", "name"],
         },
         {
           model: Size,

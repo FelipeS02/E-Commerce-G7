@@ -14,7 +14,24 @@ router.get("/all-clothes", async (req, res) => {
       order: [["id", "ASC"]],
       offset: offset,
       limit: limit,
-      include: [{ model: Category }, { model: Size }, { model: Media }],
+      include: [
+        {
+          model: Category,
+          attributes: ["id", "name"],
+        },
+        {
+          model: Media,
+          attributes: ["type", "name"],
+        },
+        {
+          model: Size,
+          attributes: ["id", "size", "stock"],
+        },
+        {
+          model: Type,
+          attributes: ["id", "name"],
+        },
+      ],
     });
     if (allClothes.length === 0) {
       return res.json(
