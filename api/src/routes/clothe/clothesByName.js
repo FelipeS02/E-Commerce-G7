@@ -10,10 +10,16 @@ const {
 //Busca el producto ingresado en el searchBar
 router.get("/", async (req, res) => {
   try {
-    const { name } = req.query;
+    const { name, limit, offset } = req.query;
 
-    const response = await Clothe.findAll({
+    const total = await Clothe.count({
       where: { name: { [Op.iLike]: `%${name}%` } },
+    });
+    const allClothes = await Clothe.findAll({
+      where: { name: { [Op.iLike]: `%${name}%` } },
+      order: [["id", "ASC"]],
+      offset,
+      limit,
       include: [
         {
           model: Category,
@@ -34,8 +40,10 @@ router.get("/", async (req, res) => {
       ],
     });
 
-    if (response.length > 0) {
-      return res.json(responseMessage(SUCCESS, response));
+    if (allClothes.length > 0) {
+      return res.json(
+        responseMessage(SUCCESS, { offset, limit, total, allClothes })
+      );
     } else {
       return res.json(
         responseMessage(ERROR, "No existe ninguna prenda con ese nombre")

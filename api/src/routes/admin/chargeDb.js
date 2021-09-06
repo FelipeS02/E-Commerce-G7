@@ -96,7 +96,6 @@ router.get(
       });
       const chargeDatabase = dataBase.map(async (data) => {
         const { categories, files, type, sizes } = data;
-        console.log(validateReq(data, files));
         if (validateReq(data, files)) {
           const newClothe = await Clothe.create(data);
           await Promise.all([

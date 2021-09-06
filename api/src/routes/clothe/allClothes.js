@@ -9,7 +9,7 @@ const {
 router.get("/all-clothes", async (req, res) => {
   try {
     const { offset, limit } = req.query;
-    const countClothes = await Clothe.count({ col: "id" });
+    const total = await Clothe.count({ col: "id" });
     const allClothes = await Clothe.findAll({
       order: [["id", "ASC"]],
       offset: offset,
@@ -42,7 +42,7 @@ router.get("/all-clothes", async (req, res) => {
         responseMessage(SUCCESS, {
           offset,
           limit,
-          total: countClothes,
+          total,
           allClothes,
         })
       );
