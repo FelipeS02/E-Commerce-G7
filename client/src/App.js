@@ -8,7 +8,8 @@ import { useDispatch } from "react-redux";
 import { getCategories } from "./actions/ProductActions";
 import SideBarFilter from "./components/SideBarFilter/SideBarFilter";
 import { Button } from "react-bootstrap";
-import AdminPanel from './components/AdminPanel/AdminPanel'
+import AdminPanel from "./components/AdminPanel/AdminPanel";
+import ProductDetail from "./components/ProductDetail/ProductDetail";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ function App() {
           path="/search/category/:category"
           component={SearchResults}
         />
+        <Route exact path="/search/details/:id" component={ProductDetail} />
       </BrowserRouter>
     </div>
   );

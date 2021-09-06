@@ -9,7 +9,8 @@ import SideBarFilter from "../SideBarFilter/SideBarFilter";
 
 const Home = (props) => {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.productsState.products);
+  const productsState = useSelector((state) => state.productsState);
+  const { loading, products } = productsState;
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -19,6 +20,10 @@ const Home = (props) => {
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dw3956c245/01sept/full3invierno.jpg?sw=1440&sfrm=png",
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dw322c4343/01sept/full4nike.jpg?sw=1440&sfrm=png",
   ];
+  if (loading) {
+    return <div>Loading...</div>;
+  }
+
   return (
     <div>
       <Carousel variant="dark">
@@ -29,22 +34,21 @@ const Home = (props) => {
         ))}
       </Carousel>
 
-      <PaginationC total={products.total}/>
+      <PaginationC total={products.total} />
+
       <Row className="mx-3">
         <Col lg="2" className="justify-content-center">
           <h4>Categorías:</h4>
           <SideBarFilter></SideBarFilter>
         </Col>
         <Col className="d-flex align-content-center flex-wrap justify-content-between">
-          <CardP />
-          <CardP />
-          <CardP />
-          <CardP />
-          <CardP />
-          <CardP />
-          <CardP />
-          <CardP />
-          <CardP />
+          {products.allClothes.map((product) => (
+            <CardP
+              name={product.name}
+              price={product.price}
+              picture={product.media[0].data}
+            />
+          ))}
         </Col>
       </Row>
       <PaginationC />
