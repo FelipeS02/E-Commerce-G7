@@ -10,10 +10,26 @@ import {
   PRODUCT_DETAIL,
 } from "../constants/productConstants";
 
-const initialState = { loading: true, products: [] };
+const initialState = {
+  loading: true,
+  products: [],
+  name: "",
+  price: "",
+  detail: "",
+  media: "",
+  sizes: [],
+};
 
 export function productReducer(
-  state = { loading: true, products: [] },
+  state = {
+    loading: true,
+    products: [],
+    name: "",
+    price: "",
+    detail: "",
+    media: "",
+    sizes: [],
+  },
   action
 ) {
   switch (action.type) {
@@ -27,6 +43,7 @@ export function productReducer(
         ...state,
         loading: false,
         products: action.payload.data,
+        error: false,
       };
     case PRODUCT_FAIL:
       return {
