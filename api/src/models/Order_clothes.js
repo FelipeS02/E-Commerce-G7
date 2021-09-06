@@ -7,6 +7,10 @@ module.exports = (sequelize) => {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
+      size: {
+        type: DataTypes.ENUM(["XS", "S", "M", "L", "XL", "XXL"]),
+        allowNull: false,
+      },
     },
     { timestamps: false }
   );
