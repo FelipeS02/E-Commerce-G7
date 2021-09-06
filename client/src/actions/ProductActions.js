@@ -24,7 +24,7 @@ export const getProducts =
       } else {
         const { data } = await (name === ""
           ? Axios.get(`http://localhost:3000/clothesByName/${name}`)
-          : Axios.get("http://localhost:3000/clothesByName/allClothe"));
+          : Axios.get("http://localhost:3001/clothe/all-clothes"));
         response = data;
       }
 
@@ -46,7 +46,7 @@ export const getCategories = () => async (dispatch) => {
   });
   try {
     const { data } = await Axios.get(
-      "http://localhost:3000/clothesByName/categories"
+      "http://localhost:3001/clothe/all-categories"
     );
     dispatch({
       type: CATEGORY_SUCCESS,
