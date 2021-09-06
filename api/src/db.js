@@ -68,6 +68,7 @@ Clothe.belongsToMany(Size, { through: "clothe_size" });
 
 // Ropa y tipos
 Clothe.belongsToMany(Type, { through: "clothe_type" });
+Type.belongsToMany(Clothe, {through: "clothe_type"})
 
 //Orden y ropa
 User.belongsToMany(Order, { through: "user_orders" });
