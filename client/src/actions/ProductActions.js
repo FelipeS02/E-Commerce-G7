@@ -45,6 +45,7 @@ export const getProducts =
     return async function(dispatch){
       try {
         await Axios.post('http://localhost:3001/admin/create-clothe', form);
+        console.log(form)
         return dispatch({
             type: CREATE_CLOTHE,
             payload: form

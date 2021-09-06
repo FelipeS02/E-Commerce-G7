@@ -49,9 +49,9 @@ const setMedia = async (mediaArray, clothe) => {
 
 // Auth0
 const jwtAuthz = require("express-jwt-authz");
-const checkScopes = (permissions) => jwtAuthz(permissions);
+// const checkScopes = (permissions) => jwtAuthz(permissions);checkScopes(['write:admin'])
 
-router.post("/create-clothe", checkScopes(['write:admin']), async (req, res) => {
+router.post("/create-clothe",  async (req, res) => {
   try {
     const {
       body: { categories },
