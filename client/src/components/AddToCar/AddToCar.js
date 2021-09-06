@@ -7,7 +7,7 @@ const AddToCar = () => {
     setItemNumber(e.target.value);
   };
   return (
-    <Row>
+    <Row className="my-5">
       <Col xs={3}>
         <Form.Control
           type="number"

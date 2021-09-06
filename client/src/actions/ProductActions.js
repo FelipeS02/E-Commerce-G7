@@ -7,6 +7,8 @@ import {
   PRODUCT_FAIL,
   PRODUCT_REQUEST,
   PRODUCT_SUCCESS,
+  PRODUCT_DETAIL,
+  FILTER_PRODUCTS_BY_CATEGORY,
 } from "../constants/productConstants";
 
 export const getProducts =
@@ -37,7 +39,6 @@ export const getProducts =
     }
   };
 
-
 export function createClothe(form) {
   console.log(form);
   return async function (dispatch) {
@@ -67,6 +68,39 @@ export const getCategories = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CATEGORY_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const filterProducts = (products, category) => (dispatch) => {
+  dispatch({
+    type: FILTER_PRODUCTS_BY_CATEGORY,
+    payload: {
+      products:
+        category === "all"
+          ? products.allClothes
+          : products.allClothes.filter((product) =>
+              product.categories.some((el) => el.name === category)
+            ),
+    },
+  });
+};
+
+export const getProductDetail = (id) => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get(`http://localhost:3001/clothe/${id}`);
+
+    dispatch({
+      type: PRODUCT_DETAIL,
+      payload: data.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_FAIL,
       payload: error.message,
     });
   }

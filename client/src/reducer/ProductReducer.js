@@ -5,7 +5,9 @@ import {
   PRODUCT_FAIL,
   PRODUCT_REQUEST,
   PRODUCT_SUCCESS,
-  CREATE_CLOTHE
+  FILTER_PRODUCTS_BY_CATEGORY,
+  CREATE_CLOTHE,
+  PRODUCT_DETAIL,
 } from "../constants/productConstants";
 
 const initialState = { loading: true, products: [] };
@@ -31,6 +33,18 @@ export function productReducer(
         ...state,
         loading: false,
         error: action.payload,
+      };
+    case PRODUCT_DETAIL:
+      return {
+        ...state,
+        loading: false,
+        detail: action.payload,
+      };
+    case FILTER_PRODUCTS_BY_CATEGORY:
+      return {
+        ...state,
+
+        filteredProducts: action.payload.products,
       };
     case CREATE_CLOTHE:
       return {
