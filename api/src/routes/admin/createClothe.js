@@ -40,7 +40,6 @@ const setMedia = async (mediaArray, clothe) => {
     const newMedia = await Media.create({
       type: m.mimetype,
       name: m.originalname,
-      data: m.path,
     });
     await clothe.addMedia(newMedia.id);
   });
