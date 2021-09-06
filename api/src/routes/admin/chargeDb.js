@@ -6,7 +6,7 @@ const {
   statusCodes: { SUCCESS, ERROR },
 } = require("../../controller/responseMessages");
 
-const { dataBase, categorySet } = require("../../database/DataBase");
+const { dataBase, categorySet } = require("../../DataBase.js");
 
 const validateReq = (data, files) => {
   const { name, size, price, color, stock, genre, categories } = data;
