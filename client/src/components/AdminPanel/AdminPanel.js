@@ -1,10 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { createClothe } from "../../actions/ProductActions";
+import { getCategories } from "../../actions/ProductActions";
 
 function AdminPanel(){
     
-    const disptach = useDispatch();
+    const dispatch = useDispatch();
+    const categories = useSelector((state) => state.productCategories.categories);
+    
+    console.log(categories,'<<<----------------------------------');
+
+    useEffect(() => {
+        dispatch(getCategories());
+    },[]);
+
     const [input, setInput] = useState({
         name: '',
         size: '',
@@ -21,20 +30,23 @@ function AdminPanel(){
             [e.target.name] : e.target.value
         })
     }
+    function handleCheckBox(e){
 
+        if(e.target.checked){
+           setInput({
+               ...input,
+               categories:[...input.categories,e.target.value]
+           });
+        } else {
+            setInput({
+                ...input,
+                categories: input.categories.filter(categorie => categorie !== e.target.value)
+            });
+        }
+    }
     function handleSubmit(e){
         e.preventDefault();
-        disptach(createClothe({
-            data: {
-                name: input.name,
-                size: input.size,
-                price: parseInt(input.price,10),
-                color: input.color,
-                stock: parseInt(input.stock,10),
-                genre: input.genre,
-                categories: [input.categories]
-            }
-        }));
+        dispatch(createClothe({data: input}));
         alert('Product created succesfully');
         setInput({
             name: '',
@@ -92,13 +104,20 @@ function AdminPanel(){
                     value={input.genre}
                     onChange={handleInput}
                 />
-                <label>Categories:</label>
-                <input
-                    type="text"
-                    name='categories'
-                    value={input.categories}
-                    onChange={handleInput}
-                />
+                <label >Categories:</label>
+                        <div>
+                        {categories?.map((categorie) =>(
+                                <span key = {categorie.id}>
+                                    <input 
+                                    type="checkbox" 
+                                    name='types'
+                                    value={categorie.name}
+                                    onChange={handleCheckBox}
+                                    />
+                                    <label >{categorie.name}</label>
+                                </span>
+                        ))}
+                </div>
                 <button type='submit'>SUBMIT</button>
             </form>
         </div>

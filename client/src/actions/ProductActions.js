@@ -40,6 +40,8 @@ export const getProducts =
       });
     }
   };
+
+
 export function createClothe(form) {
   console.log(form);
   return async function (dispatch) {
