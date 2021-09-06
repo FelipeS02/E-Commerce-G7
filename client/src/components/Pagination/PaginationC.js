@@ -12,8 +12,10 @@ const PaginationC = ({ total }) => {
 
   const handleClick = (e) => {
     e.preventDefault();
-    const newCurrent = parseInt(e.target.id)
-    setCurrent(newCurrent)
+    console.log("target id", e.target.text);
+    const newCurrent = parseInt(e.target.text);
+    setCurrent(newCurrent);
+    console.log(current);
     dispatch(getProducts("", "", e.target.id));
   };
 

@@ -10,7 +10,7 @@ import SideBarFilter from "../SideBarFilter/SideBarFilter";
 const Home = (props) => {
   const dispatch = useDispatch();
   const productsState = useSelector((state) => state.productsState);
-  const { loading, products } = productsState;
+  const { loading, products, filteredProducts } = productsState;
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
@@ -42,17 +42,17 @@ const Home = (props) => {
           <SideBarFilter></SideBarFilter>
         </Col>
         <Col className="d-flex align-content-center flex-wrap justify-content-between">
-          {products.allClothes.map((product) => (
+          {filteredProducts?.map((product) => (
             <CardP
+              id={product.id}
               name={product.name}
               price={product.price}
-              picture={product.media[0].data}
+              picture={product.media[0].name}
             />
           ))}
         </Col>
       </Row>
       <PaginationC />
-      <Footer />
     </div>
   );
 };

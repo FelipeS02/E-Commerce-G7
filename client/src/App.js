@@ -10,6 +10,7 @@ import SideBarFilter from "./components/SideBarFilter/SideBarFilter";
 import { Button } from "react-bootstrap";
 import AdminPanel from "./components/AdminPanel/AdminPanel";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
+import Footer from "./components/Footer/Footer";
 
 function App() {
   const dispatch = useDispatch();
@@ -21,6 +22,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <Route path="/" component={NavBar} />
+
         <Route exact path="/" component={Home} />
         <Route exact path="/search/name/:name?" component={SearchResults} />
         <Route exact path="/admin/createProduct" component={AdminPanel} />
@@ -30,6 +32,7 @@ function App() {
           component={SearchResults}
         />
         <Route exact path="/search/details/:id" component={ProductDetail} />
+        <Route path="/" component={Footer} />
       </BrowserRouter>
     </div>
   );
