@@ -9,11 +9,10 @@ import SideBarFilter from "../SideBarFilter/SideBarFilter";
 
 const Home = (props) => {
   const dispatch = useDispatch();
-  const diets = useSelector((state) => state.allDiets);
+  const products = useSelector((state) => state.productsState.products);
   useEffect(() => {
     dispatch(getProducts());
   }, [dispatch]);
-
   const imgUrl = [
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dw5ea30e6a/01sept/full1lotto.jpg?sw=1440&sfrm=png",
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dwbd6473ec/01sept/full2futbol.jpg?sw=1440&sfrm=png",
@@ -30,7 +29,7 @@ const Home = (props) => {
         ))}
       </Carousel>
 
-      <PaginationC />
+      <PaginationC total={products.total}/>
       <Row className="mx-3">
         <Col lg="2" className="justify-content-center">
           <h4>Categorías:</h4>

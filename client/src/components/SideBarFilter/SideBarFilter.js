@@ -10,6 +10,7 @@ const SideBarFilter = (props) => {
   const toggleHandler = (e) => {
     setActive(e.target.id);
   };
+  
   return (
     <ListGroup as="ul" onClick={toggleHandler}>
       {productCategories.map((category) => (
