@@ -40,13 +40,13 @@ router.post("/order-add/:userId", async (req, res) => {
         include: {
           model: Clothe,
           where: {
-            id: clotheId
-          }
-        }
+            id: clotheId,
+          },
+        },
       });
+      await sizeOfClothe.decrement(["stock"], { By: quantity });
       //Calculo el precio por las unidades
       const price = currentClothe.price * quantity;
-      await sizeOfClothe.decrement(['stock'], {By: quantity})
       if (userOrder.length === 0) {
         //? Si no la encuentra devuelve []
         const [user, newOrder] = await Promise.all([
@@ -59,7 +59,7 @@ router.post("/order-add/:userId", async (req, res) => {
 
         await Promise.all([
           //Reduzco el stock por la cantidad
-          await newOrder.addClothe(currentClothe, { quantity: quantity }),
+          await newOrder.addClothe(currentClothe, { quantity, size }),
           await user.addOrder(newOrder),
         ]);
 
@@ -70,7 +70,7 @@ router.post("/order-add/:userId", async (req, res) => {
 
         await Promise.all([
           await currentOrder.increment(["total"], { by: price }),
-          await currentOrder.addClothe(currentClothe, { quantity: quantity }),
+          await currentOrder.addClothe(currentClothe, { quantity, size }),
         ]);
 
         return res.json(responseMessage(SUCCESS, currentOrder));
