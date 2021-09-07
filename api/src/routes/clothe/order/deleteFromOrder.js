@@ -37,6 +37,7 @@ router.delete("/order-delete/:orderId/:clotheId", async (req, res) => {
               where: {
                 id: clotheId,
               },
+              through: { attributes: [] },
             },
           }),
         ]);

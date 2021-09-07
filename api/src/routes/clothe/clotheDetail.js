@@ -14,18 +14,22 @@ router.get("/:id", async (req, res) => {
         {
           model: Category,
           attributes: ["id", "name"],
+          through: { attributes: [] },
         },
         {
           model: Media,
           attributes: ["type", "name"],
+          through: { attributes: [] },
         },
         {
           model: Size,
           attributes: ["id", "size", "stock"],
+          through: { attributes: [] },
         },
         {
           model: Type,
-          attributes: ["id", "name"]
+          attributes: ["id", "name"],
+          through: { attributes: [] },
         },
       ],
     });

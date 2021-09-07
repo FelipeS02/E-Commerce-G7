@@ -41,19 +41,34 @@ const validateReq = (data, files) => {
 
 const setCategories = async (categoriesArray, clothe) => {
   const clotheCategory = categoriesArray.map(async (c) => {
-    const [category, created] = await Category.findOrCreate({
-      where: { name: c },
+    const currentCategory = await Category.findOne({
+      where: { name: { [Op.iLike]: `%${c}%` } },
     });
-    await clothe.addCategory(category.id);
+    if (!currentCategory) {
+      const newCategory = await Category.create({
+        name: c[0].toUpperCase() + c.substr(1),
+      });
+      await clothe.addCategory(newCategory.id);
+    } else {
+      await clothe.addCategory(currentCategory.id);
+    }
   });
   await Promise.all(clotheCategory);
 };
 
 const setType = async (type, clothe) => {
-  const [currentType, created] = await Type.findOrCreate({
-    where: { name: type },
+  const currentType = await Type.findOne({
+    where: { name: { [Op.iLike]: `%${type}%` } },
   });
-  await clothe.addType(currentType.id);
+
+  if (!currentType) {
+    const newType = await Type.create({
+      name: type[0].toUpperCase() + type.substr(1),
+    });
+    await clothe.addType(newType.id);
+  } else {
+    await clothe.addType(currentType.id);
+  }
 };
 
 const setSizes = async (sizeObject, clothe) => {
@@ -82,7 +97,7 @@ const setMedia = async (mediaArray, clothe) => {
 const jwtAuthz = require("express-jwt-authz");
 // const checkScopes = (permissions) => jwtAuthz(permissions);checkScopes(['write:admin'])
 
-router.post("/create-clothe",  async (req, res) => {
+router.post("/create-clothe", async (req, res) => {
   try {
     const {
       body: { categories, type, sizes },

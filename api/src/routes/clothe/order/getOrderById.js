@@ -16,7 +16,7 @@ router.get("/order-detail/:orderId", async (req, res) => {
         include: {
           model: Order_clothes,
           atributes: ["quantity", "size"],
-          include: { model: Clothe },
+          include: { model: Clothe, through: { attributes: [] } },
         },
       });
       if (response) {

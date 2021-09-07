@@ -34,10 +34,15 @@ router.get("/user-orders", async (req, res) => {
             where: {
               status: { [Op.iLike]: `%${orderStatus}%` },
             },
+            through: { attributes: [] },
             include: {
               model: Order_clothes,
               atributes: ["quantity", "size"],
-              include: { model: Clothe },
+              through: { attributes: [] },
+              include: {
+                model: Clothe,
+                through: { attributes: [] },
+              },
             },
           },
         });
