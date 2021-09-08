@@ -7,7 +7,8 @@ const SideBarFilter = (props) => {
   const productCategories = useSelector((state) => state.productCategories);
   const products = useSelector((state) => state.productsState.products);
 
-  const { loading, categories } = productCategories;
+  const { loading } = productCategories;
+  const { categories } = productCategories.categories;
 
   const [activeCategory, setActive] = useState("all");
 
