@@ -23,23 +23,17 @@ function AdminPanel(){
         detail: '',
         type:'',
         sizes: {},
-        stock: 0,
+        sizeStock: [{name: '',stock:0}],
         categories: []
     })
 
     function handleInput(e){
-        if(e.target.name==='sizes'){
-            setInput({
-                ...input,
-                
-            })
-        }else{
-            setInput({
-                ...input,
-                [e.target.name] : e.target.value
-            })
-        }
+        setInput({
+            ...input,
+            [e.target.name] : e.target.value
+        })
     }
+
     function handleCheckBox(e){
 
         if(e.target.checked){
@@ -54,9 +48,65 @@ function AdminPanel(){
             });
         }
     }
+//--------------------------------------------------------------------------------------------
+    const handleSize = idx => e => {
+        const newsizeStock = input.sizeStock.map((talle, tidx)=>{
+            if(idx!==tidx) return talle;
+            return {...talle, name: e.target.value}
+        })
+        setInput({
+            ...input,
+            sizeStock: newsizeStock
+        })
+    }
+
+    const handleStock = idx => e => {
+        const newsizeStock = input.sizeStock.map((talle, tidx)=>{
+            if(idx!==tidx) return talle;
+            return {...talle, stock: e.target.value}
+        })
+        setInput({
+            ...input,
+            sizeStock: newsizeStock
+        })
+    }
+
+    const handleAddSizeStock = () => {
+        setInput({
+            ...input,
+            sizeStock: input.sizeStock.concat({name: '',stock:0})
+        })
+    }
+
+    const handleRemoveSizeStock = idx => () => {
+        setInput({
+            ...input,
+            sizeStock: input.sizeStock.filter((t, tidx)=> idx !== tidx)
+        })
+    }
+//--------------------------------------------------------------------------------------------
     function handleSubmit(e){
         e.preventDefault();
-        dispatch(createClothe(input));
+        input.sizeStock.forEach(talle => {
+            setInput({
+                ...input,
+                sizes: input.sizes[talle.name] = talle.stock 
+            })
+            
+        });
+
+        dispatch(createClothe(
+            {
+                name: input.name,
+                price: input.price,
+                color: input.color,
+                genre: input.genre,
+                detail: input.detail,
+                type: input.type,
+                sizes: input.sizes,
+                categories: input.categories
+            }
+            ));
         alert('Product created succesfully');
         setInput({
             name: '',
@@ -66,7 +116,7 @@ function AdminPanel(){
             detail: '',
             type: '',
             sizes: {},
-            stock: 0,
+            sizeStock: [{name: '',stock:0}],
             categories: []
         })
     }
@@ -117,7 +167,31 @@ function AdminPanel(){
                     onChange={handleInput}
                 />
                 <label>Talles:</label>
-                <input
+                {input.sizeStock.map((talle, idx)=>(
+                    <div key={`talle${idx}`}>
+                        <input
+                        type='text'
+                        value={talle.name}
+                        onChange={handleSize(idx)}
+                        />
+                        <input
+                        type='number'
+                        value={talle.stock}
+                        onChange={handleStock(idx)}
+                        />
+                        <button
+                        type='button'
+                        onClick={handleRemoveSizeStock(idx)}
+                        >-</button>
+                    </div>
+                ))}
+                <button
+                type='button'
+                onClick={handleAddSizeStock}
+                >Agregar talle</button>
+
+
+                {/* <input
                     type="text"
                     name='size'
                     value={input.size}
@@ -129,7 +203,7 @@ function AdminPanel(){
                     name='stock'
                     value={input.stock}
                     onChange={handleInput}
-                />
+                /> */}
                 <label >Categorias:</label>
                         <div>
                         {categories?.map((cat) =>(

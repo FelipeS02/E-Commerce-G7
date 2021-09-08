@@ -15,7 +15,7 @@ const validateReq = (data, files) => {
     detail,
     type,
     sizes,
-    // categories,
+    categories,
   } = data;
   if (
     (typeof name === "string" &&
@@ -25,11 +25,10 @@ const validateReq = (data, files) => {
       typeof genre === "string" &&
       typeof detail === "string" &&
       typeof type === "string" &&
-      typeof sizes === "object"
-      
-      // Array.isArray(categories) &&
-    //   categories.length > 0 &&
-    //   Array.isArray(files) &&
+      typeof sizes === "object" &&
+      Array.isArray(categories) &&
+      categories.length > 0 
+      // Array.isArray(files)
     )
   ) {
     return true;
@@ -97,16 +96,15 @@ const jwtAuthz = require("express-jwt-authz");
 
 router.post("/create-clothe", async (req, res) => {
   try {
-    const {
-      body: { categories, type, sizes },
-      files,
-    } = req;
+    const { categories, type, sizes, files } = req.body;
+    console.log(req.body)
     if (validateReq(req.body, files)) {
+      console.log('aqui va bien')
       const newClothe = await Clothe.create(req.body);
       await Promise.all([
         await setType(type, newClothe),
         await setSizes(sizes, newClothe),
-      //   await setCategories(categories, newClothe),
+        await setCategories(categories, newClothe),
       //   await setMedia(files, newClothe),
       ]);
       return res.json(responseMessage(SUCCESS, newClothe));
