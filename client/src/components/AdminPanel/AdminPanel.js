@@ -5,38 +5,48 @@ import { getCategories } from "../../actions/ProductActions";
 
 function AdminPanel(){
     
+    useEffect(() => {
+        dispatch(getCategories());
+    },[]);
+
     const dispatch = useDispatch();
     const categories = useSelector((state) => state.productCategories.categories);
     
     console.log(categories,'<<<----------------------------------');
 
-    useEffect(() => {
-        dispatch(getCategories());
-    },[]);
 
     const [input, setInput] = useState({
         name: '',
-        size: '',
         price: 0,
         color: '',
-        stock: 0,
         genre: '',
+        detail: '',
+        type:'',
+        sizes: {},
+        stock: 0,
         categories: []
     })
 
     function handleInput(e){
-        setInput({
-            ...input,
-            [e.target.name] : e.target.value
-        })
+        if(e.target.name==='sizes'){
+            setInput({
+                ...input,
+                
+            })
+        }else{
+            setInput({
+                ...input,
+                [e.target.name] : e.target.value
+            })
+        }
     }
     function handleCheckBox(e){
 
         if(e.target.checked){
-           setInput({
-               ...input,
-               categories:[...input.categories,e.target.value]
-           });
+            setInput({
+                ...input,
+                categories:[...input.categories,e.target.value]
+            });
         } else {
             setInput({
                 ...input,
@@ -46,15 +56,17 @@ function AdminPanel(){
     }
     function handleSubmit(e){
         e.preventDefault();
-        dispatch(createClothe({data: input}));
+        dispatch(createClothe(input));
         alert('Product created succesfully');
         setInput({
             name: '',
-            size: '',
             price: 0,
             color: '',
-            stock: 0,
             genre: '',
+            detail: '',
+            type: '',
+            sizes: {},
+            stock: 0,
             categories: []
         })
     }
@@ -62,21 +74,14 @@ function AdminPanel(){
     return (
         <div>
             <form onSubmit={handleSubmit}>
-                <label>Name:</label>
+                <label>Nombre:</label>
                 <input
                     type="text"
                     name='name'
                     value={input.name}
                     onChange={handleInput}
                 />
-                <label>Size:</label>
-                <input
-                    type="text"
-                    name='size'
-                    value={input.size}
-                    onChange={handleInput}
-                />
-                <label>Price:</label>
+                <label>Precio:</label>
                 <input
                     type="number"
                     name='price'
@@ -90,6 +95,34 @@ function AdminPanel(){
                     value={input.color}
                     onChange={handleInput}
                 />
+                <label>Genero:</label>
+                <input
+                    type="text"
+                    name='genre'
+                    value={input.genre}
+                    onChange={handleInput}
+                />
+                <label>Detalles:</label>
+                <textarea
+                    type='text'
+                    name='detail'
+                    value={input.detail}
+                    onChange={handleInput}
+                />
+                <label>Tipos:</label>
+                <input
+                    type="text"
+                    name='type'
+                    value={input.type}
+                    onChange={handleInput}
+                />
+                <label>Talles:</label>
+                <input
+                    type="text"
+                    name='size'
+                    value={input.size}
+                    onChange={handleInput}
+                />
                 <label>Stock:</label>
                 <input
                     type="number"
@@ -97,24 +130,17 @@ function AdminPanel(){
                     value={input.stock}
                     onChange={handleInput}
                 />
-                <label>Genre:</label>
-                <input
-                    type="text"
-                    name='genre'
-                    value={input.genre}
-                    onChange={handleInput}
-                />
-                <label >Categories:</label>
+                <label >Categorias:</label>
                         <div>
-                        {categories?.map((categorie) =>(
-                                <span key = {categorie.id}>
+                        {categories?.map((cat) =>(
+                                <span key = {cat}>
                                     <input 
                                     type="checkbox" 
                                     name='types'
-                                    value={categorie.name}
+                                    value={cat}
                                     onChange={handleCheckBox}
                                     />
-                                    <label >{categorie.name}</label>
+                                    <label >{cat}</label>
                                 </span>
                         ))}
                 </div>

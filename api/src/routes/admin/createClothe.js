@@ -9,30 +9,28 @@ const {
 const validateReq = (data, files) => {
   const {
     name,
-    size,
     price,
     color,
-    stock,
     genre,
-    categories,
-    sizes,
-    type,
     detail,
+    type,
+    sizes,
+    // categories,
   } = data;
   if (
     (typeof name === "string" &&
       name !== "" &&
-      typeof size === "string" &&
       typeof price === "string" &&
       typeof color === "string" &&
-      typeof stock === "string" &&
       typeof genre === "string" &&
-      Array.isArray(categories) &&
       typeof detail === "string" &&
-      categories.length > 0 &&
-      Array.isArray(files) &&
-      typeof sizes === "object",
-    typeof type === "string")
+      typeof type === "string" &&
+      typeof sizes === "object"
+      
+      // Array.isArray(categories) &&
+    //   categories.length > 0 &&
+    //   Array.isArray(files) &&
+    )
   ) {
     return true;
   }
@@ -108,8 +106,8 @@ router.post("/create-clothe", async (req, res) => {
       await Promise.all([
         await setType(type, newClothe),
         await setSizes(sizes, newClothe),
-        await setCategories(categories, newClothe),
-        await setMedia(files, newClothe),
+      //   await setCategories(categories, newClothe),
+      //   await setMedia(files, newClothe),
       ]);
       return res.json(responseMessage(SUCCESS, newClothe));
     } else {
