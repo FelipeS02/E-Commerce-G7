@@ -26,9 +26,6 @@ const sequelize =
           keepAlive: true,
         },
         ssl: true,
-        define: {
-          timestamps: false,
-        },
       })
     : new Sequelize(
         `postgres://${DB_USER}:${DB_PASSWORD}@${DB_HOST}/${DB_NAME}`,
