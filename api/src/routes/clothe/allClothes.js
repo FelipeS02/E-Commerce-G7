@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const router = Router();
+const { Op } = require("sequelize");
 const { Category, Clothe, Media, Size, Type } = require("../../db");
 const {
   responseMessage,
@@ -8,32 +9,90 @@ const {
 
 router.get("/all-clothes", async (req, res) => {
   try {
-    const { offset, limit } = req.query;
-    const countClothes = await Clothe.count({ col: "id" });
-    const allClothes = await Clothe.findAll({
-      order: [["id", "ASC"]],
-      offset: offset,
-      limit: limit,
-      include: [
-        {
-          model: Category,
-          attributes: ["id", "name"],
+    const {
+      offset = 0,
+      category = "",
+      type = "",
+      size = "",
+      name = "",
+      genre = "",
+      color = "",
+    } = req.query;
+
+    let response;
+    const validSizes = ["XS", "S", "M", "L", "XL", "XXL"];
+
+    if (validSizes.includes(size)) {
+      response = await Clothe.findAndCountAll({
+        where: {
+          name: { [Op.iLike]: `%${name}%` },
+          color: { [Op.iLike]: `%${color}%` },
+          genre: { [Op.iLike]: `%${genre}%` },
         },
-        {
-          model: Media,
-          attributes: ["type", "name"],
-        },
-        {
-          model: Size,
-          attributes: ["id", "size", "stock"],
-        },
-        {
-          model: Type,
-          attributes: ["id", "name"],
-        },
-      ],
-    });
-    if (allClothes.length === 0) {
+        order: [["id", "ASC"]],
+        distinct: true,
+        offset: offset,
+        limit: 10,
+        include: [
+          {
+            model: Category,
+            attributes: ["id", "name"],
+            where: { name: { [Op.iLike]: `%${category}%` } },
+            through: { attributes: [] },
+          },
+          {
+            model: Media,
+            attributes: ["type", "name"],
+            through: { attributes: [] },
+          },
+          {
+            model: Size,
+            attributes: ["id", "size", "stock"],
+            where: { size: size },
+            through: { attributes: [] },
+          },
+          {
+            model: Type,
+            attributes: ["id", "name"],
+            where: { name: { [Op.iLike]: `%${type}%` } },
+            through: { attributes: [] },
+          },
+        ],
+      });
+    } else {
+      response = await Clothe.findAndCountAll({
+        where: { name: { [Op.iLike]: `%${name}%` } },
+        order: [["id", "ASC"]],
+        distinct: true,
+        offset: offset,
+        limit: 10,
+        include: [
+          {
+            model: Category,
+            attributes: ["id", "name"],
+            where: { name: { [Op.iLike]: `%${category}%` } },
+            through: { attributes: [] },
+          },
+          {
+            model: Media,
+            attributes: ["type", "name"],
+            through: { attributes: [] },
+          },
+          {
+            model: Size,
+            attributes: ["id", "size", "stock"],
+            through: { attributes: [] },
+          },
+          {
+            model: Type,
+            attributes: ["id", "name"],
+            where: { name: { [Op.iLike]: `%${type}%` } },
+            through: { attributes: [] },
+          },
+        ],
+      });
+    }
+    if (response.rows.length === 0) {
       return res.json(
         responseMessage(ERROR, "No existe ninguna prenda actualmente.")
       );
@@ -41,9 +100,8 @@ router.get("/all-clothes", async (req, res) => {
       return res.json(
         responseMessage(SUCCESS, {
           offset,
-          limit,
-          total: countClothes,
-          allClothes,
+          total: response.count,
+          allClothes: response.rows,
         })
       );
     }
