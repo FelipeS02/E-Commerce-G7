@@ -1,5 +1,6 @@
 const { Router } = require("express");
 const { Category, Clothe, Media, Type, Size } = require("../../db");
+const { Op } = require("sequelize");
 const router = Router();
 const {
   responseMessage,
@@ -27,8 +28,8 @@ const validateReq = (data, files) => {
       typeof type === "string" &&
       typeof sizes === "object" &&
       Array.isArray(categories) &&
-      categories.length > 0 
-      // Array.isArray(files)
+      categories.length > 0 &&
+      Array.isArray(files)
     )
   ) {
     return true;
@@ -54,11 +55,13 @@ const setCategories = async (categoriesArray, clothe) => {
 };
 
 const setType = async (type, clothe) => {
+  console.log('entro a agregar tipos')
   const currentType = await Type.findOne({
     where: { name: { [Op.iLike]: `%${type}%` } },
   });
 
   if (!currentType) {
+    console.log('el tipo no existe')
     const newType = await Type.create({
       name: type[0].toUpperCase() + type.substr(1),
     });
@@ -66,6 +69,7 @@ const setType = async (type, clothe) => {
   } else {
     await clothe.addType(currentType.id);
   }
+  console.log('se adiciono typos')
 };
 
 const setSizes = async (sizeObject, clothe) => {
@@ -96,16 +100,21 @@ const jwtAuthz = require("express-jwt-authz");
 
 router.post("/create-clothe", async (req, res) => {
   try {
-    const { categories, type, sizes, files } = req.body;
+    const {
+      body: { categories, type, sizes },
+      files,
+    } = req;
+    // const { categories, type, sizes, files } = req.body;
     console.log(req.body)
+    console.log(req.files)
     if (validateReq(req.body, files)) {
-      console.log('aqui va bien')
       const newClothe = await Clothe.create(req.body);
+      console.log('creo bien la prenda')
       await Promise.all([
         await setType(type, newClothe),
         await setSizes(sizes, newClothe),
         await setCategories(categories, newClothe),
-      //   await setMedia(files, newClothe),
+        await setMedia(files, newClothe),
       ]);
       return res.json(responseMessage(SUCCESS, newClothe));
     } else {

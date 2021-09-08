@@ -24,7 +24,8 @@ function AdminPanel(){
         type:'',
         sizes: {},
         sizeStock: [{name: '',stock:0}],
-        categories: []
+        categories: [],
+        // files: []
     })
 
     function handleInput(e){
@@ -95,18 +96,7 @@ function AdminPanel(){
             
         });
 
-        dispatch(createClothe(
-            {
-                name: input.name,
-                price: input.price,
-                color: input.color,
-                genre: input.genre,
-                detail: input.detail,
-                type: input.type,
-                sizes: input.sizes,
-                categories: input.categories
-            }
-            ));
+        dispatch(createClothe(input));
         alert('Product created succesfully');
         setInput({
             name: '',
@@ -117,13 +107,19 @@ function AdminPanel(){
             type: '',
             sizes: {},
             sizeStock: [{name: '',stock:0}],
-            categories: []
+            categories: [],
+            // files:[]
         })
     }
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
+            <form 
+            action='/admin/create-clothe' 
+            method='post' 
+            enctype='multipart/form-data'
+            onSubmit={handleSubmit}
+            >
                 <label>Nombre:</label>
                 <input
                     type="text"
@@ -189,35 +185,25 @@ function AdminPanel(){
                 type='button'
                 onClick={handleAddSizeStock}
                 >Agregar talle</button>
-
-
-                {/* <input
-                    type="text"
-                    name='size'
-                    value={input.size}
-                    onChange={handleInput}
-                />
-                <label>Stock:</label>
-                <input
-                    type="number"
-                    name='stock'
-                    value={input.stock}
-                    onChange={handleInput}
-                /> */}
                 <label >Categorias:</label>
-                        <div>
-                        {categories?.map((cat) =>(
-                                <span key = {cat}>
-                                    <input 
-                                    type="checkbox" 
-                                    name='types'
-                                    value={cat}
-                                    onChange={handleCheckBox}
-                                    />
-                                    <label >{cat}</label>
-                                </span>
-                        ))}
+                <div>
+                {categories?.map((cat) =>(
+                    <span key = {cat}>
+                        <input 
+                        type="checkbox" 
+                        name='types'
+                        value={cat}
+                        onChange={handleCheckBox}
+                        />
+                        <label >{cat}</label>
+                    </span>
+                ))}
                 </div>
+                <input
+                type='file'
+                name='media'
+                multiple
+                />
                 <button type='submit'>SUBMIT</button>
             </form>
         </div>
