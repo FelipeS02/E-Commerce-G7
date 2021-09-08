@@ -1,4 +1,5 @@
 import Axios from "axios";
+
 import {
   CATEGORY_FAIL,
   CATEGORY_REQUEST,
@@ -7,6 +8,8 @@ import {
   PRODUCT_FAIL,
   PRODUCT_REQUEST,
   PRODUCT_SUCCESS,
+  PRODUCT_DETAIL,
+  FILTER_PRODUCTS_BY_CATEGORY,
 } from "../constants/productConstants";
 
 export const getProducts =
@@ -19,16 +22,23 @@ export const getProducts =
       let response;
       console.log("name", name);
       const { data } = await (name === ""
-        ? Axios.get(
-            `http://localhost:3001/clothe/all-clothes?limit=10&offset=${offset}`
-          )
-        : Axios.get(`http://localhost:3001/clothe?name=${name}`));
+        ? Axios.get(`/clothe/all-clothes?limit=10&offset=${offset}`)
+        : Axios.get(`/clothe?name=${name}`));
+
       response = data;
 
-      dispatch({
-        type: PRODUCT_SUCCESS,
-        payload: response,
-      });
+      if (response.statusCode === 400) {
+        console.log("response", response);
+        dispatch({
+          type: PRODUCT_FAIL,
+          payload: response.data,
+        });
+      } else {
+        dispatch({
+          type: PRODUCT_SUCCESS,
+          payload: response,
+        });
+      }
     } catch (error) {
       dispatch({
         type: PRODUCT_FAIL,
@@ -37,12 +47,11 @@ export const getProducts =
     }
   };
 
-
 export function createClothe(form) {
   console.log(form);
   return async function (dispatch) {
     try {
-      await Axios.post("http://localhost:3001/admin/create-clothe", form);
+      await Axios.post("/admin/create-clothe", form);
       return dispatch({
         type: CREATE_CLOTHE,
         payload: form,
@@ -57,9 +66,7 @@ export const getCategories = () => async (dispatch) => {
     type: CATEGORY_REQUEST,
   });
   try {
-    const { data } = await Axios.get(
-      "http://localhost:3001/clothe/all-categories"
-    );
+    const { data } = await Axios.get("/clothe/all-categories");
     dispatch({
       type: CATEGORY_SUCCESS,
       payload: data,
@@ -67,6 +74,39 @@ export const getCategories = () => async (dispatch) => {
   } catch (error) {
     dispatch({
       type: CATEGORY_FAIL,
+      payload: error.message,
+    });
+  }
+};
+
+export const filterProducts = (products, category) => (dispatch) => {
+  dispatch({
+    type: FILTER_PRODUCTS_BY_CATEGORY,
+    payload: {
+      products:
+        category === "all"
+          ? products.allClothes
+          : products.allClothes.filter((product) =>
+              product.categories.some((el) => el.name === category)
+            ),
+    },
+  });
+};
+
+export const getProductDetail = (id) => async (dispatch) => {
+  dispatch({
+    type: PRODUCT_REQUEST,
+  });
+  try {
+    const { data } = await Axios.get(`/clothe/${id}`);
+
+    dispatch({
+      type: PRODUCT_DETAIL,
+      payload: data.data,
+    });
+  } catch (error) {
+    dispatch({
+      type: PRODUCT_FAIL,
       payload: error.message,
     });
   }
