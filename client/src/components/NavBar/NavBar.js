@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Login from "../Login/Login";
 import LogOut from "../Login/LogOut";
 import {
@@ -15,9 +15,20 @@ import { FaUser, FaShoppingCart } from "react-icons/fa";
 
 import { useAuth0 } from "@auth0/auth0-react";
 import SearchBar from "../SearchBar/SearchBar";
+import { authorized } from "../../actions/authActions";
 const NavBar = () => {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-  console.log("userAuth0", user);
+  useEffect(() => {
+    (async () => {
+      try {
+        const token = await getAccessTokenSilently({});
+        console.log(token);
+        authorized(token);
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, [getAccessTokenSilently]);
   return (
     <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
       <Container>

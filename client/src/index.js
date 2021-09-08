@@ -12,6 +12,7 @@ ReactDOM.render(
       domain="dev-ls3m5tco.us.auth0.com"
       clientId="zj1FCNLdMJIfrfMWfYVG4WMHhdgdfUS9"
       redirectUri={window.location.origin}
+      audience="http://ecommerce-api.com"
     >
       <Provider store={store}>
         <BrowserRouter>
