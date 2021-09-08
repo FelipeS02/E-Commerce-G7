@@ -25,7 +25,7 @@ function AdminPanel(){
         sizes: {},
         sizeStock: [{name: '',stock:0}],
         categories: [],
-        // files: []
+        files: []
     })
 
     function handleInput(e){
@@ -85,6 +85,22 @@ function AdminPanel(){
             sizeStock: input.sizeStock.filter((t, tidx)=> idx !== tidx)
         })
     }
+
+    // const handleOnChangeImg = (e) => {
+    
+    //     var imageArray = [];
+    
+    //     for(const file of e.target.files){
+    //       var reader = new FileReader();
+    //       (function(file) {
+    //         var reader = new FileReader();
+    //         reader.onload = function(image) {
+    //           setImages((e) => e.concat(image.target.result))
+    //         };
+    //         reader.readAsDataURL(file);
+    //       })(file);
+    //     }
+    //   };
 //--------------------------------------------------------------------------------------------
     function handleSubmit(e){
         e.preventDefault();
@@ -108,15 +124,15 @@ function AdminPanel(){
             sizes: {},
             sizeStock: [{name: '',stock:0}],
             categories: [],
-            // files:[]
+            files:[]
         })
     }
 
     return (
         <div>
             <form 
-            action='/admin/create-clothe' 
-            method='post' 
+            // action='/admin/create-clothe' 
+            // method='post' 
             enctype='multipart/form-data'
             onSubmit={handleSubmit}
             >
@@ -199,11 +215,19 @@ function AdminPanel(){
                     </span>
                 ))}
                 </div>
-                <input
+                {/* <input
                 type='file'
                 name='media'
                 multiple
+                /> */}
+                <input
+                type="file"
+                id="file"
+                name="media"
+                multiple
                 />
+
+
                 <button type='submit'>SUBMIT</button>
             </form>
         </div>

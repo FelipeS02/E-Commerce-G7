@@ -98,16 +98,17 @@ const setMedia = async (mediaArray, clothe) => {
 const jwtAuthz = require("express-jwt-authz");
 // const checkScopes = (permissions) => jwtAuthz(permissions);checkScopes(['write:admin'])
 
-router.post("/create-clothe", async (req, res) => {
+router.post("/create-clothe",async (req, res) => {
   try {
-    const {
-      body: { categories, type, sizes },
-      files,
-    } = req;
-    // const { categories, type, sizes, files } = req.body;
+    // const {
+    //   body: { categories, type, sizes },
+    //   files,
+    // } = req;
+    const { categories, type, sizes, files } = req.body;
     console.log(req.body)
     console.log(req.files)
     if (validateReq(req.body, files)) {
+      console.log('se valido')
       const newClothe = await Clothe.create(req.body);
       console.log('creo bien la prenda')
       await Promise.all([
