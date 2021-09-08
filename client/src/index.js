@@ -15,9 +15,10 @@ axios.defaults.baseURL = process.env.REACT_APP_API || "http://localhost:3001";
 ReactDOM.render(
   <React.StrictMode>
     <Auth0Provider
-      domain="dev-ls3m5tco.us.auth0.com"
-      clientId="zj1FCNLdMJIfrfMWfYVG4WMHhdgdfUS9"
+      domain="dev-1ik4n80w.us.auth0.com"
+      clientId="5xiJ8pQnMvXFB8qEhaTcr1SwqU178xI0"
       redirectUri={window.location.origin}
+      audience="https://ecommerce7"
     >
       <Provider store={store}>
         <BrowserRouter>

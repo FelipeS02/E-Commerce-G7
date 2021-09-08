@@ -17,13 +17,13 @@ const SideBarFilter = (props) => {
   }
   return (
     <ListGroup as="ul" onClick={toggleHandler}>
-      {categories.map((category) => (
+      {categories.categories.map((category) => (
         <ListGroup.Item
           as="li"
-          id={category.name}
-          className={activeCategory === category.name ? "active" : ""}
+          id={category}
+          className={activeCategory === category ? "active" : ""}
         >
-          {category.name}
+          {category}
         </ListGroup.Item>
       ))}
     </ListGroup>

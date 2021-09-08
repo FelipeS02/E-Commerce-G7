@@ -1,23 +1,26 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Login from "../Login/Login";
 import LogOut from "../Login/LogOut";
-import {
-  Navbar,
-  Nav,
-  Form,
-  FormControl,
-  Button,
-  Container,
-  NavDropdown,
-} from "react-bootstrap";
+import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
-
 import { useAuth0 } from "@auth0/auth0-react";
 import SearchBar from "../SearchBar/SearchBar";
+import { addingUserToDB, getAccessToken } from "../../actions/authActions";
 const NavBar = () => {
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
-  console.log("userAuth0", user);
+  useEffect(() => {
+    const getUserMetadata = async () => {
+      try {
+        const accessToken = await getAccessTokenSilently();
+        getAccessToken(accessToken);
+        addingUserToDB(user.name, user.email);
+      } catch (e) {
+        console.log(e.messsage);
+      }
+    };
+    getUserMetadata();
+  }, [getAccessTokenSilently, user]);
   return (
     <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
       <Container>
