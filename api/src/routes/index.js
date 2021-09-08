@@ -15,7 +15,7 @@ const getOrderById = require("./clothe/order/getOrderById.js");
 const chargeDatabase = require("./admin/chargeDb.js");
 const deleteFromOrder = require("./clothe/order/deleteFromOrder.js");
 const allCategories = require("./clothe/allCategories.js");
-
+const login = require("./login/login.js");
 // Usamos Routes
 // Routes Users
 router.use("/clothe", allCategories);
@@ -34,5 +34,5 @@ router.use("/admin", userControls);
 router.use("/admin", setAdmins);
 router.use("/admin", orderUpdate);
 router.use("/admin", chargeDatabase);
-
+router.use("/login", login);
 module.exports = router;
