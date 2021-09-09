@@ -5,6 +5,8 @@ import { getCategories } from "../../actions/ProductActions";
 
 function AdminPanel(){
     
+    let sizes = ["XS", "S", "M", "L", "XL", "XXL"];
+    let types = ["Remeras", "Camperas", "Camisas"]
     useEffect(() => {
         dispatch(getCategories());
     },[]);
@@ -157,13 +159,12 @@ function AdminPanel(){
                     value={input.color}
                     onChange={handleInput}
                 />
-                <label>Genero:</label>
-                <input
-                    type="text"
-                    name='genre'
-                    value={input.genre}
-                    onChange={handleInput}
-                />
+                <label>Género:</label>
+                    <select name='genre' onChange={handleInput}>
+                    <option value="Masculino" >Masculino</option>
+                    <option value="Femenino" selected>Femenino</option>
+                    <option value="Otro">Otro</option>
+                    </select>
                 <label>Detalles:</label>
                 <textarea
                     type='text'
@@ -172,20 +173,33 @@ function AdminPanel(){
                     onChange={handleInput}
                 />
                 <label>Tipos:</label>
-                <input
+                {/* <span> Elegí el tipo de tu prenda  */}
+                <select name='type' onChange={handleInput}>
+                    {
+                        types?.map((type, i) => (
+                            <option value={type} key={i}>{type}</option>
+                        ))
+                    }
+                </select>
+                {/* , si no está en las opciones, escríbilo 
+                  <input
                     type="text"
                     name='type'
                     value={input.type}
                     onChange={handleInput}
                 />
+                </span> */}
+                
                 <label>Talles:</label>
                 {input.sizeStock.map((talle, idx)=>(
                     <div key={`talle${idx}`}>
-                        <input
-                        type='text'
-                        value={talle.name}
-                        onChange={handleSize(idx)}
-                        />
+                       <select onChange={handleSize(idx)}>
+                            {
+                                sizes.map((size, i) => (
+                                    <option value={talle.name} key={i}>{size}</option>
+                                ))
+                            }
+                        </select>
                         <input
                         type='number'
                         value={talle.stock}
@@ -207,7 +221,7 @@ function AdminPanel(){
                     <span key = {cat}>
                         <input 
                         type="checkbox" 
-                        name='types'
+                        name='categories'
                         value={cat}
                         onChange={handleCheckBox}
                         />

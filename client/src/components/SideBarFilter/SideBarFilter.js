@@ -29,7 +29,7 @@ const SideBarFilter = (props) => {
       >
         Todas las categorías
       </ListGroup.Item>
-      {categories.map((category) => (
+      {categories?.map((category) => (
         <ListGroup.Item
           as="li"
           id={category.name}
