@@ -8,7 +8,7 @@ const {
   statusCodes: { SUCCESS, ERROR },
 } = require("../../../controller/responseMessages");
 
-router.get("/user-orders", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const { userId, orderStatus } = req.query;
 

@@ -9,7 +9,7 @@ const {
 const jwtAuthz = require('express-jwt-authz');
 const checkScopes = permissions => jwtAuthz(permissions);
 
-router.get("/user-control", checkScopes(['read:admin']), async (_req, res) => {
+router.get("/", checkScopes(['read:admin']), async (_req, res) => {
   try {
     const allUsers = await User.findAll();
     return res.json(responseMessage(SUCCESS, allUsers));

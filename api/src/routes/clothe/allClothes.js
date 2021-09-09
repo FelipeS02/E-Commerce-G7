@@ -7,7 +7,7 @@ const {
   statusCodes: { SUCCESS, ERROR },
 } = require("../../controller/responseMessages");
 
-router.get("/all-clothes", async (req, res) => {
+router.get("/", async (req, res) => {
   try {
     const {
       offset = 0,

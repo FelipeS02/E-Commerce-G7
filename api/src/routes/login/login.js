@@ -23,7 +23,7 @@ var jwtCheck = jwt({
 
 router.use(jwtCheck);
 
-router.post("/login", async (req, res) => {
+router.post("/", async (req, res) => {
   let isAdmin = req.user.permissions.includes(
     "read:admin" || "write:admin" || "delete:admin"
   )

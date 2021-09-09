@@ -7,7 +7,7 @@ const {
   statusCodes: { SUCCESS, ERROR },
 } = require("../../../controller/responseMessages");
 
-router.post("/order-add/:userId", async (req, res) => {
+router.post("/:userId", async (req, res) => {
   try {
     const {
       body: {

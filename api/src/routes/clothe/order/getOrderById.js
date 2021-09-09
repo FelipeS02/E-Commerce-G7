@@ -7,7 +7,7 @@ const {
   statusCodes: { SUCCESS, ERROR },
 } = require("../../../controller/responseMessages");
 
-router.get("/order-detail/:orderId", async (req, res) => {
+router.get("/:orderId", async (req, res) => {
   try {
     const { orderId } = req.params;
     if (validate(orderId)) {

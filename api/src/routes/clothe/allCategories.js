@@ -6,7 +6,7 @@ const {
   statusCodes: { SUCCESS, ERROR },
 } = require("../../controller/responseMessages");
 
-router.get("/all-categories", async (_req, res) => {
+router.get("/", async (_req, res) => {
   try {
     const [dbCategories, dbTypes] = await Promise.all([
       await Category.findAll({

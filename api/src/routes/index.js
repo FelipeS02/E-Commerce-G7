@@ -7,6 +7,8 @@ const adminRoutes = require("./admin/index.js");
 const login = require("./login/login.js");
 
 // Use de Routes
-router.use("/", clotheRoutes, adminRoutes, login);
+router.use("/clothe", clotheRoutes);
+router.use("/admin", adminRoutes)
+router.use("/login", login)
 
 module.exports = router;

@@ -8,7 +8,7 @@ const {
   statusCodes: { SUCCESS, ERROR },
 } = require("../../../controller/responseMessages");
 
-router.delete("/order-delete/:orderId/:clotheId", async (req, res) => {
+router.delete("/:orderId/:clotheId", async (req, res) => {
   try {
     const { orderId, clotheId, size } = req.params;
     if (validate(orderId) && typeof clotheId === "number") {

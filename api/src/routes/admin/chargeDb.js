@@ -83,7 +83,7 @@ const jwtAuthz = require("express-jwt-authz");
 const checkScopes = (permissions) => jwtAuthz(permissions);
 
 router.get(
-  "/charge-database",
+  "/",
   // Auth0
   // checkScopes(['write:admin']),
   async (_req, res) => {

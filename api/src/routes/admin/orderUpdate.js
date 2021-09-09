@@ -11,7 +11,7 @@ const {
 const jwtAuthz = require("express-jwt-authz");
 const checkScopes = (permissions) => jwtAuthz(permissions);
 
-router.get("/order-update/:orderId", checkScopes(['read:admin']), async (req, res) => {
+router.get("/:orderId", checkScopes(['read:admin']), async (req, res) => {
   try {
     const {
       params: { orderId },

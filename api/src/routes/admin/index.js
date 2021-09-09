@@ -9,10 +9,10 @@ const setAdmins = require("./setAdmins.js");
 const userControls = require("./userControls.js");
 
 // Use de Routes
-router.use("/admin", chargeDb);
-router.use("/admin", createClothe);
-router.use("/admin", orderUpdate);
-router.use("/admin", setAdmins);
-router.use("/admin", userControls);
+router.use("/charge-database", chargeDb);
+router.use("/create-clothe", createClothe);
+router.use("/order-update/:orderId", orderUpdate);
+router.use("/set-admin/:userId", setAdmins);
+router.use("/users-control", userControls);
 
 module.exports = router;
