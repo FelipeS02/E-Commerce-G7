@@ -11,7 +11,7 @@ export const getAccessToken = (token) => {
 
 export const addingUserToDB = async (name, email) => {
   try {
-    const { data } = await axios.post("/login/login", {
+    const { data } = await axios.post("/login", {
       name,
       email,
     });

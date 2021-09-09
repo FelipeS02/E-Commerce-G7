@@ -24,31 +24,45 @@ var jwtCheck = jwt({
 router.use(jwtCheck);
 
 router.post("/login", async (req, res) => {
-  console.log(req.user);
+  let isAdmin = req.user.permissions.includes(
+    "read:admin" || "write:admin" || "delete:admin"
+  )
+    ? true
+    : false;
   const { name, email } = req.body;
   try {
-    userExists = User.findOne({
+    userExists = await User.findOne({
       where: {
         email: { [Op.iLike]: `%${email}%` },
       },
     });
-    if (!userExists) {
-      const newUser = User.create({
-        name: name,
-        email: email,
-      });
+    if (userExists)
       return res.json(
         responseMessage(SUCCESS, {
-          message: "Usuario creado",
+          message: "Usuario existente",
           userData: {
             name,
             email,
+            isAdmin,
           },
         })
       );
-    } else {
-      return res.status(200).json({ succes: true });
-    }
+
+    const newUser = await User.create({
+      name: name,
+      email: email,
+      isAdmin: isAdmin,
+    });
+    return res.json(
+      responseMessage(SUCCESS, {
+        message: "Usuario creado",
+        userData: {
+          name,
+          email,
+          isAdmin,
+        },
+      })
+    );
   } catch (err) {
     const { message } = err;
     return res.json(responseMessage(ERROR, message));

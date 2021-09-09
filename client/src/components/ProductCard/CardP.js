@@ -16,7 +16,7 @@ const CardP = (props) => {
   console.log(picture);
   return (
     <Card style={{ width: "20rem" }} className="my-4">
-      <Card.Img variant="top" src={`${picture}`} />
+      <Card.Img variant="top" src={`/${picture}`} />
 
       <Card.Body className="justify-content-center card text-center">
         <Card.Title>{name}</Card.Title>
