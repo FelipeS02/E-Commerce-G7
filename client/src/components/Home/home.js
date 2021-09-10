@@ -6,6 +6,7 @@ import Footer from "../Footer/Footer";
 import PaginationC from "../Pagination/PaginationC";
 import CardP from "../ProductCard/CardP";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
+import Loading from "../Loading/Loading";
 
 const Home = (props) => {
   const dispatch = useDispatch();
@@ -21,14 +22,14 @@ const Home = (props) => {
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dw322c4343/01sept/full4nike.jpg?sw=1440&sfrm=png",
   ];
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
     <div>
       <Carousel variant="dark">
         {imgUrl.map((item, index) => (
-          <Carousel.Item interval={1000}>
+          <Carousel.Item interval={1000} key={index}>
             <img className="d-block w-100" src={item} alt={index} />
           </Carousel.Item>
         ))}
@@ -42,11 +43,13 @@ const Home = (props) => {
           <SideBarFilter></SideBarFilter>
         </Col>
         <Col className="d-flex align-content-center flex-wrap justify-content-between">
-          {products.allClothes.map((product) => (
+          {products.allClothes.map((product, index) => (
             <CardP
+              key={index}
               name={product.name}
               price={product.price}
               picture={product.media[0].data}
+              sizes={product.sizes}
             />
           ))}
         </Col>

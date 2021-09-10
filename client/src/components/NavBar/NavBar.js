@@ -6,21 +6,35 @@ import { Link } from "react-router-dom";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
 import SearchBar from "../SearchBar/SearchBar";
-import { addingUserToDB, getAccessToken } from "../../actions/authActions";
+import {
+  addingUserToDB,
+  getAccessToken,
+  removingUserInfo,
+} from "../../actions/authActions";
+import { useDispatch, useSelector } from "react-redux";
 const NavBar = () => {
+  const dispatch = useDispatch();
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
+  const userState = useSelector((state) => state.userState);
+  const { userInfo } = userState;
   useEffect(() => {
     const getUserMetadata = async () => {
       try {
         const accessToken = await getAccessTokenSilently();
         getAccessToken(accessToken);
-        addingUserToDB(user.name, user.email);
+        dispatch(addingUserToDB(user.name, user.email));
       } catch (e) {
         console.log(e.messsage);
       }
     };
     getUserMetadata();
   }, [getAccessTokenSilently, user]);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      dispatch(removingUserInfo());
+    }
+  }, [dispatch, isAuthenticated]);
   return (
     <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
       <Container>
@@ -92,6 +106,14 @@ const NavBar = () => {
                   </NavDropdown.Item>
                 )}
               </NavDropdown>
+              {userInfo && userInfo.isAdmin && (
+                <NavDropdown title="Admin" id="nav-dropdown">
+                  <NavDropdown.Item eventKey="4.1">Panel</NavDropdown.Item>
+                  <NavDropdown.Item eventKey="4.2">Productos</NavDropdown.Item>
+                  <NavDropdown.Item eventKey="4.3">Ordenes</NavDropdown.Item>
+                  <NavDropdown.Item eventKey="4.4">Usuarios</NavDropdown.Item>
+                </NavDropdown>
+              )}
             </Nav>
           </Container>
         </Navbar.Collapse>

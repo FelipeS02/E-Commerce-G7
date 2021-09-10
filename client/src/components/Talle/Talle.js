@@ -1,12 +1,19 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-const Talle = () => {
-  const size = ["XS", "S", "M", "L", "XL", "XXL"];
+const Talle = (props) => {
+  const { sizes, talleHandler } = props;
   return (
-    <Form.Control as="select" aria-label="Default select example">
+    <Form.Control
+      as="select"
+      onChange={(e) => {
+        talleHandler(e.target.value);
+      }}
+    >
       <option>Talle</option>
-      {size.map((item) => (
-        <option value={item}>{item}</option>
+      {sizes?.map((item, index) => (
+        <option key={index} value={index}>
+          {item.size}
+        </option>
       ))}
     </Form.Control>
   );
