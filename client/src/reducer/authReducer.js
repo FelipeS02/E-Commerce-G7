@@ -1,9 +1,32 @@
+import {
+  USER_INFO_FAIL,
+  USER_INFO_SUCCESS,
+  USER_LOGOUT,
+} from "../constants/productConstants";
 const initialState = {
-  login: {},
+  userInfo: {},
 };
 
 function authReducer(state = initialState, action) {
   switch (action.type) {
+    case USER_INFO_SUCCESS:
+      return {
+        ...state,
+        userInfo: action.payload,
+        error: false,
+      };
+    case USER_INFO_FAIL:
+      return {
+        ...state,
+        userInfo: {},
+        error: action.paload,
+      };
+    case USER_LOGOUT:
+      return {
+        ...state,
+        userInfo: {},
+        error: false,
+      };
     default:
       return state;
   }
