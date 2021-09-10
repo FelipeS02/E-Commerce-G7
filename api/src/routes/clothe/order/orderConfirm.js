@@ -1,54 +1,71 @@
 const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
-const { User, Payment, Direction, Order } = require("../../../db");
+const {
+  User,
+  Payment,
+  Direction,
+  Order,
+  Size,
+  Clothe,
+} = require("../../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
 } = require("../../../controller/responseMessages");
 
-router.post("/:userId/:orderId", async (req, res) => {
+const clotheUpdate = async (clothesArray) => {
+  const process = clothesArray.map(async (e) => {
+    const { quantity, size, clotheId } = e;
+    const currentClotheSize = await Size.findOne({
+      where: { size: size },
+      include: {
+        model: Clothe,
+        where: {
+          id: clotheId,
+        },
+      },
+    });
+    await currentClotheSize.decrement(["stock"], { by: quantity });
+  });
+  await Promise.all(process);
+};
+
+router.post("/", async (req, res) => {
   try {
     const {
-      params: { userId, orderId },
       body: {
-        data: { payment, direction },
+        data: { orderId, payment, direction, clothes, userId },
       },
     } = req;
+
+    const validPayment = ["Efectivo", "MercadoPago"];
+
     if (
-      (payment === "MercadoPago" || payment === "Efectivo") &&
-      direction.length > 0 &&
+      direction.length !== "" &&
       validate(userId) &&
-      validate(orderId)
+      validate(orderId) &&
+      clothes.length > 0
     ) {
-      let userOrder = await User.findAll({
-        where: { id: userId },
-        include: {
-          model: Order,
-          where: {
-            id: orderId,
+      const [currentOrder, newPayment, newDirection] = await Promise.all([
+        await Order.findOne({
+          where: { state: "CARRITO" },
+          include: {
+            model: User,
+            where: { id: userId },
           },
-        },
-      });
-      if (userOrder.length > 0) {
-        const [currentOrder, newPayment, newDirection] = await Promise.all([
-          await Order.findByPk(userOrder[0].orders[0].id),
-          await Payment.create({ payment: payment }),
-          await Direction.create({ data: direction }),
-        ]);
+        }),
+        await Payment.create({ payment: payment }),
+        await Direction.create({ data: direction }),
+      ]);
 
-        await Promise.all([
-          await currentOrder.addPayment(newPayment),
-          await currentOrder.addDirection(newDirection),
-          await currentOrder.update({ state: "CONFIRMADA" }),
-        ]);
-
-        res.json(responseMessage(SUCCESS, currentOrder));
-      } else {
-        res.json(
-          responseMessage(ERROR, "El usuario no tiene asignada esa orden")
-        );
-      }
+      await Promise.all([
+        await currentOrder.addPayment(newPayment),
+        await currentOrder.addDirection(newDirection),
+        await clotheUpdate(clothes),
+        await currentOrder.update({ state: "CONFIRMADA" }),
+      ]);
+      res.json(responseMessage(SUCCESS, currentOrder));
     } else {
       res.json(
         responseMessage(

@@ -1,79 +1,59 @@
 const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
-const { Clothe, User, Order, Size } = require("../../../db");
+const { Clothe, User, Order } = require("../../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
 } = require("../../../controller/responseMessages");
 
-router.post("/:userId", async (req, res) => {
+router.put("/", async (req, res) => {
   try {
     const {
       body: {
-        data: {
-          clothe: { size, quantity, clotheId },
-        },
+        data: { size, quantity, clotheId, userId },
       },
-      params: { userId },
     } = req;
 
-    if (clothe && userId && validate(userId) && typeof clothe === "object") {
-      const [currentClothe, userOrder] = await Promise.all([
-        await Clothe.findByPk(clotheId),
-        await User.findAll({
+    if (userId && validate(userId)) {
+      const [userFindOrder, currentClothe] = await Promise.all([
+        await User.findOne({
           where: { id: userId },
           include: {
             model: Order,
             where: {
-              status: "CARRITO",
+              state: "CARRITO",
             },
           },
         }),
+        await Clothe.findByPk(clotheId),
       ]);
-      //Decremento el stock por la cantidad
-      const sizeOfClothe = await Size.findOne({
-        where: {
-          size: size,
-        },
-        include: {
-          model: Clothe,
-          where: {
-            id: clotheId,
-          },
-        },
-      });
-      await sizeOfClothe.decrement(["stock"], { By: quantity });
-      //Calculo el precio por las unidades
+
       const price = currentClothe.price * quantity;
-      if (userOrder.length === 0) {
-        //? Si no la encuentra devuelve []
-        const [user, newOrder] = await Promise.all([
-          await User.findByPk(userId),
-          //Creo la orden con valor inicial del producto que me llego por id.
-          await Order.create({
-            total: price,
-          }),
-        ]);
-
+      
+      if (!userFindOrder) {
+        const currentUser = await User.findByPk(userId);
+        const newOrder = await Order.create({ total: price });
         await Promise.all([
-          //Reduzco el stock por la cantidad
-          await newOrder.addClothe(currentClothe, { quantity, size }),
-          await user.addOrder(newOrder),
+          await newOrder.addClothe(clotheId, {
+            through: { quantity, size },
+          }),
+          await currentUser.addOrder(newOrder.id),
         ]);
-
-        return res.json(responseMessage(SUCCESS, user));
       } else {
-        //? Si existe la orden la busco por el id que me trae la relacion
-        const currentOrder = await Order.findByPk(userOrder[0].orders[0].id);
-
+        const currentOrder = await Order.findByPk(
+          userFindOrder.orders[0].dataValues.id
+        );
         await Promise.all([
           await currentOrder.increment(["total"], { by: price }),
-          await currentOrder.addClothe(currentClothe, { quantity, size }),
+          await currentOrder.addClothe(clotheId, {
+            through: { quantity, size },
+          }),
         ]);
-
-        return res.json(responseMessage(SUCCESS, currentOrder));
       }
+      return res.json(
+        responseMessage(SUCCESS, "Prenda agregada correctamente")
+      );
     } else {
       return res
         .status(400)

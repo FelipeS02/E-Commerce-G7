@@ -1,21 +1,33 @@
 const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
-const { Order_clothes, Order, Clothe } = require("../../../db");
-const { Op } = require("sequelize");
+const { Order_clothes, Order, Clothe, Size } = require("../../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
 } = require("../../../controller/responseMessages");
 
-router.delete("/:orderId/:clotheId", async (req, res) => {
+router.put("/", async (req, res) => {
   try {
-    const { orderId, clotheId, size } = req.params;
-    if (validate(orderId) && typeof clotheId === "number") {
+    const {
+      body: {
+        data: { orderId, size, clotheId },
+      },
+    } = req;
+
+    const validSizes = ["XS", "S", "M", "L", "XL", "XXL"];
+
+    if (
+      validate(orderId) &&
+      typeof clotheId === "number" &&
+      validSizes.includes(size)
+    ) {
       //? En la tabla relacional, busco una seccion donde se encuentran relacionados la orden y el producto
       const orderClothe = await Order_clothes.findOne({
         where: {
-          [Op.and]: [{ orderId: orderId }, { clotheId: clotheId }, {size: size}],
+          clotheId,
+          size,
+          orderId,
         },
       });
 
@@ -24,48 +36,35 @@ router.delete("/:orderId/:clotheId", async (req, res) => {
           responseMessage(ERROR, "La orden no incluye este producto")
         );
       } else {
-        //Si existe
-        const [currentClothe, currentOrder, sizeOfClothe] = await Promise.all([
-          await Clothe.findByPk(clotheId),
-          await Order.findByPk(orderId),
-          await Size.findOne({
-            where: {
-              size: size,
-            },
+        const [currentClothe, currentOrder] = await Promise.all([
+          await Clothe.findOne({
+            where: { id: clotheId },
             include: {
-              model: Clothe,
-              where: {
-                id: clotheId,
-              },
+              model: Size,
+              where: { size },
             },
           }),
+          await Order.findByPk(orderId),
         ]);
+
+        const sizeOfClothe = await Size.findByPk(
+          currentClothe.sizes[0].dataValues.id
+        );
 
         const price = currentClothe.price * orderClothe.quantity;
 
-        //Incremento el stock de la prenda y decremento el valor total de la orden
         await Promise.all([
           await currentOrder.decrement(["total"], { by: price }),
-          await sizeOfClothe.increment(["stock"], { by: orderClothe.quantity})
+          await sizeOfClothe.increment(["stock"], { by: orderClothe.quantity }),
+          await orderClothe.destroy(),
         ]);
 
-        //Y destruyo la relacion, por lo tanto ya no figura dentro de la orden
-        const result = await orderClothe.destroy();
-        if (result === 1) {
-          return res.json(
-            responseMessage(
-              SUCCESS,
-              `Producto #${clotheId} eliminado de la orden #${orderId}`
-            )
-          );
-        } else {
-          return res.json(
-            responseMessage(
-              ERROR,
-              "El producto no pudo ser eliminado de la orden"
-            )
-          );
-        }
+        return res.json(
+          responseMessage(
+            SUCCESS,
+            `Producto #${clotheId} eliminado de la orden #${orderId}`
+          )
+        );
       }
     } else {
       return res.json(

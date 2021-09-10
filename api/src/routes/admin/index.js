@@ -11,8 +11,8 @@ const userControls = require("./userControls.js");
 // Use de Routes
 router.use("/charge-database", chargeDb);
 router.use("/create-clothe", createClothe);
-router.use("/order-update/:orderId", orderUpdate);
-router.use("/set-admin/:userId", setAdmins);
+router.use("/order-update", orderUpdate);
+router.use("/set-admin", setAdmins);
 router.use("/users-control", userControls);
 
 module.exports = router;

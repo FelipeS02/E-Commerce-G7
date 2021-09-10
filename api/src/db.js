@@ -77,8 +77,11 @@ const {
   Size,
   Type,
 } = sequelize.models;
+
 // Aca vendrian las relaciones
 User.belongsToMany(Direction, { through: "user_directions" });
+User.belongsToMany(Order, { through: "user_orders" });
+Order.belongsTo(User, { through: "user_orders" });
 
 // Ropa y Categorias
 Category.belongsToMany(Clothe, { through: "clothe_category" });
@@ -94,8 +97,8 @@ Clothe.belongsToMany(Type, { through: "clothe_type" });
 Type.belongsToMany(Clothe, { through: "clothe_type" });
 
 //Orden y ropa
-User.belongsToMany(Order, { through: "user_orders" });
 Clothe.belongsToMany(Order, { through: Order_clothes });
+Order.belongsToMany(Clothe, { through: Order_clothes });
 
 // Orden y direccion
 Direction.belongsToMany(Order, { through: "order_directions" });
