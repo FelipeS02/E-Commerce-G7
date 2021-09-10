@@ -1,23 +1,22 @@
 import React, { useState } from "react";
 import { Row, Button, Col, Form } from "react-bootstrap";
 import { FaShoppingCart } from "react-icons/fa";
-const AddToCar = () => {
-  const [itemNumber, setItemNumber] = useState("1");
-  const itemHandler = (e) => {
-    setItemNumber(e.target.value);
-  };
+const AddToCar = (props) => {
+  const { maxValue, itemHandler, quantity } = props;
+
   return (
     <Row>
-      <Col xs={3}>
+      <Col xs={4}>
         <Form.Control
           type="number"
-          min="1"
-          value={itemNumber}
-          onChange={itemHandler}
+          min="0"
+          max={maxValue}
+          value={quantity}
+          onChange={(e) => itemHandler(e.target.value)}
         />
       </Col>
-      <Col xs={9}>
-        <Button variant="primary">
+      <Col xs={8}>
+        <Button variant="primary" className={maxValue === 0 ? "disabled" : ""}>
           <FaShoppingCart /> Agregar al carrito
         </Button>
       </Col>
