@@ -15,9 +15,19 @@ const validateReq = (data, files) => {
     genre,
     detail,
     type,
-    sizes,
+    sizeName,
+    sizeStock,
     categories,
   } = data;
+  console.log(`name => ${name}`)
+  console.log(`price => ${price}`)
+  console.log(`color => ${color}`)
+  console.log(`genre => ${genre}`)
+  console.log(`detail => ${detail}`)
+  console.log(`type => ${type}`)
+  console.log(`sizesName => ${sizeName}`)
+  console.log(`sizesStock => ${sizeStock}`)
+  console.log(`categories => ${categories}`)
   if (
     (typeof name === "string" &&
       name !== "" &&
@@ -26,7 +36,11 @@ const validateReq = (data, files) => {
       typeof genre === "string" &&
       typeof detail === "string" &&
       typeof type === "string" &&
-      typeof sizes === "object" &&
+      Array.isArray(sizeName) &&
+      sizeName.length > 0 &&
+      Array.isArray(sizeStock) &&
+      sizeStock.length> 0 &&
+      sizeName.length === sizeStock.length &&
       Array.isArray(categories) &&
       categories.length > 0 &&
       Array.isArray(files)
@@ -55,13 +69,11 @@ const setCategories = async (categoriesArray, clothe) => {
 };
 
 const setType = async (type, clothe) => {
-  console.log('entro a agregar tipos')
   const currentType = await Type.findOne({
     where: { name: { [Op.iLike]: `%${type}%` } },
   });
 
   if (!currentType) {
-    console.log('el tipo no existe')
     const newType = await Type.create({
       name: type[0].toUpperCase() + type.substr(1),
     });
@@ -69,10 +81,13 @@ const setType = async (type, clothe) => {
   } else {
     await clothe.addType(currentType.id);
   }
-  console.log('se adiciono typos')
 };
 
-const setSizes = async (sizeObject, clothe) => {
+const setSizes = async (sizeN, sizeS, clothe) => {
+  let sizeObject = {}
+  for(i=0; i<sizeN.length; i++){
+    sizeObject[sizeN[i]] = sizeS[i]
+  }
   const claves = Object.keys(sizeObject);
   const clotheSizes = claves.map(async (e) => {
     if (sizeObject[e] > 0) {
@@ -100,20 +115,15 @@ const jwtAuthz = require("express-jwt-authz");
 
 router.post("/create-clothe",async (req, res) => {
   try {
-    // const {
-    //   body: { categories, type, sizes },
-    //   files,
-    // } = req;
-    const { categories, type, sizes, files } = req.body;
-    console.log(req.body)
-    console.log(req.files)
+    const {
+      body: { categories, type, sizeName, sizeStock },
+      files,
+    } = req;
     if (validateReq(req.body, files)) {
-      console.log('se valido')
       const newClothe = await Clothe.create(req.body);
-      console.log('creo bien la prenda')
       await Promise.all([
         await setType(type, newClothe),
-        await setSizes(sizes, newClothe),
+        await setSizes(sizeName, sizeStock, newClothe),
         await setCategories(categories, newClothe),
         await setMedia(files, newClothe),
       ]);
