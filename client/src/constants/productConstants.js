@@ -17,3 +17,8 @@ export const USER_LOGOUT = "USER_LOGOUT";
 export const GET_CART_FAIL = "GET_CART_FAIL";
 export const GET_CART_SUCCESS = "GET_CART_SUCCESS";
 export const GET_CART_LOADING = "GET_CART_LOADING";
+
+export const BASE_IMG_URL =
+  process.env.NODE_ENV === "production"
+    ? "https://e-commerce-g7.vercel.app/"
+    : "http://localhost:3001";

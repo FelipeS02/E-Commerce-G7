@@ -4,9 +4,8 @@ import AddToCar from "../AddToCar/AddToCar";
 import Talle from "../Talle/Talle";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../actions/cartAccions";
-import dotenv from "dotenv";
-dotenv.config();
-const BASE_IMG_URL = process.env.IMG_BASE_URL || "http://localhost:3001";
+import { BASE_IMG_URL } from "../../constants/productConstants";
+
 const CardP = (props) => {
   const dispatch = useDispatch();
   const { id, name, price, picture, sizes } = props;
