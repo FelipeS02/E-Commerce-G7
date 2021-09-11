@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { createClothe } from "../../actions/ProductActions";
-import { getCategories } from "../../actions/ProductActions";
+import { createClothe, getCategories } from "../../actions/ProductActions";
 
 function AdminPanel(){
     
-    let sizes = ["XS", "S", "M", "L", "XL", "XXL"];
+    let sizes = ["", "XS", "S", "M", "L", "XL", "XXL"];
+    let genres = ["", "Masculino", "Femenino", "Otro"]
 
     // Traemos categorias
     useEffect(() => {
@@ -26,10 +26,9 @@ function AdminPanel(){
         genre: '',
         detail: '',
         type:'',
-        sizes: {},
         sizeStock: [{name: '',stock:0}],
         categories: [],
-        files: []
+        mediaArray: null
     })
 
     function handleInput(e){
@@ -53,7 +52,7 @@ function AdminPanel(){
             });
         }
     }
-//--------------------------------------------------------------------------------------------
+
     const handleSize = idx => e => {
         const newsizeStock = input.sizeStock.map((talle, tidx)=>{
             if(idx!==tidx) return talle;
@@ -90,33 +89,34 @@ function AdminPanel(){
         })
     }
 
-    // const handleOnChangeImg = (e) => {
-    
-    //     var imageArray = [];
-    
-    //     for(const file of e.target.files){
-    //       var reader = new FileReader();
-    //       (function(file) {
-    //         var reader = new FileReader();
-    //         reader.onload = function(image) {
-    //           setImages((e) => e.concat(image.target.result))
-    //         };
-    //         reader.readAsDataURL(file);
-    //       })(file);
-    //     }
-    //   };
-//--------------------------------------------------------------------------------------------
+    const handlerOnChangeMedia = (e) => {
+        setInput({
+            ...input,
+            mediaArray: Object.values(e.target.files)
+        })
+    }
+
     function handleSubmit(e){
         e.preventDefault();
+        const data = new FormData()
+        data.append('name', input.name)
+        data.append('price', input.price)
+        data.append('color', input.color)
+        data.append('genre', input.genre)
+        data.append('detail', input.detail)
+        data.append('type', input.type)
+        input.categories.forEach(c=>{
+            data.append('categories', c)
+        })
         input.sizeStock.forEach(talle => {
-            setInput({
-                ...input,
-                sizes: input.sizes[talle.name] = talle.stock 
-            })
-            
+            data.append('sizeName', talle.name)
+            data.append('sizeStock', talle.stock)
         });
+        input.mediaArray.forEach(f=>{
+            data.append('media', f)
+        })
 
-        dispatch(createClothe(input));
+        dispatch(createClothe(data));
         alert('Product created succesfully');
         setInput({
             name: '',
@@ -125,21 +125,16 @@ function AdminPanel(){
             genre: '',
             detail: '',
             type: '',
-            sizes: {},
             sizeStock: [{name: '',stock:0}],
             categories: [],
-            files:[]
+            mediaArray: null
         })
     }
 
     return (
         <div>
-            <form 
-            // action='/admin/create-clothe' 
-            // method='post' 
-            enctype='multipart/form-data'
-            onSubmit={handleSubmit}
-            >
+            <form onSubmit={handleSubmit}>
+                <div>
                 <label>Nombre:</label>
                 <input
                     type="text"
@@ -147,6 +142,8 @@ function AdminPanel(){
                     value={input.name}
                     onChange={handleInput}
                 />
+                </div>
+                <div>
                 <label>Precio:</label>
                 <input
                     type="number"
@@ -154,6 +151,8 @@ function AdminPanel(){
                     value={input.price}
                     onChange={handleInput}
                 />
+                </div>
+                <div>
                 <label>Color:</label>
                 <input
                     type="text"
@@ -161,12 +160,16 @@ function AdminPanel(){
                     value={input.color}
                     onChange={handleInput}
                 />
+                </div>
+                <div>
                 <label>Género:</label>
                     <select name='genre' onChange={handleInput}>
-                    <option value="Masculino" >Masculino</option>
-                    <option value="Femenino" selected>Femenino</option>
-                    <option value="Otro">Otro</option>
+                        {genres.map((g, i) => (
+                            <option value={g} key={i}>{g}</option>
+                        ))}
                     </select>
+                </div>
+                <div>
                 <label>Detalles:</label>
                 <textarea
                     type='text'
@@ -174,8 +177,9 @@ function AdminPanel(){
                     value={input.detail}
                     onChange={handleInput}
                 />
+                </div>
+                <div>
                 <label>Tipos:</label>
-                {/* <span> Elegí el tipo de tu prenda  */}
                 <select name='type' onChange={handleInput}>
                     {
                         arrayTypes?.map((type, i) => (
@@ -183,22 +187,15 @@ function AdminPanel(){
                         ))
                     }
                 </select>
-                {/* , si no está en las opciones, escríbilo 
-                  <input
-                    type="text"
-                    name='type'
-                    value={input.type}
-                    onChange={handleInput}
-                />
-                </span> */}
-                
+                </div>
+                <div>
                 <label>Talles:</label>
                 {input.sizeStock.map((talle, idx)=>(
                     <div key={`talle${idx}`}>
-                       <select onChange={handleSize(idx)}>
+                        <select value={talle.name} onChange={handleSize(idx)}>
                             {
                                 sizes.map((size, i) => (
-                                    <option value={talle.name} key={i}>{size}</option>
+                                    <option value={size} key={i}>{size}</option>
                                 ))
                             }
                         </select>
@@ -217,6 +214,7 @@ function AdminPanel(){
                 type='button'
                 onClick={handleAddSizeStock}
                 >Agregar talle</button>
+                </div>               
                 <label >Categorias:</label>
                 <div>
                 {arrayCategories?.map((cat) =>(
@@ -231,19 +229,14 @@ function AdminPanel(){
                     </span>
                 ))}
                 </div>
-                {/* <input
-                type='file'
-                name='media'
-                multiple
-                /> */}
+                <div>
                 <input
                 type="file"
-                id="file"
-                name="media"
+                name="file"
                 multiple
+                onChange={handlerOnChangeMedia}
                 />
-
-
+                </div>
                 <button type='submit'>SUBMIT</button>
             </form>
         </div>
