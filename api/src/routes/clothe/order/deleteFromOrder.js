@@ -41,7 +41,7 @@ router.put("/", async (req, res) => {
             where: { id: clotheId },
             include: {
               model: Size,
-              where: { size },
+              where: { size, clotheId },
             },
           }),
           await Order.findByPk(orderId),

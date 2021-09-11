@@ -11,13 +11,7 @@ const clotheUpdate = async (clothesArray) => {
   const process = clothesArray.map(async (e) => {
     const { quantity, size, clotheId } = e;
     const currentClotheSize = await Size.findOne({
-      where: { size: size },
-      include: {
-        model: Clothe,
-        where: {
-          id: clotheId,
-        },
-      },
+      where: { size, clotheId },
     });
     await currentClotheSize.decrement(["stock"], { by: quantity });
   });
@@ -38,9 +32,10 @@ router.post("/", async (req, res) => {
       direction.length !== "" &&
       validate(userId) &&
       validate(orderId) &&
-      clothes.length > 0
+      clothes.length > 0 &&
+      validPayment.includes(payment)
     ) {
-      const [currentUserOrder, [currentDirection, isCreated]] = await Promise.all(
+      const [currentUser, currentOrder, [currentDirection, isCreated]] = await Promise.all(
         [
           await User.findOne({
             where: { id: userId },
@@ -51,6 +46,9 @@ router.post("/", async (req, res) => {
               },
             ],
           }),
+          await Order.findOne({
+            where: {id: orderId, userId}
+          }),
           await Direction.findOrCreate({
             where: {
               data: direction,
@@ -59,18 +57,21 @@ router.post("/", async (req, res) => {
         ]
       );
 
-      const userhasDirection = await currentUserOrder.hasDirection(
-        directionExist
+      const userhasDirection = await currentUser.hasDirection(
+        currentDirection
       );
 
       if (!userhasDirection) {
-        currentUserOrder.addDirection(currentDirection)
+        currentUser.addDirection(currentDirection)
       }
 
       await Promise.all([
-        await Order.update({ payment, direction }, { where: { id: orderId } }),
+        await currentOrder.update({
+          payment: payment,
+          direction: direction,
+          state: "CONFIRMADO",
+        }),
         await clotheUpdate(clothes),
-        await currentOrder.update({ state: "CONFIRMADA" }),
       ]);
 
       res.json(responseMessage(SUCCESS, "Orden confirmada correctamente"));
