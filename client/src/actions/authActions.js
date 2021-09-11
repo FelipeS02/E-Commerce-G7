@@ -20,7 +20,7 @@ export const addingUserToDB = (name, email) => async (dispatch) => {
       name,
       email,
     });
-    console.log(data.data.userData);
+    console.log(data);
     if (data.statusCode !== 200) {
       return dispatch({
         type: USER_INFO_FAIL,

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Login from "../Login/Login";
 import LogOut from "../Login/LogOut";
-import { Navbar, Nav, Container, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav, Container, NavDropdown, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -12,11 +12,13 @@ import {
   removingUserInfo,
 } from "../../actions/authActions";
 import { useDispatch, useSelector } from "react-redux";
+import Cart from "../Cart/Cart";
 const NavBar = () => {
   const dispatch = useDispatch();
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const userState = useSelector((state) => state.userState);
   const { userInfo } = userState;
+
   useEffect(() => {
     const getUserMetadata = async () => {
       try {
@@ -67,8 +69,7 @@ const NavBar = () => {
           <Container>
             <Nav className="justify-content-end align-items-center">
               <Nav.Item>
-                <FaShoppingCart size="1.3rem" color="white" />
-                <span class="badge">10</span>
+                <Cart />
               </Nav.Item>
 
               <NavDropdown
@@ -86,9 +87,15 @@ const NavBar = () => {
                 }
                 id="nav-dropdown"
               >
-                {isAuthenticated ? (
+                {isAuthenticated && (
                   <>
-                    <NavDropdown.Item eventKey="4.1">Perfil</NavDropdown.Item>
+                    <NavDropdown.Item
+                      eventKey="4.1"
+                      as={Link}
+                      to="/user/userProfile"
+                    >
+                      Perfil
+                    </NavDropdown.Item>
                     <NavDropdown.Item eventKey="4.2">
                       Mis pedidos
                     </NavDropdown.Item>
@@ -96,14 +103,8 @@ const NavBar = () => {
                       Lista de deseos
                     </NavDropdown.Item>
                     <NavDropdown.Divider />
-                    <NavDropdown.Item eventKey="4.4">
-                      <LogOut />
-                    </NavDropdown.Item>
+                    <NavDropdown.Item eventKey="4.4"></NavDropdown.Item>
                   </>
-                ) : (
-                  <NavDropdown.Item eventKey="4.4">
-                    <Login />
-                  </NavDropdown.Item>
                 )}
               </NavDropdown>
               {userInfo && userInfo.isAdmin && (
@@ -114,6 +115,7 @@ const NavBar = () => {
                   <NavDropdown.Item eventKey="4.4">Usuarios</NavDropdown.Item>
                 </NavDropdown>
               )}
+              {!isAuthenticated ? <Login /> : <LogOut />}
             </Nav>
           </Container>
         </Navbar.Collapse>
