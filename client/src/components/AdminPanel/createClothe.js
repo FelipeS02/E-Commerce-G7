@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { createClothe, getCategories } from "../../actions/ProductActions";
 import { Form, Button } from "react-bootstrap"
+import { Link, useHistory } from "react-router-dom";
 
 function AdminPanel(){
-    
+    let history = useHistory();
     let sizes = ["XS", "S", "M", "L", "XL", "XXL"];
     let genres = ["Masculino", "Femenino", "Otro"]
 
@@ -106,14 +107,14 @@ function AdminPanel(){
         data.append('genre', input.genre)
         data.append('detail', input.detail)
         data.append('type', input.type)
-        input.categories.forEach(c=>{
+        input.categories?.forEach(c=>{
             data.append('categories', c)
         })
-        input.sizeStock.forEach(talle => {
+        input.sizeStock?.forEach(talle => {
             data.append('sizeName', talle.name)
             data.append('sizeStock', talle.stock)
         });
-        input.mediaArray.forEach(f=>{
+        input.mediaArray?.forEach(f=>{
             data.append('media', f)
         })
 
@@ -130,6 +131,7 @@ function AdminPanel(){
             categories: [],
             mediaArray: null
         })
+        history.push("/admin");
     }
 
     return (
@@ -167,7 +169,7 @@ function AdminPanel(){
                     <Form.Label>Género:</Form.Label>
                         <div>
                             <select style={{padding: '0.6rem', }} name='genre' onChange={handleInput}>
-                                <option>Selecciona un genero</option>
+                                <option></option>
                                 {genres.map((g, i) => (
                                     <option value={g} key={i}>{g}</option>
                                 ))}
@@ -187,6 +189,7 @@ function AdminPanel(){
                     <Form.Label>Tipos:</Form.Label>
                         <div>
                             <select style={{padding: '0.6rem', }} name='type' onChange={handleInput}>
+                                <option></option>
                                 {
                                     arrayTypes?.map((type, i) => (
                                         <option value={type} key={i}>{type}</option>
@@ -200,7 +203,7 @@ function AdminPanel(){
                     {input.sizeStock.map((talle, idx)=>(
                         <Form.Group className="mb-3" key={`talle${idx}`}>
                             <select style={{padding: '0.6rem', marginRight: '1rem' }} value={talle.name} onChange={handleSize(idx)}>
-                                <option>Talle</option>
+                                <option></option>
                                 {sizes.map((size, i) => (
                                     <option value={size} key={i}>{size}</option>
                                 ))}
@@ -241,6 +244,9 @@ function AdminPanel(){
                     <Form.Control type="file" multiple onChange={handlerOnChangeMedia}/>
                 </Form.Group>
                 <Button variant="dark" type='submit'>SUBMIT</Button>
+                <Link style={{marginLeft: '2rem'}} to="/admin">
+                    <Button variant="danger" type='submit'>CANCEL</Button>
+                </Link>
             </Form>
         </div>
     )
