@@ -46,7 +46,7 @@ router.put("/", async (req, res) => {
           }),
           await Order.findByPk(orderId),
         ]);
-
+        
         const sizeOfClothe = await Size.findByPk(
           currentClothe.sizes[0].dataValues.id
         );
@@ -55,7 +55,6 @@ router.put("/", async (req, res) => {
 
         await Promise.all([
           await currentOrder.decrement(["total"], { by: price }),
-          await sizeOfClothe.increment(["stock"], { by: orderClothe.quantity }),
           await orderClothe.destroy(),
         ]);
 

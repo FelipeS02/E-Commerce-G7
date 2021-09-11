@@ -9,8 +9,8 @@ import SearchBar from "../SearchBar/SearchBar";
 import {
   addingUserToDB,
   getAccessToken,
-  removingUserInfo,
-} from "../../actions/authActions";
+  removingUserInfo
+} from "../../actions/authActions.js";
 import { useDispatch, useSelector } from "react-redux";
 import Cart from "../Cart/Cart";
 const NavBar = () => {
@@ -109,7 +109,7 @@ const NavBar = () => {
               </NavDropdown>
               {userInfo && userInfo.isAdmin && (
                 <NavDropdown title="Admin" id="nav-dropdown">
-                  <NavDropdown.Item eventKey="4.1">Panel</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/admin" eventKey="4.1">Panel</NavDropdown.Item>
                   <NavDropdown.Item eventKey="4.2">Productos</NavDropdown.Item>
                   <NavDropdown.Item eventKey="4.3">Ordenes</NavDropdown.Item>
                   <NavDropdown.Item eventKey="4.4">Usuarios</NavDropdown.Item>

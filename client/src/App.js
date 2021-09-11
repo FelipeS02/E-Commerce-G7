@@ -10,6 +10,8 @@ import AdminPanel from "./components/AdminPanel/AdminPanel";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
 import UserProfile from "./components/UserProfile/UserProfile";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
+import creatheClothe from "./components/AdminPanel/createClothe.js";
+
 
 function App() {
   const dispatch = useDispatch();
@@ -23,15 +25,15 @@ function App() {
         <Route path="/" component={NavBar} />
         <Route exact path="/" component={Home} />
         <Route exact path="/search/name/:name?" component={SearchResults} />
-        <Route exact path="/admin/createProduct" component={AdminPanel} />
+        <Route exact path="/admin" component={AdminPanel} />
         <Route
           exact
           path="/search/category/:category"
           component={SearchResults}
         />
         <Route exact path="/search/details/:id" component={ProductDetail} />
-
         <PrivateRoute exact path="/user/userProfile" component={UserProfile} />
+        <Route exact path="/admin/createClothe" component={creatheClothe} />
       </BrowserRouter>
     </div>
   );
