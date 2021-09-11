@@ -47,6 +47,7 @@ const validateReq = (data, files) => {
       // categories.length > 0 &&
       Array.isArray(files)
   ) {
+    console.log('se valido')
     return true;
   }
   console.log('algo llego mal')
@@ -67,7 +68,8 @@ if(Array.isArray(categoriesArray)){  const clotheCategory = categoriesArray.map(
       await clothe.addCategory(currentCategory.id);
     }
   });
-  await Promise.all(clotheCategory);} else {
+  await Promise.all(clotheCategory);
+} else {
     const currentCategory = await Category.findOne({
       where: { name: { [Op.iLike]: `%${categoriesArray}%` } },
     });
@@ -98,8 +100,17 @@ const setType = async (type, clothe) => {
   console.log('se cargo el typo')
 };
 
-const setSizes = async (sizeN, sizeS, clothe) => {
+const setSizes = async (sN, sS, clothe) => {
   let sizeObject = {}
+  let sizeN = []
+  let sizeS = []
+  if(!Array.isArray(sN)){
+    sizeN.push(sN);
+    sizeS.push(sS)
+  }else {
+    sizeN.concat(sN);
+    sizeS.concat(sS)
+  }
   for(i=0; i<sizeN.length; i++){
     sizeObject[sizeN[i]] = sizeS[i]
   }
