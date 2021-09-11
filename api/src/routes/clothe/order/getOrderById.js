@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
-const { Order, Order_clothes, Clothe } = require("../../../db");
+const { Order, Clothe, Media } = require("../../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
@@ -13,10 +13,19 @@ router.get("/:orderId", async (req, res) => {
     if (validate(orderId)) {
       const response = await Order.findOne({
         where: { id: orderId },
+        attributes: ["id", "direction", "payment", "total", "userId"],
         include: {
-          model: Order_clothes,
-          atributes: ["quantity", "size"],
-          include: { model: Clothe },
+          model: Clothe,
+          attributes: ["id", "name", "price", "color", "genre", "detail"],
+          include: {
+            model: Media,
+            attributes: ["name"],
+            through: { attributes: [] },
+          },
+          through: {
+            as: "quantity_and_size",
+            attributes: ["quantity", "size"],
+          },
         },
       });
       if (response) {
