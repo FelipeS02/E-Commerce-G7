@@ -1,14 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
-const {
-  User,
-  Payment,
-  Direction,
-  Order,
-  Size,
-  Clothe,
-} = require("../../../db");
+const { User, Direction, Order, Size, Clothe } = require("../../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
@@ -39,7 +32,7 @@ router.post("/", async (req, res) => {
       },
     } = req;
 
-    const validPayment = ["Efectivo", "MercadoPago"];
+    const validPayment = ["Efectivo / Transferencia", "MercadoPago"];
 
     if (
       direction.length !== "" &&
@@ -47,25 +40,40 @@ router.post("/", async (req, res) => {
       validate(orderId) &&
       clothes.length > 0
     ) {
-      const [currentOrder, newPayment, newDirection] = await Promise.all([
-        await Order.findOne({
-          where: { state: "CARRITO" },
-          include: {
-            model: User,
+      const [currentUserOrder, [currentDirection, isCreated]] = await Promise.all(
+        [
+          await User.findOne({
             where: { id: userId },
-          },
-        }),
-        await Payment.create({ payment: payment }),
-        await Direction.create({ data: direction }),
-      ]);
+            include: [
+              {
+                model: Order,
+                where: { id: orderId },
+              },
+            ],
+          }),
+          await Direction.findOrCreate({
+            where: {
+              data: direction,
+            },
+          }),
+        ]
+      );
+
+      const userhasDirection = await currentUserOrder.hasDirection(
+        directionExist
+      );
+
+      if (!userhasDirection) {
+        currentUserOrder.addDirection(currentDirection)
+      }
 
       await Promise.all([
-        await currentOrder.addPayment(newPayment),
-        await currentOrder.addDirection(newDirection),
+        await Order.update({ payment, direction }, { where: { id: orderId } }),
         await clotheUpdate(clothes),
         await currentOrder.update({ state: "CONFIRMADA" }),
       ]);
-      res.json(responseMessage(SUCCESS, currentOrder));
+
+      res.json(responseMessage(SUCCESS, "Orden confirmada correctamente"));
     } else {
       res.json(
         responseMessage(
