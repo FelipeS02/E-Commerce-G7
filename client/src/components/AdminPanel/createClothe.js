@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { createClothe, getCategories } from "../../actions/ProductActions";
+import { validate } from './validateCreate'
 import { Form, Button } from "react-bootstrap"
 import { Link, useHistory } from "react-router-dom";
 
@@ -18,9 +19,6 @@ function AdminPanel(){
     const arrayCategories = useSelector((state) => state.productCategories.categories?.categories);
     const arrayTypes = useSelector((state) => state.productCategories.categories?.types);
     
-    console.log(arrayCategories,'<<<------------soy categories----------------------');
-    console.log(arrayTypes,'<<<-----------soy types-----------------------');
-
     const [input, setInput] = useState({
         name: '',
         price: 0,
@@ -33,11 +31,18 @@ function AdminPanel(){
         mediaArray: null
     })
 
+    const [errors, setErrors] = useState({});
+    const [validated, setValidated] = useState(false);
+
     function handleInput(e){
         setInput({
             ...input,
             [e.target.name] : e.target.value
         })
+        setErrors(validate({
+            ...input,
+            [e.target.name]: e.target.value
+        }));
     }
     
     function handleCheckBox(e){
@@ -100,38 +105,40 @@ function AdminPanel(){
 
     function handleSubmit(e){
         e.preventDefault();
-        const data = new FormData()
-        data.append('name', input.name)
-        data.append('price', input.price)
-        data.append('color', input.color)
-        data.append('genre', input.genre)
-        data.append('detail', input.detail)
-        data.append('type', input.type)
-        input.categories?.forEach(c=>{
-            data.append('categories', c)
-        })
-        input.sizeStock?.forEach(talle => {
-            data.append('sizeName', talle.name)
-            data.append('sizeStock', talle.stock)
-        });
-        input.mediaArray?.forEach(f=>{
-            data.append('media', f)
-        })
-
-        dispatch(createClothe(data));
-        alert('Product created succesfully');
-        setInput({
-            name: '',
-            price: 0,
-            color: '',
-            genre: '',
-            detail: '',
-            type: '',
-            sizeStock: [{name: '',stock:0}],
-            categories: [],
-            mediaArray: null
-        })
-        history.push("/admin");
+        if (Object.keys(errors).length === 0&&input.name!=='') {
+            const data = new FormData()
+            data.append('name', input.name)
+            data.append('price', input.price)
+            data.append('color', input.color)
+            data.append('genre', input.genre)
+            data.append('detail', input.detail)
+            data.append('type', input.type)
+            input.categories?.forEach(c=>{
+                data.append('categories', c)
+            })
+            input.sizeStock?.forEach(talle => {
+                data.append('sizeName', talle.name)
+                data.append('sizeStock', talle.stock)
+            });
+            input.mediaArray?.forEach(f=>{
+                data.append('media', f)
+            })
+            
+            dispatch(createClothe(data));
+            alert('Product created succesfully');
+            setInput({
+                name: '',
+                price: 0,
+                color: '',
+                genre: '',
+                detail: '',
+                type: '',
+                sizeStock: [{name: '',stock:0}],
+                categories: [],
+                mediaArray: null
+            })
+            history.push("/admin");
+        }
     }
 
     return (
@@ -190,11 +197,9 @@ function AdminPanel(){
                         <div>
                             <select style={{padding: '0.6rem', }} name='type' onChange={handleInput}>
                                 <option></option>
-                                {
-                                    arrayTypes?.map((type, i) => (
-                                        <option value={type} key={i}>{type}</option>
-                                    ))
-                                }
+                                {arrayTypes?.map((type, i) => (
+                                    <option value={type} key={i}>{type}</option>
+                                ))}
                             </select>
                         </div>
                 </Form.Group>
