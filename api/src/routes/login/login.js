@@ -36,11 +36,13 @@ router.post("/", async (req, res) => {
         email: { [Op.iLike]: `%${email}%` },
       },
     });
+    console.log("user", userExists);
     if (userExists)
       return res.json(
         responseMessage(SUCCESS, {
           message: "Usuario existente",
           userData: {
+            id: userExists.id,
             name,
             email,
             isAdmin,
@@ -57,6 +59,7 @@ router.post("/", async (req, res) => {
       responseMessage(SUCCESS, {
         message: "Usuario creado",
         userData: {
+          id: userExists.id,
           name,
           email,
           isAdmin,

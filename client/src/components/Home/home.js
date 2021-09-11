@@ -46,9 +46,10 @@ const Home = (props) => {
           {products.allClothes.map((product, index) => (
             <CardP
               key={index}
+              id={product.id}
               name={product.name}
               price={product.price}
-              picture={product.media[0].data}
+              picture={product.media[0].name}
               sizes={product.sizes}
             />
           ))}
