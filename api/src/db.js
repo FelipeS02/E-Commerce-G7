@@ -72,7 +72,6 @@ const {
   Order,
   Media,
   Direction,
-  Payment,
   Order_clothes,
   Size,
   Type,
@@ -102,11 +101,7 @@ Order.belongsToMany(Clothe, { through: Order_clothes });
 
 // Orden y direccion
 Direction.belongsToMany(Order, { through: "order_directions" });
-Order.belongsTo(Direction, { through: "order_directions" });
-
-// Orden y Pago
-Payment.belongsToMany(Order, { through: "order_payment" });
-Order.belongsTo(Payment, { through: "order_payment" });
+Order.belongsToMany(Direction, { through: "order_directions" });
 
 module.exports = {
   ...sequelize.models, // para poder importar los modelos así: const { Product, User } = require('./db.js');

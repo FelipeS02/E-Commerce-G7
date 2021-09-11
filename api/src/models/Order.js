@@ -10,6 +10,14 @@ module.exports = (sequelize) => {
       allowNull: false,
       primaryKey: true,
     },
+    direction: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+    payment: {
+      type: DataTypes.ENUM(["Efectivo / Transferencia", "Mercado Pago"]),
+      allowNull: true
+    },
     state: {
       type: DataTypes.ENUM([
         "CARRITO",

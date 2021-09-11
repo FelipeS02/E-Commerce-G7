@@ -33,7 +33,7 @@ router.put("/", async (req, res) => {
       
       if (!userFindOrder) {
         const currentUser = await User.findByPk(userId);
-        const newOrder = await Order.create({ total: price });
+        const newOrder = await Order.create({ total: price, userId });
         await Promise.all([
           await newOrder.addClothe(clotheId, {
             through: { quantity, size },

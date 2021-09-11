@@ -41,12 +41,12 @@ router.put("/", async (req, res) => {
             where: { id: clotheId },
             include: {
               model: Size,
-              where: { size },
+              where: { size, clotheId },
             },
           }),
           await Order.findByPk(orderId),
         ]);
-
+        
         const sizeOfClothe = await Size.findByPk(
           currentClothe.sizes[0].dataValues.id
         );
@@ -55,7 +55,6 @@ router.put("/", async (req, res) => {
 
         await Promise.all([
           await currentOrder.decrement(["total"], { by: price }),
-          await sizeOfClothe.increment(["stock"], { by: orderClothe.quantity }),
           await orderClothe.destroy(),
         ]);
 

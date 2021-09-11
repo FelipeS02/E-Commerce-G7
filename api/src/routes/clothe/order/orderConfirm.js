@@ -1,14 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
-const {
-  User,
-  Payment,
-  Direction,
-  Order,
-  Size,
-  Clothe,
-} = require("../../../db");
+const { User, Direction, Order, Size, Clothe } = require("../../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
@@ -18,13 +11,7 @@ const clotheUpdate = async (clothesArray) => {
   const process = clothesArray.map(async (e) => {
     const { quantity, size, clotheId } = e;
     const currentClotheSize = await Size.findOne({
-      where: { size: size },
-      include: {
-        model: Clothe,
-        where: {
-          id: clotheId,
-        },
-      },
+      where: { size, clotheId },
     });
     await currentClotheSize.decrement(["stock"], { by: quantity });
   });
@@ -39,33 +26,55 @@ router.post("/", async (req, res) => {
       },
     } = req;
 
-    const validPayment = ["Efectivo", "MercadoPago"];
+    const validPayment = ["Efectivo / Transferencia", "MercadoPago"];
 
     if (
       direction.length !== "" &&
       validate(userId) &&
       validate(orderId) &&
-      clothes.length > 0
+      clothes.length > 0 &&
+      validPayment.includes(payment)
     ) {
-      const [currentOrder, newPayment, newDirection] = await Promise.all([
-        await Order.findOne({
-          where: { state: "CARRITO" },
-          include: {
-            model: User,
+      const [currentUser, currentOrder, [currentDirection, isCreated]] = await Promise.all(
+        [
+          await User.findOne({
             where: { id: userId },
-          },
-        }),
-        await Payment.create({ payment: payment }),
-        await Direction.create({ data: direction }),
-      ]);
+            include: [
+              {
+                model: Order,
+                where: { id: orderId },
+              },
+            ],
+          }),
+          await Order.findOne({
+            where: {id: orderId, userId}
+          }),
+          await Direction.findOrCreate({
+            where: {
+              data: direction,
+            },
+          }),
+        ]
+      );
+
+      const userhasDirection = await currentUser.hasDirection(
+        currentDirection
+      );
+
+      if (!userhasDirection) {
+        currentUser.addDirection(currentDirection)
+      }
 
       await Promise.all([
-        await currentOrder.addPayment(newPayment),
-        await currentOrder.addDirection(newDirection),
+        await currentOrder.update({
+          payment: payment,
+          direction: direction,
+          state: "CONFIRMADO",
+        }),
         await clotheUpdate(clothes),
-        await currentOrder.update({ state: "CONFIRMADA" }),
       ]);
-      res.json(responseMessage(SUCCESS, currentOrder));
+
+      res.json(responseMessage(SUCCESS, "Orden confirmada correctamente"));
     } else {
       res.json(
         responseMessage(
