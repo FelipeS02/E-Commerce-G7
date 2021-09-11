@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import {Link} from "react-router-dom";
-import { getProductDetail, editClothe} from '../../actions/ProductActions';
+import { getProductDetail, editClothe, getCategories} from '../../actions/ProductActions';
 
 export default function EditClothe(props){
 	const { id } = props.match.params;
@@ -9,8 +9,14 @@ export default function EditClothe(props){
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-		dispatch(getProductDetail(id));
+		dispatch(getProductDetail(id),
+        dispatch(getCategories())
+        );
 	},[dispatch])
+
+    let sizes = ["XS", "S", "M", "L", "XL", "XXL"];
+    const arrayCategories = useSelector((state) => state.productCategories.categories?.categories);
+    const arrayTypes = useSelector((state) => state.productCategories.categories?.types);
 
 	const detail = useSelector(state => state.detailState.detail)
 
@@ -111,7 +117,120 @@ export default function EditClothe(props){
         })
     }
 	
-	return(
-		<h1>{id}</h1>
-	)
+    return (
+        <div>
+            <form 
+            // action='/admin/create-clothe' 
+            // method='post' 
+            enctype='multipart/form-data'
+            onSubmit={handleSubmit}
+            >
+                <label>Nombre:</label>
+                <input
+                    type="text"
+                    name='name'
+                    value={input.name}
+                    onChange={handleInput}
+                />
+                <label>Precio:</label>
+                <input
+                    type="number"
+                    name='price'
+                    value={input.price}
+                    onChange={handleInput}
+                />
+                <label>Color:</label>
+                <input
+                    type="text"
+                    name='color'
+                    value={input.color}
+                    onChange={handleInput}
+                />
+                <label>Género:</label>
+                    <select name='genre' onChange={handleInput}>
+                    <option value="Masculino" >Masculino</option>
+                    <option value="Femenino" selected>Femenino</option>
+                    <option value="Otro">Otro</option>
+                    </select>
+                <label>Detalles:</label>
+                <textarea
+                    type='text'
+                    name='detail'
+                    value={input.detail}
+                    onChange={handleInput}
+                />
+                <label>Tipos:</label>
+                {/* <span> Elegí el tipo de tu prenda  */}
+                <select name='type' onChange={handleInput}>
+                    {
+                        arrayTypes?.map((type, i) => (
+                            <option value={type} key={i}>{type}</option>
+                        ))
+                    }
+                </select>
+                {/* , si no está en las opciones, escríbilo 
+                  <input
+                    type="text"
+                    name='type'
+                    value={input.type}
+                    onChange={handleInput}
+                />
+                </span> */}
+                
+                <label>Talles:</label>
+                {input.sizeStock.map((talle, idx)=>(
+                    <div key={`talle${idx}`}>
+                       <select onChange={handleSize(idx)}>
+                            {
+                                sizes.map((size, i) => (
+                                    <option value={talle.name} key={i}>{size}</option>
+                                ))
+                            }
+                        </select>
+                        <input
+                        type='number'
+                        value={talle.stock}
+                        onChange={handleStock(idx)}
+                        />
+                        <button
+                        type='button'
+                        onClick={handleRemoveSizeStock(idx)}
+                        >-</button>
+                    </div>
+                ))}
+                <button
+                type='button'
+                onClick={handleAddSizeStock}
+                >Agregar talle</button>
+                <label >Categorias:</label>
+                <div>
+                {arrayCategories?.map((cat) =>(
+                    <span key = {cat}>
+                        <input 
+                        type="checkbox" 
+                        name='categories'
+                        value={cat}
+                        onChange={handleCheckBox}
+                        />
+                        <label >{cat}</label>
+                    </span>
+                ))}
+                </div>
+                {/* <input
+                type='file'
+                name='media'
+                multiple
+                /> */}
+                <input
+                type="file"
+                id="file"
+                name="media"
+                multiple
+                />
+
+
+                <button type='submit'>SUBMIT</button>
+            </form>
+        </div>
+    )
 }
