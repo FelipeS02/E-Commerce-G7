@@ -10,6 +10,7 @@ import {
   PRODUCT_SUCCESS,
   PRODUCT_DETAIL,
   FILTER_PRODUCTS_BY_CATEGORY,
+  EDIT_CLOTHE
 } from "../constants/productConstants";
 
 export const getProducts =
@@ -94,15 +95,11 @@ export const filterProducts = (products, category) => (dispatch) => {
 };
 
 export const getProductDetail = (id) => async (dispatch) => {
-  dispatch({
-    type: PRODUCT_REQUEST,
-  });
   try {
-    const { data } = await Axios.get(`/clothe/${id}`);
-
+    const { data } = await Axios.get(`/clothe/clothe-details/${id}`);
     dispatch({
       type: PRODUCT_DETAIL,
-      payload: data.data,
+      payload: data.data
     });
   } catch (error) {
     dispatch({
@@ -111,3 +108,17 @@ export const getProductDetail = (id) => async (dispatch) => {
     });
   }
 };
+
+export function editClothe(form) {
+  return async function (dispatch) {
+    try {
+      await Axios.post("/admin/edit-clothe", form);
+      return dispatch({
+        type: EDIT_CLOTHE,
+        payload: form,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
