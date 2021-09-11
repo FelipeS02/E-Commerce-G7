@@ -6,13 +6,13 @@ const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
 } = require("../../controller/responseMessages");
-// en principio, esta ruta puede modificar el nombre, el precio, detalle, stock. Preguntar si 
-// también hacemos que se puedan agregar nuevas fotos o eliminar.
+// en principio, esta ruta puede modificar el nombre, el precio, detalle, stock. Referente 
+// al stock, si ya existe el talle, solo modfica el stock, si no existe el talle, etnonces 
+// lo crea, tanto el talle como el stock. 
 router.put("/:idClothe", async (req,res) => {
     try {
         const {idClothe} = req.params;
-        const {name, price, sizes, detail} = req.body;
-        // console.log(sizes);
+        const {name, price, sizes, detail, color, genre, categories, type} = req.body;
         
         const clotheToUpdate = await Clothe.findByPk(idClothe,{
             include :
@@ -22,29 +22,33 @@ router.put("/:idClothe", async (req,res) => {
                 through: { attributes: [] }
             }
             });
-        // console.log(clotheToUpdate.dataValues);
-        // console.log(clotheToUpdate.dataValues.sizes[0].dataValues);
-        
+
         if(name) clotheToUpdate.name = name;
         if(price) clotheToUpdate.price = price;
         if(detail) clotheToUpdate.detail = detail;
+        if(color) clotheToUpdate.color = color;
+        if(genre) clotheToUpdate.genre = genre;
         clotheToUpdate.save();
         if(sizes) {
             const arrayKeys = Object.keys(sizes);
-            // console.log(arrayKeys)
+
             arrayKeys.forEach(async e => {
                 const sizeFound = clotheToUpdate.sizes.find(size => size.size === e);
-                // si lo encuentra quiere decir que ya ewxistia en la base de datos dicho size.
+                // si lo encuentra quiere decir que ya existia en la base de datos dicho size.
                 // entonces tenemos que modificar, si no lo encuentra, añadimos un nuevo talle 
                 // a la prenda.
-                // console.log(sizeFound,'<<----size encontrado------');
+
                 if(sizeFound){
-                    // console.log(clotheToUpdate.sizes.indexOf(sizeFound));
-                    const index = clotheToUpdate.sizes.indexOf(sizeFound);
-                    clotheToUpdate.sizes[index].stock = sizes[e];
-                    // console.log(clotheToUpdate.sizes[index].size);
-                    // console.log(sizes[e]);
-                    clotheToUpdate.save();
+                    await Size.update({
+                        size: e,
+                        stock: sizes[e]
+                    },
+                    {
+                        where: {
+                            id: sizeFound.id
+                        }
+                    });
+
                 } else {
                     console.log( e,sizes[e]);
                     const  newSize = await Size.create({size : e , stock : sizes[e]});
@@ -53,6 +57,10 @@ router.put("/:idClothe", async (req,res) => {
                 }
             });
         }
+        // if(categories){
+
+ 
+        // }
         return res.json(responseMessage(SUCCESS, clotheToUpdate));
     } catch (err) {
         const { message } = err;
