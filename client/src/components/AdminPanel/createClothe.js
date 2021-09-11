@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { createClothe } from "../../actions/ProductActions";
-import { getCategories } from "../../actions/ProductActions";
+import { createClothe, getCategories } from "../../actions/ProductActions";
+import { Form, Button } from "react-bootstrap"
+import { Link, useHistory } from "react-router-dom";
 
 function AdminPanel(){
-    
+    let history = useHistory();
     let sizes = ["XS", "S", "M", "L", "XL", "XXL"];
+    let genres = ["Masculino", "Femenino", "Otro"]
 
     // Traemos categorias
     useEffect(() => {
@@ -26,10 +28,9 @@ function AdminPanel(){
         genre: '',
         detail: '',
         type:'',
-        sizes: {},
         sizeStock: [{name: '',stock:0}],
         categories: [],
-        files: []
+        mediaArray: null
     })
 
     function handleInput(e){
@@ -53,7 +54,7 @@ function AdminPanel(){
             });
         }
     }
-//--------------------------------------------------------------------------------------------
+
     const handleSize = idx => e => {
         const newsizeStock = input.sizeStock.map((talle, tidx)=>{
             if(idx!==tidx) return talle;
@@ -90,33 +91,34 @@ function AdminPanel(){
         })
     }
 
-    // const handleOnChangeImg = (e) => {
-    
-    //     var imageArray = [];
-    
-    //     for(const file of e.target.files){
-    //       var reader = new FileReader();
-    //       (function(file) {
-    //         var reader = new FileReader();
-    //         reader.onload = function(image) {
-    //           setImages((e) => e.concat(image.target.result))
-    //         };
-    //         reader.readAsDataURL(file);
-    //       })(file);
-    //     }
-    //   };
-//--------------------------------------------------------------------------------------------
+    const handlerOnChangeMedia = (e) => {
+        setInput({
+            ...input,
+            mediaArray: Object.values(e.target.files)
+        })
+    }
+
     function handleSubmit(e){
         e.preventDefault();
-        input.sizeStock.forEach(talle => {
-            setInput({
-                ...input,
-                sizes: input.sizes[talle.name] = talle.stock 
-            })
-            
+        const data = new FormData()
+        data.append('name', input.name)
+        data.append('price', input.price)
+        data.append('color', input.color)
+        data.append('genre', input.genre)
+        data.append('detail', input.detail)
+        data.append('type', input.type)
+        input.categories?.forEach(c=>{
+            data.append('categories', c)
+        })
+        input.sizeStock?.forEach(talle => {
+            data.append('sizeName', talle.name)
+            data.append('sizeStock', talle.stock)
         });
+        input.mediaArray?.forEach(f=>{
+            data.append('media', f)
+        })
 
-        dispatch(createClothe(input));
+        dispatch(createClothe(data));
         alert('Product created succesfully');
         setInput({
             name: '',
@@ -125,127 +127,127 @@ function AdminPanel(){
             genre: '',
             detail: '',
             type: '',
-            sizes: {},
             sizeStock: [{name: '',stock:0}],
             categories: [],
-            files:[]
+            mediaArray: null
         })
+        history.push("/admin");
     }
 
     return (
-        <div>
-            <form 
-            // action='/admin/create-clothe' 
-            // method='post' 
-            enctype='multipart/form-data'
-            onSubmit={handleSubmit}
-            >
-                <label>Nombre:</label>
-                <input
-                    type="text"
-                    name='name'
-                    value={input.name}
-                    onChange={handleInput}
-                />
-                <label>Precio:</label>
-                <input
-                    type="number"
-                    name='price'
-                    value={input.price}
-                    onChange={handleInput}
-                />
-                <label>Color:</label>
-                <input
-                    type="text"
-                    name='color'
-                    value={input.color}
-                    onChange={handleInput}
-                />
-                <label>Género:</label>
-                    <select name='genre' onChange={handleInput}>
-                    <option value="Masculino" >Masculino</option>
-                    <option value="Femenino" selected>Femenino</option>
-                    <option value="Otro">Otro</option>
-                    </select>
-                <label>Detalles:</label>
-                <textarea
-                    type='text'
-                    name='detail'
-                    value={input.detail}
-                    onChange={handleInput}
-                />
-                <label>Tipos:</label>
-                {/* <span> Elegí el tipo de tu prenda  */}
-                <select name='type' onChange={handleInput}>
-                    {
-                        arrayTypes?.map((type, i) => (
-                            <option value={type} key={i}>{type}</option>
-                        ))
-                    }
-                </select>
-                {/* , si no está en las opciones, escríbilo 
-                  <input
-                    type="text"
-                    name='type'
-                    value={input.type}
-                    onChange={handleInput}
-                />
-                </span> */}
-                
-                <label>Talles:</label>
-                {input.sizeStock.map((talle, idx)=>(
-                    <div key={`talle${idx}`}>
-                       <select onChange={handleSize(idx)}>
-                            {
-                                sizes.map((size, i) => (
-                                    <option value={talle.name} key={i}>{size}</option>
-                                ))
-                            }
-                        </select>
-                        <input
-                        type='number'
-                        value={talle.stock}
-                        onChange={handleStock(idx)}
+        <div style={{backgroundColor: '#EAEDED', padding: '5rem'}}>
+            <h1 style={{marginBottom: '3rem'}}>Create Clothe</h1>
+            <Form onSubmit={handleSubmit}>
+                <Form.Group className="mb-3">
+                    <Form.Label>Nombre:</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name='name'
+                        value={input.name}
+                        onChange={handleInput}
                         />
-                        <button
-                        type='button'
-                        onClick={handleRemoveSizeStock(idx)}
-                        >-</button>
-                    </div>
-                ))}
-                <button
-                type='button'
-                onClick={handleAddSizeStock}
-                >Agregar talle</button>
-                <label >Categorias:</label>
-                <div>
-                {arrayCategories?.map((cat) =>(
-                    <span key = {cat}>
-                        <input 
-                        type="checkbox" 
-                        name='categories'
-                        value={cat}
-                        onChange={handleCheckBox}
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Precio:</Form.Label>
+                    <Form.Control
+                        type="number"
+                        name='price'
+                        value={input.price}
+                        onChange={handleInput}
                         />
-                        <label >{cat}</label>
-                    </span>
-                ))}
-                </div>
-                {/* <input
-                type='file'
-                name='media'
-                multiple
-                /> */}
-                <input
-                type="file"
-                id="file"
-                name="media"
-                multiple
-                />
-
-
-                <button type='submit'>SUBMIT</button>
-            </form>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Color:</Form.Label>
+                    <Form.Control
+                        type="text"
+                        name='color'
+                        value={input.color}
+                        onChange={handleInput}
+                        />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Género:</Form.Label>
+                        <div>
+                            <select style={{padding: '0.6rem', }} name='genre' onChange={handleInput}>
+                                <option></option>
+                                {genres.map((g, i) => (
+                                    <option value={g} key={i}>{g}</option>
+                                ))}
+                            </select>
+                        </div>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Detalles:</Form.Label>
+                    <Form.Control as="textarea" rows={3}
+                        type='text'
+                        name='detail'
+                        value={input.detail}
+                        onChange={handleInput}
+                        />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Tipos:</Form.Label>
+                        <div>
+                            <select style={{padding: '0.6rem', }} name='type' onChange={handleInput}>
+                                <option></option>
+                                {
+                                    arrayTypes?.map((type, i) => (
+                                        <option value={type} key={i}>{type}</option>
+                                    ))
+                                }
+                            </select>
+                        </div>
+                </Form.Group>
+                <Form.Group className="mb-3">
+                    <Form.Label>Talles:</Form.Label>
+                    {input.sizeStock.map((talle, idx)=>(
+                        <Form.Group className="mb-3" key={`talle${idx}`}>
+                            <select style={{padding: '0.6rem', marginRight: '1rem' }} value={talle.name} onChange={handleSize(idx)}>
+                                <option></option>
+                                {sizes.map((size, i) => (
+                                    <option value={size} key={i}>{size}</option>
+                                ))}
+                            </select>
+                            <input style={{padding: '.37rem', width: '7rem', marginRight: '1rem'}}
+                            type='number'
+                            value={talle.stock}
+                            onChange={handleStock(idx)}
+                            />
+                            <Button variant="dark"
+                            type='button'
+                            onClick={handleRemoveSizeStock(idx)}
+                            >-</Button>
+                        </Form.Group>
+                    ))}
+                    <Button variant="dark"
+                    type='button'
+                    onClick={handleAddSizeStock}
+                    >Agregar talle</Button>
+                </Form.Group>               
+                <Form.Group className="mb-3">
+                    <Form.Label >Categorias:</Form.Label>
+                    <Form.Group className="mb-3" style={{padding: '.5rem'}}>
+                        {arrayCategories?.map((cat) =>(
+                            <span style={{padding: '1rem'}} key = {cat}>
+                                <input
+                                type="checkbox" 
+                                name='categories'
+                                value={cat}
+                                onChange={handleCheckBox}
+                                />
+                                <label >{cat}</label>
+                            </span>
+                        ))}
+                    </Form.Group>
+                </Form.Group>
+                <Form.Group controlId="formFileMultiple" className="mb-3">
+                    <Form.Control type="file" multiple onChange={handlerOnChangeMedia}/>
+                </Form.Group>
+                <Button variant="dark" type='submit'>SUBMIT</Button>
+                <Link style={{marginLeft: '2rem'}} to="/admin">
+                    <Button variant="danger" type='submit'>CANCEL</Button>
+                </Link>
+            </Form>
         </div>
     )
 }
