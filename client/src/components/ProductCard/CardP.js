@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import { Card } from "react-bootstrap";
 import AddToCar from "../AddToCar/AddToCar";
 import Talle from "../Talle/Talle";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../actions/cartAccions";
+import { BASE_IMG_URL } from "../../constants/productConstants";
 
 const CardP = (props) => {
-  const { name, price, picture, sizes } = props;
+  const dispatch = useDispatch();
+  const { id, name, price, picture, sizes } = props;
   const [userSelected, setUserSelected] = useState({
-    talle: "",
+    size: "",
     quantity: 0,
     maxValue: 0,
   });
-
+  const userInfo = useSelector((state) => state.userState.userInfo);
   const addToCardHandler = () => {
-    console.log("adding to car");
+    dispatch(addToCart(userSelected, id, userInfo.id));
   };
 
   const talleHandler = (index) => {
@@ -20,7 +24,7 @@ const CardP = (props) => {
       return setUserSelected((prevState) => {
         return {
           ...prevState,
-          talle: "",
+          size: "",
           maxValue: 0,
           quantity: 0,
         };
@@ -29,7 +33,7 @@ const CardP = (props) => {
     setUserSelected((prevState) => {
       return {
         ...prevState,
-        talle: sizes[index].size,
+        size: sizes[index].size,
         maxValue: sizes[index].stock,
         quantity:
           prevState.maxValue > sizes[index].stock ? sizes[index].stock : "1",
@@ -46,7 +50,7 @@ const CardP = (props) => {
   };
   return (
     <Card style={{ width: "20rem" }} className="my-4">
-      <Card.Img variant="top" src={`/${picture}`} />
+      <Card.Img variant="top" src={`${BASE_IMG_URL}/uploads/${picture}`} />
 
       <Card.Body className="justify-content-center card text-center">
         <Card.Title>{name}</Card.Title>
