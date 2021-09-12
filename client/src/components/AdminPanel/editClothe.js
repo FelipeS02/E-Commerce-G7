@@ -208,7 +208,12 @@ export default function EditClothe(props){
                             <select style={{padding: '0.6rem', }} name='genre' onChange={handleInput} default={input.genre}>
                                 <option hidden disabled value=""></option>
                                 {genres.map((g, i) => (
-                                    <option value={g} key={i}>{g}</option>
+                                    <option
+                                        value={g}
+                                        key={i}
+                                    >
+                                    {g}
+                                    </option>
                                 ))}
                             </select>
                         </div>
