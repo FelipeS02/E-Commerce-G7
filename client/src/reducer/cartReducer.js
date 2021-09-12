@@ -16,6 +16,7 @@ function cartReducer(state = initialState, action) {
         totalItems: action.payload.clothes.length,
         carTotalAmount: action.payload.total,
         carItems: action.payload.clothes,
+        orderId: action.payload.id,
         error: false,
         loading: false,
       };

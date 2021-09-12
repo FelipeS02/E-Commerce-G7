@@ -10,6 +10,7 @@ import {
   PRODUCT_SUCCESS,
   PRODUCT_DETAIL,
   FILTER_PRODUCTS_BY_CATEGORY,
+  SET_CURRENT_PAGE,
 } from "../constants/productConstants";
 
 export const getProducts =
@@ -110,4 +111,11 @@ export const getProductDetail = (id) => async (dispatch) => {
       payload: error.message,
     });
   }
+};
+
+export const setCurrentPage = (obj) => (dispatch) => {
+  dispatch({
+    type: SET_CURRENT_PAGE,
+    payload: obj,
+  });
 };
