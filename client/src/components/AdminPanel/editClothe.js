@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getProductDetail, editClothe, getCategories} from '../../actions/ProductActions';
+import { getProductDetail, editClothe, getCategories, deleteClothe} from '../../actions/ProductActions';
 import { Link, useHistory } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 
@@ -65,6 +65,10 @@ export default function EditClothe(props){
             ...input,
             [e.target.name] : e.target.value
         })
+    }
+
+    const deletePrenda = () => {
+        dispatch(deleteClothe(id))
     }
 
     function handleChecked(name, array){
@@ -290,6 +294,8 @@ export default function EditClothe(props){
                 <Link style={{marginLeft: '2rem'}} to="/admin">
                     <Button variant="danger" type='submit'>CANCEL</Button>
                 </Link>
+
+                <Button variant="danger" onClick={deletePrenda} style={{marginTop: '2rem', display: 'block'}}>Eliminar Prenda</Button>
             </Form>
         </div>
     )

@@ -10,7 +10,8 @@ import {
   PRODUCT_SUCCESS,
   PRODUCT_DETAIL,
   FILTER_PRODUCTS_BY_CATEGORY,
-  EDIT_CLOTHE
+  EDIT_CLOTHE,
+  DELETE_CLOTHE
 } from "../constants/productConstants";
 
 export const getProducts =
@@ -121,4 +122,19 @@ export function editClothe(form) {
       console.log(error);
     }
   };
+}
+
+export function deleteClothe(id){
+  return async function(dispatch){
+    try {
+      await Axios.delete(`/admin/update-clothe/delete/${id}` )
+      return dispatch({
+        type: DELETE_CLOTHE,
+        payload: id
+      })
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
 }

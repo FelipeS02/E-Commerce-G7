@@ -11,13 +11,13 @@ const {
 // al stock, si ya existe el talle, solo modfica el stock, si no existe el talle, etnonces 
 // lo crea, tanto el talle como el stock. 
 
-router.delete("/:idClothe/delete", async (req,res) => {
+router.delete("/delete/:id", async (req,res) => {
     try {
-        const {idClothe} = req.params;
+        const {id} = req.params;
 
         Clothe.destroy({
             where: {
-              id: idClothe,
+              id: id,
             },
           })
         return res.json(responseMessage(SUCCESS,{ message : "Clote deleted"}));
