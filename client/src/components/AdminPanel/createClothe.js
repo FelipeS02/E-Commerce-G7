@@ -32,7 +32,6 @@ function AdminPanel(){
     })
 
     const [errors, setErrors] = useState({});
-    const [validated, setValidated] = useState(false);
 
     function handleInput(e){
         setInput({
@@ -145,9 +144,10 @@ function AdminPanel(){
         <div style={{backgroundColor: '#EAEDED', padding: '5rem'}}>
             <h1 style={{marginBottom: '3rem'}}>Create Clothe</h1>
             <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3">
+                <Form.Group  className="mb-3">
                     <Form.Label>Nombre:</Form.Label>
                     <Form.Control
+                        validated='false'
                         type="text"
                         name='name'
                         value={input.name}
