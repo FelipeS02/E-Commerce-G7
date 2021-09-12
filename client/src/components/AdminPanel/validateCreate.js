@@ -7,7 +7,7 @@ export function validate(input) {
     }
     if (!input.price) {
         errors.price = 'Price is required';
-    } else if (!(parseInt(input.price)>=0&&/^([1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1][0-9][0-9][0-9][0-9])$/.test(input.price))) {
+    } else if (!(parseInt(input.price)>=0&&/^([1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1-2][0-9][0-9][0-9][0-9])$/.test(input.price))) {
         errors.price = 'Price is invalid';
     }
     if (!input.color) {

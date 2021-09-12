@@ -170,7 +170,7 @@ function AdminPanel(){
 
     function handleSubmit(e){
         e.preventDefault();
-        if (Object.keys(errors).length === 0&&input.name!==''&&input.sizeStock.length>0&&input.categories.length>0&&input.mediaArray>0) {
+        if (Object.keys(errors).length === 0&&input.name!==''&&input.sizeStock.length>0&&input.categories.length>0) {
             const data = new FormData()
             data.append('name', input.name)
             data.append('price', input.price)
