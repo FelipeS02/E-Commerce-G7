@@ -7,6 +7,7 @@ export default function ClotheCard(props){
 		<div>
 			<Link to={`/admin/editClothe/${props.id}`}>
 				<h6>{props.name}</h6>
+				<h6>{props.types[0].name}</h6>
 			</Link>
 		</div>
 	)
