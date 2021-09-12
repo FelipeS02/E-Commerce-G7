@@ -13,6 +13,17 @@ const initialState = { loading: true, products: [], current: 1 };
 
 export function productReducer(
   state = { loading: true, products: [], current: 1 },
+
+  PRODUCT_DETAIL,
+  EDIT_CLOTHE,
+  DELETE_CLOTHE
+} from "../constants/productConstants";
+
+const initialState = { loading: true, products: [], detail: {} };
+
+export function productReducer(
+  state = { loading: true, products: [], detail: {} },
+
   action
 ) {
   switch (action.type) {
@@ -35,22 +46,32 @@ export function productReducer(
       };
     case CREATE_CLOTHE:
       return {
-        ...state,
-        products: action.payload,
+        ...state
       };
+
     case SET_CURRENT_PAGE:
       return {
         ...state,
         current: action.payload.current,
         offset: action.payload.offset,
       };
+
+    case DELETE_CLOTHE:
+      return {
+        ...state
+      }
+    case EDIT_CLOTHE:
+    return {
+      ...state
+    }
+
     default:
       return state;
   }
 }
 
 export function categoryReducer(
-  state = { loading: true, products: [] },
+  state = { loading: true, products: [], detail: {}},
   action
 ) {
   switch (action.type) {
@@ -73,5 +94,26 @@ export function categoryReducer(
       };
     default:
       return state;
+  }
+}
+
+export function detailReducer(state = { loading: true, products: [], detail: {} }, action){
+  switch(action.type){
+    case PRODUCT_DETAIL:
+    return{
+      ...state,
+      loading: false,
+      detail: action.payload
+    }
+
+    case PRODUCT_FAIL:
+    return{
+      ...state,
+      loading: false,
+      error: action.payload
+    }
+
+    default:
+    return state
   }
 }

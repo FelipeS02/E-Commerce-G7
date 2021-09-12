@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
 const { Op } = require("sequelize");
-const { User, Order, Clothe, Order_clothes } = require("../../../db");
+const { User, Order, Clothe, Size, Media } = require("../../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
@@ -32,11 +32,16 @@ router.get("/", async (req, res) => {
           where: {
             state: orderStatus,
           },
-          attributes: ["id", "state", "total"],
+          attributes: ["id", "state", "total", "payment", "direction"],
           through: { attributes: [] },
           include: {
             model: Clothe,
             attributes: ["id", "name", "price", "color", "genre", "detail"],
+            include: {
+              model: Media,
+              attributes: ["name"],
+              through: { attributes: [] },
+            },
             through: {
               as: "quantity_and_size",
               attributes: ["quantity", "size"],
@@ -49,11 +54,16 @@ router.get("/", async (req, res) => {
         attributes: ["id", "name", "email"],
         include: {
           model: Order,
-          attributes: ["id", "state", "total"],
+          attributes: ["id", "state", "total", "payment", "direction"],
           through: { attributes: [] },
           include: {
             model: Clothe,
             attributes: ["id", "name", "price", "color", "genre", "detail"],
+            include: {
+              model: Media,
+              attributes: ["name"],
+              through: { attributes: [] },
+            },
             through: {
               as: "quantity_and_size",
               attributes: ["quantity", "size"],
@@ -69,11 +79,16 @@ router.get("/", async (req, res) => {
         attributes: ["id", "name", "email"],
         include: {
           model: Order,
-          attributes: ["id", "state", "total"],
+          attributes: ["id", "state", "total", "payment", "direction"],
           through: { attributes: [] },
           include: {
             model: Clothe,
             attributes: ["id", "name", "price", "color", "genre", "detail"],
+            include: {
+              model: Media,
+              attributes: ["name"],
+              through: { attributes: [] },
+            },
             through: {
               as: "quantity_and_size",
               attributes: ["quantity", "size"],
@@ -87,11 +102,16 @@ router.get("/", async (req, res) => {
         include: {
           model: Order,
           where: { state: orderStatus },
-          attributes: ["id", "state", "total"],
+          attributes: ["id", "state", "total", "payment", "direction"],
           through: { attributes: [] },
           include: {
             model: Clothe,
             attributes: ["id", "name", "price", "color", "genre", "detail"],
+            include: {
+              model: Media,
+              attributes: ["name"],
+              through: { attributes: [] },
+            },
             through: {
               as: "quantity_and_size",
               attributes: ["quantity", "size"],

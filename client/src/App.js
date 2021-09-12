@@ -11,6 +11,7 @@ import ProductDetail from "./components/ProductDetail/ProductDetail";
 import UserProfile from "./components/UserProfile/UserProfile";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 import creatheClothe from "./components/AdminPanel/createClothe.js";
+import editClothe from "./components/AdminPanel/editClothe.js";
 
 
 function App() {
@@ -31,9 +32,11 @@ function App() {
           path="/search/category/:category"
           component={SearchResults}
         />
-        <Route exact path="/search/details/:id" component={ProductDetail} />
+        <Route exact path="/search/details/:id"   component={ProductDetail} />
+        <Route exact path="/admin/createClothe"   component={creatheClothe} />
+        <Route exact path="/admin/editClothe/:id" component={editClothe} />
         <PrivateRoute exact path="/user/userProfile" component={UserProfile} />
-        <Route exact path="/admin/createClothe" component={creatheClothe} />
+
       </BrowserRouter>
     </div>
   );

@@ -11,6 +11,8 @@ import {
   PRODUCT_DETAIL,
   FILTER_PRODUCTS_BY_CATEGORY,
   SET_CURRENT_PAGE,
+  EDIT_CLOTHE,
+  DELETE_CLOTHE
 } from "../constants/productConstants";
 
 export const getProducts =
@@ -95,15 +97,11 @@ export const filterProducts = (products, category) => (dispatch) => {
 };
 
 export const getProductDetail = (id) => async (dispatch) => {
-  dispatch({
-    type: PRODUCT_REQUEST,
-  });
   try {
-    const { data } = await Axios.get(`/clothe/${id}`);
-
+    const { data } = await Axios.get(`/clothe/clothe-details/${id}`);
     dispatch({
       type: PRODUCT_DETAIL,
-      payload: data.data,
+      payload: data.data
     });
   } catch (error) {
     dispatch({
@@ -113,9 +111,40 @@ export const getProductDetail = (id) => async (dispatch) => {
   }
 };
 
+
 export const setCurrentPage = (obj) => (dispatch) => {
   dispatch({
     type: SET_CURRENT_PAGE,
     payload: obj,
   });
 };
+
+export function editClothe(form) {
+  return async function (dispatch) {
+    try {
+      await Axios.post("/admin/edit-clothe", form);
+      return dispatch({
+        type: EDIT_CLOTHE,
+        payload: form,
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+}
+
+export function deleteClothe(id){
+  return async function(dispatch){
+    try {
+      await Axios.delete(`/admin/update-clothe/delete/${id}` )
+      return dispatch({
+        type: DELETE_CLOTHE,
+        payload: id
+      })
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+}
+

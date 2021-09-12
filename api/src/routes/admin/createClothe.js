@@ -117,7 +117,7 @@ const setSizes = async (sN, sS, clothe) => {
   const claves = Object.keys(sizeObject);
   const clotheSizes = claves.map(async (e) => {
     if (sizeObject[e] > 0) {
-      const currentSize = await Size.create({ size: e, stock: sizeObject[e] });
+      const currentSize = await Size.create({ size: e, stock: sizeObject[e], clotheId: clothe.id });
       await clothe.addSize(currentSize.id);
     }
   });
