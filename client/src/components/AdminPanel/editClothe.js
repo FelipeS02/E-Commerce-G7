@@ -36,7 +36,9 @@ export default function EditClothe(props){
 
         const category = categorias?.map(e => e.name);
 
+        console.log('talles',talles)
         talles?.forEach(e => {
+            console.log('aqui vamos',e)
             handleAddSizeStock(e.size, e.stock)
         })
 
@@ -48,6 +50,9 @@ export default function EditClothe(props){
             genre: genero,
             detail: detalle,
             type: tipos[0]?.name,
+            sizeStock: talles?.map((t)=>(
+                {name: t.size, stock: t.stock}
+            )),
             categories: input.categories.concat(category)
         })
     }
@@ -113,10 +118,11 @@ export default function EditClothe(props){
         })
     }
 
-    const handleAddSizeStock = (talle = '', stock = 0) => {
+    const handleAddSizeStock = (tal = '', sto = 0) => {
+        console.log('al llegar aaddsizeStock', tal, sto)
         setInput({
             ...input,
-            sizeStock: input.sizeStock.concat({name: talle,stock:stock})
+            sizeStock: input.sizeStock.concat({name: tal, stock:sto})
         })
     }
 
@@ -163,7 +169,7 @@ export default function EditClothe(props){
             genre: '',
             detail: '',
             type: '',
-            sizeStock: [{name: '',stock:0}],
+            sizeStock: [],
             categories: [],
             mediaArray: null
         })
@@ -206,15 +212,10 @@ export default function EditClothe(props){
                     <Form.Label>Género:</Form.Label>
                         <div>
                             <select style={{padding: '0.6rem', }} name='genre' onChange={handleInput} default={input.genre}>
-                                <option hidden disabled value=""></option>
-                                {genres.map((g, i) => (
-                                    <option
-                                        value={g}
-                                        key={i}
-                                    >
-                                    {g}
-                                    </option>
-                                ))}
+                                <option></option>
+                                {genres.map((g, i) => {
+                                    if(g===input.genre)return <option value={g} key={i} selected>{g}</option>;
+                                    return <option value={g} key={i}>{g}</option>})}
                             </select>
                         </div>
                 </Form.Group>
@@ -231,12 +232,10 @@ export default function EditClothe(props){
                     <Form.Label>Tipos:</Form.Label>
                         <div>
                             <select style={{padding: '0.6rem', }} name='type' onChange={handleInput} defaultValue={input.type}>
-                                <option hidden disabled value=""></option>
-                                {
-                                    arrayTypes?.map((type, i) => (
-                                        <option value={type} key={i}>{type}</option>
-                                    ))
-                                }
+                                <option></option>
+                                {arrayTypes?.map((type, i) => {
+                                    if(type===input.type) return <option value={type} key={i} selected>{type}</option>
+                                    return <option value={type} key={i}>{type}</option>})}
                             </select>
                         </div>
                 </Form.Group>
