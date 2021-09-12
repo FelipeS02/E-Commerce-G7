@@ -5,12 +5,12 @@ export function validate(input) {
     } else if (!(/([A-Z])/.test(input.name)&&!/([a-z])/.test(input.name)&&input.name.length>3)) {
         errors.name = 'Product-name is invalid';
     }
-    else if (!input.price) {
+    if (!input.price) {
         errors.price = 'Price is required';
-    } else if (!(parseInt(input.price)>=0&&/^([0]|[1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1][0-9][0-9][0-9][0-9])$/.test(input.price))) {
+    } else if (!(parseInt(input.price)>=0&&/^([1-9][0-9][0-9]|[1-9][0-9][0-9][0-9]|[1][0-9][0-9][0-9][0-9])$/.test(input.price))) {
         errors.price = 'Price is invalid';
     }
-    else if (!input.color) {
+    if (!input.color) {
         errors.color = 'Color is required';
     } else if (!['negro', 'azul', 'marrón', 'gris', 'verde', 'naranja', 'rosa',
     'púrpura', 'rojo', 'blanco', 'amarillo', 'turquesa', 'verde oliva', 'verde menta',
@@ -20,26 +20,47 @@ export function validate(input) {
     'melocotón', 'violeta', 'tan', 'granate'].includes(input.color.toLowerCase())) {
         errors.color = 'Color is invalid';
     }
-    else if (!input.genre) {
+    if (!input.genre) {
         errors.genre = 'Genre is required';
     } else if (!['Femenino', 'Masculino', 'Otro'].includes(input.genre)) {
         errors.genre = 'Genre is invalid';
     }
-    else if (!input.detail) {
+    if (!input.detail) {
         errors.detail = 'Detail is required';
-    } else if (!(/([A-Z]{1})/.test(input.detail)&&input.detail.length>50)) {
+    } else if (!(/(^[A-Z])/.test(input.detail)&&input.detail.length>50)) {
       errors.detail = 'Detail is invalid';
     }
-    else if (!input.type) {
+    if (!input.type) {
       errors.type = 'Type is required';
-    } else if (!(/([A-Z]{1})/.test(input.type)&&input.type.length>3)) {
+    } else if (!(input.type.length>3)) {
       errors.type = 'Type is invalid';
+    } if(!input.sizeStock.length>0){
+      errors.sizeStock= 'Talle is required'
     }
-    else if (!input.sizeStock.name) {
-      errors.sizeStock.name = 'Talle is required';
-    } else if (!["XS", "s", "M", "L", "XL", "XXL"].includes(input.sizeStock.name)) {
-      errors.sizeStock.name = 'Talle is invalid';
+    if(input.sizeStock.length>0){
+      for(let i=0; i<input.sizeStock.length;i++){
+        if(input.sizeStock[i].name===''){
+          errors[`size${i}`]= 'Define Talle'
+        } if(input.sizeStock[i].stock<0){
+          errors[`stock${i}`]= "The stock can't less than zero"
+        }
+      }
+    }
+    if(!input.categories.length>0){
+      errors.categories= 'Select a category'
+    }
+
+    if(input.newCategories.length>0){
+      for(let i=0; i<input.newCategories.length;i++){
+        if(input.newCategories[i].name===''){
+          errors[`newCategory${i}`]= 'Define new category'
+        }
+      }
+    }
+
+    if(!(input.mediaArray&&input.mediaArray.length>0)){
+      errors.mediaArray= 'Select a file'
     }
     return errors;
-  };
+};
   
