@@ -7,7 +7,8 @@ import {
   PRODUCT_SUCCESS,
   CREATE_CLOTHE,
   PRODUCT_DETAIL,
-  EDIT_CLOTHE
+  EDIT_CLOTHE,
+  DELETE_CLOTHE
 } from "../constants/productConstants";
 
 const initialState = { loading: true, products: [], detail: {} };
@@ -38,6 +39,10 @@ export function productReducer(
       return {
         ...state
       };
+    case DELETE_CLOTHE:
+      return {
+        ...state
+      }
     case EDIT_CLOTHE:
     return {
       ...state
