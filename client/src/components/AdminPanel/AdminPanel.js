@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { getOrders } from "../../actions/orderActions.js";
 import { getProducts } from '../../actions/ProductActions';
 import ClotheCard from "./ClotheCard.js";
+import "./AdminPanel.css"
 
 function AdminPanel(){
 
@@ -22,34 +23,35 @@ function AdminPanel(){
 
     console.log("sfasfasfasfasfasfasfasf")
     return(
-        <div>
+        <div className="general">
             {/*Boton de crear*/}
             <Link to="/admin/createClothe">
-                <div>Crear prenda</div>
+                <div className="pagetitle">Crear prenda</div>
             </Link>
 
-            {/*Listado de ordenes*/}
-            <div>
-                <h4>Orders</h4>
-                <div>
-                    {
-                        arrayOrders?.map(e => {
-                            return (
-                                <span>{e.name} || {e.email} </span>
-                            )
-                        })
-                    }
+            <div className="recuadros">
+                {/*Listado de ordenes*/}
+                <div className="orders">
+                    <h4>Orders</h4>
+                    <div className="ordersRecuadro">
+                        {
+                            arrayOrders?.map(e => {
+                                return (
+                                    <span>{e.name} || {e.email} </span>
+                                )
+                            })
+                        }
+                    </div>
                 </div>
-            </div>
 
-            {/*Listado de productos*/}
-            <div>
-                <h4>Prendas</h4>
-                <div>
-                    {
-                        products.allClothes?.map(e => {
-                            return(
-                                
+                {/*Listado de productos*/}
+                <div className="prendas">
+                    <h4>Prendas</h4>
+                    <div className="prendasRecuadro">
+                        {
+                            products.allClothes?.map(e => {
+                                return(
+                                    
                                     <ClotheCard
                                         id={e.id}
                                         name={e.name}
@@ -57,11 +59,13 @@ function AdminPanel(){
                                         categories={e.categories}
                                         sizes={e.sizes}
                                     />
-                            )
-                        })
-                    }
-                </div>
+                                )
+                            })
+                        }
+                    </div>
+                </div>            
             </div>
+
         </div>
     )
 }

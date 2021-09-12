@@ -1,0 +1,15 @@
+.recuadros{
+	display: flex;
+	border: 1px solid black;
+	margin: 200px 100px;
+}
+.orders{
+	margin: auto auto;
+	border: 1px solid black;
+}
+
+.prendas{
+	width: 700px;
+	margin: auto auto;
+	border: 1px solid black;
+}
