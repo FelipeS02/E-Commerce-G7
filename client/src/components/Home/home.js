@@ -11,10 +11,11 @@ import Loading from "../Loading/Loading";
 const Home = (props) => {
   const dispatch = useDispatch();
   const productsState = useSelector((state) => state.productsState);
-  const { loading, products } = productsState;
+
+  const { loading, products, offset } = productsState;
   useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+    dispatch(getProducts("", "", offset));
+  }, [dispatch, offset]);
   const imgUrl = [
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dw5ea30e6a/01sept/full1lotto.jpg?sw=1440&sfrm=png",
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dwbd6473ec/01sept/full2futbol.jpg?sw=1440&sfrm=png",
@@ -39,7 +40,6 @@ const Home = (props) => {
 
       <Row className="mx-3">
         <Col lg="2" className="justify-content-center">
-          <h4>Categorías:</h4>
           <SideBarFilter></SideBarFilter>
         </Col>
         <Col className="d-flex align-content-center flex-wrap justify-content-between">

@@ -34,7 +34,6 @@ const SearchResults = () => {
           <PaginationC total={products.total} />
           <Row className="mx-3">
             <Col lg="2">
-              <h4>Categorías:</h4>
               {loadingCategories ? (
                 <h1>Loading..</h1>
               ) : errorCategories ? (

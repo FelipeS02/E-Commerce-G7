@@ -6,6 +6,14 @@ import {
   PRODUCT_REQUEST,
   PRODUCT_SUCCESS,
   CREATE_CLOTHE,
+  SET_CURRENT_PAGE,
+} from "../constants/productConstants";
+
+const initialState = { loading: true, products: [], current: 1 };
+
+export function productReducer(
+  state = { loading: true, products: [], current: 1 },
+
   PRODUCT_DETAIL,
   EDIT_CLOTHE,
   DELETE_CLOTHE
@@ -15,6 +23,7 @@ const initialState = { loading: true, products: [], detail: {} };
 
 export function productReducer(
   state = { loading: true, products: [], detail: {} },
+
   action
 ) {
   switch (action.type) {
@@ -39,6 +48,14 @@ export function productReducer(
       return {
         ...state
       };
+
+    case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        current: action.payload.current,
+        offset: action.payload.offset,
+      };
+
     case DELETE_CLOTHE:
       return {
         ...state
@@ -47,6 +64,7 @@ export function productReducer(
     return {
       ...state
     }
+
     default:
       return state;
   }

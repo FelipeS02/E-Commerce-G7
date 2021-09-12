@@ -10,6 +10,7 @@ import {
   PRODUCT_SUCCESS,
   PRODUCT_DETAIL,
   FILTER_PRODUCTS_BY_CATEGORY,
+  SET_CURRENT_PAGE,
   EDIT_CLOTHE,
   DELETE_CLOTHE
 } from "../constants/productConstants";
@@ -110,6 +111,14 @@ export const getProductDetail = (id) => async (dispatch) => {
   }
 };
 
+
+export const setCurrentPage = (obj) => (dispatch) => {
+  dispatch({
+    type: SET_CURRENT_PAGE,
+    payload: obj,
+  });
+};
+
 export function editClothe(form) {
   return async function (dispatch) {
     try {
@@ -138,3 +147,4 @@ export function deleteClothe(id){
     }
   }
 }
+
