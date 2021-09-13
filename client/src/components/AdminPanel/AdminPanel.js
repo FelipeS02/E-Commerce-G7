@@ -20,8 +20,6 @@ function AdminPanel(){
     const productsState = useSelector(state => state.productsState);
     const { products } = productsState;
 
-
-    console.log("sfasfasfasfasfasfasfasf")
     return(
         <div className="general">
             {/*Boton de crear*/}
@@ -37,7 +35,17 @@ function AdminPanel(){
                         {
                             arrayOrders?.map(e => {
                                 return (
-                                    <span>{e.name} || {e.email} </span>
+                                    <div className="orderCard">
+                                        <h5>Total: {e.total}</h5>
+                                        <h5>Estado: {e.state}</h5>
+                                        {
+                                            e.clothes.map((i,index) => {
+                                                return(
+                                                    <h5>Prenda nro {index+1}: {i.name}</h5>
+                                                )
+                                            })
+                                        }
+                                    </div>
                                 )
                             })
                         }

@@ -5,11 +5,20 @@
 }
 .orders{
 	margin: auto auto;
-	border: 1px solid black;
+
 }
 
 .prendas{
 	width: 700px;
 	margin: auto auto;
 	border: 1px solid black;
+}
+
+.orderCard{
+	display: flex;
+	border: 1px solid black;
+}
+
+.orderCard h5{
+	margin: 5px 10px 5px 10px;
 }
