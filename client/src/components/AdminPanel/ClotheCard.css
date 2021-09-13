@@ -1,0 +1,15 @@
+.clotheCard{
+	padding: 2.5px 0px;
+	border: 1px solid black;
+	display: flex;
+}
+.cardName{
+	margin: 0px 20px;
+}
+.typeName{
+	margin: 0px 10px 0px 10px;
+}
+
+.editClothe{
+	margin-left: 20px;
+}

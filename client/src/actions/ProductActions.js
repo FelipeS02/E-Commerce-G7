@@ -10,7 +10,9 @@ import {
   PRODUCT_SUCCESS,
   PRODUCT_DETAIL,
   FILTER_PRODUCTS_BY_CATEGORY,
-  EDIT_CLOTHE
+  SET_CURRENT_PAGE,
+  EDIT_CLOTHE,
+  DELETE_CLOTHE
 } from "../constants/productConstants";
 
 export const getProducts =
@@ -109,6 +111,14 @@ export const getProductDetail = (id) => async (dispatch) => {
   }
 };
 
+
+export const setCurrentPage = (obj) => (dispatch) => {
+  dispatch({
+    type: SET_CURRENT_PAGE,
+    payload: obj,
+  });
+};
+
 export function editClothe(form) {
   return async function (dispatch) {
     try {
@@ -122,3 +132,19 @@ export function editClothe(form) {
     }
   };
 }
+
+export function deleteClothe(id){
+  return async function(dispatch){
+    try {
+      await Axios.delete(`/admin/update-clothe/delete/${id}` )
+      return dispatch({
+        type: DELETE_CLOTHE,
+        payload: id
+      })
+    }
+    catch(error){
+      console.log(error)
+    }
+  }
+}
+
