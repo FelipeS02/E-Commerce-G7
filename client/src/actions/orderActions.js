@@ -7,11 +7,11 @@ import {
 
 export const getOrders = () => {
 	return async function(dispatch){
-		const orders = await axios.get("clothe/users-orders?userId=&orderStatus=")
-
+		const orders = await axios.get("/clothe/users-orders?userId=&orderStatus=")
 		return dispatch({
 			type: GET_ORDERS,
 			payload: orders.data
 		})
 	}
 }
+

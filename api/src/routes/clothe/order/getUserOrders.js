@@ -10,7 +10,7 @@ const {
 
 router.get("/", async (req, res) => {
   try {
-    const { userId = "", orderStatus = "" } = req.query;
+    const { userId = "", orderStatus = ""} = req.query;
 
     const validStatus = [
       "CARRITO",
@@ -50,24 +50,20 @@ router.get("/", async (req, res) => {
         },
       });
     } else if (userId === "" && orderStatus === "") {
-      response = await User.findAll({
-        attributes: ["id", "name", "email"],
+      console.log("holaaaaa")
+      response = await Order.findAll({
+        attributes: ["id", "state", "total", "payment", "direction"],
         include: {
-          model: Order,
-          attributes: ["id", "state", "total", "payment", "direction"],
-          through: { attributes: [] },
+          model: Clothe,
+          attributes: ["id", "name", "price", "color", "genre", "detail"],
           include: {
-            model: Clothe,
-            attributes: ["id", "name", "price", "color", "genre", "detail"],
-            include: {
-              model: Media,
-              attributes: ["name"],
-              through: { attributes: [] },
-            },
-            through: {
-              as: "quantity_and_size",
-              attributes: ["quantity", "size"],
-            },
+            model: Media,
+            attributes: ["name"],
+            through: { attributes: [] },
+          },
+          through: {
+            as: "quantity_and_size",
+            attributes: ["quantity", "size"],
           },
         },
       });
@@ -119,7 +115,8 @@ router.get("/", async (req, res) => {
           },
         },
       });
-    } else {
+    }
+    else {
       return res.json(responseMessage(ERROR, "Usuario y/o estado no valido"));
     }
     if (response.length > 0) {

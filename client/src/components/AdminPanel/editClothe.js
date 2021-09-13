@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getProductDetail, editClothe, getCategories, deleteClothe} from '../../actions/ProductActions';
 import { Link, useHistory } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
+import swal from 'sweetalert';
 
 export default function EditClothe(props){
 	const { id } = props.match.params;
@@ -73,7 +74,26 @@ export default function EditClothe(props){
     }
 
     const deletePrenda = () => {
-        dispatch(deleteClothe(id))
+        swal({
+            title: "¿Estás seguro de querer eliminar este producto?",
+            text: "Una vez eliminado, no hay manera de recuperarlo",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+        .then((willDelete) => {
+            if (willDelete) {
+                dispatch(deleteClothe(id));
+                swal("¡Hecho! Tu producto ha sido eliminado", {
+                    icon: "success",
+                });
+                history.push("/admin");
+            } else {
+              swal("Your imaginary file is safe!");
+              history.push("/admin");
+            }
+        });
+
     }
 
     function handleChecked(name, array){
@@ -163,9 +183,12 @@ export default function EditClothe(props){
         input.mediaArray?.forEach(f=>{
             data.append('media', f)
         })
-
-        dispatch(editClothe(data));
-        alert('Product created succesfully');
+        dispatch(editClothe(data,id));
+        swal({
+            title: "¡Hecho!",
+            text: "Tu producto se ha actualizado de manera correcta.",
+            icon: "success",
+          });
         setInput({
             name: '',
             price: 0,
