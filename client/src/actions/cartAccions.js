@@ -1,4 +1,6 @@
 import axios from "axios";
+import swal from "sweetalert";
+
 import { GET_CART_SUCCESS } from "../constants/productConstants";
 export const addToCart = (obj, id, userId) => async (dispatch) => {
   try {
@@ -13,6 +15,7 @@ export const addToCart = (obj, id, userId) => async (dispatch) => {
     if (data.statusCode !== 200) {
       throw new Error(`${data.data}`);
     }
+    swal("Prenda se agrego correctamente al carrito", "", "success");
 
     return dispatch(getOrder(userId, "CARRITO"));
   } catch (err) {
