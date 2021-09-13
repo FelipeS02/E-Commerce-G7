@@ -6,13 +6,15 @@ import { setCurrentPage } from "../../actions/ProductActions";
 const PaginationC = () => {
   const dispatch = useDispatch();
   const productsState = useSelector((state) => state.productsState);
-  const { current, products } = productsState;
-  const { total, offset } = products;
+  const { products } = productsState;
+  const { current } = useSelector((state) => state.filterState);
+  const { total } = products;
 
   let recipesPerPage = 10;
   let totalPaginate = Math.ceil(total / recipesPerPage);
 
   const handleClick = (e) => {
+    e.preventDefault();
     dispatch(
       setCurrentPage({ current: parseInt(e.target.text), offset: e.target.id })
     );

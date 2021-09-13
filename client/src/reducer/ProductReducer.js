@@ -8,6 +8,7 @@ import {
   CREATE_CLOTHE,
   SET_CURRENT_PAGE,
   PRODUCT_DETAIL,
+  SET_FILTERS,
   EDIT_CLOTHE,
   DELETE_CLOTHE,
 } from "../constants/productConstants";
@@ -15,7 +16,11 @@ import {
 const initialState = { loading: true, products: [], current: 1 };
 
 export function productReducer(
-  state = { loading: true, products: [], detail: {}, current: 1 },
+  state = {
+    loading: true,
+    products: [],
+    detail: {},
+  },
 
   action
 ) {
@@ -42,13 +47,6 @@ export function productReducer(
         ...state,
       };
 
-    case SET_CURRENT_PAGE:
-      return {
-        ...state,
-        current: action.payload.current,
-        offset: action.payload.offset,
-      };
-
     case DELETE_CLOTHE:
       return {
         ...state,
@@ -64,7 +62,7 @@ export function productReducer(
 }
 
 export function categoryReducer(
-  state = { loading: true, products: [], detail: {} },
+  state = { loading: true, categories: {} },
   action
 ) {
   switch (action.type) {
@@ -90,10 +88,7 @@ export function categoryReducer(
   }
 }
 
-export function detailReducer(
-  state = { loading: true, products: [], detail: {} },
-  action
-) {
+export function detailReducer(state = { loading: true, detail: {} }, action) {
   switch (action.type) {
     case PRODUCT_DETAIL:
       return {
@@ -109,6 +104,34 @@ export function detailReducer(
         error: action.payload,
       };
 
+    default:
+      return state;
+  }
+}
+
+export function filterReducer(
+  state = {
+    current: 1,
+    offset: 0,
+    filters: { category: "all", type: "all", size: "all", genre: "all" },
+  },
+  action
+) {
+  switch (action.type) {
+    case SET_FILTERS:
+      return {
+        ...state,
+        filters: {
+          ...state.filters,
+          [action.payload.name]: action.payload.value,
+        },
+      };
+    case SET_CURRENT_PAGE:
+      return {
+        ...state,
+        current: action.payload.current,
+        offset: action.payload.offset,
+      };
     default:
       return state;
   }
