@@ -2,15 +2,17 @@ import React, { useEffect } from "react";
 import {
   Button,
   Col,
+  Image,
   ListGroup,
   OverlayTrigger,
   Popover,
   Row,
 } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { FaShoppingCart, FaRegTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrder, removeFromCart } from "../../actions/cartAccions";
-
+import { BASE_IMG_URL } from "../../constants/productConstants";
 const Cart = () => {
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.cartState);
@@ -41,14 +43,16 @@ const Cart = () => {
                 className="justify-content-end align-items-center"
               >
                 <Row>
+                  <Image
+                    src={`${BASE_IMG_URL}/uploads/${item.media[0].name}`}
+                    fluid
+                  />
+                </Row>
+                <Row>
                   <Col>
-                    <Col></Col>
-                    <Col>
-                      <Row>{item.name}</Row>
-                      <Row>{`${item.quantity_and_size.quantity}x$${item.price}`}</Row>
-                    </Col>
+                    <Row>{item.name}</Row>
+                    <Row>{`${item.quantity_and_size.quantity}x$${item.price}`}</Row>
                   </Col>
-
                   <Col>
                     <FaRegTrashAlt
                       id={item.id}
@@ -66,7 +70,9 @@ const Cart = () => {
       {totalItems > 0 && (
         <Popover.Content>
           <h6>Total: ${carTotalAmount}</h6>
-          <Button className="my">Check out</Button>
+          <Button className="my" as={Link} to="/cart">
+            Ver Carrito
+          </Button>
         </Popover.Content>
       )}
     </Popover>
