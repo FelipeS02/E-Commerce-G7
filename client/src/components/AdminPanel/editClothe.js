@@ -34,10 +34,11 @@ export default function EditClothe(props){
     })
     console.log(input)
 
-    const getDetail = () => {
-        dispatch(getProductDetail(id));
+    const category = categorias?.map(e => e.name);
 
-        const category = categorias?.map(e => e.name);
+    const getDetail = () => {
+
+        dispatch(getProductDetail(id));
 
         console.log('talles',talles)
         talles?.forEach(e => {
@@ -56,7 +57,7 @@ export default function EditClothe(props){
             sizeStock: talles?.map((t)=>(
                 {name: t.size, stock: t.stock}
             )),
-            categories: input.categories.concat(category)
+            categories: []
         })
     }
 
@@ -130,9 +131,7 @@ export default function EditClothe(props){
         .then((willDelete) => {
             if (willDelete) {
                 dispatch(deleteClothe(id));
-                swal("¡Hecho! Tu producto ha sido eliminado", {
-                    icon: "succes",
-                });
+                swal("¡Hecho! Tu producto ha sido eliminado");
                 history.push("/admin");
             } else {
               swal("Tu producto NO ha sido borrado");
@@ -142,14 +141,14 @@ export default function EditClothe(props){
 
     }
 
-    function handleChecked(name, array){
-        if(array.includes(name)){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }
+    // function handleChecked(name, array){
+    //     if(array.includes(name)){
+    //         return true;
+    //     }
+    //     else{
+    //         return false;
+    //     }
+    // }
     
     function handleCheckBox(e){
 
@@ -246,9 +245,6 @@ export default function EditClothe(props){
             data.append('sizeName', talle.name)
             data.append('sizeStock', talle.stock)
         });
-        input.mediaArray?.forEach(f=>{
-            data.append('media', f)
-        })
         dispatch(editClothe(data,id));
         swal({
             title: "¡Hecho!",
@@ -264,6 +260,7 @@ export default function EditClothe(props){
             type: '',
             sizeStock: [],
             categories: [],
+            newCategories: [],
             mediaArray: null
         })
         history.push("/admin");
@@ -282,7 +279,7 @@ export default function EditClothe(props){
                         value={input.name}
                         onChange={handleInput}
                         />
-                    {errors.name && (<p className="danger">{errors.name}</p>)}
+                    {/* {errors.name && (<p className="danger">{errors.name}</p>)} */}
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Precio:</Form.Label>
@@ -292,7 +289,7 @@ export default function EditClothe(props){
                         value={input.price}
                         onChange={handleInput}
                         />
-                    {errors.price && (<p className="danger">{errors.price}</p>)}
+                    {/* {errors.price && (<p className="danger">{errors.price}</p>)} */}
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Color:</Form.Label>
@@ -302,7 +299,7 @@ export default function EditClothe(props){
                         value={input.color}
                         onChange={handleInput}
                         />
-                    {errors.color && (<p className="danger">{errors.color}</p>)}
+                    {/* {errors.color && (<p className="danger">{errors.color}</p>)} */}
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Género:</Form.Label>
@@ -313,7 +310,7 @@ export default function EditClothe(props){
                                     if(g===input.genre)return <option value={g} key={i} selected>{g}</option>;
                                     return <option value={g} key={i}>{g}</option>})}
                             </select>
-                            {errors.genre && (<p className="danger">{errors.genre}</p>)}
+                            {/* {errors.genre && (<p className="danger">{errors.genre}</p>)} */}
                         </div>
                 </Form.Group>
                 <Form.Group className="mb-3">
@@ -324,7 +321,7 @@ export default function EditClothe(props){
                         value={input.detail}
                         onChange={handleInput}
                         />
-                    {errors.detail && (<p className="danger">{errors.detail}</p>)}
+                    {/* {errors.detail && (<p className="danger">{errors.detail}</p>)} */}
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Tipos:</Form.Label>
@@ -335,12 +332,12 @@ export default function EditClothe(props){
                                     if(type===input.type) return <option value={type} key={i} selected>{type}</option>
                                     return <option value={type} key={i}>{type}</option>})}
                             </select>
-                            {errors.type && (<p className="danger">{errors.type}</p>)}
+                            {/* {errors.type && (<p className="danger">{errors.type}</p>)} */}
                         </div>
                 </Form.Group>
                 <Form.Group className="mb-3">
                     <Form.Label>Talles:</Form.Label>
-                    {errors.sizeStock && (<p className="danger">{errors.sizeStock}</p>)}
+                    {/* {errors.sizeStock && (<p className="danger">{errors.sizeStock}</p>)} */}
                     {input.sizeStock.map((talle, idx)=>(
                         <Form.Group className="mb-3" key={`talle${idx}`}>
                             <select style={{padding: '0.6rem', marginRight: '1rem' }} value={talle.name} onChange={handleSize(idx)}>
@@ -358,8 +355,8 @@ export default function EditClothe(props){
                             type='button'
                             onClick={handleRemoveSizeStock(idx)}
                             >-</Button>
-                            {errors[`size${idx}`] && (<p className="danger">{errors[`size${idx}`]}</p>)}
-                            {errors[`stock${idx}`]&& (<p className="danger">{errors[`stock${idx}`]}</p>)}
+                            {/* {errors[`size${idx}`] && (<p className="danger">{errors[`size${idx}`]}</p>)} */}
+                            {/* {errors[`stock${idx}`]&& (<p className="danger">{errors[`stock${idx}`]}</p>)} */}
                         </Form.Group>
                     ))}
                     <Button variant="dark"
@@ -369,6 +366,11 @@ export default function EditClothe(props){
                 </Form.Group>  
                 <Form.Group className="mb-3">
                     <Form.Label >Categorias:</Form.Label>
+                    {category?.map((cat) =>(
+                            <span style={{padding: '1rem'}} key = {cat}>
+                                <label >{cat}</label>
+                            </span>
+                        ))}
                     <Form.Group className="mb-3" style={{padding: '.5rem'}}>
                         {arrayCategories?.map((cat) =>(
                             <span style={{padding: '1rem'}} key = {cat}>
@@ -381,7 +383,7 @@ export default function EditClothe(props){
                                 <label >{cat}</label>
                             </span>
                         ))}
-                        {errors.categories&& (<p className="danger">{errors.categories}</p>)}
+                        {/* {errors.categories&& (<p className="danger">{errors.categories}</p>)} */}
                     </Form.Group>
                     <Form.Group className="mb-3">
                     {input.newCategories?.map((cat, idx)=>(
@@ -395,14 +397,14 @@ export default function EditClothe(props){
                             name='newCategorie'
                             value={cat.name}
                             onChange={handleNewCategory(idx)}
-                            checked={handleChecked(cat, input.categories)}
+                            // checked={handleChecked(cat, input.categories)}
                             />
                             <Button variant="dark"
                             type='button'
                             onClick={handleRemoveNewCategory(idx)}
                             >-</Button>
                         </Form.Group>
-                        {errors[`newCategory${idx}`] && (<p className="danger">{errors[`newCategory${idx}`]}</p>)}
+                        {/* {errors[`newCategory${idx}`] && (<p className="danger">{errors[`newCategory${idx}`]}</p>)} */}
                         </Form.Group>
                     ))}
                     <Button variant="dark"
@@ -411,26 +413,6 @@ export default function EditClothe(props){
                     >Agregar nueva categoria</Button>
                 </Form.Group>
                 </Form.Group>             
-                {/* <Form.Group className="mb-3">
-                    <Form.Label >Categorias:</Form.Label>
-                    <Form.Group className="mb-3" style={{padding: '.5rem'}}>
-                        {arrayCategories?.map((cat) =>(
-                            <span style={{padding: '1rem'}} key = {cat}>
-                                <input
-                                type="checkbox" 
-                                name='categories'
-                                value={cat}
-                                onChange={handleCheckBox}
-                                checked={handleChecked(cat, input.categories)}
-                                />
-                                <label >{cat}</label>
-                            </span>
-                        ))}
-                    </Form.Group>
-                </Form.Group> */}
-                {/* <Form.Group controlId="formFileMultiple" className="mb-3">
-                    <Form.Control type="file" multiple onChange={handlerOnChangeMedia}/>
-                </Form.Group> */}
                 <Button variant="dark" type='submit'>SUBMIT</Button>
                 <Link style={{marginLeft: '2rem'}} to="/admin">
                     <Button variant="danger" type='submit'>CANCEL</Button>

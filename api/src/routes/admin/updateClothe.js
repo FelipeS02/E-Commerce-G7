@@ -105,23 +105,21 @@ router.put("/:idClothe", async (req,res) => {
             });
         }
         if(categories){
-            if(!Array.isArray(categories)) {var arrayCategories = categories.split(' ');}
-            arrayCategories = categories;
+            // if(!Array.isArray(categories)) {var arrayCategories = categories.split(' ');}
+            // arrayCategories = categories;
+
             for(let i = 0; i < clotheToUpdate.categories.length; i++){
-                try {
                     
-                    await clothe_category.destroy({where : {
-                       
-                    categoryId:clotheToUpdate.categories[i].clothe_category.categoryId,
+                    await clothe_category.destroy({
+                    where : 
+                    {
                     clotheId:clotheToUpdate.categories[i].clothe_category.clotheId,
+                    categoryId:clotheToUpdate.categories[i].clothe_category.categoryId,
                         
                     }});
-                } catch (err) {
-                    const { message } = err;
-                    return res.json(responseMessage(ERROR, message));
-                }
             }
-            arrayCategories.map(async cat => {
+
+            categories.map(async cat => {
                 const newCategory = await Category.create({name : cat});
                 await clotheToUpdate.addCategory(newCategory);
             });
