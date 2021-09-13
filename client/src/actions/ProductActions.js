@@ -25,11 +25,9 @@ export const getProducts =
     try {
       let response;
       console.log(size, type);
-      const { data } = await (name === ""
-        ? Axios.get(
-            `/clothe/all-clothes?name=${name}&limit=10&offset=${offset}&category=${category}&type=${type}&size=${size}&genre=${genre}`
-          )
-        : Axios.get(`/clothe?name=${name}`));
+      const { data } = await Axios.get(
+        `/clothe/all-clothes?name=${name}&limit=10&offset=${offset}&category=${category}&type=${type}&size=${size}&genre=${genre}`
+      );
 
       response = data;
 
