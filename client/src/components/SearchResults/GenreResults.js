@@ -26,6 +26,9 @@ const GenreResults = () => {
   const { offset } = filterState;
   const { category, size, type } = filterState.filters;
   useEffect(() => {
+    dispatch(cleanFilters());
+  }, []);
+  useEffect(() => {
     dispatch(setFilters({ name: "genre", value: genre }));
     dispatch(
       getProducts(
@@ -38,9 +41,7 @@ const GenreResults = () => {
       )
     );
   }, [dispatch, offset, category, type, size, genre]);
-  useEffect(() => {
-    dispatch(cleanFilters());
-  }, []);
+
   if (loading) {
     return <div>Loading...</div>;
   }
