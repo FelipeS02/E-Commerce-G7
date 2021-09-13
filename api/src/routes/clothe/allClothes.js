@@ -18,16 +18,16 @@ router.get("/", async (req, res) => {
       genre = "",
       color = "",
     } = req.query;
-
     let response;
     const validSizes = ["XS", "S", "M", "L", "XL", "XXL"];
+    const validGenres = ["Masculino", "Femenino", "Otro"];
 
-    if (validSizes.includes(size)) {
+    if (validSizes.includes(size) && validGenres.includes(genre)) {
       response = await Clothe.findAndCountAll({
         where: {
           name: { [Op.iLike]: `%${name}%` },
           color: { [Op.iLike]: `%${color}%` },
-          genre: { [Op.iLike]: `%${genre}%` },
+          genre,
         },
         order: [["id", "ASC"]],
         distinct: true,
@@ -48,7 +48,79 @@ router.get("/", async (req, res) => {
           {
             model: Size,
             attributes: ["id", "size", "stock"],
-            where: { size: size },
+            where: { size },
+            through: { attributes: [] },
+          },
+          {
+            model: Type,
+            attributes: ["id", "name"],
+            where: { name: { [Op.iLike]: `%${type}%` } },
+            through: { attributes: [] },
+          },
+        ],
+      });
+    } else if (validGenres.includes(genre)) {
+      response = await Clothe.findAndCountAll({
+        where: {
+          name: { [Op.iLike]: `%${name}%` },
+          color: { [Op.iLike]: `%${color}%` },
+          genre,
+        },
+        order: [["id", "ASC"]],
+        distinct: true,
+        offset: offset,
+        limit: 10,
+        include: [
+          {
+            model: Category,
+            attributes: ["id", "name"],
+            where: { name: { [Op.iLike]: `%${category}%` } },
+            through: { attributes: [] },
+          },
+          {
+            model: Media,
+            attributes: ["type", "name"],
+            through: { attributes: [] },
+          },
+          {
+            model: Size,
+            attributes: ["id", "size", "stock"],
+            through: { attributes: [] },
+          },
+          {
+            model: Type,
+            attributes: ["id", "name"],
+            where: { name: { [Op.iLike]: `%${type}%` } },
+            through: { attributes: [] },
+          },
+        ],
+      });
+    } else if (validSizes.includes(size)) {
+      response = await Clothe.findAndCountAll({
+        where: {
+          name: { [Op.iLike]: `%${name}%` },
+          color: { [Op.iLike]: `%${color}%` },
+        },
+        order: [["id", "ASC"]],
+        distinct: true,
+        offset: offset,
+        limit: 10,
+        include: [
+          {
+            model: Category,
+            attributes: ["id", "name"],
+            where: { name: { [Op.iLike]: `%${category}%` } },
+            through: { attributes: [] },
+          },
+          {
+            model: Media,
+            attributes: ["type", "name"],
+            through: { attributes: [] },
+          },
+          {
+            model: Size,
+            where: { size },
+            attributes: ["id", "size", "stock"],
             through: { attributes: [] },
           },
           {
@@ -61,7 +133,10 @@ router.get("/", async (req, res) => {
       });
     } else {
       response = await Clothe.findAndCountAll({
-        where: { name: { [Op.iLike]: `%${name}%` } },
+        where: {
+          name: { [Op.iLike]: `%${name}%` },
+          color: { [Op.iLike]: `%${color}%` },
+        },
         order: [["id", "ASC"]],
         distinct: true,
         offset: offset,

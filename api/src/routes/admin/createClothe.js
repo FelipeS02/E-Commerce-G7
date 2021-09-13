@@ -108,8 +108,8 @@ const setSizes = async (sN, sS, clothe) => {
     sizeN.push(sN);
     sizeS.push(sS)
   }else {
-    sizeN.concat(sN);
-    sizeS.concat(sS)
+    sizeN = sizeN.concat(sN);
+    sizeS = sizeS.concat(sS);
   }
   for(i=0; i<sizeN.length; i++){
     sizeObject[sizeN[i]] = sizeS[i]

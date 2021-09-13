@@ -53,6 +53,7 @@ function AdminPanel(){
         setInput({
             ...input,
             newCategories: input.newCategories.concat({name: ''})
+
         })
         setErrors(validate({
             ...input,
@@ -170,7 +171,8 @@ function AdminPanel(){
 
     function handleSubmit(e){
         e.preventDefault();
-        if (Object.keys(errors).length === 0&&input.name!==''&&input.sizeStock.length>0&&input.categories.length>0&&input.mediaArray>0) {
+        if (Object.keys(errors).length === 0&&input.name!==''&&input.sizeStock.length>0) {
+            console.log(input.categories)
             const data = new FormData()
             data.append('name', input.name)
             data.append('price', input.price)
@@ -180,6 +182,9 @@ function AdminPanel(){
             data.append('type', input.type)
             input.categories?.forEach(c=>{
                 data.append('categories', c)
+            })
+            input.newCategories?.forEach(c=>{
+                data.append('categories', c.name)
             })
             input.sizeStock?.forEach(talle => {
                 data.append('sizeName', talle.name)

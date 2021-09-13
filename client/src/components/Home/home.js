@@ -11,10 +11,22 @@ import Loading from "../Loading/Loading";
 const Home = (props) => {
   const dispatch = useDispatch();
   const productsState = useSelector((state) => state.productsState);
+  const filterState = useSelector((state) => state.filterState);
   const { loading, products } = productsState;
+  const { category, size, type, genre } = filterState.filters;
+  const { offset, current } = filterState;
   useEffect(() => {
-    dispatch(getProducts());
-  }, [dispatch]);
+    dispatch(
+      getProducts(
+        "",
+        category === "all" ? "" : category,
+        type === "all" ? "" : type,
+        size === "all" ? "" : size,
+        genre === "all" ? "" : genre,
+        offset
+      )
+    );
+  }, [dispatch, offset, category, type, size, genre]);
   const imgUrl = [
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dw5ea30e6a/01sept/full1lotto.jpg?sw=1440&sfrm=png",
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dwbd6473ec/01sept/full2futbol.jpg?sw=1440&sfrm=png",
@@ -39,11 +51,10 @@ const Home = (props) => {
 
       <Row className="mx-3">
         <Col lg="2" className="justify-content-center">
-          <h4>Categorías:</h4>
           <SideBarFilter></SideBarFilter>
         </Col>
         <Col className="d-flex align-content-center flex-wrap justify-content-between">
-          {products.allClothes.map((product, index) => (
+          {products.allClothes ? products.allClothes.map((product, index) => (
             <CardP
               key={index}
               id={product.id}
@@ -52,7 +63,7 @@ const Home = (props) => {
               picture={product.media[0].name}
               sizes={product.sizes}
             />
-          ))}
+          )): <h1>No existe ninguna prenda actualmente</h1>}
         </Col>
       </Row>
       <PaginationC />
