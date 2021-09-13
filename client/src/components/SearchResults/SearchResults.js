@@ -18,52 +18,61 @@ const SearchResults = () => {
     error: errorCategories,
     categories,
   } = productCategories;
-
+  const filterState = useSelector((state) => state.filterState);
+  const { offset } = filterState;
+  const { category, size, type, genre } = filterState.filters;
   useEffect(() => {
-    let param = name !== "all" ? name : "";
-    dispatch(getProducts(param));
-  }, [dispatch, name]);
+    dispatch(
+      getProducts(
+        name === "all" ? "" : name,
+        category === "all" ? "" : category,
+        type === "all" ? "" : type,
+        size === "all" ? "" : size,
+        genre === "all" ? "" : genre,
+        offset
+      )
+    );
+  }, [dispatch, name, offset, category, type, size, genre]);
   if (loading) {
     return <div>Loading...</div>;
   }
   return (
-    <div>
-      {loading ? (
-        <h1>Loading..</h1>
-      ) : error ? (
-        <h1>{error}</h1>
-      ) : (
-        <>
-          <PaginationC total={products.total} />
-          <Row className="mx-3">
-            <Col lg="2">
-              {loadingCategories ? (
-                <h1>Loading..</h1>
-              ) : errorCategories ? (
-                <h1>{errorCategories}</h1>
-              ) : (
-                <SideBarFilter />
-              )}
-            </Col>
-            <Col>
-              <Row>
-                <h1>{products.length}Resultados</h1>
-              </Row>
-              <Row className="d-flex align-content-center flex-wrap justify-content-between">
-                {products.allClothes?.map((product) => (
-                  <CardP
-                    name={product.name}
-                    price={product.price}
-                    picture={product.media[0].name}
-                  />
-                ))}
-              </Row>
-            </Col>
+    <>
+      <PaginationC total={products.total} />
+      <Row className="mx-3">
+        <Col lg="2">
+          {loadingCategories ? (
+            <h1>Loading..</h1>
+          ) : errorCategories ? (
+            <h1>{errorCategories}</h1>
+          ) : (
+            <SideBarFilter />
+          )}
+        </Col>
+        <Col>
+          <Row>
+            <h1>{products.length}Resultados</h1>
           </Row>
-          <PaginationC total={products.total} />
-        </>
-      )}
-    </div>
+          <Row className="d-flex align-content-center flex-wrap justify-content-between">
+            {error === "" && products.allClothes ? (
+              products.allClothes.map((product, index) => (
+                <CardP
+                  key={index}
+                  id={product.id}
+                  name={product.name}
+                  price={product.price}
+                  picture={product.media[0].name}
+                  sizes={product.sizes}
+                />
+              ))
+            ) : (
+              <h1>No se encontrarón resultados...</h1>
+            )}
+          </Row>
+        </Col>
+      </Row>
+      <PaginationC total={products.total} />
+    </>
   );
 };
 
