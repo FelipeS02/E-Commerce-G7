@@ -43,7 +43,7 @@ const Home = (props) => {
           <SideBarFilter></SideBarFilter>
         </Col>
         <Col className="d-flex align-content-center flex-wrap justify-content-between">
-          {products.allClothes.map((product, index) => (
+          {products.allClothes ? products.allClothes.map((product, index) => (
             <CardP
               key={index}
               id={product.id}
@@ -52,7 +52,7 @@ const Home = (props) => {
               picture={product.media[0].name}
               sizes={product.sizes}
             />
-          ))}
+          )): <h1>No existe ninguna prenda actualmente</h1>}
         </Col>
       </Row>
       <PaginationC />
