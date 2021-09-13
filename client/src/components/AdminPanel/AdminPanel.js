@@ -25,7 +25,7 @@ function AdminPanel(){
         <div className="general">
             {/*Boton de crear*/}
             <Link to="/admin/createClothe">
-                <div className="pagetitle">Crear prenda</div>
+                <div className="pageTitle">Crear prenda</div>
             </Link>
 
             <div className="recuadros">
@@ -34,35 +34,34 @@ function AdminPanel(){
                     <h4>Orders</h4>
                     <div className="ordersRecuadro">
                         {
-                            arrayOrders?arrayOrders.map(e => {
+                            arrayOrders ? arrayOrders.map(e => {
                                 return (
                                     <div className="orderCard">
-                                        <h5>Total: {e.total}</h5>
-                                        <h5>Estado: {e.state}</h5>
+                                        <h6>Total: {e.total}</h6>
+                                        <h6>Estado: {e.state}</h6>
                                         <Dropdown>
-                                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                        <Dropdown.Toggle variant="success" id="dropdown-basic" className="botonDrop">
                                             Items
                                         </Dropdown.Toggle>
 
-                                        <Dropdown.Menu>
+                                        <Dropdown.Menu className="orderDetailDrop">
                                         {
                                             e.clothes.map((i,index) => {
                                                 return(
-                                                    <Dropdown.Item >
+                                                    <Dropdown.Item className="prendasOrder">
                                                         <>
-                                                        <h5>Prenda:{i.name}</h5>
-                                                        <h5>Talle:{i.quantity_and_size.size} Cantidad:{i.quantity_and_size.quantity}</h5>
+                                                        <h6>Prenda: {i.name}</h6>
+                                                        <h6>Talle: {i.quantity_and_size.size} Cantidad: {i.quantity_and_size.quantity}</h6>
+                                                        <h6>Precio individual: {i.price}</h6>
                                                         </> 
                                                     </Dropdown.Item>
-                                                )}
                                                 )
                                             })
-                            
-
+                                        }
                                         </Dropdown.Menu>
                                         </Dropdown>
                                     </div>
-                            )
+                                )
                             }): <h3>No hay ordenes en este momento</h3>
                         }
                     </div>
@@ -95,31 +94,3 @@ function AdminPanel(){
 }
 
 export default AdminPanel;
-
-
-  //   const dispatch = useDispatch();
-
-
-
-  //   useEffect(() => {
-  //       dispatch(getProducts());
-  //   },[dispatch]);
-
-
-  //   return (
-  //   <div>
-  //     <h3>Prendas para editar</h3>
-  //     <div>
-  //       {
-  //           products.allClothes?.forEach(e => {
-
-  //               return (
-  //                   <Link to={`admin/editClothe/${id}`}>
-  //                       <span>{e.name} || {e.price} || {e.sizes}</span>
-  //                   </Link>
-  //               )
-  //           })
-  //       }
-  //     </div>
-  //   </div>
-  // );

@@ -1,15 +1,36 @@
-.clotheCard{
-	padding: 2.5px 0px;
-	border: 1px solid black;
-	display: flex;
-}
-.cardName{
-	margin: 0px 20px;
-}
-.typeName{
-	margin: 0px 10px 0px 10px;
+a{
+	text-decoration: none;
 }
 
 .editClothe{
 	margin-left: 20px;
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 7px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+}
+.clotheCard{
+	align-items: center;
+	padding: 5px 0px 5px 0px;
+	border-bottom: 2px solid black;
+	display: flex;
+}
+.cardName{
+	width: 225px;
+	margin: 0px auto 0px 5px;
+}
+.typeName{
+	border-right: red;
+	text-align: center;
+	width: 100px;
+	margin: 0px auto 0px 5px;
+}
+.cardCategory{
+	width: 100px;
+	text-align: center;
+	margin: 0px 10px 0px auto;
 }

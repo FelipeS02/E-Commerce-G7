@@ -13,10 +13,17 @@ export default function ClotheCard(props){
 						<h6>{props.name}</h6>
 					</div>
 					
-					<h6 className="typeName">{props.types[0].name}</h6>
+					<div className="typeName">
+						<h6>{props.types[0].name}</h6>
+					</div>
+
 					{
 						props.categories?.map(e => {
-							return <span>{e.name}</span>
+							return(
+								<div className="cardCategory">
+									<h6>{e.name}</h6>
+								</div>
+							)
 						})
 					}
 					<button className="editClothe">Editar</button>
