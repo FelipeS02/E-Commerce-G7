@@ -164,7 +164,7 @@ export default function EditClothe(props){
             data.append('media', f)
         })
 
-        dispatch(editClothe(data));
+        dispatch(editClothe(data,id));
         alert('Product created succesfully');
         setInput({
             name: '',
@@ -293,8 +293,10 @@ export default function EditClothe(props){
                 <Link style={{marginLeft: '2rem'}} to="/admin">
                     <Button variant="danger" type='submit'>CANCEL</Button>
                 </Link>
-
+                <Link style={{marginLeft: '2rem'}} to="/admin">
                 <Button variant="danger" onClick={deletePrenda} style={{marginTop: '2rem', display: 'block'}}>Eliminar Prenda</Button>
+                </Link>
+
             </Form>
         </div>
     )

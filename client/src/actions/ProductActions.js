@@ -110,10 +110,11 @@ export const getProductDetail = (id) => async (dispatch) => {
   }
 };
 
-export function editClothe(form) {
+export function editClothe(form,id) {
   return async function (dispatch) {
     try {
-      await Axios.post("/admin/edit-clothe", form);
+      await Axios.put(`/admin/update-clothe/${id}`, form);
+      console.log(form,'-------soy el formulario para actualizar los datos de un rpoducto');
       return dispatch({
         type: EDIT_CLOTHE,
         payload: form,
