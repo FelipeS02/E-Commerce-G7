@@ -80,6 +80,7 @@ const Cart = () => {
   return (
     <OverlayTrigger
       trigger="click"
+      rootClose
       placement="bottom"
       className="my-2"
       overlay={popover}
