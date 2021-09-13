@@ -2,8 +2,8 @@ export const PRODUCT_REQUEST = "PRODUCT_REQUEST";
 export const PRODUCT_SUCCESS = "PRODUCT_SUCCESS";
 export const PRODUCT_FAIL = "PRODUCT_FAIL";
 export const CREATE_CLOTHE = "CREATE_CLOTHE";
-export const EDIT_CLOTHE = "EDIT_CLOTHE"
-export const DELETE_CLOTHE = "DELETE_CLOTHE"
+export const EDIT_CLOTHE = "EDIT_CLOTHE";
+export const DELETE_CLOTHE = "DELETE_CLOTHE";
 export const CATEGORY_REQUEST = "CATEGORY_REQUEST";
 export const CATEGORY_SUCCESS = "CATEGORY_SUCCESS";
 export const CATEGORY_FAIL = "CATEGORY_FAIL";
@@ -19,6 +19,7 @@ export const GET_CART_FAIL = "GET_CART_FAIL";
 export const GET_CART_SUCCESS = "GET_CART_SUCCESS";
 export const GET_CART_LOADING = "GET_CART_LOADING";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
+export const SET_FILTERS = "SET_FILTERS";
 
 export const BASE_IMG_URL =
   process.env.NODE_ENV === "production"

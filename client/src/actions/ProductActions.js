@@ -11,21 +11,24 @@ import {
   PRODUCT_DETAIL,
   FILTER_PRODUCTS_BY_CATEGORY,
   SET_CURRENT_PAGE,
+  SET_FILTERS,
   EDIT_CLOTHE,
-  DELETE_CLOTHE
+  DELETE_CLOTHE,
 } from "../constants/productConstants";
 
 export const getProducts =
-  (name = "", category = "", offset = 0) =>
+  (name = "", category = "", type = "", size = "", genre = "", offset = 0) =>
   async (dispatch) => {
     dispatch({
       type: PRODUCT_REQUEST,
     });
     try {
       let response;
-      console.log("name", name);
+      console.log(size, type);
       const { data } = await (name === ""
-        ? Axios.get(`/clothe/all-clothes?limit=10&offset=${offset}`)
+        ? Axios.get(
+            `/clothe/all-clothes?name=${name}&limit=10&offset=${offset}&category=${category}&type=${type}&size=${size}&genre=${genre}`
+          )
         : Axios.get(`/clothe?name=${name}`));
 
       response = data;
@@ -101,7 +104,7 @@ export const getProductDetail = (id) => async (dispatch) => {
     const { data } = await Axios.get(`/clothe/clothe-details/${id}`);
     dispatch({
       type: PRODUCT_DETAIL,
-      payload: data.data
+      payload: data.data,
     });
   } catch (error) {
     dispatch({
@@ -111,10 +114,16 @@ export const getProductDetail = (id) => async (dispatch) => {
   }
 };
 
-
 export const setCurrentPage = (obj) => (dispatch) => {
   dispatch({
     type: SET_CURRENT_PAGE,
+    payload: obj,
+  });
+};
+
+export const setFilters = (obj) => (dispatch) => {
+  dispatch({
+    type: SET_FILTERS,
     payload: obj,
   });
 };
@@ -133,18 +142,16 @@ export function editClothe(form) {
   };
 }
 
-export function deleteClothe(id){
-  return async function(dispatch){
+export function deleteClothe(id) {
+  return async function (dispatch) {
     try {
-      await Axios.delete(`/admin/update-clothe/delete/${id}` )
+      await Axios.delete(`/admin/update-clothe/delete/${id}`);
       return dispatch({
         type: DELETE_CLOTHE,
-        payload: id
-      })
+        payload: id,
+      });
+    } catch (error) {
+      console.log(error);
     }
-    catch(error){
-      console.log(error)
-    }
-  }
+  };
 }
-

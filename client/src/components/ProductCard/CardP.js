@@ -5,6 +5,7 @@ import Talle from "../Talle/Talle";
 import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../actions/cartAccions";
 import { BASE_IMG_URL } from "../../constants/productConstants";
+import { Link } from "react-router-dom";
 
 const CardP = (props) => {
   const dispatch = useDispatch();
@@ -53,7 +54,9 @@ const CardP = (props) => {
       <Card.Img variant="top" src={`${BASE_IMG_URL}/uploads/${picture}`} />
 
       <Card.Body className="justify-content-center card text-center">
-        <Card.Title>{name}</Card.Title>
+        <Card.Title as={Link} to={`/search/details/${id}`}>
+          {name}
+        </Card.Title>
         <Card.Text>${price}</Card.Text>
 
         <Talle sizes={sizes} talleHandler={talleHandler} />
