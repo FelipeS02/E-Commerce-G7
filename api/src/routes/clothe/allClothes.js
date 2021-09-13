@@ -17,6 +17,7 @@ router.get("/", async (req, res) => {
       name = "",
       genre = "",
       color = "",
+      limit = 10,
     } = req.query;
     let response;
     const validSizes = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -32,7 +33,7 @@ router.get("/", async (req, res) => {
         order: [["id", "ASC"]],
         distinct: true,
         offset: offset,
-        limit: 10,
+        limit,
         include: [
           {
             model: Category,
@@ -69,7 +70,7 @@ router.get("/", async (req, res) => {
         order: [["id", "ASC"]],
         distinct: true,
         offset: offset,
-        limit: 10,
+        limit,
         include: [
           {
             model: Category,
@@ -104,7 +105,7 @@ router.get("/", async (req, res) => {
         order: [["id", "ASC"]],
         distinct: true,
         offset: offset,
-        limit: 10,
+        limit,
         include: [
           {
             model: Category,
@@ -140,7 +141,7 @@ router.get("/", async (req, res) => {
         order: [["id", "ASC"]],
         distinct: true,
         offset: offset,
-        limit: 10,
+        limit,
         include: [
           {
             model: Category,
