@@ -12,7 +12,7 @@ const Home = (props) => {
   const dispatch = useDispatch();
   const productsState = useSelector((state) => state.productsState);
   const filterState = useSelector((state) => state.filterState);
-  const { loading, products } = productsState;
+  const { loading, products, error } = productsState;
   const { category, size, type, genre } = filterState.filters;
   const { offset, current } = filterState;
   useEffect(() => {
@@ -54,16 +54,20 @@ const Home = (props) => {
           <SideBarFilter></SideBarFilter>
         </Col>
         <Col className="d-flex align-content-center flex-wrap justify-content-between">
-          {products.allClothes ? products.allClothes.map((product, index) => (
-            <CardP
-              key={index}
-              id={product.id}
-              name={product.name}
-              price={product.price}
-              picture={product.media[0].name}
-              sizes={product.sizes}
-            />
-          )): <h1>No existe ninguna prenda actualmente</h1>}
+          {error === "" && products.allClothes ? (
+            products.allClothes.map((product, index) => (
+              <CardP
+                key={index}
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                picture={product.media[0].name}
+                sizes={product.sizes}
+              />
+            ))
+          ) : (
+            <h1>No se encontrarón resultados...</h1>
+          )}
         </Col>
       </Row>
       <PaginationC />

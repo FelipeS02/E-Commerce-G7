@@ -32,17 +32,12 @@ export const getProducts =
       response = data;
 
       if (response.statusCode === 400) {
-        console.log("response", response);
-        dispatch({
-          type: PRODUCT_FAIL,
-          payload: response.data,
-        });
-      } else {
-        dispatch({
-          type: PRODUCT_SUCCESS,
-          payload: response,
-        });
+        throw new Error(response.data);
       }
+      dispatch({
+        type: PRODUCT_SUCCESS,
+        payload: response,
+      });
     } catch (error) {
       dispatch({
         type: PRODUCT_FAIL,
