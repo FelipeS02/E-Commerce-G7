@@ -1,15 +1,18 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import { cleanFilters, getProducts } from "../../actions/ProductActions";
+import {
+  cleanFilters,
+  getProducts,
+  setFilters,
+} from "../../actions/ProductActions";
 import { Row, Col } from "react-bootstrap";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
 import PaginationC from "../Pagination/PaginationC";
 import CardP from "../ProductCard/CardP";
-import Loading from "../Loading/Loading";
 
-const SearchResults = () => {
-  const { name = "all" } = useParams();
+const GenreResults = () => {
+  const { genre = "all" } = useParams();
   const dispatch = useDispatch();
   const productsState = useSelector((state) => state.productsState);
   const { loading, error, products } = productsState;
@@ -21,11 +24,12 @@ const SearchResults = () => {
   } = productCategories;
   const filterState = useSelector((state) => state.filterState);
   const { offset } = filterState;
-  const { category, size, type, genre } = filterState.filters;
+  const { category, size, type } = filterState.filters;
   useEffect(() => {
+    dispatch(setFilters({ name: "genre", value: genre }));
     dispatch(
       getProducts(
-        name === "all" ? "" : name,
+        "",
         category === "all" ? "" : category,
         type === "all" ? "" : type,
         size === "all" ? "" : size,
@@ -33,12 +37,12 @@ const SearchResults = () => {
         offset
       )
     );
-  }, [dispatch, name, offset, category, type, size, genre]);
+  }, [dispatch, offset, category, type, size, genre]);
   useEffect(() => {
     dispatch(cleanFilters());
   }, []);
   if (loading) {
-    return <Loading />;
+    return <div>Loading...</div>;
   }
   return (
     <>
@@ -80,4 +84,4 @@ const SearchResults = () => {
   );
 };
 
-export default SearchResults;
+export default GenreResults;
