@@ -5,6 +5,7 @@ import { getOrders } from "../../actions/orderActions.js";
 import { getProducts } from '../../actions/ProductActions';
 import ClotheCard from "./ClotheCard.js";
 import "./AdminPanel.css"
+import { Dropdown } from "react-bootstrap"
 
 function AdminPanel(){
 
@@ -20,8 +21,6 @@ function AdminPanel(){
     const productsState = useSelector(state => state.productsState);
     const { products } = productsState;
 
-
-    console.log("sfasfasfasfasfasfasfasf")
     return(
         <div className="general">
             {/*Boton de crear*/}
@@ -35,11 +34,36 @@ function AdminPanel(){
                     <h4>Orders</h4>
                     <div className="ordersRecuadro">
                         {
-                            arrayOrders?.map(e => {
+                            arrayOrders?arrayOrders.map(e => {
                                 return (
-                                    <span>{e.name} || {e.email} </span>
-                                )
-                            })
+                                    <div className="orderCard">
+                                        <h5>Total: {e.total}</h5>
+                                        <h5>Estado: {e.state}</h5>
+                                        <Dropdown>
+                                        <Dropdown.Toggle variant="success" id="dropdown-basic">
+                                            Items
+                                        </Dropdown.Toggle>
+
+                                        <Dropdown.Menu>
+                                        {
+                                            e.clothes.map((i,index) => {
+                                                return(
+                                                    <Dropdown.Item >
+                                                        <>
+                                                        <h5>Prenda:{i.name}</h5>
+                                                        <h5>Talle:{i.quantity_and_size.size} Cantidad:{i.quantity_and_size.quantity}</h5>
+                                                        </> 
+                                                    </Dropdown.Item>
+                                                )}
+                                                )
+                                            })
+                            
+
+                                        </Dropdown.Menu>
+                                        </Dropdown>
+                                    </div>
+                            )
+                            }): <h3>No hay ordenes en este momento</h3>
                         }
                     </div>
                 </div>

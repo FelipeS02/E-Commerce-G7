@@ -29,12 +29,14 @@ export function productReducer(
       return {
         ...state,
         loading: true,
+        error: "",
       };
     case PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
         products: action.payload.data,
+        error: "",
       };
     case PRODUCT_FAIL:
       return {
