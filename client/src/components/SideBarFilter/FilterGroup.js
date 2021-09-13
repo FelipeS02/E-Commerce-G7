@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { ListGroup } from "react-bootstrap";
-
+import { useDispatch } from "react-redux";
+import { setFilters } from "../../actions/ProductActions";
 const FilterGroup = (props) => {
-  const { title, items } = props;
-  const [active, setActive] = useState("");
+  const dispatch = useDispatch();
+  const { title, items, type, active } = props;
+
   const toggleHandler = (e) => {
-    setActive(e.target.id);
+    e.preventDefault();
+    dispatch(setFilters({ name: type, value: e.target.id }));
   };
-  useEffect(() => {
-    setActive("all");
-  }, []);
+
   return (
     <>
       <h4 className="mt-5 mb-3">{title}</h4>
