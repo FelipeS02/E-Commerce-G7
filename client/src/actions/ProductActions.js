@@ -12,6 +12,7 @@ import {
   FILTER_PRODUCTS_BY_CATEGORY,
   SET_CURRENT_PAGE,
   SET_FILTERS,
+  CLEAN_FILTERS,
   EDIT_CLOTHE,
   DELETE_CLOTHE,
 } from "../constants/productConstants";
@@ -107,7 +108,6 @@ export const getProductDetail = (id) => async (dispatch) => {
   }
 };
 
-
 export const setCurrentPage = (obj) => (dispatch) => {
   dispatch({
     type: SET_CURRENT_PAGE,
@@ -122,11 +122,20 @@ export const setFilters = (obj) => (dispatch) => {
   });
 };
 
-export function editClothe(form,id) {
+export const cleanFilters = () => (dispatch) => {
+  dispatch({
+    type: CLEAN_FILTERS,
+  });
+};
+
+export function editClothe(form, id) {
   return async function (dispatch) {
     try {
       await Axios.put(`/admin/update-clothe/${id}`, form);
-      console.log(form,'-------soy el formulario para actualizar los datos de un rpoducto');
+      console.log(
+        form,
+        "-------soy el formulario para actualizar los datos de un rpoducto"
+      );
       return dispatch({
         type: EDIT_CLOTHE,
         payload: form,
