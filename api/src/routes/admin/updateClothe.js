@@ -135,13 +135,16 @@ router.put("/:idClothe", async (req,res) => {
                 }
             }
             arrayCategories.map(async cat => {
-                const categoryFound = await Category.findOne({where :{ name :  cat}});
-                    if(!categoryFound){
-                        const newCategory = await Category.create({name : cat});
+                const newCategory = await Category.create({name : cat});
                         await clotheToUpdate.addCategory(newCategory);
-                    } else {
-                        await clotheToUpdate.addCategory(categoryFound);
-                    }
+                
+                // const categoryFound = await Category.findOne({where :{ name :  cat}});
+                //     if(!categoryFound){
+                //         const newCategory = await Category.create({name : cat});
+                //         await clotheToUpdate.addCategory(newCategory);
+                //     } else {
+                //         await clotheToUpdate.addCategory(categoryFound);
+                //     }
             });
         }
             // if(!Array.isArray(categories)){
