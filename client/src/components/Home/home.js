@@ -11,11 +11,22 @@ import Loading from "../Loading/Loading";
 const Home = (props) => {
   const dispatch = useDispatch();
   const productsState = useSelector((state) => state.productsState);
-
-  const { loading, products, offset } = productsState;
+  const filterState = useSelector((state) => state.filterState);
+  const { loading, products } = productsState;
+  const { category, size, type, genre } = filterState.filters;
+  const { offset, current } = filterState;
   useEffect(() => {
-    dispatch(getProducts("", "", offset));
-  }, [dispatch, offset]);
+    dispatch(
+      getProducts(
+        "",
+        category === "all" ? "" : category,
+        type === "all" ? "" : type,
+        size === "all" ? "" : size,
+        genre === "all" ? "" : genre,
+        offset
+      )
+    );
+  }, [dispatch, offset, category, type, size, genre]);
   const imgUrl = [
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dw5ea30e6a/01sept/full1lotto.jpg?sw=1440&sfrm=png",
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dwbd6473ec/01sept/full2futbol.jpg?sw=1440&sfrm=png",

@@ -41,7 +41,7 @@ export function validate(input) {
       for(let i=0; i<input.sizeStock.length;i++){
         if(input.sizeStock[i].name===''){
           errors[`size${i}`]= 'Define Talle'
-        } if(input.sizeStock[i].stock<0){
+        } if(input.sizeStock[i].stock<1){
           errors[`stock${i}`]= "The stock is invalid, the stock must be in a range from 0 to 999"
         }
       }
