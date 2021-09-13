@@ -1,7 +1,6 @@
 import axios from "axios";
 import { GET_CART_SUCCESS } from "../constants/productConstants";
 export const addToCart = (obj, id, userId) => async (dispatch) => {
-  console.log("id", id, "user id", userId);
   try {
     const { data } = await axios.put("/clothe/order-add", {
       data: {
@@ -21,6 +20,24 @@ export const addToCart = (obj, id, userId) => async (dispatch) => {
   }
 };
 
+export const removeFromCart = (obj, orderId, userId) => async (dispatch) => {
+  try {
+    const { data } = await axios.put("/clothe/order-delete ", {
+      data: {
+        orderId: orderId,
+        size: obj.quantity_and_size.size,
+        clotheId: obj.id,
+      },
+    });
+    if (data.statusCode !== 200) {
+      throw new Error(`${data.data}`);
+    }
+
+    return dispatch(getOrder(userId, "CARRITO"));
+  } catch (err) {
+    console.log(err);
+  }
+};
 export const getOrder = (userId, status) => async (dispatch) => {
   try {
     const { data } = await axios.get(

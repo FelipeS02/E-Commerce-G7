@@ -9,7 +9,8 @@ const {
 router.get("/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    const finalClothe = await Clothe.findByPk(id, {
+    const finalClothe = await Clothe.findOne({
+      where: { id },
       include: [
         {
           model: Category,
@@ -25,7 +26,7 @@ router.get("/:id", async (req, res) => {
         },
         {
           model: Type,
-          attributes: ["id", "name"]
+          attributes: ["id", "name"],
         },
       ],
     });

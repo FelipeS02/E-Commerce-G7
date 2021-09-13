@@ -9,17 +9,20 @@ import {
 } from "react-bootstrap";
 import { FaShoppingCart, FaRegTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { getOrder } from "../../actions/cartAccions";
+import { getOrder, removeFromCart } from "../../actions/cartAccions";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.cartState);
-  const { totalItems, carItems, carTotalAmount } = cartState;
+  const { totalItems, carItems, carTotalAmount, orderId } = cartState;
   const userState = useSelector((state) => state.userState);
   const { userInfo } = userState;
   useEffect(() => {
     dispatch(getOrder(userInfo.id, "CARRITO"));
   }, [dispatch, userInfo.id]);
+  const removeItemHandler = (id) => {
+    dispatch(removeFromCart(id, orderId, userInfo.id));
+  };
   const popover = (
     <Popover id="popover-basic">
       <Popover.Content
@@ -39,12 +42,20 @@ const Cart = () => {
               >
                 <Row>
                   <Col>
-                    <Row>{item.name}</Row>
-                    <Row>{`${item.quantity_and_size.quantity}x$${item.price}`}</Row>
+                    <Col></Col>
+                    <Col>
+                      <Row>{item.name}</Row>
+                      <Row>{`${item.quantity_and_size.quantity}x$${item.price}`}</Row>
+                    </Col>
                   </Col>
 
                   <Col>
-                    <FaRegTrashAlt />
+                    <FaRegTrashAlt
+                      id={item.id}
+                      onClick={() => {
+                        removeItemHandler(item);
+                      }}
+                    />
                   </Col>
                 </Row>
               </ListGroup.Item>
@@ -52,10 +63,12 @@ const Cart = () => {
           </ListGroup>
         )}
       </Popover.Content>
-      <Popover.Content>
-        <h6>Total: ${carTotalAmount}</h6>
-        <Button className="my">Check out</Button>
-      </Popover.Content>
+      {totalItems > 0 && (
+        <Popover.Content>
+          <h6>Total: ${carTotalAmount}</h6>
+          <Button className="my">Check out</Button>
+        </Popover.Content>
+      )}
     </Popover>
   );
   return (

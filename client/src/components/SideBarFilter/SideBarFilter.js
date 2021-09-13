@@ -1,33 +1,36 @@
-import React, { useState } from "react";
-import { Form, ListGroup } from "react-bootstrap";
+import React from "react";
 import { useSelector } from "react-redux";
+import FilterGroup from "./FilterGroup";
 
 const SideBarFilter = (props) => {
   const productCategories = useSelector((state) => state.productCategories);
-  // const productCategories = ["Camperas", "Remeras", "Jeans", "Camisas"];
+  const filterState = useSelector((state) => state.filterState);
+  const { category, size, type, genre, offset, current } = filterState.filters;
+
   const { loading, categories } = productCategories;
+  const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
+  const genres = ["Masculino", "Femenino"];
 
-  const [activeCategory, setActive] = useState("");
-
-  const toggleHandler = (e) => {
-    setActive(e.target.id);
-  };
   if (loading) {
     return <div>Loading...</div>;
   }
   return (
-    <ListGroup as="ul" onClick={toggleHandler}>
-      {categories.categories.map((category, index) => (
-        <ListGroup.Item
-          key={index}
-          as="li"
-          id={category}
-          className={activeCategory === category ? "active" : ""}
-        >
-          {category}
-        </ListGroup.Item>
-      ))}
-    </ListGroup>
+    <>
+      <FilterGroup
+        title="Categorias"
+        type="category"
+        items={categories.categories}
+        active={category}
+      />
+      <FilterGroup
+        title="Tipos"
+        type="type"
+        items={categories.types}
+        active={type}
+      />
+      <FilterGroup title="Talles" type="size" items={sizes} active={size} />
+      <FilterGroup title="Genero" type="genre" items={genres} active={genre} />
+    </>
   );
 };
 

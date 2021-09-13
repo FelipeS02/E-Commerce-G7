@@ -36,7 +36,6 @@ router.post("/", async (req, res) => {
         email: { [Op.iLike]: `%${email}%` },
       },
     });
-    console.log("user", userExists);
     if (userExists)
       return res.json(
         responseMessage(SUCCESS, {
