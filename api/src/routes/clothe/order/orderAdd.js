@@ -30,7 +30,7 @@ router.put("/", async (req, res) => {
       ]);
 
       const price = currentClothe.price * quantity;
-      
+
       if (!userFindOrder) {
         const currentUser = await User.findByPk(userId);
         const newOrder = await Order.create({ total: price, userId });

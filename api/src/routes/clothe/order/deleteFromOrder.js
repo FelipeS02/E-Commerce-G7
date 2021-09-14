@@ -46,7 +46,7 @@ router.put("/", async (req, res) => {
           }),
           await Order.findByPk(orderId),
         ]);
-        
+
         const sizeOfClothe = await Size.findByPk(
           currentClothe.sizes[0].dataValues.id
         );

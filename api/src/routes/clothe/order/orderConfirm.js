@@ -35,8 +35,8 @@ router.post("/", async (req, res) => {
       clothes.length > 0 &&
       validPayment.includes(payment)
     ) {
-      const [currentUser, currentOrder, [currentDirection, isCreated]] = await Promise.all(
-        [
+      const [currentUser, currentOrder, [currentDirection, isCreated]] =
+        await Promise.all([
           await User.findOne({
             where: { id: userId },
             include: [
@@ -47,22 +47,19 @@ router.post("/", async (req, res) => {
             ],
           }),
           await Order.findOne({
-            where: {id: orderId, userId}
+            where: { id: orderId, userId },
           }),
           await Direction.findOrCreate({
             where: {
               data: direction,
             },
           }),
-        ]
-      );
+        ]);
 
-      const userhasDirection = await currentUser.hasDirection(
-        currentDirection
-      );
+      const userhasDirection = await currentUser.hasDirection(currentDirection);
 
       if (!userhasDirection) {
-        currentUser.addDirection(currentDirection)
+        currentUser.addDirection(currentDirection);
       }
 
       await Promise.all([

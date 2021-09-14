@@ -75,12 +75,18 @@ const {
   Order_clothes,
   Size,
   Type,
+  Review,
 } = sequelize.models;
 
 // Aca vendrian las relaciones
 User.belongsToMany(Direction, { through: "user_directions" });
 User.belongsToMany(Order, { through: "user_orders" });
 Order.belongsTo(User, { through: "user_orders" });
+
+// Reviews
+User.hasMany(Review)
+Clothe.hasMany(Review);
+Review.belongsTo(Clothe, { through: "clothe_reviews" });
 
 // Ropa y Categorias
 Category.belongsToMany(Clothe, { through: "clothe_category" });

@@ -11,7 +11,7 @@ const {
 const jwtAuthz = require("express-jwt-authz");
 const checkScopes = (permissions) => jwtAuthz(permissions);
 
-router.get("/:orderId", checkScopes(['read:admin']), async (req, res) => {
+router.get("/:orderId", checkScopes(["read:admin"]), async (req, res) => {
   try {
     const {
       params: { orderId },
@@ -25,14 +25,8 @@ router.get("/:orderId", checkScopes(['read:admin']), async (req, res) => {
       "ENTREGADO",
     ];
     if (validStates.includes(state) && validate(orderId)) {
-      const order = await Order.update({ state: state }, orderId);
-      if (order[0] === 1) {
-        res.json(responseMessage(SUCCESS, "Estado actualizado correctamente"));
-      } else {
-        res.json(
-          responseMessage(ERROR, "Ocurrio un error al actualizar el estado")
-        );
-      }
+      await Order.update({ state: state }, orderId);
+      res.json(responseMessage(SUCCESS, "Estado actualizado correctamente"));
     } else {
       res.json(
         responseMessage(ERROR, "Alguno de los parametros es incorrecto")

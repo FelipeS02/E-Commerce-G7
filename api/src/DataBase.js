@@ -1,10 +1,7 @@
 const path = require("path");
 const BASE_URL = path.join(__dirname, "public/uploads/");
 
-const categorySet = [
-  "clasico",
-  "casual",
-];
+const categorySet = ["clasico", "casual"];
 const dataBase = [
   {
     name: "REMERA RETRO O'NEILL Y",
@@ -96,7 +93,7 @@ const dataBase = [
     sizes: {
       M: 5,
       XS: 15,
-      L: 10
+      L: 10,
     },
     price: 2138,
     color: "negro",
@@ -109,23 +106,23 @@ const dataBase = [
       {
         mimetype: "image/jpeg",
         originalname: "REMERA-LEFT-COAST-ONEILL-negro1.jpg",
-        path: BASE_URL+"REMERA-LEFT-COAST-ONEILL-negro1.jpg",
+        path: BASE_URL + "REMERA-LEFT-COAST-ONEILL-negro1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "REMERA-LEFT-COAST-ONEILL-negro2.jpg",
-        path: BASE_URL+"REMERA-LEFT-COAST-ONEILL-negro2.jpg",
+        path: BASE_URL + "REMERA-LEFT-COAST-ONEILL-negro2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "REMERA-LEFT-COAST-ONEILL-negro3.jpg",
-        path: BASE_URL+"REMERA-LEFT-COAST-ONEILL-negro3.jpg",
+        path: BASE_URL + "REMERA-LEFT-COAST-ONEILL-negro3.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "REMERA-LEFT-COAST-ONEILL-negro4.jpg",
-        path: BASE_URL+"REMERA-LEFT-COAST-ONEILL-negro4.jpg",
-      }
+        path: BASE_URL + "REMERA-LEFT-COAST-ONEILL-negro4.jpg",
+      },
     ],
   },
   {
@@ -145,22 +142,22 @@ const dataBase = [
       {
         mimetype: "image/jpeg",
         originalname: "PANTALON-CORD-ONEILL-negro1.jpg",
-        path: BASE_URL+"PANTALON-CORD-ONEILL-negro1.jpg",
+        path: BASE_URL + "PANTALON-CORD-ONEILL-negro1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "PANTALON-CORD-ONEILL-negro2.jpg",
-        path: BASE_URL+"PANTALON-CORD-ONEILL-negro2.jpg",
+        path: BASE_URL + "PANTALON-CORD-ONEILL-negro2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "PANTALON-CORD-ONEILL-negro3.jpg",
-        path: BASE_URL+"PANTALON-CORD-ONEILL-negro3.jpg",
+        path: BASE_URL + "PANTALON-CORD-ONEILL-negro3.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "PANTALON-CORD-ONEILL-negro4.jpg",
-        path: BASE_URL+"PANTALON-CORD-ONEILL-negro4.jpg",
+        path: BASE_URL + "PANTALON-CORD-ONEILL-negro4.jpg",
       },
     ],
   },
@@ -206,18 +203,18 @@ const dataBase = [
       {
         mimetype: "image/jpeg",
         originalname: "JOGGER-ELENA-PRINTED-ONEIL-negro1.jpg",
-        path: BASE_URL+"JOGGER-ELENA-PRINTED-ONEIL-negro1.jpg",
+        path: BASE_URL + "JOGGER-ELENA-PRINTED-ONEIL-negro1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "JOGGER-ELENA-PRINTED-ONEIL-negro2.jpg",
-        path: BASE_URL+"JOGGER-ELENA-PRINTED-ONEIL-negro2.jpg",
+        path: BASE_URL + "JOGGER-ELENA-PRINTED-ONEIL-negro2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "JOGGER-ELENA-PRINTED-ONEIL-negro3.jpg",
-        path: BASE_URL+"JOGGER-ELENA-PRINTED-ONEIL-negro3.jpg",
-      }
+        path: BASE_URL + "JOGGER-ELENA-PRINTED-ONEIL-negro3.jpg",
+      },
     ],
   },
   {
@@ -237,24 +234,24 @@ const dataBase = [
       {
         mimetype: "image/jpeg",
         originalname: "PANTALON-LAVIN-ONEILL-bordo1.jpg",
-        path: BASE_URL+"PANTALON-LAVIN-ONEILL-bordo1.jpg",
+        path: BASE_URL + "PANTALON-LAVIN-ONEILL-bordo1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "PANTALON-LAVIN-ONEILL-bordo2.jpg",
-        path: BASE_URL+"PANTALON-LAVIN-ONEILL-bordo2.jpg",
+        path: BASE_URL + "PANTALON-LAVIN-ONEILL-bordo2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "PANTALON-LAVIN-ONEILL-bordo3.jpg",
-        path: BASE_URL+"PANTALON-LAVIN-ONEILL-bordo3.jpg",
+        path: BASE_URL + "PANTALON-LAVIN-ONEILL-bordo3.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "PANTALON-LAVIN-ONEILL-bordo4.jpg",
-        path: BASE_URL+"PANTALON-LAVIN-ONEILL-bordo4.jpg",
-      }
-    ]
+        path: BASE_URL + "PANTALON-LAVIN-ONEILL-bordo4.jpg",
+      },
+    ],
   },
   // {
   //   name: "GORRO BRIX BEANIE O'NEILL",
@@ -326,7 +323,7 @@ const dataBase = [
     sizes: {
       M: 6,
       XS: 1,
-      S: 5
+      S: 5,
     },
     price: 14400,
     color: "amarillo",
@@ -339,23 +336,23 @@ const dataBase = [
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-ONTARIO-ONEILL-amarillo1.jpg",
-        path: BASE_URL+"CAMPERA-ONTARIO-ONEILL-amarillo1.jpg",
+        path: BASE_URL + "CAMPERA-ONTARIO-ONEILL-amarillo1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-ONTARIO-ONEILL-amarillo2.jpg",
-        path: BASE_URL+"CAMPERA-ONTARIO-ONEILL-amarillo2.jpg",
+        path: BASE_URL + "CAMPERA-ONTARIO-ONEILL-amarillo2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-ONTARIO-ONEILL-amarillo3.jpg",
-        path: BASE_URL+"CAMPERA-ONTARIO-ONEILL-amarillo3.jpg",
+        path: BASE_URL + "CAMPERA-ONTARIO-ONEILL-amarillo3.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-ONTARIO-ONEILL-amarillo4.jpg",
-        path: BASE_URL+"CAMPERA-ONTARIO-ONEILL-amarillo4.jpg",
-      }
+        path: BASE_URL + "CAMPERA-ONTARIO-ONEILL-amarillo4.jpg",
+      },
     ],
   },
   {
@@ -375,28 +372,28 @@ const dataBase = [
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-KENAI-ONEILL-verde1.jpg",
-        path: BASE_URL+"CAMPERA-KENAI-ONEILL-verde1.jpg",
+        path: BASE_URL + "CAMPERA-KENAI-ONEILL-verde1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-KENAI-ONEILL-verde2.jpg",
-        path: BASE_URL+"CAMPERA-KENAI-ONEILL-verde2.jpg",
+        path: BASE_URL + "CAMPERA-KENAI-ONEILL-verde2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-KENAI-ONEILL-verde3.jpg",
-        path: BASE_URL+"CAMPERA-KENAI-ONEILL-verde3.jpg",
+        path: BASE_URL + "CAMPERA-KENAI-ONEILL-verde3.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-KENAI-ONEILL-verde4.jpg",
-        path: BASE_URL+"CAMPERA-KENAI-ONEILL-verde4.jpg",
+        path: BASE_URL + "CAMPERA-KENAI-ONEILL-verde4.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-KENAI-ONEILL-verde5.jpg",
-        path: BASE_URL+"CAMPERA-KENAI-ONEILL-verde5.jpg",
-      }
+        path: BASE_URL + "CAMPERA-KENAI-ONEILL-verde5.jpg",
+      },
     ],
   },
   {
@@ -416,23 +413,23 @@ const dataBase = [
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-GALA-ONEILL-azul1.jpg",
-        path: BASE_URL+"CAMPERA-GALA-ONEILL-azul1.jpg",
+        path: BASE_URL + "CAMPERA-GALA-ONEILL-azul1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-GALA-ONEILL-azul2.jpg",
-        path: BASE_URL+"CAMPERA-GALA-ONEILL-azul2.jpg",
+        path: BASE_URL + "CAMPERA-GALA-ONEILL-azul2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-GALA-ONEILL-azul3.jpg",
-        path: BASE_URL+"CAMPERA-GALA-ONEILL-azul3.jpg",
+        path: BASE_URL + "CAMPERA-GALA-ONEILL-azul3.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-GALA-ONEILL-azul4.jpg",
-        path: BASE_URL+"CAMPERA-GALA-ONEILL-azul4.jpg",
-      }
+        path: BASE_URL + "CAMPERA-GALA-ONEILL-azul4.jpg",
+      },
     ],
   },
   {
@@ -452,23 +449,23 @@ const dataBase = [
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-BANDALE-ONEILL-rojo1.jpg",
-        path: BASE_URL+"CAMPERA-BANDALE-ONEILL-rojo1.jpg",
+        path: BASE_URL + "CAMPERA-BANDALE-ONEILL-rojo1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-BANDALE-ONEILL-rojo2.jpg",
-        path: BASE_URL+"CAMPERA-BANDALE-ONEILL-rojo2.jpg",
+        path: BASE_URL + "CAMPERA-BANDALE-ONEILL-rojo2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-BANDALE-ONEILL-rojo3.jpg",
-        path: BASE_URL+"CAMPERA-BANDALE-ONEILL-rojo3.jpg",
+        path: BASE_URL + "CAMPERA-BANDALE-ONEILL-rojo3.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMPERA-BANDALE-ONEILL-rojo4.jpg",
-        path: BASE_URL+"CAMPERA-BANDALE-ONEILL-rojo4.jpg",
-      }
+        path: BASE_URL + "CAMPERA-BANDALE-ONEILL-rojo4.jpg",
+      },
     ],
   },
   {
@@ -488,23 +485,23 @@ const dataBase = [
       {
         mimetype: "image/jpeg",
         originalname: "CAMISA-LUMBER-ONEILL-ladrillo1.jpg",
-        path: BASE_URL+"CAMISA-LUMBER-ONEILL-ladrillo1.jpg",
+        path: BASE_URL + "CAMISA-LUMBER-ONEILL-ladrillo1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMISA-LUMBER-ONEILL-ladrillo2.jpg",
-        path: BASE_URL+"CAMISA-LUMBER-ONEILL-ladrillo2.jpg",
+        path: BASE_URL + "CAMISA-LUMBER-ONEILL-ladrillo2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMISA-LUMBER-ONEILL-ladrillo3.jpg",
-        path: BASE_URL+"CAMISA-LUMBER-ONEILL-ladrillo3.jpg",
+        path: BASE_URL + "CAMISA-LUMBER-ONEILL-ladrillo3.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMISA-LUMBER-ONEILL-ladrillo4.jpg",
-        path: BASE_URL+"CAMISA-LUMBER-ONEILL-ladrillo4.jpg",
-      }
+        path: BASE_URL + "CAMISA-LUMBER-ONEILL-ladrillo4.jpg",
+      },
     ],
   },
   {
@@ -524,23 +521,23 @@ const dataBase = [
       {
         mimetype: "image/jpeg",
         originalname: "CAMISA-HAMPTON-ONEILL-azul1.jpg",
-        path: BASE_URL+"CAMISA-HAMPTON-ONEILL-azul1.jpg",
+        path: BASE_URL + "CAMISA-HAMPTON-ONEILL-azul1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMISA-HAMPTON-ONEILL-azul2.jpg",
-        path: BASE_URL+"CAMISA-HAMPTON-ONEILL-azul2.jpg",
+        path: BASE_URL + "CAMISA-HAMPTON-ONEILL-azul2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMISA-HAMPTON-ONEILL-azul3.jpg",
-        path: BASE_URL+"CAMISA-HAMPTON-ONEILL-azul3.jpg",
+        path: BASE_URL + "CAMISA-HAMPTON-ONEILL-azul3.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMISA-HAMPTON-ONEILL-azul4.jpg",
-        path: BASE_URL+"CAMISA-HAMPTON-ONEILL-azul4.jpg",
-      }
+        path: BASE_URL + "CAMISA-HAMPTON-ONEILL-azul4.jpg",
+      },
     ],
   },
   {
@@ -560,25 +557,25 @@ const dataBase = [
       {
         mimetype: "image/jpeg",
         originalname: "CAMISA-DORY-ONEILL-azul1.jpg",
-        path: BASE_URL+"CAMISA-DORY-ONEILL-azul1.jpg",
+        path: BASE_URL + "CAMISA-DORY-ONEILL-azul1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMISA-DORY-ONEILL-azul2.jpg",
-        path: BASE_URL+"CAMISA-DORY-ONEILL-azul2.jpg",
+        path: BASE_URL + "CAMISA-DORY-ONEILL-azul2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "CAMISA-DORY-ONEILL-azul3.jpg",
-        path: BASE_URL+"CAMISA-DORY-ONEILL-azul3.jpg",
-      }
+        path: BASE_URL + "CAMISA-DORY-ONEILL-azul3.jpg",
+      },
     ],
   },
   {
     name: "BUZO CANGURO COAST",
     sizes: {
       XXL: 10,
-      M: 5
+      M: 5,
     },
     price: 4830,
     color: "lila",
@@ -592,25 +589,24 @@ const dataBase = [
       {
         mimetype: "image/jpeg",
         originalname: "BUZO-CANGURO-COAST-lila1.jpg",
-        path: BASE_URL+"BUZO-CANGURO-COAST-lila1.jpg",
+        path: BASE_URL + "BUZO-CANGURO-COAST-lila1.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "BUZO-CANGURO-COAST-lila2.jpg",
-        path: BASE_URL+"BUZO-CANGURO-COAST-lila2.jpg",
+        path: BASE_URL + "BUZO-CANGURO-COAST-lila2.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "BUZO-CANGURO-COAST-lila3.jpg",
-        path: BASE_URL+"BUZO-CANGURO-COAST-lila3.jpg",
+        path: BASE_URL + "BUZO-CANGURO-COAST-lila3.jpg",
       },
       {
         mimetype: "image/jpeg",
         originalname: "BUZO-CANGURO-COAST-lila4.jpg",
-        path: BASE_URL+"BUZO-CANGURO-COAST-lila4.jpg",
-      }
+        path: BASE_URL + "BUZO-CANGURO-COAST-lila4.jpg",
+      },
     ],
   },
 ];
 module.exports = { dataBase, categorySet };
-
