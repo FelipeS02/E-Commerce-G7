@@ -6,6 +6,10 @@ module.exports = (sequelize) => {
   const Review = sequelize.define(
     "review",
     {
+      username: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       score: {
         type: DataTypes.INTEGER,
         min: 0,

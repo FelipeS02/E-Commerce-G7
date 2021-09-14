@@ -16,10 +16,10 @@ router.post("/", async (req, res) => {
       typeof score === "number" &&
       typeof review === "string"
     ) {
-      const [user, clothe, clotheReview] = await Promise.all([
-        await User.findByPk(userId),
+      const user = await User.findByPk(userId);
+      const [clothe, clotheReview] = await Promise.all([
         await Clothe.findByPk(clotheId),
-        await Review.create({ score, review }),
+        await Review.create({ score, review, username: user.name }),
       ]);
       await Promise.all([
         await user.addReview(clotheReview),

@@ -1,6 +1,6 @@
 const { Router } = require("express");
 const router = Router();
-const { Category, Clothe, Media, Type, Size } = require("../../db");
+const { Category, Clothe, Media, Type, Size, Review } = require("../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
@@ -27,6 +27,10 @@ router.get("/:id", async (req, res) => {
         {
           model: Type,
           attributes: ["id", "name"],
+        },
+        {
+          model: Review,
+          attributes: ["score", "review"]
         },
       ],
     });
