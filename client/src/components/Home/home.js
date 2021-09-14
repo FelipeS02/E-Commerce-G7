@@ -1,7 +1,11 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Carousel, Container, Col, Row } from "react-bootstrap";
-import { getCategories, getProducts } from "../../actions/ProductActions";
+import {
+  cleanFilters,
+  getCategories,
+  getProducts,
+} from "../../actions/ProductActions";
 import Footer from "../Footer/Footer";
 import PaginationC from "../Pagination/PaginationC";
 import CardP from "../ProductCard/CardP";
@@ -12,7 +16,7 @@ const Home = (props) => {
   const dispatch = useDispatch();
   const productsState = useSelector((state) => state.productsState);
   const filterState = useSelector((state) => state.filterState);
-  const { loading, products } = productsState;
+  const { loading, products, error } = productsState;
   const { category, size, type, genre } = filterState.filters;
   const { offset, current } = filterState;
   useEffect(() => {
@@ -27,6 +31,9 @@ const Home = (props) => {
       )
     );
   }, [dispatch, offset, category, type, size, genre]);
+  useEffect(() => {
+    dispatch(cleanFilters());
+  }, []);
   const imgUrl = [
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dw5ea30e6a/01sept/full1lotto.jpg?sw=1440&sfrm=png",
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dwbd6473ec/01sept/full2futbol.jpg?sw=1440&sfrm=png",
@@ -54,16 +61,20 @@ const Home = (props) => {
           <SideBarFilter></SideBarFilter>
         </Col>
         <Col className="d-flex align-content-center flex-wrap justify-content-between">
-          {products.allClothes ? products.allClothes.map((product, index) => (
-            <CardP
-              key={index}
-              id={product.id}
-              name={product.name}
-              price={product.price}
-              picture={product.media[0].name}
-              sizes={product.sizes}
-            />
-          )): <h1>No existe ninguna prenda actualmente</h1>}
+          {error === "" && products.allClothes ? (
+            products.allClothes.map((product, index) => (
+              <CardP
+                key={index}
+                id={product.id}
+                name={product.name}
+                price={product.price}
+                picture={product.media[0].name}
+                sizes={product.sizes}
+              />
+            ))
+          ) : (
+            <h1>No se encontrarón resultados...</h1>
+          )}
         </Col>
       </Row>
       <PaginationC />

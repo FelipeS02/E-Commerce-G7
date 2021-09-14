@@ -52,10 +52,10 @@ const NavBar = () => {
           ></Nav>
           <Container>
             <Nav className="justify-content-center align-content-center">
-              <Nav.Link as={Link} to="/Hombre">
+              <Nav.Link as={Link} to="/search/genre/Masculino">
                 Hombre
               </Nav.Link>
-              <Nav.Link as={Link} to="/Mujer">
+              <Nav.Link as={Link} to="/search/genre/Femenino">
                 Mujer
               </Nav.Link>
               <Nav.Link as={Link} to="/Ofertas">

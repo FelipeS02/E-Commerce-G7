@@ -4,6 +4,8 @@ import { createClothe, getCategories } from "../../actions/ProductActions";
 import { validate } from './validateCreate'
 import { Form, Button } from "react-bootstrap"
 import { Link, useHistory } from "react-router-dom";
+import swal from 'sweetalert';
+
 
 function AdminPanel(){
     let history = useHistory();
@@ -195,7 +197,11 @@ function AdminPanel(){
             })
             
             dispatch(createClothe(data));
-            alert('Product created succesfully');
+            swal({
+                title: "¡Hecho!",
+                text: "Tu producto ha sido creado correctamente.",
+                icon: "success",
+              });
             setInput({
                 name: '',
                 price: 0,
@@ -209,12 +215,16 @@ function AdminPanel(){
                 mediaArray: null
             })
             history.push("/admin");
-        }else alert("Check all fields");
+        }else    swal({
+            title: "¡Atención!",
+            text: "Faltan ítems para poder crear tu producto.",
+            icon: "error",
+          });
     }
 
     return (
         <div style={{backgroundColor: '#EAEDED', padding: '5rem'}}>
-            <h1 style={{marginBottom: '3rem'}}>Create Clothe</h1>
+            <h1 style={{marginBottom: '3rem'}}>Crear Producto</h1>
             <Form onSubmit={handleSubmit}>
                 <Form.Group  className="mb-3">
                     <Form.Label>Nombre:</Form.Label>

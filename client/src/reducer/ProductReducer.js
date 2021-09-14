@@ -9,6 +9,7 @@ import {
   SET_CURRENT_PAGE,
   PRODUCT_DETAIL,
   SET_FILTERS,
+  CLEAN_FILTERS,
   EDIT_CLOTHE,
   DELETE_CLOTHE,
 } from "../constants/productConstants";
@@ -29,12 +30,14 @@ export function productReducer(
       return {
         ...state,
         loading: true,
+        error: "",
       };
     case PRODUCT_SUCCESS:
       return {
         ...state,
         loading: false,
         products: action.payload.data,
+        error: "",
       };
     case PRODUCT_FAIL:
       return {
@@ -118,6 +121,11 @@ export function filterReducer(
   action
 ) {
   switch (action.type) {
+    case CLEAN_FILTERS:
+      return {
+        ...state,
+        filters: { category: "all", type: "all", size: "all", genre: "all" },
+      };
     case SET_FILTERS:
       return {
         ...state,

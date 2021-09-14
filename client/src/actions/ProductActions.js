@@ -12,6 +12,7 @@ import {
   FILTER_PRODUCTS_BY_CATEGORY,
   SET_CURRENT_PAGE,
   SET_FILTERS,
+  CLEAN_FILTERS,
   EDIT_CLOTHE,
   DELETE_CLOTHE,
 } from "../constants/productConstants";
@@ -32,17 +33,12 @@ export const getProducts =
       response = data;
 
       if (response.statusCode === 400) {
-        console.log("response", response);
-        dispatch({
-          type: PRODUCT_FAIL,
-          payload: response.data,
-        });
-      } else {
-        dispatch({
-          type: PRODUCT_SUCCESS,
-          payload: response,
-        });
+        throw new Error(response.data);
       }
+      dispatch({
+        type: PRODUCT_SUCCESS,
+        payload: response,
+      });
     } catch (error) {
       dispatch({
         type: PRODUCT_FAIL,
@@ -126,10 +122,20 @@ export const setFilters = (obj) => (dispatch) => {
   });
 };
 
-export function editClothe(form) {
+export const cleanFilters = () => (dispatch) => {
+  dispatch({
+    type: CLEAN_FILTERS,
+  });
+};
+
+export function editClothe(form, id) {
   return async function (dispatch) {
     try {
-      await Axios.post("/admin/edit-clothe", form);
+      await Axios.put(`/admin/update-clothe/${id}`, form);
+      console.log(
+        form,
+        "-------soy el formulario para actualizar los datos de un rpoducto"
+      );
       return dispatch({
         type: EDIT_CLOTHE,
         payload: form,
