@@ -33,9 +33,13 @@ const Cart = () => {
           "overflow-y": "auto",
         }}
       >
-        {totalItems === 0 ? (
+        {totalItems === 0 ? !window.localStorage.getItem('henryShopG7') ? (
           <h6>No hay productos en el carrito.</h6>
-        ) : (
+        )
+        : (
+          <h6>Hay productos en el carrito local.</h6>
+        )
+        : (
           <ListGroup>
             {carItems?.map((item, index) => (
               <ListGroup.Item
@@ -65,7 +69,8 @@ const Cart = () => {
               </ListGroup.Item>
             ))}
           </ListGroup>
-        )}
+        )
+        }
       </Popover.Content>
       {totalItems > 0 && (
         <Popover.Content>

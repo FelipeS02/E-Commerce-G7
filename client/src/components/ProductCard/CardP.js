@@ -17,7 +17,7 @@ const CardP = (props) => {
   });
   const userInfo = useSelector((state) => state.userState.userInfo);
   const addToCardHandler = () => {
-    dispatch(addToCart(userSelected, id, userInfo.id));
+    dispatch(addToCart(userSelected, id, userInfo.id, props));
   };
 
   const talleHandler = (index) => {
