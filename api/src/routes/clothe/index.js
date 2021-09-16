@@ -14,14 +14,12 @@ const getUserOrders = require("./order/getUserOrders.js");
 const deleteFromOrder = require("./order/deleteFromOrder.js");
 const orderConfirm = require("./order/orderConfirm.js");
 const orderEdit = require("./order/orderEdit.js")
-const getOnlyClothe = require("./getOnlyClothe")
 
 // Rutas de ropa
 router.use("/clothe-details", clotheDetail);
 router.use("/all-categories", allCategories);
 router.use("/all-clothes", allClothes);
 router.use("/clothe-review", clotheReview)
-router.use("/clothe-only", getOnlyClothe)
 
 // Rutas de order
 router.use("/order-add", orderAdd);
