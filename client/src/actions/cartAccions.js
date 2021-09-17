@@ -83,44 +83,64 @@ export const getOrder = (userId, status) => async (dispatch) => {
       buttons: true,
       dangerMode: true,
     })
-    .then((willDelete) => {
+    .then(async (willDelete) => {
       if (willDelete) {
+          let floatCart = JSON.parse( window.localStorage.getItem('henryShopG7'));
+          window.localStorage.clear();
+          let dataLS = Object.keys(floatCart);
+          let cargarCarrito = dataLS.map(async (c)=>{
+            try{
+            await axios.put("/clothe/order-add", {
+              data: {
+                  size: floatCart[c].quantity_and_size.size,
+                  quantity: floatCart[c].quantity_and_size.quantity, 
+                  clotheId: floatCart[c].id,
+                  userId: userId,
+                },
+              });
+            } catch (err){
+              console.log(err);
+            }
+          })          
+          await Promise.all(cargarCarrito);
+          try {
+            window.localStorage.clear();
+            const { data } = await axios.get(
+              `/clothe/users-orders?userId=${userId}&orderStatus=${status}`
+            );
+            console.log("get order function", data.data[0].orders[0]);
+        
+            return dispatch({
+              type: GET_CART_SUCCESS,
+              payload: data.data[0].orders[0],
+            });
+          } catch (err) {
+            console.log(err);
+          }
         swal("¡Hecho! Se agregaron los productos a tu carrito");
       }else{
         window.localStorage.clear();
         swal("Los producto no se agregaron a tu carrito");
-      }
-  });
-  }
-  if(userId){
-    if(window.localStorage.getItem('henryShopG7')){
-      console.log(`Aqui vamos a agregar al carrito`)
-      let floatCart = JSON.parse( window.localStorage.getItem('henryShopG7'));
-      window.localStorage.clear();
-      let dataLS = Object.keys(floatCart);
-      let cargarCarrito = dataLS.map(async (c)=>{
-        try{
-        await axios.put("/clothe/order-add", {
-          data: {
-              size: floatCart[c].quantity_and_size.size,
-              quantity: floatCart[c].quantity_and_size.quantity, 
-              clotheId: floatCart[c].id,
-              userId: userId,
-            },
+        try {
+          window.localStorage.clear();
+          const { data } = await axios.get(
+            `/clothe/users-orders?userId=${userId}&orderStatus=${status}`
+          );
+          return dispatch({
+            type: GET_CART_SUCCESS,
+            payload: data.data[0].orders[0],
           });
-        } catch (err){
+        } catch (err) {
           console.log(err);
         }
-      })          
-      await Promise.all(cargarCarrito);
-    }
+      }
+  });
+  }else if(userId&&!window.localStorage.getItem('henryShopG7')){
     try {
       window.localStorage.clear();
       const { data } = await axios.get(
         `/clothe/users-orders?userId=${userId}&orderStatus=${status}`
       );
-      console.log("get order function", data.data[0].orders[0]);
-  
       return dispatch({
         type: GET_CART_SUCCESS,
         payload: data.data[0].orders[0],
