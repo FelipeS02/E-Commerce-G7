@@ -75,6 +75,23 @@ export const removeFromCart = (obj, orderId, userId) => async (dispatch) => {
   }
 };
 export const getOrder = (userId, status) => async (dispatch) => {
+  if(userId&&window.localStorage.getItem('henryShopG7')){
+    swal({
+      title: "Ya tienes productos seleccionados",
+      text: "¿Quieres agregar los productos al carrito?",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        swal("¡Hecho! Se agregaron los productos a tu carrito");
+      }else{
+        window.localStorage.clear();
+        swal("Los producto no se agregaron a tu carrito");
+      }
+  });
+  }
   if(userId){
     if(window.localStorage.getItem('henryShopG7')){
       console.log(`Aqui vamos a agregar al carrito`)
@@ -98,6 +115,7 @@ export const getOrder = (userId, status) => async (dispatch) => {
       await Promise.all(cargarCarrito);
     }
     try {
+      window.localStorage.clear();
       const { data } = await axios.get(
         `/clothe/users-orders?userId=${userId}&orderStatus=${status}`
       );
