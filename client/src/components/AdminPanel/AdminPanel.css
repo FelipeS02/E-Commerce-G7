@@ -1,24 +1,59 @@
 .recuadros{
 	display: flex;
 	border: 1px solid black;
-	margin: 200px 100px;
+	margin: 20px 100px;
 }
 .orders{
-	margin: auto auto;
+	margin: 20px auto;
+	padding-right:150px ;
+	border-right: red 2px solid;
+}
 
+.botonDrop{
+	background-color: #4CAF50;
 }
 
 .prendas{
 	width: 700px;
-	margin: auto auto;
-	border: 1px solid black;
+	margin: 20px auto 20px 50px;
+}
+.pageTitle{
+	padding: 5px;
+	width: 120px;
+	text-align: center;
+	background-color: white;
+    color: #4CAF50 ;
+    border: 2px solid #4CAF50; /* Green */
+    margin: 50px auto 40px 100px;
+}
+.pageTitle:hover{
+	color: white;
+	background-color: #4CAF50;
+	transition: 0.7s;
+}
+
+.orderDetailDrop{
+	background-color: lightgray;
 }
 
 .orderCard{
 	display: flex;
-	border: 1px solid black;
+	border-bottom: 2px solid black;
+	margin: 5px 0px 5px 0px;
+	padding: 2px 0px 5px 0px;
+	align-items: center;
 }
 
-.orderCard h5{
+.orderCard h6{
 	margin: 5px 10px 5px 10px;
+}
+
+.prendasOrder{
+	border: 2px solid lightblue;
+	padding: 5px;
+	margin: 2px;
+}
+
+.prendasOrder h6{
+	color: white;
 }
