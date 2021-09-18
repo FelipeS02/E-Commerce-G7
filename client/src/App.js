@@ -14,6 +14,7 @@ import creatheClothe from "./components/AdminPanel/createClothe.js";
 import editClothe from "./components/AdminPanel/editClothe.js";
 import CartScreen from "./components/Cart/CartScreen";
 import GenreResults from "./components/SearchResults/GenreResults";
+import OrderHistory from "./components/OrderHistory/OrderHistory.js"
 
 function App() {
   const dispatch = useDispatch();
@@ -38,6 +39,7 @@ function App() {
         <Route exact path="/admin/createClothe" component={creatheClothe} />
         <Route exact path="/admin/editClothe/:id" component={editClothe} />
         <PrivateRoute exact path="/user/userProfile" component={UserProfile} />
+        <PrivateRoute exact path="/user/userProfile/orderHistory" component={OrderHistory} />
         <Route exact path="/cart" component={CartScreen} />
       </BrowserRouter>
     </div>

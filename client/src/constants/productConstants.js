@@ -14,6 +14,7 @@ export const PRODUCT_DETAIL = "PRODUCT_DETAIL";
 export const USER_INFO_FAIL = "USER_INFO_FAIL";
 export const USER_INFO_SUCCESS = "USER_INFO_SUCCESS";
 export const USER_LOGOUT = "USER_LOGOUT";
+export const USER_LOGIN = "USER_LOGIN";
 
 export const GET_CART_FAIL = "GET_CART_FAIL";
 export const GET_CART_SUCCESS = "GET_CART_SUCCESS";
