@@ -15,8 +15,8 @@ module.exports = (sequelize) => {
       allowNull: true,
     },
     payment: {
-      type: DataTypes.ENUM(["Efectivo / Transferencia", "Mercado Pago"]),
-      allowNull: true
+      type: DataTypes.ENUM(["Efectivo / Transferencia", "MercadoPago"]),
+      allowNull: true,
     },
     state: {
       type: DataTypes.ENUM([

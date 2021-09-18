@@ -68,7 +68,7 @@ const CartScreen = () => {
                             quantity: e.target.value,
                             size: item.quantity_and_size.size,
                           },
-                          item.id, 
+                          item.id,
                           userInfo.id,
                           item
                         )
@@ -107,7 +107,9 @@ const CartScreen = () => {
             </Card.Body>
             <Card.Body>
               <Row>
-                <Button variant="primary">Proceder a la compra</Button>
+                <Button variant="primary" as={Link} to="/user/checkout">
+                  Proceder a la compra
+                </Button>
               </Row>
             </Card.Body>
           </Card>
