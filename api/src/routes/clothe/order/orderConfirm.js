@@ -9,9 +9,11 @@ const {
 
 const clotheUpdate = async (clothesArray) => {
   const process = clothesArray.map(async (e) => {
-    const { quantity, size, clotheId } = e;
+    const { quantity_and_size, id } = e;
+    const { quantity, size } = quantity_and_size;
+
     const currentClotheSize = await Size.findOne({
-      where: { size, clotheId },
+      where: { size: size, clotheId: id },
     });
     await currentClotheSize.decrement(["stock"], { by: quantity });
   });
