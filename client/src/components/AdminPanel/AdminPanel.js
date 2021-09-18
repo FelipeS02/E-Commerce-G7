@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { getOrders } from "../../actions/orderActions.js";
 import { getProducts } from '../../actions/ProductActions';
-import ClotheCard from "./ClotheCard.js";
+import ClotheCard from "./ClotheCard/ClotheCard.js";
 import "./AdminPanel.css"
 import { Dropdown } from "react-bootstrap"
 
@@ -34,7 +34,10 @@ function AdminPanel(){
                     <h4>Orders</h4>
                     <div className="ordersRecuadro">
                         {
-                            arrayOrders?arrayOrders.map(e => {
+                            typeof arrayOrders === "object" && arrayOrders !== 0 ? arrayOrders.filter(e => e.state !== "CARRITO"): arrayOrders
+                        }
+                        {
+                            typeof arrayOrders === "object" && arrayOrders !== 0 ? arrayOrders.map(e => {
                                 return (
                                     <div className="orderCard">
                                         <h5>Total: {e.total}</h5>
@@ -54,16 +57,17 @@ function AdminPanel(){
                                                         <h5>Talle:{i.quantity_and_size.size} Cantidad:{i.quantity_and_size.quantity}</h5>
                                                         </> 
                                                     </Dropdown.Item>
-                                                )}
                                                 )
                                             })
-                            
-
+                                        }
                                         </Dropdown.Menu>
                                         </Dropdown>
+                                        <Link to={`/admin/edit-order/${e.id}`}>
+                                            <button>Editar Orden</button>                                        
+                                        </Link>
                                     </div>
-                            )
-                            }): <h3>No hay ordenes en este momento</h3>
+                                )
+                            }): (<h3>No hay ordenes en este momento</h3>)
                         }
                     </div>
                 </div>

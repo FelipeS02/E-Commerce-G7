@@ -1,9 +1,11 @@
 import{
   GET_ORDERS,
-  ORDERS_FAIL
+  ORDERS_FAIL,
+  ORDER_DETAIL,
+  ORDER_MODIFIED
 } from "../constants/ordersConstants.js";
 
-const initialState = { orders: [] };
+const initialState = { orders: [], orderDetail: {} };
 
 export default function orderReducer(state = initialState, action){
 	switch(action.type){
@@ -20,7 +22,16 @@ export default function orderReducer(state = initialState, action){
 				message: "Fallo traer las ordenes"
 			}
 		}
-
+		case ORDER_DETAIL:
+		return {
+			...state,
+			orderDetail: action.payload
+		}
+		case ORDER_MODIFIED:
+		return {
+			...state,
+			orderDetail: action.payload
+		}
 		default:
 		return state;
 	}
