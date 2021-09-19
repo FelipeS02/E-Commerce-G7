@@ -12,8 +12,9 @@ const OrderHistory = () => {
   const dispatch = useDispatch();
   const id = userState.userInfo.id;
   const { loginUserInfo } = userState
-  const users = orderState.orders.data?.data[0].orders;
-  console.log(users)
+   const orders = orderState.orders;
+  // console.log(users,'ASDASDASDASDASDAS')
+  console.log(orders)
     useEffect(() => {
         if(id){
           dispatch(getOrders(id,''));
@@ -27,11 +28,11 @@ const OrderHistory = () => {
     return (
             <div>
               {
-                users?.map((user,index)=>(
+                orders?.map((order,index)=>(
                   <div key ={index}>{
                     `Orden número ${index+1}`}
                     {
-                      user.clothes?.map((clothe,index) => (
+                      order.clothes?.map((clothe,index) => (
                         <div key={index}>
                         {clothe.name}
                         {clothe.id}

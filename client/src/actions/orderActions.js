@@ -8,10 +8,10 @@ import {
 export const getOrders = (id,status) => async (dispatch) => {
   try {
     const  data = await axios.get(`/clothe/users-orders?userId=${id}&orderStatus=${status}`);
-	console.log(data,'aca esta lo que estoy buscando');
+	console.log(data.data.data[0],'aca esta lo que estoy buscando');
     dispatch({
       type: GET_ORDERS,
-      payload: data,
+      payload: data.data.data[0],
     });
   } catch (error) {
     dispatch({
