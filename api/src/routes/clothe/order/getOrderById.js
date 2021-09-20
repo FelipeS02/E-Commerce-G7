@@ -13,7 +13,7 @@ router.get("/:orderId", async (req, res) => {
     if (validate(orderId)) {
       const response = await Order.findOne({
         where: { id: orderId },
-        attributes: ["id", "direction", "payment", "total", "userId"],
+        attributes: ["id", "direction", "payment", "total", "userId", "state"],
         include: {
           model: Clothe,
           attributes: ["id", "name", "price", "color", "genre", "detail"],

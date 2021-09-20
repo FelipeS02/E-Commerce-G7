@@ -23,7 +23,7 @@ export default function OrderEdit(props){
   	const { userInfo } = userState;
 
 	const detail = useSelector(state => state.orderState.orderDetail);
-	const {direction, payment, total, userId, clothes} = detail;
+	const {direction, payment, total, userId, clothes, state} = detail;
 
 	const itemHandler = (obj, itemId, userId, clothe) => {
 		console.log(obj, itemId);
@@ -32,6 +32,10 @@ export default function OrderEdit(props){
 	const removeItemHandler = (itemId) => {
 		dispatch(removeFromCart(itemId, id, userId));
 	};
+
+	const confirmOrderEdit = (id, orderState, clothes) => {
+		dispatch(orderModified(id, orderState, clothes))
+	}
 
 	useEffect(() => {
 		dispatch(orderDetail(id))
@@ -47,7 +51,7 @@ export default function OrderEdit(props){
 	              <h4 className="my-3">Orden numero: <h6>{id}</h6></h4>
 	            </Card.Header>
 	            <Card.Body>
-	              {clothes?.map((item, index) => (
+	              {clothes?.map((item) => (
 	                <Row className="my-4">
 	                  <Col>
 	                    <Image
@@ -117,7 +121,7 @@ export default function OrderEdit(props){
 	            </Card.Body>
 	            <Card.Body>
 	              <Row>
-	                <Button variant="primary">Proceder a la compra</Button>
+	                <Button variant="primary" onClick={confirmOrderEdit(id, state, clothes)}>Confirmar Cambios</Button>
 	              </Row>
 	            </Card.Body>
 	          </Card>
