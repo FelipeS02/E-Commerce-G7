@@ -14,6 +14,7 @@ import creatheClothe from "./components/AdminPanel/createClothe.js";
 import editClothe from "./components/AdminPanel/editClothe.js";
 import CartScreen from "./components/Cart/CartScreen";
 import GenreResults from "./components/SearchResults/GenreResults";
+import ListDetail from "./components/AdminPanel/orderFilterList"
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,7 @@ function App() {
         <Route exact path="/search/name/:name?" component={SearchResults} />
         <Route exact path="/search/genre/:genre?" component={GenreResults} />
         <Route exact path="/admin" component={AdminPanel} />
+        <Route exact path="/admin-listDetail" component={ListDetail} />
         <Route
           exact
           path="/search/category/:category"
