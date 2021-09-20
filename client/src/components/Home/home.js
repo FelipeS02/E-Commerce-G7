@@ -19,6 +19,7 @@ const Home = (props) => {
   const { loading, products, error } = productsState;
   const { category, size, type, genre } = filterState.filters;
   const { offset, current } = filterState;
+
   useEffect(() => {
     dispatch(
       getProducts(
@@ -34,6 +35,7 @@ const Home = (props) => {
   useEffect(() => {
     dispatch(cleanFilters());
   }, []);
+  useEffect(() => {});
   const imgUrl = [
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dw5ea30e6a/01sept/full1lotto.jpg?sw=1440&sfrm=png",
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dwbd6473ec/01sept/full2futbol.jpg?sw=1440&sfrm=png",

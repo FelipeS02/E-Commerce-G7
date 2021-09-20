@@ -21,6 +21,7 @@ export const GET_CART_LOADING = "GET_CART_LOADING";
 export const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 export const SET_FILTERS = "SET_FILTERS";
 export const CLEAN_FILTERS = "CLEAN_FILTERS";
+export const PAYMENT_SUCCESS = "PAYMENT_SUCCESS";
 
 export const BASE_IMG_URL =
   process.env.NODE_ENV === "production"
