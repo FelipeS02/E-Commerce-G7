@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   CardElement,
   Elements,
@@ -15,18 +15,32 @@ import {
   Row,
   Col,
   Image,
+  Spinner,
 } from "react-bootstrap";
 import { BASE_IMG_URL } from "../../constants/productConstants";
 import { FaAddressCard, FaCreditCard, FaStripe } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { confirmPayment } from "../../actions/paymentAccions";
+import swal from "sweetalert";
+import { getOrder } from "../../actions/cartAccions";
 
-const CheckOut = () => {
+const CheckOut = (props) => {
+  const provincias = [
+    "Buenos Aires",
+    "Catamarca",
+    "Chaco",
+    "Chubut",
+    "Córdoba",
+    "Corrientes",
+    "Entre Ríos",
+  ];
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
+  const [loadingPayment, setLoading] = useState(false);
   const cartState = useSelector((state) => state.cartState);
-  const { totalItems, carItems, carTotalAmount, orderId } = cartState;
+  const { totalItems, carItems, carTotalAmount, orderId, paymentSuccess } =
+    cartState;
   const userState = useSelector((state) => state.userState);
   const { userInfo } = userState;
 
@@ -36,19 +50,23 @@ const CheckOut = () => {
         type: "card",
         card: elements.getElement(CardElement),
       });
+      setLoading(true);
       if (error) {
         console.log("[error]", error);
       } else {
         const { id } = paymentMethod;
-        console.log(id);
-        confirmPayment(
-          id,
-          carTotalAmount,
-          orderId,
-          "MercadoPago",
-          "3448, La Rioja, Buenos Aires",
-          carItems,
-          userInfo.id
+        elements.getElement(CardElement).clear();
+
+        dispatch(
+          confirmPayment(
+            id,
+            carTotalAmount,
+            orderId,
+            "MercadoPago",
+            "3448, La Rioja, Buenos Aires",
+            carItems,
+            userInfo.id
+          )
         );
       }
     } catch (err) {
@@ -56,7 +74,17 @@ const CheckOut = () => {
     }
   };
   // orderId, payment, direction, clothes, userId
-
+  useEffect(() => {
+    if (paymentSuccess) {
+      setLoading(false);
+      setTimeout(() => {
+        props.history.push(`/`);
+      }, 3000);
+    }
+  }, [paymentSuccess, props.history]);
+  if (totalItems === 0) {
+    return <h1>No hay productos en tu carrito</h1>;
+  }
   return (
     <Container className="my-5">
       <Accordion defaultActiveKey="0">
@@ -67,13 +95,6 @@ const CheckOut = () => {
           <Accordion.Collapse eventKey="0">
             <Card.Body>
               <Form>
-                <Form.Row>
-                  <Form.Group as={Col} controlId="formGridEmail">
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
-                  </Form.Group>
-                </Form.Row>
-
                 <Form.Group controlId="formGridAddress1">
                   <Form.Label>Dirección</Form.Label>
                   <Form.Control placeholder="1234 Main St" />
@@ -87,9 +108,11 @@ const CheckOut = () => {
 
                   <Form.Group as={Col} controlId="formGridState">
                     <Form.Label>Provincia</Form.Label>
-                    <Form.Control as="select" defaultValue="Choose...">
-                      <option>Choose...</option>
-                      <option>...</option>
+                    <Form.Control as="select" defaultValue="Selecciona...">
+                      <option>Selecciona...</option>
+                      {provincias.map((provincia, index) => (
+                        <option>{`Provincia de ${provincia}`}</option>
+                      ))}
                     </Form.Control>
                   </Form.Group>
 
@@ -104,7 +127,7 @@ const CheckOut = () => {
         </Card>
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="1">
-            Metodo de pago
+            Datos de tarjeta
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="1">
             <Card.Body>
@@ -181,7 +204,11 @@ const CheckOut = () => {
                             paymentHandler();
                           }}
                         >
-                          Pagar
+                          {loadingPayment ? (
+                            <Spinner animation="border" variant="light" />
+                          ) : (
+                            "Pagar"
+                          )}
                         </Button>
                       </Row>
                     </Card.Body>
