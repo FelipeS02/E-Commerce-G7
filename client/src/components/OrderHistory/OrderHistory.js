@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getOrders } from "../../actions/orderActions";
 import Loading from "../Loading/Loading";
 import Modal from 'react-bootstrap/Modal'
-import { Button, Image } from "react-bootstrap";
-import { BASE_IMG_URL } from "../../constants/productConstants";
+import { Button, Container, Row, Col, Table } from "react-bootstrap";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const OrderHistory = () => {
 
@@ -38,7 +38,7 @@ const OrderHistory = () => {
       const handleClose = () => setShow(false);
       const handleShow = (e) => {
         setShow(true);
-     console.log(e.target.value)
+     console.log(e)
 
 let obj =  JSON.parse(e.target.value)
 let date = new Date(obj.date);
@@ -69,40 +69,65 @@ console.log(dateFormat);
            time: timeFormat
          })
       }
-    
+
   return (
-        <div>
-          {
-            orders?.map((order,index)=>(
-              <div key ={index}>
-              {`Orden número ${index+1}`}
-                {
-                  order.clothes?.map((clothe,i) => (
-                    <div key={i}>
-                    <Button variant="second" onClick={(e) => handleShow(e)} value={JSON.stringify({ clothe, date:order.updatedAt})}>
-                      {clothe.name}
-                      </Button>
-                      <Modal show={show} onHide={handleClose}>
-                        <Modal.Header closeButton>
-                          <Modal.Title>Detalle de la orden</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                          <Link to={`/search/details/${data.id}`}>{data.name}</Link>
-                          <div>Cantidad:{data.quantity}</div>
-                          <div>Fecha de la compra: {data.date}</div>
-                          <div>Hora de la compra: {data.time}</div>
-                        </Modal.Body>
-                        <Modal.Footer>
-                          <Button variant="secondary" onClick={handleClose}>
-                            OK
-                          </Button>
-                        </Modal.Footer>
-                      </Modal>
-                  </div>
-                  ))}
-              </div>
+    <Container>
+        <Table striped bordered hover>
+          <thead>
+            <tr>
+              <th>Número de orden</th>
+              <th>Prendas</th>
+            </tr>
+          </thead>
+          <tbody>
+            {orders?.map((order,index)=>(
+              <tr key={index}>
+                <div>{`Orden número ${index + 1}`}</div>
+                {order.clothes?.map((clothe, i) => (
+                  <Button key={i} variant="second" onClick={(e) => handleShow(e)} value={JSON.stringify({ clothe, date: order.updatedAt })}>
+                    {clothe.name}
+                  </Button>
+                ))}
+              <><Modal show={show} onHide={handleClose}>
+                  <Modal.Header closeButton>
+                    <Modal.Title>Detalle de la orden</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <Link to={`/search/details/${data.id}`}>{data.name}</Link>
+                    <div>Cantidad:{data.quantity}</div>
+                    <div>Fecha de la compra: {data.date}</div>
+                    <div>Hora de la compra: {data.time}</div>
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                      OK
+                    </Button>
+                  </Modal.Footer>
+                </Modal></>
+                </tr> 
             ))}
-      </div>
+          </tbody>
+        </Table>
+          {/* {orders?.map((order,index)=>(
+            <Container className='border border-primary'>
+            <Row key ={index} >
+              {`Orden número ${index+1}`}
+                {order.clothes?.map((clothe,i) => (
+                   <><Col className='border border-10 border-primary' key={i}>
+                    <Button variant="second" onClick={(e) => handleShow(e)} value={JSON.stringify({ clothe, date: order.updatedAt })}>
+                      {clothe.name}
+                    </Button>
+                  </Col> */}
+
+                  
+                  {/* </>
+                
+                  ))}
+               </Row>
+          </Container>
+            ))} */}
+  
+      </Container>
     )
 }
 export default OrderHistory;
