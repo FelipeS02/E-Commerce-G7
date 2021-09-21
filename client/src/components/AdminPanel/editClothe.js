@@ -12,7 +12,8 @@ export default function EditClothe(props){
 	const dispatch = useDispatch();
 
 	useEffect(() => {
-        dispatch(getCategories());
+        dispatch(getCategories())
+        dispatch(getProductDetail(id))
 	},[dispatch])
 
     const prenda = useSelector(state => state.detailState.detail)
@@ -141,15 +142,7 @@ export default function EditClothe(props){
 
     }
 
-    // function handleChecked(name, array){
-    //     if(array.includes(name)){
-    //         return true;
-    //     }
-    //     else{
-    //         return false;
-    //     }
-    // }
-    
+
     function handleCheckBox(e){
 
         if(e.target.checked){
@@ -263,11 +256,11 @@ export default function EditClothe(props){
             newCategories: [],
             mediaArray: null
         })
-        history.push("/admin");
+        history.push("/admin/listproducts");
     }
 	
     return (
-        <div style={{backgroundColor: '#EAEDED', padding: '5rem'}}>
+        <div style={{display: 'flexbox', width: "100%", margin: '1.5rem' }}>
             <button onClick={getDetail}></button>
             <h1 style={{marginBottom: '3rem'}}>Editar Producto</h1>
             <Form onSubmit={handleSubmit}>
