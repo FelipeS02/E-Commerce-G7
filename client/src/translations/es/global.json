@@ -1,0 +1,57 @@
+{
+	"NavBar": {
+		"Ofertas": "Ofertas",
+		"Hombre": "Hombre",
+		"Mujer": "Mujer",
+		"Deseos": "Lista de deseos",
+		"Perfil": "Perfil",
+		"Mis-Pedidos": "Mis Pedidos"
+	},
+
+	"Login": {
+		"Ingresar": "Ingresar",
+		"Salir": "Salir"
+	},
+
+	"Results": {
+		"Sin-Resultados": "No se encontraron resultados",
+		"Resultados": "Resultados"
+	},
+
+	"Buscar": {
+		"Buscar": "Buscar"
+	},
+
+	"SideBarFilter": {
+		"Categorias": "Categorias",
+		"Tipos": "Tipos",
+		"Talles": "Talles",
+		"Genero": "Genero"
+	},
+
+	"Loading": {
+		"Loading": "Cargando"
+	},
+
+	"Carrito": {
+		"Agregar": "Agregar al carrito",
+		"Sin-Productos": "No hay productos",
+		"Ver-Carrito": "Ver carrito"
+	},
+
+	"Talle": {
+		"Talle": "Talle"
+	},
+
+	"Footer": {
+		"Productos": "Productos",
+		"Ofertas": "Ofertas",
+		"Nuevos-Productos": "Nuevos Productos",
+		"Mas-Vendido": "Lo mas vendido",
+		"Informacion": "Informacion",
+		"Privacidad": "Aviso de privacidad",
+		"Tyc": "Terminos y condiciones",
+		"Preguntas-F": "Preguntas Frecuentes",
+		"Contactanos": "Contactanos"
+	}
+}

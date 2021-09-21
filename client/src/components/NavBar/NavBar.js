@@ -8,6 +8,9 @@ import { useAuth0 } from "@auth0/auth0-react";
 import SearchBar from "../SearchBar/SearchBar";
 import Logo from "./logo.png"
 
+// Translation
+import {useTranslation} from "react-i18next";
+
 import {
   addingUserToDB,
   getAccessToken,
@@ -15,11 +18,15 @@ import {
 } from "../../actions/authActions.js";
 import { useDispatch, useSelector } from "react-redux";
 import Cart from "../Cart/Cart";
+
 const NavBar = () => {
   const dispatch = useDispatch();
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const userState = useSelector((state) => state.userState);
   const { userInfo } = userState;
+
+  // Translation
+  const [t, i18n] = useTranslation("global");
 
   useEffect(() => {
     const getUserMetadata = async () => {
@@ -61,13 +68,13 @@ const NavBar = () => {
           <Container>
             <Nav className="justify-content-center align-content-center">
               <Nav.Link as={Link} to="/search/genre/Masculino">
-                Hombre
+                {t("NavBar.Hombre")}
               </Nav.Link>
               <Nav.Link as={Link} to="/search/genre/Femenino">
-                Mujer
+                {t("NavBar.Mujer")}
               </Nav.Link>
               <Nav.Link as={Link} to="/Ofertas">
-                Ofertas
+                {t("NavBar.Ofertas")}
               </Nav.Link>
             </Nav>
           </Container>
@@ -102,13 +109,13 @@ const NavBar = () => {
                       as={Link}
                       to="/user/userProfile"
                     >
-                      Perfil
+                      {t("NavBar.Perfil")}
                     </NavDropdown.Item>
                     <NavDropdown.Item eventKey="4.2">
-                      Mis pedidos
+                      {t("NavBar.Mis-Pedidos")}
                     </NavDropdown.Item>
                     <NavDropdown.Item eventKey="4.3">
-                      Lista de deseos
+                      {t("NavBar.Deseos")}
                     </NavDropdown.Item>
 
                     <NavDropdown.Item eventKey="4.4"></NavDropdown.Item>
@@ -126,6 +133,9 @@ const NavBar = () => {
                 </NavDropdown>
               )}
               {!isAuthenticated ? <Login /> : <LogOut />}
+
+              <Nav.Link onClick={() => i18n.changeLanguage("es")}>ES</Nav.Link>
+              <Nav.Link onClick={() => i18n.changeLanguage("en")}>EN</Nav.Link>
             </Nav>
           </Container>
         </Navbar.Collapse>

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Row, Button, Col, Form } from "react-bootstrap";
 import { FaShoppingCart } from "react-icons/fa";
+import {useTranslation} from "react-i18next";
 const AddToCar = (props) => {
   const { maxValue, itemHandler, quantity, addToCardHandler } = props;
-
+  const [t, i18n] = useTranslation("global");
   return (
     <Row>
       <Col xs={4}>
@@ -23,7 +24,7 @@ const AddToCar = (props) => {
             addToCardHandler(e.target.value);
           }}
         >
-          <FaShoppingCart /> Agregar al carrito
+          <FaShoppingCart /> {t("Carrito.Agregar")}
         </Button>
       </Col>
     </Row>

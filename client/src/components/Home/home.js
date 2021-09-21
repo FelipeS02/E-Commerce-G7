@@ -11,6 +11,7 @@ import PaginationC from "../Pagination/PaginationC";
 import CardP from "../ProductCard/CardP";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
 import Loading from "../Loading/Loading";
+import {useTranslation} from "react-i18next";
 
 const Home = (props) => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ const Home = (props) => {
   const { loading, products, error } = productsState;
   const { category, size, type, genre } = filterState.filters;
   const { offset, current } = filterState;
+  const [t, i18n] = useTranslation("global");
 
   useEffect(() => {
     dispatch(
@@ -75,7 +77,7 @@ const Home = (props) => {
               />
             ))
           ) : (
-            <h1>No se encontrarón resultados...</h1>
+            <h1>{t("Results.Sin-Resultados")}</h1>
           )}
         </Col>
       </Row>
