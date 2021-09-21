@@ -84,7 +84,7 @@ User.belongsToMany(Order, { through: "user_orders" });
 Order.belongsTo(User, { through: "user_orders" });
 
 // Reviews
-User.hasMany(Review)
+User.hasMany(Review);
 Clothe.hasMany(Review);
 Review.belongsTo(Clothe, { through: "clothe_reviews" });
 
