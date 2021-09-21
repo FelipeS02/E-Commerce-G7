@@ -18,8 +18,10 @@
     //////////
     import React, { Component, forwardRef } from "react";
     import ReactDOM from "react-dom";
+    import { connect } from "react-redux";
     import MaterialTable, {MTableToolbar} from "material-table";
-    import { AddBox, ArrowDownward, Check, ChevronLeft, Search, ChevronRight, Clear, DeleteOutline, Edit, FilterList, FirstPage, LastPage, Remove, SaveAlt, ViewColumn } from '@material-ui/icons';
+    import {  Save, AddBox, ArrowDownward, Check, ChevronLeft, Search, ChevronRight, Clear, DeleteOutline, Edit, FilterList, FirstPage, LastPage, Remove, SaveAlt, ViewColumn } from '@material-ui/icons';
+import { getOrders, orderStateUpdate } from "../../actions/orderActions";
 
 
 const tableIcons = {
@@ -29,6 +31,7 @@ const tableIcons = {
     Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
     DetailPanel: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
     Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
+    Save: forwardRef((props, ref) => <Save {...props} ref={ref}/>),
     Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
     Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
     FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
@@ -44,6 +47,9 @@ const tableIcons = {
 
     class ListDetail extends Component {
         //
+        componentDidMount(){
+            this.props.getOrders()
+        }
         //
         render() {
             return (
@@ -52,7 +58,7 @@ const tableIcons = {
          <MaterialTable
     components={{
         Toolbar: props => (
-            <div style={{ backgroundColor: 'green' }}>
+            <div style={{ backgroundColor: '#A8F2CA' }}>
                 <MTableToolbar {...props} />
             </div>
         )
@@ -67,165 +73,191 @@ const tableIcons = {
              { title: 'Total compra ($)', field: 'total', type: 'numeric',  filtering: false },
              { title: 'Ultima actualización', field: 'birthCity',  filtering: false },
             ]}
-            data=
-            {[
+            actions={[
                 {
-                id:"9206adf4-acdf-466a-b0bb-ba37dc79508d",
-                state:"CARRITO",
-                total:40846,
-                payment:null,
-                direction:null,
-                clothes: [
-                    {
-                        id :4,
-                        name:"REMERA LEFT COAST O'NEILL",
-                        price:2138,
-                        color:"negro",
-                        genre:"Masculino",
-                        detail:"Remera manga corta, escote redondo con ribb a tono. Estampa en el frente. Material 100% algodón. Calce regular",
-                        quantity_and_size:{
-                            quantity:4,
-                            size:"L"
-                        }
-                    },
-                    {
-                        id:31,
-                        name:"REMERA HENRY",
-                        price:1500,
-                        color:"azul",
-                        genre:"Masculino",
-                        detail:"Remera re piola, de herny con una estampa de henry re piola,",
-                        quantity_and_size:{
-                            quantity:3,
-                            size:"M"
-                        }
+                    icon: 'ShowTitle',
+                    tooltip: 'Cancelar Pedido',
+                    onClick: (event, rowData) => {
+                        this.props.orderStateUpdate(rowData.id, 'CANCELADO')
+                        this.props.getOrders()
                     }
-                ]},
-                {
-                id:"18897984-551c-45a4-bf28-a149068384f7",
-                state:"ENTREGADO",
-                total:15384,
-                payment:null,
-                direction:null,
-                clothes: [
-                    {
-                        id:2,
-                        name:"REMERA RETRO O'NEILL",
-                        price:2138,
-                        color:"blanco",
-                        genre:"Femenino",
-                        detail:"- Remera manga corta, escote redondo con ribb a tono, Estampa 1 color en frente. - Calce: Clasica Oversize Material Algodon / Viscosa",
-                        quantity_and_size:{
-                            quantity:2,
-                            size:"L"
-                        }
-                    }
-                ]
                 },
                 {
-                id:"ae2a5785-8c6c-4132-8500-d123168f9830",
-                state:"CARRITO",
-                total:2138,
-                payment:null,
-                direction:null,
-                clothes: [
-                    {
-                    id:2,
-                    name:"REMERA RETRO O'NEILL",
-                    price:2138,
-                    color:"blanco",
-                    genre:"Femenino",
-                    detail:"- Remera manga corta, escote redondo con ribb a tono, Estampa 1 color en frente. - Calce: Clasica Oversize Material Algodon / Viscosa",
-                    quantity_and_size:{
-                        quantity:1,
-                        size:"L"
-                        }
+                    icon: 'ShowTitle',
+                    tooltip: 'Despachar Pedido',
+                    onClick: (event, rowData) => {
+                        this.props.orderStateUpdate(rowData.id, 'DESPACHADO')
+                        this.props.getOrders()
                     }
-                    ]
                 },
                 {
-                    id:"fdad147c-a6bc-47c9-9f61-7d591dbdbcf6",
-                    state:"CARRITO",
-                    total:107549,
-                    payment:null,
-                    direction:null,
-                    clothes: [
-                        {
-                        id:8,
-                        name:"CAMPERA ONTARIO O'NEILL",
-                        price:14400,
-                        color:"amarillo",
-                        genre:"Femenino",
-                        detail:"Campera urbana femenina con canelones y capucha. Abertura cierre plástico. Cintura y puños con elástico. Calce: regular a la cadera. Material 100% Poliester.",
-                        quantity_and_size:{
-                            quantity:2,
-                            size:"XS"
-                            }
-                        },         
-                        {
-                        id:8,
-                        name:"CAMPERA ONTARIO O'NEILL",
-                        price:14400,
-                        color:"amarillo",
-                        genre:"Femenino",
-                        detail:"Campera urbana femenina con canelones y capucha. Abertura cierre plástico. Cintura y puños con elástico. Calce: regular a la cadera. Material 100% Poliester.",
-                        quantity_and_size:{
-                            quantity:2,
-                            size:"XS"
-                            }
-                        },
-                        {
-                        id:2,
-                        name:"REMERA RETRO O'NEILL",
-                        price:2138,
-                        color:"blanco",
-                        genre:"Femenino",
-                        detail:"- Remera manga corta, escote redondo con ribb a tono, Estampa 1 color en frente. - Calce: Clasica Oversize Material Algodon / Viscosa",
-                        quantity_and_size:{
-                            quantity:9,
-                            size:"L"
-                            }
-                        },
-                        {
-                        id:29,
-                        name:"CAMISA DORY O'NEILL",
-                        price:6999,
-                        color:"azul",
-                        genre:"Masculino",
-                        detail:"Camisa manga larga tipo leñadora de viyela MATERIALES 100% Algodón",
-                        quantity_and_size:{
-                            quantity:1,
-                            size:"XS"
-                            }
-                        },
-                        {
-                        id:25,
-                        name:"CAMPERA GALA O'NEILL",
-                        price:11600,
-                        color:"azul marino",
-                        genre:"Masculino",
-                        detail:"Campera con capucha ajustable. Canelones anchos y cierre central plástico. Dos bolsillos con botones a presión y puños regulables con velcro. MATERIALES Relleno 100% Silicona.",
-                        quantity_and_size:{
-                            quantity:1,
-                            size:"M"
-                            }
-                        },
-                        {
-                        id:4,
-                        name:"REMERA LEFT COAST O'NEILL",
-                        price:2138,
-                        color:"negro",
-                        genre:"Masculino",
-                        detail:"Remera manga corta, escote redondo con ribb a tono. Estampa en el frente. Material 100% algodón. Calce regular",
-                        quantity_and_size:{
-                            quantity:1,
-                            size:"XS"
-                            }
-                        }
-                        ]
+                    icon: 'ShowTitle',
+                    tooltip: 'Entregado',
+                    onClick: (event, rowData) => {
+                        this.props.orderStateUpdate(rowData.id, 'ENTREGADO')
+                        this.props.getOrders()
+                    }
                 }
             ]}
-
+            // data=
+            // {[
+            //     {
+            //     id:"9206adf4-acdf-466a-b0bb-ba37dc79508d",
+            //     state:"CARRITO",
+            //     total:40846,
+            //     payment:null,
+            //     direction:null,
+            //     clothes: [
+            //         {
+            //             id :4,
+            //             name:"REMERA LEFT COAST O'NEILL",
+            //             price:2138,
+            //             color:"negro",
+            //             genre:"Masculino",
+            //             detail:"Remera manga corta, escote redondo con ribb a tono. Estampa en el frente. Material 100% algodón. Calce regular",
+            //             quantity_and_size:{
+            //                 quantity:4,
+            //                 size:"L"
+            //             }
+            //         },
+            //         {
+            //             id:31,
+            //             name:"REMERA HENRY",
+            //             price:1500,
+            //             color:"azul",
+            //             genre:"Masculino",
+            //             detail:"Remera re piola, de herny con una estampa de henry re piola,",
+            //             quantity_and_size:{
+            //                 quantity:3,
+            //                 size:"M"
+            //             }
+            //         }
+            //     ]},
+            //     {
+            //     id:"18897984-551c-45a4-bf28-a149068384f7",
+            //     state:"ENTREGADO",
+            //     total:15384,
+            //     payment:null,
+            //     direction:null,
+            //     clothes: [
+            //         {
+            //             id:2,
+            //             name:"REMERA RETRO O'NEILL",
+            //             price:2138,
+            //             color:"blanco",
+            //             genre:"Femenino",
+            //             detail:"- Remera manga corta, escote redondo con ribb a tono, Estampa 1 color en frente. - Calce: Clasica Oversize Material Algodon / Viscosa",
+            //             quantity_and_size:{
+            //                 quantity:2,
+            //                 size:"L"
+            //             }
+            //         }
+            //     ]
+            //     },
+            //     {
+            //     id:"ae2a5785-8c6c-4132-8500-d123168f9830",
+            //     state:"CARRITO",
+            //     total:2138,
+            //     payment:null,
+            //     direction:null,
+            //     clothes: [
+            //         {
+            //         id:2,
+            //         name:"REMERA RETRO O'NEILL",
+            //         price:2138,
+            //         color:"blanco",
+            //         genre:"Femenino",
+            //         detail:"- Remera manga corta, escote redondo con ribb a tono, Estampa 1 color en frente. - Calce: Clasica Oversize Material Algodon / Viscosa",
+            //         quantity_and_size:{
+            //             quantity:1,
+            //             size:"L"
+            //             }
+            //         }
+            //         ]
+            //     },
+            //     {
+            //         id:"fdad147c-a6bc-47c9-9f61-7d591dbdbcf6",
+            //         state:"CARRITO",
+            //         total:107549,
+            //         payment:null,
+            //         direction:null,
+            //         clothes: [
+            //             {
+            //             id:8,
+            //             name:"CAMPERA ONTARIO O'NEILL",
+            //             price:14400,
+            //             color:"amarillo",
+            //             genre:"Femenino",
+            //             detail:"Campera urbana femenina con canelones y capucha. Abertura cierre plástico. Cintura y puños con elástico. Calce: regular a la cadera. Material 100% Poliester.",
+            //             quantity_and_size:{
+            //                 quantity:2,
+            //                 size:"XS"
+            //                 }
+            //             },         
+            //             {
+            //             id:8,
+            //             name:"CAMPERA ONTARIO O'NEILL",
+            //             price:14400,
+            //             color:"amarillo",
+            //             genre:"Femenino",
+            //             detail:"Campera urbana femenina con canelones y capucha. Abertura cierre plástico. Cintura y puños con elástico. Calce: regular a la cadera. Material 100% Poliester.",
+            //             quantity_and_size:{
+            //                 quantity:2,
+            //                 size:"XS"
+            //                 }
+            //             },
+            //             {
+            //             id:2,
+            //             name:"REMERA RETRO O'NEILL",
+            //             price:2138,
+            //             color:"blanco",
+            //             genre:"Femenino",
+            //             detail:"- Remera manga corta, escote redondo con ribb a tono, Estampa 1 color en frente. - Calce: Clasica Oversize Material Algodon / Viscosa",
+            //             quantity_and_size:{
+            //                 quantity:9,
+            //                 size:"L"
+            //                 }
+            //             },
+            //             {
+            //             id:29,
+            //             name:"CAMISA DORY O'NEILL",
+            //             price:6999,
+            //             color:"azul",
+            //             genre:"Masculino",
+            //             detail:"Camisa manga larga tipo leñadora de viyela MATERIALES 100% Algodón",
+            //             quantity_and_size:{
+            //                 quantity:1,
+            //                 size:"XS"
+            //                 }
+            //             },
+            //             {
+            //             id:25,
+            //             name:"CAMPERA GALA O'NEILL",
+            //             price:11600,
+            //             color:"azul marino",
+            //             genre:"Masculino",
+            //             detail:"Campera con capucha ajustable. Canelones anchos y cierre central plástico. Dos bolsillos con botones a presión y puños regulables con velcro. MATERIALES Relleno 100% Silicona.",
+            //             quantity_and_size:{
+            //                 quantity:1,
+            //                 size:"M"
+            //                 }
+            //             },
+            //             {
+            //             id:4,
+            //             name:"REMERA LEFT COAST O'NEILL",
+            //             price:2138,
+            //             color:"negro",
+            //             genre:"Masculino",
+            //             detail:"Remera manga corta, escote redondo con ribb a tono. Estampa en el frente. Material 100% algodón. Calce regular",
+            //             quantity_and_size:{
+            //                 quantity:1,
+            //                 size:"XS"
+            //                 }
+            //             }
+            //             ]
+            //     }
+            // ]}
+              data={this.props.Data}
 
          title="Detail Orders Panel"
          detailPanel={rowData => {
@@ -258,4 +290,17 @@ const tableIcons = {
     );
   }
 }
-export default ListDetail;
+
+function mapStateToProps(state){
+    return { Data: state.orderState.orders.data}
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        getOrders: () => dispatch(getOrders()),
+        orderStateUpdate: (id, state) => dispatch(orderStateUpdate(id, state))
+    };
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(ListDetail);

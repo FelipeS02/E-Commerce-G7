@@ -11,12 +11,17 @@ const {
 const jwtAuthz = require("express-jwt-authz");
 const checkScopes = (permissions) => jwtAuthz(permissions);
 
-router.get("/:orderId", checkScopes(["read:admin"]), async (req, res) => {
+router.get("/:orderId", async (req, res) => {
   try {
-    const {
-      params: { orderId },
-      query: { state },
-    } = req;
+    // const {
+    //   params: { orderId },
+    //   query: { state },
+    // } = req;
+    console.log('llego al back')
+    const {orderId} = req.params
+    const {stateOrder} = req.query
+    console.log(orderId)
+    console.log(stateOrder)
     const validStates = [
       "CARRITO",
       "CONFIRMADO",
@@ -24,8 +29,8 @@ router.get("/:orderId", checkScopes(["read:admin"]), async (req, res) => {
       "CANCELADO",
       "ENTREGADO",
     ];
-    if (validStates.includes(state) && validate(orderId)) {
-      await Order.update({ state: state }, orderId);
+    if (validStates.includes(stateOrder) && validate(orderId)) {
+      await Order.update({ state: stateOrder }, orderId);
       res.json(responseMessage(SUCCESS, "Estado actualizado correctamente"));
     } else {
       res.json(
