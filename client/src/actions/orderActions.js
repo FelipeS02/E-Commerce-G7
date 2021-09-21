@@ -6,8 +6,7 @@ import {
   ORDER_STATE_UPDATE
 } from "../constants/ordersConstants.js";
 
-<<<<<<< HEAD
-export const getOrders = () => {
+export const getAllOrders = () => {
 	return async function(dispatch){
 		const orders = await axios.get("/clothe/users-orders?userId=&orderStatus=")
 		return dispatch({
@@ -37,10 +36,9 @@ export const orderStateUpdate = (id, state) => {
 		}
 	}
 }
-=======
 export const getOrders = (id,status) => async (dispatch) => {
   try {
-    const  data = await axios.get(`/clothe/users-orders?userId=${id}&orderStatus=${status}`);
+    const data = await axios.get(`/clothe/users-orders?userId=${id}&orderStatus=${status}`);
 	console.log(data.data.data[0],'aca esta lo que estoy buscando');
     dispatch({
       type: GET_ORDERS,
@@ -53,5 +51,4 @@ export const getOrders = (id,status) => async (dispatch) => {
     });
   }
 };
->>>>>>> main
 
