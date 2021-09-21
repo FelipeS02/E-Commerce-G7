@@ -18,7 +18,14 @@ import ListDetail from "./components/AdminPanel/orderFilterList"
 import NewAdminPanel from "./components/AdminPanel/NewAdminPanel"
 import ProductList from "./components/AdminPanel/productList"
 import PanelTitle from "./components/AdminPanel/PanelTitle";
+import OrderHistory from "./components/OrderHistory/OrderHistory.js"
 
+import CheckOut from "./components/Checkout/CheckOut";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(
+  "pk_test_51Jb4lZCUIIDXCqbkKXri5uz0jgOhwsWSGfXIjayHYBbF1WbUbFyYN9IG87QIIWgxzJbu38Oe1SmF2jounkyUbKYA00aSTtx30h"
+);
 function App() {
   const dispatch = useDispatch();
 
@@ -50,6 +57,10 @@ function App() {
         />
         <Route exact path="/search/details/:id" component={ProductDetail} />
         <PrivateRoute exact path="/user/userProfile" component={UserProfile} />
+        <PrivateRoute exact path="/user/userProfile/orderHistory" component={OrderHistory} />
+        <Elements stripe={stripePromise}>
+          <Route exact path="/user/checkout" component={CheckOut} />
+        </Elements>
         <Route exact path="/cart" component={CartScreen} />
       </BrowserRouter>
     </div>

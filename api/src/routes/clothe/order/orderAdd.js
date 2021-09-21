@@ -1,7 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
-const { Clothe, User, Order } = require("../../../db");
+const { Clothe, Order, User } = require("../../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
@@ -16,14 +16,11 @@ router.put("/", async (req, res) => {
     } = req;
 
     if (userId && validate(userId)) {
-      const [userFindOrder, currentClothe] = await Promise.all([
-        await User.findOne({
-          where: { id: userId },
-          include: {
-            model: Order,
-            where: {
-              state: "CARRITO",
-            },
+      const [findUserOrder, currentClothe] = await Promise.all([
+        await Order.findOne({
+          where: {
+            state: "CARRITO",
+            userId,
           },
         }),
         await Clothe.findByPk(clotheId),
@@ -31,25 +28,28 @@ router.put("/", async (req, res) => {
 
       const price = currentClothe.price * quantity;
 
-      if (!userFindOrder) {
-        const currentUser = await User.findByPk(userId);
-        const newOrder = await Order.create({ total: price, userId });
+      if (!findUserOrder) {
+        const [newOrder, currentUser] = await Promise.all([
+          await Order.create({ total: price, userId }),
+          await User.findByPk(userId),
+        ]);
+
         await Promise.all([
           await newOrder.addClothe(clotheId, {
             through: { quantity, size },
           }),
           await currentUser.addOrder(newOrder.id),
         ]);
+      
       } else {
-        const currentOrder = await Order.findByPk(
-          userFindOrder.orders[0].dataValues.id
-        );
+        
         await Promise.all([
-          await currentOrder.increment(["total"], { by: price }),
-          await currentOrder.addClothe(clotheId, {
+          await findUserOrder.increment(["total"], { by: price }),
+          await findUserOrder.addClothe(clotheId, {
             through: { quantity, size },
           }),
         ]);
+        
       }
       return res.json(
         responseMessage(SUCCESS, "Prenda agregada correctamente")
