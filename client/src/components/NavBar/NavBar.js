@@ -6,6 +6,8 @@ import { Link } from "react-router-dom";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
 import SearchBar from "../SearchBar/SearchBar";
+import Logo from "./logo.png"
+
 import {
   addingUserToDB,
   getAccessToken,
@@ -41,7 +43,13 @@ const NavBar = () => {
     <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
       <Container>
         <Navbar.Brand as={Link} to="/">
-          Logo
+            <img
+              src={Logo}
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+              alt="Logo"
+            />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
