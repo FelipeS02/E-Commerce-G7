@@ -2,14 +2,54 @@ const { Router } = require("express");
 const router = Router();
 const { User } = require("../../db");
 const { Op } = require("sequelize");
+const nodemailer = require("nodemailer");
+const { google } = require("googleapis");
+const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URI, REFRESH_TOKEN } = process.env;
+const welcomeMail = require("../../mails/welcome");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
 } = require("../../controller/responseMessages");
 
-var jwt = require("express-jwt");
-var jwks = require("jwks-rsa");
-var jwtCheck = jwt({
+const oAuth2client = new google.auth.OAuth2(
+  CLIENT_ID,
+  CLIENT_SECRET,
+  REDIRECT_URI
+);
+
+oAuth2client.setCredentials({
+  refresh_token: REFRESH_TOKEN,
+});
+
+const sendMail = async (email, name, id) => {
+  try {
+    const accessToken = await oAuth2client.getAccessToken();
+    const transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        type: "OAuth2",
+        user: "henrycommerceg7@gmail.com",
+        clientId: CLIENT_ID,
+        clientSecret: CLIENT_SECRET,
+        refreshToken: REFRESH_TOKEN,
+        accessToken,
+      },
+    });
+    const mailOptions = {
+      from: "<henrycommerceg7@gmail.com>",
+      to: email,
+      subject: "Bienvenido a E-Commerce G7",
+      html: welcomeMail(name, id),
+    };
+    await transporter.sendMail(mailOptions);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+let jwt = require("express-jwt");
+let jwks = require("jwks-rsa");
+let jwtCheck = jwt({
   secret: jwks.expressJwtSecret({
     cache: true,
     rateLimit: true,
@@ -24,14 +64,14 @@ var jwtCheck = jwt({
 router.use(jwtCheck);
 
 router.post("/", async (req, res) => {
-  let isAdmin = req.user.permissions.includes(
-    "read:admin" || "write:admin" || "delete:admin"
-  )
-    ? true
-    : false;
-  const { name, email } = req.body;
   try {
-    userExists = await User.findOne({
+    let isAdmin = req.user.permissions.includes(
+      "read:admin" || "write:admin" || "delete:admin"
+    )
+      ? true
+      : false;
+    const { name, email } = req.body;
+    const userExists = await User.findOne({
       where: {
         email: { [Op.iLike]: `%${email}%` },
       },
@@ -54,6 +94,7 @@ router.post("/", async (req, res) => {
       email: email,
       isAdmin: isAdmin,
     });
+    await sendMail(email, name, newUser.id);
     return res.json(
       responseMessage(SUCCESS, {
         message: "Usuario creado",

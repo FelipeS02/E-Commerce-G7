@@ -5,6 +5,7 @@ const morgan = require("morgan");
 const routes = require("./routes/index.js");
 const multer = require("multer");
 const path = require("path");
+const nodemailer = require("nodemailer");
 
 // Auth0
 let jwt = require("express-jwt");
@@ -33,6 +34,9 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
+
+//mailgun
+
 
 // server.use(jwtCheck);
 server.use(

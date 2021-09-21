@@ -3,6 +3,12 @@ module.exports = (sequelize) => {
   const Order_clothes = sequelize.define(
     "order_clothes",
     {
+      id: {
+        type: DataTypes.INTEGER,
+        primaryKey: true,
+        autoIncrement: true,
+        allowNull: false,
+      },
       quantity: {
         type: DataTypes.INTEGER,
         allowNull: false,
