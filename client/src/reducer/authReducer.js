@@ -2,11 +2,11 @@ import {
   USER_INFO_FAIL,
   USER_INFO_SUCCESS,
   USER_LOGOUT,
-  USER_LOGIN
+  USER_LOGIN,
 } from "../constants/productConstants";
 const initialState = {
   userInfo: {},
-  loginUserInfo:false
+  loginUserInfo: false,
 };
 
 function authReducer(state = initialState, action) {
@@ -16,28 +16,27 @@ function authReducer(state = initialState, action) {
         ...state,
         userInfo: action.payload,
         error: false,
-        loginUserInfo:false
-
+        loginUserInfo: false,
       };
     case USER_INFO_FAIL:
       return {
         ...state,
         userInfo: {},
         error: action.paload,
-        loginUserInfo:false
+        loginUserInfo: false,
       };
     case USER_LOGOUT:
       return {
         ...state,
         userInfo: {},
         error: false,
-        loginUserInfo:false
+        loginUserInfo: false,
       };
     case USER_LOGIN:
       return {
         ...state,
-        loginUserInfo:true
-      }
+        loginUserInfo: true,
+      };
     default:
       return state;
   }

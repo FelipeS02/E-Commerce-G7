@@ -3,7 +3,7 @@ import {
   USER_LOGOUT,
   USER_INFO_FAIL,
   USER_INFO_SUCCESS,
-  USER_LOGIN
+  USER_LOGIN,
 } from "../constants/productConstants";
 
 export const getAccessToken = (token) => {
@@ -17,8 +17,8 @@ export const getAccessToken = (token) => {
 
 export const addingUserToDB = (name, email) => async (dispatch) => {
   dispatch({
-    type: USER_LOGIN
-  })
+    type: USER_LOGIN,
+  });
   try {
     const { data } = await axios.post("/login", {
       name,
