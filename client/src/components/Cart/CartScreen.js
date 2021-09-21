@@ -19,9 +19,9 @@ const CartScreen = () => {
   const { totalItems, carItems, carTotalAmount, orderId } = cartState;
   const userState = useSelector((state) => state.userState);
   const { userInfo } = userState;
-  const itemHandler = (obj, id) => {
+  const itemHandler = (obj, id, userId, clothe) => {
     console.log(obj, id);
-    dispatch(addToCart(obj, id, userInfo.id));
+    dispatch(addToCart(obj, id, userId, clothe));
   };
 
   const removeItemHandler = (id) => {
@@ -68,7 +68,9 @@ const CartScreen = () => {
                             quantity: e.target.value,
                             size: item.quantity_and_size.size,
                           },
-                          item.id
+                          item.id,
+                          userInfo.id,
+                          item
                         )
                       }
                     />
@@ -105,7 +107,9 @@ const CartScreen = () => {
             </Card.Body>
             <Card.Body>
               <Row>
-                <Button variant="primary">Proceder a la compra</Button>
+                <Button variant="primary" as={Link} to="/user/checkout">
+                  Proceder a la compra
+                </Button>
               </Row>
             </Card.Body>
           </Card>

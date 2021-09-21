@@ -14,7 +14,14 @@ import creatheClothe from "./components/AdminPanel/createClothe.js";
 import editClothe from "./components/AdminPanel/editClothe.js";
 import CartScreen from "./components/Cart/CartScreen";
 import GenreResults from "./components/SearchResults/GenreResults";
+import OrderHistory from "./components/OrderHistory/OrderHistory.js"
 
+import CheckOut from "./components/Checkout/CheckOut";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
+const stripePromise = loadStripe(
+  "pk_test_51Jb4lZCUIIDXCqbkKXri5uz0jgOhwsWSGfXIjayHYBbF1WbUbFyYN9IG87QIIWgxzJbu38Oe1SmF2jounkyUbKYA00aSTtx30h"
+);
 function App() {
   const dispatch = useDispatch();
 
@@ -38,6 +45,10 @@ function App() {
         <Route exact path="/admin/createClothe" component={creatheClothe} />
         <Route exact path="/admin/editClothe/:id" component={editClothe} />
         <PrivateRoute exact path="/user/userProfile" component={UserProfile} />
+        <PrivateRoute exact path="/user/userProfile/orderHistory" component={OrderHistory} />
+        <Elements stripe={stripePromise}>
+          <Route exact path="/user/checkout" component={CheckOut} />
+        </Elements>
         <Route exact path="/cart" component={CartScreen} />
       </BrowserRouter>
     </div>
