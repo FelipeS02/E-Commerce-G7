@@ -14,6 +14,10 @@ import creatheClothe from "./components/AdminPanel/createClothe.js";
 import editClothe from "./components/AdminPanel/editClothe.js";
 import CartScreen from "./components/Cart/CartScreen";
 import GenreResults from "./components/SearchResults/GenreResults";
+import ListDetail from "./components/AdminPanel/orderFilterList"
+import NewAdminPanel from "./components/AdminPanel/NewAdminPanel"
+import ProductList from "./components/AdminPanel/productList"
+import PanelTitle from "./components/AdminPanel/PanelTitle";
 import OrderHistory from "./components/OrderHistory/OrderHistory.js"
 
 import CheckOut from "./components/Checkout/CheckOut";
@@ -35,15 +39,23 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/search/name/:name?" component={SearchResults} />
         <Route exact path="/search/genre/:genre?" component={GenreResults} />
-        <Route exact path="/admin" component={AdminPanel} />
+        {/* <Route exact path="/admin" component={AdminPanel} /> */}
+        <Route path="/admin" component={PanelTitle}/>
+        <div style={{display: 'flex', backgroundColor: '#E4ECE8'}}>
+          <Route path="/admin" component={NewAdminPanel}/>
+          <Route exact path="/admin/listDetail" component={ListDetail} />
+          <Route exact path="/admin/listproducts" component={ProductList} />
+          <Route exact path="/admin/createClothe" component={creatheClothe} />
+          <Route exact path="/admin/editClothe/:id" component={editClothe} />
+        </div>
+        
+        
         <Route
           exact
           path="/search/category/:category"
           component={SearchResults}
         />
         <Route exact path="/search/details/:id" component={ProductDetail} />
-        <Route exact path="/admin/createClothe" component={creatheClothe} />
-        <Route exact path="/admin/editClothe/:id" component={editClothe} />
         <PrivateRoute exact path="/user/userProfile" component={UserProfile} />
         <PrivateRoute exact path="/user/userProfile/orderHistory" component={OrderHistory} />
         <Elements stripe={stripePromise}>
