@@ -46,6 +46,36 @@ export const getProducts =
       });
     }
   };
+  export const getProductsAdmin =
+  (name = "", category = "", type = "", size = "", genre = "", offset = 0) =>
+  async (dispatch) => {
+    dispatch({
+      type: PRODUCT_REQUEST,
+    });
+    try {
+      let response;
+      console.log(size, type);
+      const { data } = await Axios.get(
+        `/clothe/all-clothes?name=${name}&limit=1000&offset=${offset}&category=${category}&type=${type}&size=${size}&genre=${genre}`
+      );
+
+      response = data;
+
+      if (response.statusCode === 400) {
+        throw new Error(response.data);
+      }
+      dispatch({
+        type: PRODUCT_SUCCESS,
+        payload: response,
+      });
+    } catch (error) {
+      dispatch({
+        type: PRODUCT_FAIL,
+        payload: error.message,
+      });
+    }
+  };
+
 
 export function createClothe(form) {
   console.log(form);

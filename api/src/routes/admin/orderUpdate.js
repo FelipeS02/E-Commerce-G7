@@ -30,7 +30,7 @@ router.get("/:orderId", async (req, res) => {
       "ENTREGADO",
     ];
     if (validStates.includes(stateOrder) && validate(orderId)) {
-      await Order.update({ state: stateOrder }, orderId);
+      await Order.update({ state: stateOrder }, { where: { id: orderId } });
       res.json(responseMessage(SUCCESS, "Estado actualizado correctamente"));
     } else {
       res.json(
