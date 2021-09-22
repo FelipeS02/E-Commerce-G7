@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
 import SearchBar from "../SearchBar/SearchBar";
-import Logo from "./logo.png"
+import Logo from "./logo.png";
 
 // Translation
 import {useTranslation} from "react-i18next";
@@ -39,7 +39,7 @@ const NavBar = () => {
       }
     };
     getUserMetadata();
-  }, [getAccessTokenSilently, user]);
+  }, [getAccessTokenSilently, user, dispatch]);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -50,13 +50,13 @@ const NavBar = () => {
     <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
       <Container>
         <Navbar.Brand as={Link} to="/">
-            <img
-              src={Logo}
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-              alt="Logo"
-            />
+          <img
+            src={Logo}
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+            alt="Logo"
+          />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
@@ -72,9 +72,6 @@ const NavBar = () => {
               </Nav.Link>
               <Nav.Link as={Link} to="/search/genre/Femenino">
                 {t("NavBar.Mujer")}
-              </Nav.Link>
-              <Nav.Link as={Link} to="/Ofertas">
-                {t("NavBar.Ofertas")}
               </Nav.Link>
             </Nav>
           </Container>
@@ -102,7 +99,7 @@ const NavBar = () => {
                 }
                 id="nav-dropdown"
               >
-                {isAuthenticated && (
+                {isAuthenticated ? (
                   <>
                     <NavDropdown.Item
                       eventKey="4.1"
@@ -117,9 +114,12 @@ const NavBar = () => {
                     <NavDropdown.Item eventKey="4.3">
                       {t("NavBar.Deseos")}
                     </NavDropdown.Item>
-
                     <NavDropdown.Item eventKey="4.4"></NavDropdown.Item>
                   </>
+                ) : (
+                  <NavDropdown.Item eventKey="4.4">
+                    Inicia sesión para ver opciones
+                  </NavDropdown.Item>
                 )}
               </NavDropdown>
               {userInfo && userInfo.isAdmin && (
@@ -127,9 +127,6 @@ const NavBar = () => {
                   <NavDropdown.Item as={Link} to="/admin" eventKey="4.1">
                     Panel
                   </NavDropdown.Item>
-                  <NavDropdown.Item eventKey="4.2">Productos</NavDropdown.Item>
-                  <NavDropdown.Item eventKey="4.3">Ordenes</NavDropdown.Item>
-                  <NavDropdown.Item eventKey="4.4">Usuarios</NavDropdown.Item>
                 </NavDropdown>
               )}
               {!isAuthenticated ? <Login /> : <LogOut />}
