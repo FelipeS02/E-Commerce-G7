@@ -104,7 +104,11 @@ const NavBar = () => {
                     >
                       Perfil
                     </NavDropdown.Item>
-                    <NavDropdown.Item eventKey="4.2">
+                    <NavDropdown.Item 
+                    eventKey="4.2"
+                    as={Link}
+                      to="/user/userProfile/orderHistory"
+                    >
                       Mis pedidos
                     </NavDropdown.Item>
                     <NavDropdown.Item eventKey="4.3">
