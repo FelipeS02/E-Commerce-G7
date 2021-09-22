@@ -95,31 +95,3 @@ function AdminPanel(){
 }
 
 export default AdminPanel;
-
-
-  //   const dispatch = useDispatch();
-
-
-
-  //   useEffect(() => {
-  //       dispatch(getProducts());
-  //   },[dispatch]);
-
-
-  //   return (
-  //   <div>
-  //     <h3>Prendas para editar</h3>
-  //     <div>
-  //       {
-  //           products.allClothes?.forEach(e => {
-
-  //               return (
-  //                   <Link to={`admin/editClothe/${id}`}>
-  //                       <span>{e.name} || {e.price} || {e.sizes}</span>
-  //                   </Link>
-  //               )
-  //           })
-  //       }
-  //     </div>
-  //   </div>
-  // );

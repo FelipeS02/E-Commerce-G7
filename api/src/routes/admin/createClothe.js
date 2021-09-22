@@ -8,7 +8,7 @@ const {
 } = require("../../controller/responseMessages");
 
 const validateReq = (data, files) => {
-  console.log('a validar')
+  console.log("a validar");
   const {
     name,
     price,
@@ -18,58 +18,59 @@ const validateReq = (data, files) => {
     type,
     sizeName,
     sizeStock,
-    categories
+    categories,
   } = data;
-  console.log(`name => ${name}`)
-  console.log(`price => ${price}`)
-  console.log(`color => ${color}`)
-  console.log(`genre => ${genre}`)
-  console.log(`detail => ${detail}`)
-  console.log(`type => ${type}`)
-  console.log(`sizeName => ${sizeName}`)
-  console.log(`sizeStock => ${sizeStock}`)
-  console.log(`categories => ${categories}`)
-  console.log(`files => ${files}`)
+  console.log(`name => ${name}`);
+  console.log(`price => ${price}`);
+  console.log(`color => ${color}`);
+  console.log(`genre => ${genre}`);
+  console.log(`detail => ${detail}`);
+  console.log(`type => ${type}`);
+  console.log(`sizeName => ${sizeName}`);
+  console.log(`sizeStock => ${sizeStock}`);
+  console.log(`categories => ${categories}`);
+  console.log(`files => ${files}`);
   if (
-    (typeof name === "string" &&
-      name !== "" &&
-      typeof price === "string" &&
-      typeof color === "string" &&
-      typeof genre === "string" &&
-      typeof detail === "string" &&
-      typeof type === "string") &&
-      // Array.isArray(sizeName) &&
-      // sizeName.length > 0 &&
-      // Array.isArray(sizeStock) &&
-      // sizeStock.length> 0 &&
-      // sizeName.length === sizeStock.length &&
-      // Array.isArray(categories) &&
-      // categories.length > 0 &&
-      Array.isArray(files)
+    typeof name === "string" &&
+    name !== "" &&
+    typeof price === "string" &&
+    typeof color === "string" &&
+    typeof genre === "string" &&
+    typeof detail === "string" &&
+    typeof type === "string" &&
+    // Array.isArray(sizeName) &&
+    // sizeName.length > 0 &&
+    // Array.isArray(sizeStock) &&
+    // sizeStock.length> 0 &&
+    // sizeName.length === sizeStock.length &&
+    // Array.isArray(categories) &&
+    // categories.length > 0 &&
+    Array.isArray(files)
   ) {
-    console.log('se valido')
+    console.log("se valido");
     return true;
   }
-  console.log('algo llego mal')
+  console.log("algo llego mal");
   return false;
 };
 
 const setCategories = async (categoriesArray, clothe) => {
-if(Array.isArray(categoriesArray)){  const clotheCategory = categoriesArray.map(async (c) => {
-    const currentCategory = await Category.findOne({
-      where: { name: { [Op.iLike]: `%${c}%` } },
-    });
-    if (!currentCategory) {
-      const newCategory = await Category.create({
-        name: c[0].toUpperCase() + c.substr(1),
+  if (Array.isArray(categoriesArray)) {
+    const clotheCategory = categoriesArray.map(async (c) => {
+      const currentCategory = await Category.findOne({
+        where: { name: { [Op.iLike]: `%${c}%` } },
       });
-      await clothe.addCategory(newCategory.id);
-    } else {
-      await clothe.addCategory(currentCategory.id);
-    }
-  });
-  await Promise.all(clotheCategory);
-} else {
+      if (!currentCategory) {
+        const newCategory = await Category.create({
+          name: c[0].toUpperCase() + c.substr(1),
+        });
+        await clothe.addCategory(newCategory.id);
+      } else {
+        await clothe.addCategory(currentCategory.id);
+      }
+    });
+    await Promise.all(clotheCategory);
+  } else {
     const currentCategory = await Category.findOne({
       where: { name: { [Op.iLike]: `%${categoriesArray}%` } },
     });
@@ -97,32 +98,36 @@ const setType = async (type, clothe) => {
   } else {
     await clothe.addType(currentType.id);
   }
-  console.log('se cargo el typo')
+  console.log("se cargo el typo");
 };
 
 const setSizes = async (sN, sS, clothe) => {
-  let sizeObject = {}
-  let sizeN = []
-  let sizeS = []
-  if(!Array.isArray(sN)){
+  let sizeObject = {};
+  let sizeN = [];
+  let sizeS = [];
+  if (!Array.isArray(sN)) {
     sizeN.push(sN);
-    sizeS.push(sS)
-  }else {
+    sizeS.push(sS);
+  } else {
     sizeN = sizeN.concat(sN);
     sizeS = sizeS.concat(sS);
   }
-  for(i=0; i<sizeN.length; i++){
-    sizeObject[sizeN[i]] = sizeS[i]
+  for (i = 0; i < sizeN.length; i++) {
+    sizeObject[sizeN[i]] = sizeS[i];
   }
   const claves = Object.keys(sizeObject);
   const clotheSizes = claves.map(async (e) => {
     if (sizeObject[e] > 0) {
-      const currentSize = await Size.create({ size: e, stock: sizeObject[e], clotheId: clothe.id });
+      const currentSize = await Size.create({
+        size: e,
+        stock: sizeObject[e],
+        clotheId: clothe.id,
+      });
       await clothe.addSize(currentSize.id);
     }
   });
   await Promise.all(clotheSizes);
-  console.log('se cargaron los talles')
+  console.log("se cargaron los talles");
 };
 
 const setMedia = async (mediaArray, clothe) => {
@@ -134,17 +139,17 @@ const setMedia = async (mediaArray, clothe) => {
     await clothe.addMedia(newMedia.id);
   });
   await Promise.all(clotheMedia);
-  console.log('se cargaron las imagenes')
+  console.log("se cargaron las imagenes");
 };
 
 // Auth0
 const jwtAuthz = require("express-jwt-authz");
 // const checkScopes = (permissions) => jwtAuthz(permissions);checkScopes(['write:admin'])
 
-router.post("/",async (req, res) => {
-  console.log('esto llego')
-  console.log(req.body)
-  console.log(req.files)
+router.post("/", async (req, res) => {
+  console.log("esto llego");
+  console.log(req.body);
+  console.log(req.files);
   try {
     const {
       body: { categories, type, sizeName, sizeStock },
@@ -158,7 +163,7 @@ router.post("/",async (req, res) => {
         await setCategories(categories, newClothe),
         await setMedia(files, newClothe),
       ]);
-      console.log('se creo la prenda')
+      console.log("se creo la prenda");
       return res.json(responseMessage(SUCCESS, newClothe));
     } else {
       return res.json(

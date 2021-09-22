@@ -75,7 +75,7 @@ router.get("/", async (req, res) => {
         attributes: ["id", "name", "email"],
         include: {
           model: Order,
-          attributes: ["id", "state", "total", "payment", "direction"],
+          attributes: ["id", "state", "total", "payment", "direction", "updatedAt"],
           through: { attributes: [] },
           include: {
             model: Clothe,

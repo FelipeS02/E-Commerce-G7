@@ -9,17 +9,8 @@ const {
 const { dataBase, categorySet } = require("../../DataBase.js");
 
 const validateReq = (data, files) => {
-  const {
-    name,
-    price,
-    color,
-    stock,
-    genre,
-    categories,
-    sizes,
-    type,
-    detail,
-  } = data;
+  const { name, price, color, stock, genre, categories, sizes, type, detail } =
+    data;
   if (
     (typeof name === "string" &&
       name !== "" &&
@@ -60,7 +51,11 @@ const setSizes = async (sizeObject, clothe) => {
   const claves = Object.keys(sizeObject);
   const clotheSizes = claves.map(async (e) => {
     if (sizeObject[e] > 0) {
-      const currentSize = await Size.create({ size: e, stock: sizeObject[e], clotheId: clothe.id });
+      const currentSize = await Size.create({
+        size: e,
+        stock: sizeObject[e],
+        clotheId: clothe.id,
+      });
       await clothe.addSize(currentSize.id);
     }
   });
