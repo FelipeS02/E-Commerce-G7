@@ -3,12 +3,15 @@ import {
   GET_CART_SUCCESS,
   GET_CART_LOADING,
   PAYMENT_SUCCESS,
+  PAYMENT_FAIL,
+  PAYMENT_LOADING,
 } from "../constants/productConstants";
 const initialState = {
   carItems: {},
   totalItems: 0,
   carTotalAmount: 0,
   paymentSuccess: false,
+  loadingPayment: false,
 };
 function cartReducer(state = initialState, action) {
   switch (action.type) {
@@ -31,8 +34,16 @@ function cartReducer(state = initialState, action) {
         totalItems: 0,
         carTotalAmount: 0,
         paymentSuccess: true,
+        loadingPayment: false,
       };
     }
+    case PAYMENT_LOADING: {
+      return {
+        ...state,
+        loadingPayment: action.payload,
+      };
+    }
+
     default:
       return state;
   }

@@ -30,7 +30,7 @@ const NavBar = () => {
       }
     };
     getUserMetadata();
-  }, [getAccessTokenSilently, user]);
+  }, [getAccessTokenSilently, user, dispatch]);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -58,9 +58,6 @@ const NavBar = () => {
               <Nav.Link as={Link} to="/search/genre/Femenino">
                 Mujer
               </Nav.Link>
-              <Nav.Link as={Link} to="/Ofertas">
-                Ofertas
-              </Nav.Link>
             </Nav>
           </Container>
           <Container>
@@ -87,24 +84,23 @@ const NavBar = () => {
                 }
                 id="nav-dropdown"
               >
-                {isAuthenticated && (
+                {isAuthenticated ? (
                   <>
                     <NavDropdown.Item
                       eventKey="4.1"
                       as={Link}
                       to="/user/userProfile"
                     >
-                      Perfil
+                      Mi Perfil
                     </NavDropdown.Item>
                     <NavDropdown.Item eventKey="4.2">
                       Mis pedidos
                     </NavDropdown.Item>
-                    <NavDropdown.Item eventKey="4.3">
-                      Lista de deseos
-                    </NavDropdown.Item>
-
-                    <NavDropdown.Item eventKey="4.4"></NavDropdown.Item>
                   </>
+                ) : (
+                  <NavDropdown.Item eventKey="4.4">
+                    Inicia sesión para ver opciones
+                  </NavDropdown.Item>
                 )}
               </NavDropdown>
               {userInfo && userInfo.isAdmin && (
