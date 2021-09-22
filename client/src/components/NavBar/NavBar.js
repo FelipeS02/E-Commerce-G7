@@ -6,7 +6,10 @@ import { Link } from "react-router-dom";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
 import { useAuth0 } from "@auth0/auth0-react";
 import SearchBar from "../SearchBar/SearchBar";
-import Logo from "./logo.png"
+import Logo from "./logo.png";
+
+// Translation
+import {useTranslation} from "react-i18next";
 
 import {
   addingUserToDB,
@@ -15,11 +18,15 @@ import {
 } from "../../actions/authActions.js";
 import { useDispatch, useSelector } from "react-redux";
 import Cart from "../Cart/Cart";
+
 const NavBar = () => {
   const dispatch = useDispatch();
   const { user, isAuthenticated, getAccessTokenSilently } = useAuth0();
   const userState = useSelector((state) => state.userState);
   const { userInfo } = userState;
+
+  // Translation
+  const [t, i18n] = useTranslation("global");
 
   useEffect(() => {
     const getUserMetadata = async () => {
@@ -32,7 +39,7 @@ const NavBar = () => {
       }
     };
     getUserMetadata();
-  }, [getAccessTokenSilently, user]);
+  }, [getAccessTokenSilently, user, dispatch]);
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -43,13 +50,13 @@ const NavBar = () => {
     <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
       <Container>
         <Navbar.Brand as={Link} to="/">
-            <img
-              src={Logo}
-              width="30"
-              height="30"
-              className="d-inline-block align-top"
-              alt="Logo"
-            />
+          <img
+            src={Logo}
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+            alt="Logo"
+          />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
@@ -61,13 +68,10 @@ const NavBar = () => {
           <Container>
             <Nav className="justify-content-center align-content-center">
               <Nav.Link as={Link} to="/search/genre/Masculino">
-                Hombre
+                {t("NavBar.Hombre")}
               </Nav.Link>
               <Nav.Link as={Link} to="/search/genre/Femenino">
-                Mujer
-              </Nav.Link>
-              <Nav.Link as={Link} to="/Ofertas">
-                Ofertas
+                {t("NavBar.Mujer")}
               </Nav.Link>
             </Nav>
           </Container>
@@ -95,28 +99,27 @@ const NavBar = () => {
                 }
                 id="nav-dropdown"
               >
-                {isAuthenticated && (
+                {isAuthenticated ? (
                   <>
                     <NavDropdown.Item
                       eventKey="4.1"
                       as={Link}
                       to="/user/userProfile"
                     >
-                      Perfil
+                      {t("NavBar.Perfil")}
                     </NavDropdown.Item>
-                    <NavDropdown.Item 
-                    eventKey="4.2"
-                    as={Link}
-                      to="/user/userProfile/orderHistory"
-                    >
-                      Mis pedidos
+                    <NavDropdown.Item eventKey="4.2">
+                      {t("NavBar.Mis-Pedidos")}
                     </NavDropdown.Item>
                     <NavDropdown.Item eventKey="4.3">
-                      Lista de deseos
+                      {t("NavBar.Deseos")}
                     </NavDropdown.Item>
-
                     <NavDropdown.Item eventKey="4.4"></NavDropdown.Item>
                   </>
+                ) : (
+                  <NavDropdown.Item eventKey="4.4">
+                    Inicia sesión para ver opciones
+                  </NavDropdown.Item>
                 )}
               </NavDropdown>
               {userInfo && userInfo.isAdmin && (
@@ -124,12 +127,12 @@ const NavBar = () => {
                   <NavDropdown.Item as={Link} to="/admin" eventKey="4.1">
                     Panel
                   </NavDropdown.Item>
-                  <NavDropdown.Item eventKey="4.2">Productos</NavDropdown.Item>
-                  <NavDropdown.Item eventKey="4.3">Ordenes</NavDropdown.Item>
-                  <NavDropdown.Item eventKey="4.4">Usuarios</NavDropdown.Item>
                 </NavDropdown>
               )}
               {!isAuthenticated ? <Login /> : <LogOut />}
+
+              <Nav.Link onClick={() => i18n.changeLanguage("es")}>ES</Nav.Link>
+              <Nav.Link onClick={() => i18n.changeLanguage("en")}>EN</Nav.Link>
             </Nav>
           </Container>
         </Navbar.Collapse>
