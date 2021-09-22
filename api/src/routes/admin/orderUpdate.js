@@ -13,15 +13,8 @@ const checkScopes = (permissions) => jwtAuthz(permissions);
 
 router.get("/:orderId", async (req, res) => {
   try {
-    // const {
-    //   params: { orderId },
-    //   query: { state },
-    // } = req;
-    console.log('llego al back')
     const {orderId} = req.params
     const {stateOrder} = req.query
-    console.log(orderId)
-    console.log(stateOrder)
     const validStates = [
       "CARRITO",
       "CONFIRMADO",
