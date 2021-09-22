@@ -1,0 +1,57 @@
+{
+	"NavBar": {
+		"Ofertas": "Offers",
+		"Hombre": "Men",
+		"Mujer": "Women",
+		"Deseos": "Wish list",
+		"Perfil": "Profile",
+		"Mis-Pedidos": "My Orders"
+	},
+
+	"Login": {
+		"Ingresar": "Login",
+		"Salir": "Logout"
+	},
+
+	"Results": {
+		"Sin-Resultados": "No results were found",
+		"Resultados": "Results"
+	},
+
+	"Buscar": {
+		"Buscar": "Search"
+	},
+
+	"SideBarFilter": {
+		"Categorias": "Categories",
+		"Tipos": "Types",
+		"Talles": "Sizes",
+		"Genero": "Genre"
+	},
+
+	"Loading": {
+		"Loading": "Loading"
+	},
+
+	"Carrito": {
+		"Agregar": "Add to cart",
+		"Sin-Productos": "No products",
+		"Ver-Carrito": "Go to cart"
+	},
+
+	"Talle": {
+		"Talle": "Size"
+	},
+
+	"Footer": {
+		"Productos": "Products",
+		"Ofertas": "Offers",
+		"Nuevos-Productos": "New Products",
+		"Mas-Vendido": "Best seller",
+		"Informacion": "Information",
+		"Privacidad": "Notice of Privacy",
+		"Tyc": "Terms and Conditions",
+		"Preguntas-F": "Frequent questions",
+		"Contactanos": "Contact Us"
+	}
+}

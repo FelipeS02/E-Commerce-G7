@@ -13,7 +13,11 @@ import { FaShoppingCart, FaRegTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrder, removeFromCart } from "../../actions/cartAccions";
 import { BASE_IMG_URL } from "../../constants/productConstants";
+import {useTranslation} from "react-i18next";
+
+
 const Cart = () => {
+  const [t, i18n] = useTranslation("global");
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.cartState);
   const { totalItems, carItems, carTotalAmount, orderId, paymentSuccess } =
@@ -37,7 +41,7 @@ const Cart = () => {
       >
         {totalItems === 0 ? (
           !window.localStorage.getItem("henryShopG7") ? (
-            <h6>No hay productos en el carrito.</h6>
+            <h6>{t("Carrito.Sin-Productos")}</h6>
           ) : (
             <h6>Hay productos en el carrito local.</h6>
           )
@@ -77,7 +81,7 @@ const Cart = () => {
         <Popover.Content>
           <h6>Total: ${carTotalAmount}</h6>
           <Button className="my" as={Link} to="/cart">
-            Ver Carrito
+            {t("Carrito.Ver-Carrito")}
           </Button>
         </Popover.Content>
       )}
