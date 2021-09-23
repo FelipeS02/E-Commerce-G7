@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import FilterGroup from "./FilterGroup";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const SideBarFilter = (props) => {
   const productCategories = useSelector((state) => state.productCategories);
@@ -30,8 +30,18 @@ const SideBarFilter = (props) => {
         items={categories.types}
         active={type}
       />
-      <FilterGroup title={t("SideBarFilter.Talles")} type="size" items={sizes} active={size} />
-      <FilterGroup title={t("SideBarFilter.Genero")} type="genre" items={genres} active={genre} />
+      <FilterGroup
+        title={t("SideBarFilter.Talles")}
+        type="size"
+        items={sizes}
+        active={size}
+      />
+      <FilterGroup
+        title={t("SideBarFilter.Genero")}
+        type="genre"
+        items={genres}
+        active={genre}
+      />
     </>
   );
 };

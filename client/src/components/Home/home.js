@@ -11,7 +11,7 @@ import PaginationC from "../Pagination/PaginationC";
 import CardP from "../ProductCard/CardP";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
 import Loading from "../Loading/Loading";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const Home = (props) => {
   const dispatch = useDispatch();
@@ -52,7 +52,7 @@ const Home = (props) => {
     <div>
       <Carousel variant="dark">
         {imgUrl.map((item, index) => (
-          <Carousel.Item interval={1000} key={index}>
+          <Carousel.Item interval={5000} key={index}>
             <img className="d-block w-100" src={item} alt={index} />
           </Carousel.Item>
         ))}

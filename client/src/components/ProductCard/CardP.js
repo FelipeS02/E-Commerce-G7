@@ -65,7 +65,7 @@ const CardP = (props) => {
         </Card.Title>
         <Card.Text>${price}</Card.Text>
 
-        <Talle sizes={sizes} talleHandler={talleHandler}/>
+        <Talle sizes={sizes} talleHandler={talleHandler} />
       </Card.Body>
       <Card.Footer>
         <AddToCar

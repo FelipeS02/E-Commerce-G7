@@ -3,8 +3,7 @@ import {
   ORDERS_FAIL,
   ORDER_STATE_UPDATE,
   GET_ALL_ORDERS,
-  ORDER_REVIEW
-
+  ORDER_REVIEW,
 } from "../constants/ordersConstants.js";
 
 const initialState = { orders: [] };
@@ -14,7 +13,7 @@ export default function orderReducer(state = initialState, action) {
     case GET_ALL_ORDERS:
       return {
         ...state,
-        orders: action.payload
+        orders: action.payload,
       };
     case GET_ORDERS:
       return {
@@ -37,7 +36,7 @@ export default function orderReducer(state = initialState, action) {
 
     case ORDER_REVIEW:
       return {
-        ...state
+        ...state,
       };
 
     default:

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { useDispatch } from "react-redux";
-import "./FilterGroup.css"
+import "./FilterGroup.css";
 import { setFilters } from "../../actions/ProductActions";
 const FilterGroup = (props) => {
   const dispatch = useDispatch();
