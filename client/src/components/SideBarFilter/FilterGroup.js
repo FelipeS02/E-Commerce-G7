@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { useDispatch } from "react-redux";
+import "./FilterGroup.css"
 import { setFilters } from "../../actions/ProductActions";
 const FilterGroup = (props) => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ const FilterGroup = (props) => {
             id={item}
             className={active === item ? "active" : ""}
           >
-            {item}
+            {item[0].toUpperCase() + item.substring(1)}
           </ListGroup.Item>
         ))}
       </ListGroup>

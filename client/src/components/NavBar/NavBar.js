@@ -50,7 +50,13 @@ const NavBar = () => {
     }
   }, [dispatch, isAuthenticated]);
   return (
-    <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
+    <Navbar
+      bg="dark"
+      variant="dark"
+      sticky="top"
+      expand="lg"
+      style={{ boxShadow: "1px 3px 6px 1px rgba(0, 0, 0, 0.6)" }}
+    >
       <Container>
         <Navbar.Brand as={Link} to="/">
           <img

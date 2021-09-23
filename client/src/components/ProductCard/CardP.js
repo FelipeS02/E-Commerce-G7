@@ -50,7 +50,13 @@ const CardP = (props) => {
     });
   };
   return (
-    <Card style={{ width: "20rem" }} className="my-4">
+    <Card
+      style={{
+        width: "20rem",
+        boxShadow: "0px 0px 6px 2px rgba(0, 0, 0, 0.5)",
+      }}
+      className="my-4"
+    >
       <Card.Img variant="top" src={`${BASE_IMG_URL}/uploads/${picture}`} />
 
       <Card.Body className="justify-content-center card text-center">
@@ -59,7 +65,7 @@ const CardP = (props) => {
         </Card.Title>
         <Card.Text>${price}</Card.Text>
 
-        <Talle sizes={sizes} talleHandler={talleHandler} />
+        <Talle sizes={sizes} talleHandler={talleHandler}/>
       </Card.Body>
       <Card.Footer>
         <AddToCar
