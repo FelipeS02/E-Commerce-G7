@@ -202,7 +202,7 @@ function AdminPanel(){
                 title: t("CrearPrenda.Hecho"),
                 text: t("CrearPrenda.Exitoso"),
                 icon: "success",
-              });
+            });
             setInput({
                 name: '',
                 price: 0,
@@ -220,13 +220,12 @@ function AdminPanel(){
             title: t("CrearPrenda.Atencion"),
             text: t("CrearPrenda.Faltan"),
             icon: "error",
-          });
+        });
     }
 
     return (
-        <div style={{display: 'flexbox', width: "100%", margin: '1.5rem' }} >
-            <div style={{backgroundColor: '#E4ECE8' }}>
-                <h1 style={{marginBottom: '3rem'}}>{t("CrearPrenda.Titulo")}</h1>
+        <div style={{display: 'flexbox', width: "70%", margin: '2.5%' }} >
+            <div style={{backgroundColor: '#D3D7D2' }}>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group  className="mb-3">
                         <Form.Label>{t("CrearPrenda.Nombre")}:</Form.Label>

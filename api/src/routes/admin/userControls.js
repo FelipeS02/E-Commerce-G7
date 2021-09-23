@@ -10,24 +10,24 @@ const {
 const jwtAuthz = require("express-jwt-authz");
 const checkScopes = (permissions) => jwtAuthz(permissions);
 
-<<<<<<< HEAD
-var ManagementClient = require("auth0").ManagementClient;
-var AuthenticationClient = require("auth0").AuthenticationClient;
 
-var auth0 = new ManagementClient({
-  domain: "dev-1ik4n80w.us.auth0.com",
-  clientId: "Gq8GYRK0GoSXddVzrJrV2gsRPevzwmEG",
-  clientSecret:
-    "3KJs37MBspryPS_offY-GsWCRkQRWOESPYsqnzGlGM2JhNpYtOL4ULKF_1A4tstS",
-  scope: "read:users update:users",
-});
+// var ManagementClient = require("auth0").ManagementClient;
+// var AuthenticationClient = require("auth0").AuthenticationClient;
 
-var authenticationClient = new AuthenticationClient({
-  domain: "dev-1ik4n80w.us.auth0.com",
-  clientId: "Gq8GYRK0GoSXddVzrJrV2gsRPevzwmEG",
-  clientSecret:
-    "3KJs37MBspryPS_offY-GsWCRkQRWOESPYsqnzGlGM2JhNpYtOL4ULKF_1A4tstS",
-=======
+// var auth0 = new ManagementClient({
+//   domain: "dev-1ik4n80w.us.auth0.com",
+//   clientId: "Gq8GYRK0GoSXddVzrJrV2gsRPevzwmEG",
+//   clientSecret:
+//     "3KJs37MBspryPS_offY-GsWCRkQRWOESPYsqnzGlGM2JhNpYtOL4ULKF_1A4tstS",
+//   scope: "read:users update:users",
+// });
+
+// var authenticationClient = new AuthenticationClient({
+//   domain: "dev-1ik4n80w.us.auth0.com",
+//   clientId: "Gq8GYRK0GoSXddVzrJrV2gsRPevzwmEG",
+//   clientSecret:
+//     "3KJs37MBspryPS_offY-GsWCRkQRWOESPYsqnzGlGM2JhNpYtOL4ULKF_1A4tstS",
+
 let ManagementClient = require("auth0").ManagementClient;
 let AuthenticationClient = require("auth0").AuthenticationClient;
 
@@ -42,7 +42,7 @@ let authenticationClient = new AuthenticationClient({
   domain: AUTH0_DOMAIN,
   clientId: AUTH0_CLIENTID,
   clientSecret: AUTH0_CLIENTSECRET,
->>>>>>> main
+
   scope: "read:users update:users",
 });
 

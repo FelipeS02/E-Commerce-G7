@@ -135,8 +135,8 @@ export default function EditClothe(props){
                 swal("¡Hecho! Tu producto ha sido eliminado");
                 history.push("/admin");
             } else {
-              swal("Tu producto NO ha sido borrado");
-              history.push("/admin");
+                swal("Tu producto NO ha sido borrado");
+                history.push("/admin");
             }
         });
 
@@ -243,7 +243,7 @@ export default function EditClothe(props){
             title: "¡Hecho!",
             text: "Tu producto se ha actualizado de manera correcta.",
             icon: "success",
-          });
+        });
         setInput({
             name: '',
             price: 0,
@@ -260,159 +260,160 @@ export default function EditClothe(props){
     }
 	
     return (
-        <div style={{display: 'flexbox', width: "100%", margin: '1.5rem' }}>
-            <button onClick={getDetail}></button>
-            <h1 style={{marginBottom: '3rem'}}>Editar Producto</h1>
-            <Form onSubmit={handleSubmit}>
-                <Form.Group className="mb-3">
-                    <Form.Label>Nombre:</Form.Label>
-                    <Form.Control
-                        type="text"
-                        name='name'
-                        value={input.name}
-                        onChange={handleInput}
-                        />
-                    {/* {errors.name && (<p className="danger">{errors.name}</p>)} */}
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Precio:</Form.Label>
-                    <Form.Control
-                        type="number"
-                        name='price'
-                        value={input.price}
-                        onChange={handleInput}
-                        />
-                    {/* {errors.price && (<p className="danger">{errors.price}</p>)} */}
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Color:</Form.Label>
-                    <Form.Control
-                        type="text"
-                        name='color'
-                        value={input.color}
-                        onChange={handleInput}
-                        />
-                    {/* {errors.color && (<p className="danger">{errors.color}</p>)} */}
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Género:</Form.Label>
-                        <div>
-                            <select style={{padding: '0.6rem', }} name='genre' onChange={handleInput} default={input.genre}>
-                                <option></option>
-                                {genres.map((g, i) => {
-                                    if(g===input.genre)return <option value={g} key={i} selected>{g}</option>;
-                                    return <option value={g} key={i}>{g}</option>})}
-                            </select>
-                            {/* {errors.genre && (<p className="danger">{errors.genre}</p>)} */}
-                        </div>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Detalles:</Form.Label>
-                    <Form.Control as="textarea" rows={3}
-                        type='text'
-                        name='detail'
-                        value={input.detail}
-                        onChange={handleInput}
-                        />
-                    {/* {errors.detail && (<p className="danger">{errors.detail}</p>)} */}
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Tipos:</Form.Label>
-                        <div>
-                            <select style={{padding: '0.6rem', }} name='type' onChange={handleInput} defaultValue={input.type}>
-                                <option></option>
-                                {arrayTypes?.map((type, i) => {
-                                    if(type===input.type) return <option value={type} key={i} selected>{type}</option>
-                                    return <option value={type} key={i}>{type}</option>})}
-                            </select>
-                            {/* {errors.type && (<p className="danger">{errors.type}</p>)} */}
-                        </div>
-                </Form.Group>
-                <Form.Group className="mb-3">
-                    <Form.Label>Talles:</Form.Label>
-                    {/* {errors.sizeStock && (<p className="danger">{errors.sizeStock}</p>)} */}
-                    {input.sizeStock.map((talle, idx)=>(
-                        <Form.Group className="mb-3" key={`talle${idx}`}>
-                            <select style={{padding: '0.6rem', marginRight: '1rem' }} value={talle.name} onChange={handleSize(idx)}>
-                                <option></option>
-                                {sizes.map((size, i) => (
-                                    <option value={size} key={i}>{size}</option>
-                                ))}
-                            </select>
-                            <input style={{padding: '.37rem', width: '7rem', marginRight: '1rem'}}
-                            type='number'
-                            value={talle.stock}
-                            onChange={handleStock(idx)}
+        <div style={{display: 'flexbox', width: "70%", margin: '2.5%' }} >
+            <div style={{backgroundColor: '#D3D7D2' }}>
+                <button onClick={getDetail}></button>
+                <Form onSubmit={handleSubmit}>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Nombre:</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name='name'
+                            value={input.name}
+                            onChange={handleInput}
                             />
-                            <Button variant="dark"
-                            type='button'
-                            onClick={handleRemoveSizeStock(idx)}
-                            >-</Button>
-                            {/* {errors[`size${idx}`] && (<p className="danger">{errors[`size${idx}`]}</p>)} */}
-                            {/* {errors[`stock${idx}`]&& (<p className="danger">{errors[`stock${idx}`]}</p>)} */}
-                        </Form.Group>
-                    ))}
-                    <Button variant="dark"
-                    type='button'
-                    onClick={handleAddSizeStock}
-                    >Agregar talle</Button>
-                </Form.Group>  
-                <Form.Group className="mb-3">
-                    <Form.Label >Categorias:</Form.Label>
-                    {category?.map((cat) =>(
-                            <span style={{padding: '1rem'}} key = {cat}>
-                                <label >{cat}</label>
-                            </span>
-                        ))}
-                    <Form.Group className="mb-3" style={{padding: '.5rem'}}>
-                        {arrayCategories?.map((cat) =>(
-                            <span style={{padding: '1rem'}} key = {cat}>
-                                <input
-                                type="checkbox" 
-                                name='categories'
-                                value={cat}
-                                onChange={handleCheckBox}
-                                />
-                                <label >{cat}</label>
-                            </span>
-                        ))}
-                        {/* {errors.categories&& (<p className="danger">{errors.categories}</p>)} */}
+                        {/* {errors.name && (<p className="danger">{errors.name}</p>)} */}
                     </Form.Group>
                     <Form.Group className="mb-3">
-                    {input.newCategories?.map((cat, idx)=>(
-                        <Form.Group className="mb-3" key={`cat${idx}`}>
-                        <Form.Group className="mb-3" style={{ display: 'flex'}}>
-                            <Form.Control
-                            style={{ width: '7rem', marginRight: '1rem'}}
-                            autoComplete='off'
-                            className={errors.newCategory && 'danger'}
-                            type='text'
-                            name='newCategorie'
-                            value={cat.name}
-                            onChange={handleNewCategory(idx)}
-                            // checked={handleChecked(cat, input.categories)}
+                        <Form.Label>Precio:</Form.Label>
+                        <Form.Control
+                            type="number"
+                            name='price'
+                            value={input.price}
+                            onChange={handleInput}
                             />
-                            <Button variant="dark"
-                            type='button'
-                            onClick={handleRemoveNewCategory(idx)}
-                            >-</Button>
+                        {/* {errors.price && (<p className="danger">{errors.price}</p>)} */}
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Color:</Form.Label>
+                        <Form.Control
+                            type="text"
+                            name='color'
+                            value={input.color}
+                            onChange={handleInput}
+                            />
+                        {/* {errors.color && (<p className="danger">{errors.color}</p>)} */}
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Género:</Form.Label>
+                            <div>
+                                <select style={{padding: '0.6rem', }} name='genre' onChange={handleInput} default={input.genre}>
+                                    <option></option>
+                                    {genres.map((g, i) => {
+                                        if(g===input.genre)return <option value={g} key={i} selected>{g}</option>;
+                                        return <option value={g} key={i}>{g}</option>})}
+                                </select>
+                                {/* {errors.genre && (<p className="danger">{errors.genre}</p>)} */}
+                            </div>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Detalles:</Form.Label>
+                        <Form.Control as="textarea" rows={3}
+                            type='text'
+                            name='detail'
+                            value={input.detail}
+                            onChange={handleInput}
+                            />
+                        {/* {errors.detail && (<p className="danger">{errors.detail}</p>)} */}
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Tipos:</Form.Label>
+                            <div>
+                                <select style={{padding: '0.6rem', }} name='type' onChange={handleInput} defaultValue={input.type}>
+                                    <option></option>
+                                    {arrayTypes?.map((type, i) => {
+                                        if(type===input.type) return <option value={type} key={i} selected>{type}</option>
+                                        return <option value={type} key={i}>{type}</option>})}
+                                </select>
+                                {/* {errors.type && (<p className="danger">{errors.type}</p>)} */}
+                            </div>
+                    </Form.Group>
+                    <Form.Group className="mb-3">
+                        <Form.Label>Talles:</Form.Label>
+                        {/* {errors.sizeStock && (<p className="danger">{errors.sizeStock}</p>)} */}
+                        {input.sizeStock.map((talle, idx)=>(
+                            <Form.Group className="mb-3" key={`talle${idx}`}>
+                                <select style={{padding: '0.6rem', marginRight: '1rem' }} value={talle.name} onChange={handleSize(idx)}>
+                                    <option></option>
+                                    {sizes.map((size, i) => (
+                                        <option value={size} key={i}>{size}</option>
+                                    ))}
+                                </select>
+                                <input style={{padding: '.37rem', width: '7rem', marginRight: '1rem'}}
+                                type='number'
+                                value={talle.stock}
+                                onChange={handleStock(idx)}
+                                />
+                                <Button variant="dark"
+                                type='button'
+                                onClick={handleRemoveSizeStock(idx)}
+                                >-</Button>
+                                {/* {errors[`size${idx}`] && (<p className="danger">{errors[`size${idx}`]}</p>)} */}
+                                {/* {errors[`stock${idx}`]&& (<p className="danger">{errors[`stock${idx}`]}</p>)} */}
+                            </Form.Group>
+                        ))}
+                        <Button variant="dark"
+                        type='button'
+                        onClick={handleAddSizeStock}
+                        >Agregar talle</Button>
+                    </Form.Group>  
+                    <Form.Group className="mb-3">
+                        <Form.Label >Categorias:</Form.Label>
+                        {category?.map((cat) =>(
+                                <span style={{padding: '1rem'}} key = {cat}>
+                                    <label >{cat}</label>
+                                </span>
+                            ))}
+                        <Form.Group className="mb-3" style={{padding: '.5rem'}}>
+                            {arrayCategories?.map((cat) =>(
+                                <span style={{padding: '1rem'}} key = {cat}>
+                                    <input
+                                    type="checkbox" 
+                                    name='categories'
+                                    value={cat}
+                                    onChange={handleCheckBox}
+                                    />
+                                    <label >{cat}</label>
+                                </span>
+                            ))}
+                            {/* {errors.categories&& (<p className="danger">{errors.categories}</p>)} */}
                         </Form.Group>
-                        {/* {errors[`newCategory${idx}`] && (<p className="danger">{errors[`newCategory${idx}`]}</p>)} */}
-                        </Form.Group>
-                    ))}
-                    <Button variant="dark"
-                    type='button'
-                    onClick={handleAddNewCategory}
-                    >Agregar nueva categoria</Button>
-                </Form.Group>
-                </Form.Group>             
-                <Button variant="dark" type='submit'>SUBMIT</Button>
-                <Link style={{marginLeft: '2rem'}} to="/admin">
-                    <Button variant="danger" type='submit'>CANCEL</Button>
-                </Link>
+                        <Form.Group className="mb-3">
+                        {input.newCategories?.map((cat, idx)=>(
+                            <Form.Group className="mb-3" key={`cat${idx}`}>
+                            <Form.Group className="mb-3" style={{ display: 'flex'}}>
+                                <Form.Control
+                                style={{ width: '7rem', marginRight: '1rem'}}
+                                autoComplete='off'
+                                className={errors.newCategory && 'danger'}
+                                type='text'
+                                name='newCategorie'
+                                value={cat.name}
+                                onChange={handleNewCategory(idx)}
+                                // checked={handleChecked(cat, input.categories)}
+                                />
+                                <Button variant="dark"
+                                type='button'
+                                onClick={handleRemoveNewCategory(idx)}
+                                >-</Button>
+                            </Form.Group>
+                            {/* {errors[`newCategory${idx}`] && (<p className="danger">{errors[`newCategory${idx}`]}</p>)} */}
+                            </Form.Group>
+                        ))}
+                        <Button variant="dark"
+                        type='button'
+                        onClick={handleAddNewCategory}
+                        >Agregar nueva categoria</Button>
+                    </Form.Group>
+                    </Form.Group>             
+                    <Button variant="dark" type='submit'>SUBMIT</Button>
+                    <Link style={{marginLeft: '2rem'}} to="/admin">
+                        <Button variant="danger" type='submit'>CANCEL</Button>
+                    </Link>
 
-                <Button variant="danger" onClick={deletePrenda} style={{marginTop: '2rem', display: 'block'}}>Eliminar Prenda</Button>
-            </Form>
+                    <Button variant="danger" onClick={deletePrenda} style={{marginTop: '2rem', display: 'block'}}>Eliminar Prenda</Button>
+                </Form>
+            </div>
         </div>
     )
 }

@@ -4,6 +4,7 @@ import {
   GET_ORDERS,
   ORDERS_FAIL,
   ORDER_STATE_UPDATE,
+  GET_ALL_ORDERS,
   ORDER_REVIEW
 } from "../constants/ordersConstants.js";
 
@@ -11,7 +12,7 @@ export const getAllOrders = () => {
 	return async function(dispatch){
 		const orders = await axios.get("/clothe/users-orders?userId=&orderStatus=")
 		return dispatch({
-			type: GET_ORDERS,
+			type: GET_ALL_ORDERS,
 			payload: orders.data
 		})
 	}
