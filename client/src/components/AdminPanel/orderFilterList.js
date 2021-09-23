@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import MaterialTable, {MTableToolbar} from "material-table";
 import {  Save, AddBox, ArrowDownward, Check, ChevronLeft, Search, ChevronRight, Clear, DeleteOutline, Edit, FilterList, FirstPage, LastPage, Remove, SaveAlt, ViewColumn } from '@material-ui/icons';
 import { getAllOrders, orderStateUpdate } from "../../actions/orderActions";
+import { withTranslation } from "react-i18next";
 
 
 const tableIcons = {
@@ -32,6 +33,7 @@ class ListDetail extends Component {
     }
 
     render() {
+        const {t} = this.props;
         return (
             <div style={{ width: "70%", margin: "2.5%"}}>
                 <MaterialTable
@@ -47,15 +49,15 @@ class ListDetail extends Component {
                 }}
                 icons={tableIcons}
                 columns={[
-                    { title: 'Numero de orden', field: 'id',  filtering: false },
-                    { title: 'Estado de orden', field: 'state', lookup: { 'CARRITO': 'EN PROCESO', "CONFIRMADO": "CONFIRMADO", "DESPACHADO": "DESPACHADO", "CANCELADO": "CANCELADO", "ENTREGADO": "ENTREGADO"} },
-                    { title: 'Total compra ($)', field: 'total', type: 'numeric',  filtering: false },
-                    { title: 'Ultima actualización', field: 'birthCity',  filtering: false },
+                    { title: t("ListaOrdenes.NumOrden"), field: 'id',  filtering: false },
+                    { title: t("ListaOrdenes.Estado"), field: 'state', lookup: { 'CARRITO': 'EN PROCESO', "CONFIRMADO": "CONFIRMADO", "DESPACHADO": "DESPACHADO", "CANCELADO": "CANCELADO", "ENTREGADO": "ENTREGADO"} },
+                    { title: t("ListaOrdenes.Total"), field: 'total', type: 'numeric',  filtering: false },
+                    { title: t("ListaOrdenes.UltAct"), field: 'birthCity',  filtering: false },
                 ]}
                 actions={[
                     {
                         icon: 'ShowTitle',
-                        tooltip: 'Cancelar Pedido',
+                        tooltip: t("ListaOrdenes.Cancelar"),
                         onClick: async (event, rowData) => {
                             await this.props.orderStateUpdate(rowData.id, 'CANCELADO')
                             this.props.getAllOrders()
@@ -63,7 +65,7 @@ class ListDetail extends Component {
                     },
                     {
                         icon: 'ShowTitle',
-                        tooltip: 'Despachar Pedido',
+                        tooltip: t("ListaOrdenes.Despachar"),
                         onClick: async (event, rowData) => {
                             await this.props.orderStateUpdate(rowData.id, 'DESPACHADO')
                             this.props.getAllOrders()
@@ -71,7 +73,7 @@ class ListDetail extends Component {
                     },
                     {
                         icon: 'ShowTitle',
-                        tooltip: 'Entregado',
+                        tooltip: t("ListaOrdenes.Entregado"),
                         onClick: async (event, rowData) => {
                             await this.props.orderStateUpdate(rowData.id, 'ENTREGADO')
                             this.props.getAllOrders()
@@ -79,7 +81,7 @@ class ListDetail extends Component {
                     }
                 ]}
                 data={this.props.Data}
-                title="Lista de ordenes"
+                title={t("ListaOrdenes.Titulo")}
                 detailPanel={rowData => {
                     return (
                         <table style={{ textAlign: 'center', margin: '1rem'}}>
@@ -120,4 +122,4 @@ function mapDispatchToProps(dispatch) {
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(withTranslation("global")(ListDetail));

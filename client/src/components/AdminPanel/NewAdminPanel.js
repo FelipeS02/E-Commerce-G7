@@ -4,8 +4,11 @@ import { useDispatch } from 'react-redux';
 import { getAllUsers } from "../../actions/authActions";
 import "./NewAdminPanel.css"
 import { Button } from "react-bootstrap"
+import {useTranslation} from "react-i18next";
 
 function NewAdminPanel(){
+
+    const [t, i18n] = useTranslation("global");
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(getAllUsers());

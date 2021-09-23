@@ -1,10 +1,14 @@
-
+import { compose } from 'redux';
 import React, { Component, forwardRef } from "react";
 import { connect } from "react-redux";
 import MaterialTable, {MTableToolbar} from "material-table";
 import {  Save, AddBox, ArrowDownward, Check, ChevronLeft, Search, ChevronRight, Clear, DeleteOutline, Edit, FilterList, FirstPage, LastPage, Remove, SaveAlt, ViewColumn } from '@material-ui/icons';
 import {getProductsAdmin} from "../../actions/ProductActions"
 import { Link } from "react-router-dom";
+
+import { withTranslation } from "react-i18next";
+
+
 
 
 const tableIcons = {
@@ -27,11 +31,13 @@ const tableIcons = {
     ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
+
 class ProductList extends Component {
     componentDidMount(){
         this.props.getProductsAdmin()
     }
     render() {
+        const {t} = this.props;
         return (
             <div style={{ width: "70%", margin: '2.5%' }}>
                 <MaterialTable
@@ -45,18 +51,18 @@ class ProductList extends Component {
                     icons={tableIcons}
                     columns={[
                         { title: 'Id', field: 'id' },
-                        { title: 'Nombre', field: 'name', },
-                        { title: 'Precio', field: 'price', type: 'numeric' },
+                        { title: t("ListaPrendas.Nombre"), field: 'name', },
+                        { title: t("ListaPrendas.Precio"), field: 'price', type: 'numeric' },
                     ]}
                     actions={[
                         rowData => ({
-                            icon: () => <Link to={`/admin/editClothe/${rowData.id}`}>Edit</Link>,
-                            tooltip: 'Editar producto',
+                            icon: () => <Link to={`/admin/editClothe/${rowData.id}`}>{t("ListaPrendas.Editar")}</Link>,
+                            tooltip: t("ListaPrendas.EditarProd"),
                             onClick: (rowData)
                         })
                     ]}
                     data={this.props.Products}
-                    title="Lista de productos"
+                    title={t("ListaPrendas.Titulo")}
                 />
             </div>
         );
@@ -69,9 +75,8 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch) {
     return {
-        getProductsAdmin: () => dispatch(getProductsAdmin())
+        getProductsAdmin: () => dispatch(getProductsAdmin()),
     };
 }
 
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProductList);
+export default connect(mapStateToProps,mapDispatchToProps)(withTranslation("global")(ProductList));

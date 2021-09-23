@@ -4,6 +4,9 @@ import LogOut from "../Login/LogOut";
 import { Navbar, Nav, Container, NavDropdown, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
+
+import { HiTranslate } from "react-icons/hi";
+
 import { useAuth0 } from "@auth0/auth0-react";
 import SearchBar from "../SearchBar/SearchBar";
 import Logo from "./logo.png";
@@ -47,7 +50,13 @@ const NavBar = () => {
     }
   }, [dispatch, isAuthenticated]);
   return (
-    <Navbar bg="dark" variant="dark" sticky="top" expand="lg">
+    <Navbar
+      bg="dark"
+      variant="dark"
+      sticky="top"
+      expand="lg"
+      style={{ boxShadow: "1px 3px 6px 1px rgba(0, 0, 0, 0.6)" }}
+    >
       <Container>
         <Navbar.Brand as={Link} to="/">
           <img
@@ -129,7 +138,11 @@ const NavBar = () => {
                     >
                       {t("NavBar.Perfil")}
                     </NavDropdown.Item>
-                    <NavDropdown.Item eventKey="4.2">
+                    <NavDropdown.Item 
+                    eventKey="4.2"
+                    as={Link}
+                    to="/user/userProfile/orderHistory"
+                    >
                       {t("NavBar.Mis-Pedidos")}
                     </NavDropdown.Item>
                     <NavDropdown.Item eventKey="4.3">
@@ -139,14 +152,28 @@ const NavBar = () => {
                   </>
                 ) : (
                   <NavDropdown.Item eventKey="4.4">
-                    Inicia sesión para ver opciones
+                    {t("NavBar.Inicia")}
                   </NavDropdown.Item>
                 )}
               </NavDropdown>
               {!isAuthenticated ? <Login /> : <LogOut />}
 
-              <Nav.Link onClick={() => i18n.changeLanguage("es")}>ES</Nav.Link>
-              <Nav.Link onClick={() => i18n.changeLanguage("en")}>EN</Nav.Link>
+              <Container>
+                <NavDropdown
+                  title={<HiTranslate color="white" size ="1.3rem" />}
+                >
+                  
+                <>
+                  <NavDropdown.Item onClick={() => i18n.changeLanguage("es")}>
+                    ES
+                  </NavDropdown.Item>   
+
+                  <NavDropdown.Item onClick={() => i18n.changeLanguage("en")}>
+                    EN
+                  </NavDropdown.Item>  
+                </>            
+                </NavDropdown>         
+              </Container>
             </Nav>
           </Container>
         </Navbar.Collapse>

@@ -6,6 +6,7 @@ import Loading from "../Loading/Loading";
 import Modal from 'react-bootstrap/Modal'
 import { Button, Container, Row, Col, Table } from "react-bootstrap";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Review from "../Review/Review.js";
 
 const OrderHistory = () => {
 
@@ -98,11 +99,12 @@ const OrderHistory = () => {
                     <Modal.Title>Detalle de la orden</Modal.Title>
                   </Modal.Header>
                   <Modal.Body>
-                    <Link to={`/search/details/${data.id}`}>{data.name}</Link>
+                    <Link  to={`/search/details/${data.id}`}>{data.name}</Link>
                     <div>Talle: {data.size}</div>
                     <div>Cantidad:{data.quantity}</div>
                     <div>Fecha de la compra: {data.date}</div>
                     <div>Hora de la compra: {data.time}</div>
+                    <Review  clotheId={data.id}  userId={id}/>
                   </Modal.Body>
                   <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>

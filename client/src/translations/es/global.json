@@ -1,12 +1,41 @@
 {
 	"NavBar": {
-		"Ofertas": "Ofertas",
 		"Hombre": "Hombre",
 		"Mujer": "Mujer",
 		"Deseos": "Lista de deseos",
 		"Perfil": "Perfil",
-		"Mis-Pedidos": "Mis Pedidos"
+		"Mis-Pedidos": "Mis Pedidos",
+		"Inicia": "Inicia sesion para ver opciones"
 	},
+
+	"Panel": {
+		"Titulo": "Panel de administrador",
+		"Crear": "Crear Prenda",
+		"Listado": "Listado de prendas",
+		"Ordenes": "Listado de ordenes",
+		"Usuarios": "Listado de usuarios"
+	},
+
+	"CrearPrenda": {
+		"Titulo": "Crear prenda",
+		"Nombre": "Nombre",
+		"Precio": "Precio",
+		"Color": "Color",
+		"Genero": "Genero",
+		"Detalles": "Detalles",
+		"Tipos": "Tipos",
+		"Talles": "Talles",
+		"Agregar-Talle": "Agregar talle",
+		"Categorias": "Categorias",
+		"Agregar-Categoria": "Agregar categorias",
+		"Confirmar": "CONFIRMAR",
+		"Cancelar": "Cancelar",
+		"Exitoso": "Tu producto ha sido creado correctamente.",
+		"Atencion": "¡Atención!",
+		"Faltan": "Faltan ítems para poder crear tu producto.",
+		"Hecho": "¡Hecho!"
+	},
+
 
 	"Login": {
 		"Ingresar": "Ingresar",
@@ -20,6 +49,25 @@
 
 	"Buscar": {
 		"Buscar": "Buscar"
+	},
+
+	"ListaPrendas": {
+		"Titulo": "Lista de productos",
+		"Editar": "Editar",
+		"Nombre": "Nombre",
+		"Precio": "Precio",
+		"EditarProd": "Editar Producto"
+	},
+
+	"ListaOrdenes": {
+		"Titulo": "Listado de ordenes",
+		"NumOrden": "Numero de orden",
+		"Estado": "Estado de orden",
+		"Total": "Total compra ($)",
+		"UltAct": "Ultima actualizacion",
+		"Cancelar": "Cancelar pedido",
+		"Despachar": "Despachar pedido",
+		"Entregado": "Entregado"
 	},
 
 	"SideBarFilter": {
@@ -39,6 +87,16 @@
 		"Ver-Carrito": "Ver carrito"
 	},
 
+	"CartScreen": {
+		"Titulo": "Carrito de Compras",
+		"Precio": "Precio",
+		"Talle": "Talle",
+		"Articulos": "Articulos",
+		"Total": "Total",
+		"Proceder": "Proceder a la compra",
+		"Continuar-Comprando": "Continuar Comprando"
+	},
+
 	"Talle": {
 		"Talle": "Talle"
 	},
@@ -50,7 +108,7 @@
 		"Mas-Vendido": "Lo mas vendido",
 		"Informacion": "Informacion",
 		"Privacidad": "Aviso de privacidad",
-		"Tyc": "Terminos y condiciones",
+		"TyC": "Terminos y condiciones",
 		"Preguntas-F": "Preguntas Frecuentes",
 		"Contactanos": "Contactanos"
 	}

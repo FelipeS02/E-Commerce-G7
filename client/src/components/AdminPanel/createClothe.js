@@ -5,9 +5,10 @@ import { validate } from './validateCreate'
 import { Form, Button } from "react-bootstrap"
 import { Link, useHistory } from "react-router-dom";
 import swal from 'sweetalert';
-
+import {useTranslation} from "react-i18next";
 
 function AdminPanel(){
+    const [t, i18n] = useTranslation("global");
     let history = useHistory();
     let sizes = ["XS", "S", "M", "L", "XL", "XXL"];
     let genres = ["Masculino", "Femenino", "Otro"]
@@ -198,8 +199,8 @@ function AdminPanel(){
             
             dispatch(createClothe(data));
             swal({
-                title: "¡Hecho!",
-                text: "Tu producto ha sido creado correctamente.",
+                title: t("CrearPrenda.Hecho"),
+                text: t("CrearPrenda.Exitoso"),
                 icon: "success",
             });
             setInput({
@@ -216,8 +217,8 @@ function AdminPanel(){
             })
             history.push("/admin");
         }else    swal({
-            title: "¡Atención!",
-            text: "Faltan ítems para poder crear tu producto.",
+            title: t("CrearPrenda.Atencion"),
+            text: t("CrearPrenda.Faltan"),
             icon: "error",
         });
     }
@@ -227,7 +228,7 @@ function AdminPanel(){
             <div style={{backgroundColor: '#D3D7D2' }}>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group  className="mb-3">
-                        <Form.Label>Nombre:</Form.Label>
+                        <Form.Label>{t("CrearPrenda.Nombre")}:</Form.Label>
                         <Form.Control
                             autoComplete='off'
                             className={errors.name && 'danger'}
@@ -239,7 +240,7 @@ function AdminPanel(){
                         {errors.name && (<p className="danger">{errors.name}</p>)}
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Precio:</Form.Label>
+                        <Form.Label>{t("CrearPrenda.Precio")}:</Form.Label>
                         <Form.Control
                             autoComplete='off'
                             className={errors.price && 'danger'}
@@ -251,7 +252,7 @@ function AdminPanel(){
                         {errors.price && (<p className="danger">{errors.price}</p>)}
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Color:</Form.Label>
+                        <Form.Label>{t("CrearPrenda.Color")}:</Form.Label>
                         <Form.Control
                             autoComplete='off'
                             className={errors.color && 'danger'}
@@ -263,7 +264,7 @@ function AdminPanel(){
                         {errors.color && (<p className="danger">{errors.color}</p>)}
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Género:</Form.Label>
+                        <Form.Label>{t("CrearPrenda.Genero")}:</Form.Label>
                             <div>
                                 <select className={errors.genre && 'danger'} style={{padding: '0.6rem', }} name='genre' onChange={handleInput}>
                                     <option></option>
@@ -275,7 +276,7 @@ function AdminPanel(){
                             </div>
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Detalles:</Form.Label>
+                        <Form.Label>{t("CrearPrenda.Detalles")}:</Form.Label>
                         <Form.Control as="textarea" rows={3}
                             className={errors.detail && 'danger'}
                             type='text'
@@ -286,7 +287,7 @@ function AdminPanel(){
                         {errors.detail && (<p className="danger">{errors.detail}</p>)}
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Tipos:</Form.Label>
+                        <Form.Label>{t("CrearPrenda.Tipos")}:</Form.Label>
                             <div>
                                 <select className={errors.type && 'danger'} style={{padding: '0.6rem', }} name='type' onChange={handleInput}>
                                     <option></option>
@@ -298,7 +299,7 @@ function AdminPanel(){
                             </div>
                     </Form.Group>
                     <Form.Group className="mb-3">
-                        <Form.Label>Talles:</Form.Label>
+                        <Form.Label>{t("CrearPrenda.Talles")}:</Form.Label>
                         {errors.sizeStock && (<p className="danger">{errors.sizeStock}</p>)}
                         {input.sizeStock.map((talle, idx)=>(
                             <Form.Group className="mb-3" key={`talle${idx}`}>
@@ -326,10 +327,10 @@ function AdminPanel(){
                         <Button variant="dark"
                         type='button'
                         onClick={handleAddSizeStock}
-                        >Agregar talle</Button>
+                        >{t("CrearPrenda.Agregar-Talle")}</Button>
                     </Form.Group>               
                     <Form.Group className="mb-3">
-                        <Form.Label >Categorias:</Form.Label>
+                        <Form.Label>{t("CrearPrenda.Categorias")}:</Form.Label>
                         <Form.Group className="mb-3" style={{padding: '.5rem'}}>
                             {arrayCategories?.map((cat) =>(
                                 <span style={{padding: '1rem'}} key = {cat}>
@@ -368,16 +369,16 @@ function AdminPanel(){
                         <Button variant="dark"
                         type='button'
                         onClick={handleAddNewCategory}
-                        >Agregar nueva categoria</Button>
+                        >{t("CrearPrenda.Agregar-Categoria")}</Button>
                     </Form.Group>
                     </Form.Group>
                     <Form.Group controlId="formFileMultiple" className="mb-3">
                         <Form.Control type="file" multiple onChange={handlerOnChangeMedia}/>
                         {errors.mediaArray&& (<p className="danger">{errors.mediaArray}</p>)}
                     </Form.Group>
-                    <Button variant="dark" type='submit'>SUBMIT</Button>
+                    <Button variant="dark" type='submit'>{t("CrearPrenda.Confirmar")}</Button>
                     <Link style={{marginLeft: '2rem'}} to="/admin">
-                        <Button variant="danger" type='submit'>CANCEL</Button>
+                        <Button variant="danger" type='submit'>{t("CrearPrenda.Cancelar")}</Button>
                     </Link>
                 </Form>
             </div>

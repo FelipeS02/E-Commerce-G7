@@ -36,7 +36,7 @@ const Home = (props) => {
   }, [dispatch, offset, category, type, size, genre]);
   useEffect(() => {
     dispatch(cleanFilters());
-  }, []);
+  }, [dispatch]);
   useEffect(() => {});
   const imgUrl = [
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dw5ea30e6a/01sept/full1lotto.jpg?sw=1440&sfrm=png",
