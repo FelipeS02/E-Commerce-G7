@@ -1,5 +1,5 @@
 const confirm = (orderDetails, direction, payment, total, orderId) => {
-  let MailBody = `<html>
+  return `<html>
         <head>
             <title></title>
             <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -335,7 +335,6 @@ const confirm = (orderDetails, direction, payment, total, orderId) => {
             </table>
         </body>
         </html>`;
-  return MailBody;
 };
 
-module.exports = confirm
+module.exports = confirm;

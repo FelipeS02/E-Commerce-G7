@@ -405,7 +405,7 @@ const dataBase = [
     price: 11600,
     color: "azul marino",
     genre: "Masculino",
-    type: "camperos",
+    type: "camperas",
     categories: ["clasico"],
     detail:
       "Campera con capucha ajustable.\nCanelones anchos y cierre central plástico.\nDos bolsillos con botones a presión y puños regulables con velcro.\nMATERIALES\nRelleno 100% Silicona.",
