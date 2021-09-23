@@ -71,6 +71,12 @@ const OrderHistory = () => {
   };
 
   return (
+    <div>
+    {
+      orders.length === 0 ? 
+      (<Container>
+        <h1 >No hay compras realizadas</h1>
+    </Container>) : (
     <Container className="m-5">
       <Table variant="dark" striped bordered hover>
         <thead>
@@ -115,7 +121,8 @@ const OrderHistory = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </Container>
-  );
-};
+      </Container>
+      )}
+    </div>
+)};
 export default OrderHistory;
