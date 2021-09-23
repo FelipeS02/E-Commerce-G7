@@ -1,6 +1,7 @@
 import React from "react";
 import { Form } from "react-bootstrap";
-import {useTranslation} from "react-i18next";
+import "./Talle.css"
+import { useTranslation } from "react-i18next";
 const Talle = (props) => {
   const { sizes, talleHandler } = props;
   const [t, i18n] = useTranslation("global");
