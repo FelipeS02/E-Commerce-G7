@@ -1,11 +1,11 @@
 {
 	"NavBar": {
-		"Ofertas": "Ofertas",
 		"Hombre": "Hombre",
 		"Mujer": "Mujer",
 		"Deseos": "Lista de deseos",
 		"Perfil": "Perfil",
-		"Mis-Pedidos": "Mis Pedidos"
+		"Mis-Pedidos": "Mis Pedidos",
+		"Inicia": "Inicia sesion para ver opciones"
 	},
 
 	"Panel": {
@@ -49,6 +49,25 @@
 
 	"Buscar": {
 		"Buscar": "Buscar"
+	},
+
+	"ListaPrendas": {
+		"Titulo": "Lista de productos",
+		"Editar": "Editar",
+		"Nombre": "Nombre",
+		"Precio": "Precio",
+		"EditarProd": "Editar Producto"
+	},
+
+	"ListaOrdenes": {
+		"Titulo": "Listado de ordenes",
+		"NumOrden": "Numero de orden",
+		"Estado": "Estado de orden",
+		"Total": "Total compra ($)",
+		"UltAct": "Ultima actualizacion",
+		"Cancelar": "Cancelar pedido",
+		"Despachar": "Despachar pedido",
+		"Entregado": "Entregado"
 	},
 
 	"SideBarFilter": {

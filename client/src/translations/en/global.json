@@ -1,11 +1,30 @@
 {
 	"NavBar": {
-		"Ofertas": "Offers",
 		"Hombre": "Men",
 		"Mujer": "Women",
 		"Deseos": "Wish list",
 		"Perfil": "Profile",
-		"Mis-Pedidos": "My Orders"
+		"Mis-Pedidos": "My Orders",
+		"Inicia": "Login to see options"
+	},
+
+	"ListaPrendas": {
+		"Titulo": "Product List",
+		"Editar": "Edit",
+		"Nombre": "Name",
+		"Precio": "Price",
+		"EditarProd": "Edit Product"
+	},
+
+	"ListaOrdenes": {
+		"Titulo": "Order List",
+		"NumOrden": "Order number",
+		"Estado": "Order state",
+		"Total": "Total ($)",
+		"UltAct": "Last update",
+		"Cancelar": "Cancel order",
+		"Despachar": "Pack off order",
+		"Entregado": "Delivered"
 	},
 
 	"Panel": {

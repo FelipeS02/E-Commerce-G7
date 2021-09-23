@@ -4,6 +4,9 @@ import LogOut from "../Login/LogOut";
 import { Navbar, Nav, Container, NavDropdown, Dropdown } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { FaUser, FaShoppingCart } from "react-icons/fa";
+
+import { HiTranslate } from "react-icons/hi";
+
 import { useAuth0 } from "@auth0/auth0-react";
 import SearchBar from "../SearchBar/SearchBar";
 import Logo from "./logo.png";
@@ -118,7 +121,7 @@ const NavBar = () => {
                   </>
                 ) : (
                   <NavDropdown.Item eventKey="4.4">
-                    Inicia sesión para ver opciones
+                    {t("NavBar.Inicia")}
                   </NavDropdown.Item>
                 )}
               </NavDropdown>
@@ -131,8 +134,22 @@ const NavBar = () => {
               )}
               {!isAuthenticated ? <Login /> : <LogOut />}
 
-              <Nav.Link onClick={() => i18n.changeLanguage("es")}>ES</Nav.Link>
-              <Nav.Link onClick={() => i18n.changeLanguage("en")}>EN</Nav.Link>
+              <Container>
+                <NavDropdown
+                  title={<HiTranslate color="white" size ="1.3rem" />}
+                >
+                  
+                <>
+                  <NavDropdown.Item onClick={() => i18n.changeLanguage("es")}>
+                    ES
+                  </NavDropdown.Item>   
+
+                  <NavDropdown.Item onClick={() => i18n.changeLanguage("en")}>
+                    EN
+                  </NavDropdown.Item>  
+                </>            
+                </NavDropdown>         
+              </Container>
             </Nav>
           </Container>
         </Navbar.Collapse>
