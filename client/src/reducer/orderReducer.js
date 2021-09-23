@@ -4,9 +4,10 @@ import {
   ORDER_STATE_UPDATE,
   GET_ALL_ORDERS,
   ORDER_REVIEW,
+  GET_REVIEWS
 } from "../constants/ordersConstants.js";
 
-const initialState = { orders: [] };
+const initialState = { orders: [], reviews: [] };
 
 export default function orderReducer(state = initialState, action) {
   switch (action.type) {
@@ -36,7 +37,13 @@ export default function orderReducer(state = initialState, action) {
 
     case ORDER_REVIEW:
       return {
+        ...state
+      };
+      
+    case GET_REVIEWS:
+      return {
         ...state,
+        reviews: action.payload
       };
 
     default:

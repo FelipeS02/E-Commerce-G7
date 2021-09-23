@@ -6,6 +6,7 @@ import {
   ORDER_STATE_UPDATE,
   GET_ALL_ORDERS,
   ORDER_REVIEW,
+  GET_REVIEWS
 } from "../constants/ordersConstants.js";
 
 export const getAllOrders = () => {
@@ -61,6 +62,18 @@ export const reviewUser = (form) => async (dispatch) => {
     dispatch({
       type: ORDER_REVIEW,
       payload: form,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getReviews = (clotheId) => async (dispatch) => {
+  try {
+    const data = await axios.get(`/clothe/clothe-review/get-reviews?clotheId=${clotheId}`);
+    dispatch({
+      type: GET_REVIEWS,
+      payload: data,
     });
   } catch (error) {
     console.log(error);

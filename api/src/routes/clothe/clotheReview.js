@@ -37,4 +37,19 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/get-reviews", async (req, res) => {
+
+  try {
+      const { clotheId } = req.query;
+
+      const response = await Review.findAll({ where : {clotheId : clotheId}});
+      return res.json(response);
+      
+  } catch (err) {
+    const { message } = err;
+    return res.json(responseMessage(ERROR, message));
+  }
+
+})
+
 module.exports = router;
