@@ -1,11 +1,58 @@
 {
 	"NavBar": {
-		"Ofertas": "Offers",
 		"Hombre": "Men",
 		"Mujer": "Women",
 		"Deseos": "Wish list",
 		"Perfil": "Profile",
-		"Mis-Pedidos": "My Orders"
+		"Mis-Pedidos": "My Orders",
+		"Inicia": "Login to see options"
+	},
+
+	"ListaPrendas": {
+		"Titulo": "Product List",
+		"Editar": "Edit",
+		"Nombre": "Name",
+		"Precio": "Price",
+		"EditarProd": "Edit Product"
+	},
+
+	"ListaOrdenes": {
+		"Titulo": "Order List",
+		"NumOrden": "Order number",
+		"Estado": "Order state",
+		"Total": "Total ($)",
+		"UltAct": "Last update",
+		"Cancelar": "Cancel order",
+		"Despachar": "Pack off order",
+		"Entregado": "Delivered"
+	},
+
+	"Panel": {
+		"Titulo": "Admin panel",
+		"Crear": "Create clothe",
+		"Listado": "Clothing list",
+		"Ordenes": "Order list",
+		"Usuarios": "User List"
+	},
+
+	"CrearPrenda": {
+		"Titulo": "Create clothe",
+		"Nombre": "Name",
+		"Precio": "Price",
+		"Color": "Color",
+		"Genero": "Genre",
+		"Detalles": "Details",
+		"Tipos": "Types",
+		"Talles": "Sizes",
+		"Agregar-Talle": "Add size",
+		"Categorias": "Categories",
+		"Agregar-Categoria": "Add categories",
+		"Confirmar": "SUBMIT",
+		"Cancelar": "Cancel",
+		"Exitoso": "Your product has been created successfully",
+		"Atencion": "¡Alert!",
+		"Faltan": "Items are missing to create your product",
+		"Hecho": "¡Done!"
 	},
 
 	"Login": {
@@ -39,6 +86,16 @@
 		"Ver-Carrito": "Go to cart"
 	},
 
+	"CartScreen": {
+		"Titulo": "Shopping Cart",
+		"Precio": "Price",
+		"Talle": "Size",
+		"Articulos": "Articles",
+		"Total": "Total",
+		"Proceder": "Proceed to purchase",
+		"Continuar-Comprando": "Continue buying"
+	},
+
 	"Talle": {
 		"Talle": "Size"
 	},
@@ -50,7 +107,7 @@
 		"Mas-Vendido": "Best seller",
 		"Informacion": "Information",
 		"Privacidad": "Notice of Privacy",
-		"Tyc": "Terms and Conditions",
+		"TyC": "Terms and Conditions",
 		"Preguntas-F": "Frequent questions",
 		"Contactanos": "Contact Us"
 	}

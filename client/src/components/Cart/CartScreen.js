@@ -13,11 +13,13 @@ import { Link } from "react-router-dom";
 import { BASE_IMG_URL } from "../../constants/productConstants";
 import { FaRegTrashAlt, FaArrowLeft } from "react-icons/fa";
 import { addToCart, getOrder, removeFromCart } from "../../actions/cartAccions";
+import {useTranslation} from "react-i18next";
 const CartScreen = () => {
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.cartState);
   const { totalItems, carItems, carTotalAmount, orderId } = cartState;
   const userState = useSelector((state) => state.userState);
+  const [t, i18n] = useTranslation("global");
   const { userInfo } = userState;
   const itemHandler = (obj, id, userId, clothe) => {
     console.log(obj, id);
@@ -34,7 +36,7 @@ const CartScreen = () => {
           <Card>
             <Card.Header className="text-center">
               {" "}
-              <h4 className="my-3">Carrito de compras</h4>
+              <h4 className="my-3">{t("CartScreen.Titulo")}</h4>
             </Card.Header>
             <Card.Body>
               {carItems?.map((item, index) => (
@@ -50,10 +52,10 @@ const CartScreen = () => {
                       <h6>{item.name}</h6>
                     </Row>
                     <Row>
-                      <h6>Precio: ${item.price}</h6>
+                      <h6>{t("CartScreen.Precio")}: ${item.price}</h6>
                     </Row>
                     <Row>
-                      <h6>Talle: {item.quantity_and_size.size}</h6>
+                      <h6>{t("CartScreen.Talle")}: {item.quantity_and_size.size}</h6>
                     </Row>
                   </Col>
                   <Col>
@@ -98,17 +100,17 @@ const CartScreen = () => {
             <Card.Body>
               <Row>
                 <Col>
-                  <h6>{totalItems} articulos</h6>
+                  <h6>{totalItems} {t("CartScreen.Articulos")}</h6>
                 </Col>
                 <Col>
-                  <h6>Total: ${totalItems === 0 ? 0 : carTotalAmount}</h6>
+                  <h6>{t("CartScreen.Total")}: ${totalItems === 0 ? 0 : carTotalAmount}</h6>
                 </Col>
               </Row>
             </Card.Body>
             <Card.Body>
               <Row>
                 <Button variant="primary" as={Link} to="/user/checkout">
-                  Proceder a la compra
+                  {t("CartScreen.Proceder")}
                 </Button>
               </Row>
             </Card.Body>
@@ -120,7 +122,7 @@ const CartScreen = () => {
           {" "}
           <FaArrowLeft />
         </Col>
-        <Col>Continuar comprando</Col>
+        <Col>{t("CartScreen.Continuar-Comprando")}</Col>
       </Button>
     </Container>
   );
