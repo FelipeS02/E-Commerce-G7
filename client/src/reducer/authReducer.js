@@ -3,7 +3,7 @@ import {
   USER_INFO_SUCCESS,
   USER_LOGOUT,
   USER_LOGIN,
-  GET_USERS
+  GET_USERS,
 } from "../constants/productConstants";
 const initialState = {
   allUsers: null,
@@ -14,10 +14,10 @@ const initialState = {
 function authReducer(state = initialState, action) {
   switch (action.type) {
     case GET_USERS:
-      return{
+      return {
         ...state,
-        allUsers: action.payload
-      }
+        allUsers: action.payload,
+      };
     case USER_INFO_SUCCESS:
       return {
         ...state,

@@ -46,7 +46,7 @@ export const getProducts =
       });
     }
   };
-  export const getProductsAdmin =
+export const getProductsAdmin =
   (name = "", category = "", type = "", size = "", genre = "", offset = 0) =>
   async (dispatch) => {
     dispatch({
@@ -75,7 +75,6 @@ export const getProducts =
       });
     }
   };
-
 
 export function createClothe(form) {
   console.log(form);
