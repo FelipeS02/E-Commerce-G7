@@ -1,7 +1,9 @@
 import React from "react";
 import { Form } from "react-bootstrap";
+import {useTranslation} from "react-i18next";
 const Talle = (props) => {
   const { sizes, talleHandler } = props;
+  const [t, i18n] = useTranslation("global");
   return (
     <Form.Control
       as="select"
@@ -9,7 +11,7 @@ const Talle = (props) => {
         talleHandler(e.target.value);
       }}
     >
-      <option>Talle</option>
+      <option>{t("Talle.Talle")}</option>
       {sizes?.map((item, index) => (
         <option key={index} value={index}>
           {item.size}

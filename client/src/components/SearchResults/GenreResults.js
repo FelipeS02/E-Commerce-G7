@@ -10,8 +10,10 @@ import { Row, Col } from "react-bootstrap";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
 import PaginationC from "../Pagination/PaginationC";
 import CardP from "../ProductCard/CardP";
+import {useTranslation} from "react-i18next";
 
 const GenreResults = () => {
+  const [t, i18n] = useTranslation("global");
   const { genre = "all" } = useParams();
   const dispatch = useDispatch();
   const productsState = useSelector((state) => state.productsState);
@@ -43,7 +45,7 @@ const GenreResults = () => {
   }, [dispatch, offset, category, type, size, genre]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>{t("Loading.Loading")}</div>;
   }
   return (
     <>
@@ -60,7 +62,7 @@ const GenreResults = () => {
         </Col>
         <Col>
           <Row>
-            <h1>{products.length}Resultados</h1>
+            <h1>{products.length}{t("Results.Resultados")}</h1>
           </Row>
           <Row className="d-flex align-content-center flex-wrap justify-content-between">
             {error === "" && products.allClothes ? (
@@ -75,7 +77,7 @@ const GenreResults = () => {
                 />
               ))
             ) : (
-              <h1>No se encontrarón resultados...</h1>
+              <h1>{t("Results.Sin-Resultados")}</h1>
             )}
           </Row>
         </Col>

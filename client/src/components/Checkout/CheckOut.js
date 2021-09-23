@@ -25,6 +25,21 @@ import swal from "sweetalert";
 import { getOrder } from "../../actions/cartAccions";
 
 const CheckOut = (props) => {
+  const [formValidation, setFormValidation] = useState({
+    hasBeenTouched: false,
+    isCompleted: false,
+  });
+
+  const cardHandler = (e) => {
+    console.log("sonethinbg");
+    console.log("e completed", e.complete);
+    setFormValidation((prevState) => {
+      return {
+        ...prevState,
+        isCompleted: e.complete,
+      };
+    });
+  };
   const provincias = [
     "Buenos Aires",
     "Catamarca",
@@ -37,20 +52,29 @@ const CheckOut = (props) => {
   const stripe = useStripe();
   const elements = useElements();
   const dispatch = useDispatch();
-  const [loadingPayment, setLoading] = useState(false);
+
   const cartState = useSelector((state) => state.cartState);
-  const { totalItems, carItems, carTotalAmount, orderId, paymentSuccess } =
-    cartState;
+  const {
+    totalItems,
+    carItems,
+    carTotalAmount,
+    orderId,
+    paymentSuccess,
+    loadingPayment,
+  } = cartState;
   const userState = useSelector((state) => state.userState);
   const { userInfo } = userState;
 
   const paymentHandler = async () => {
+    if (!formValidation.isCompleted) {
+      return swal("Verificar los datos de la tarjeta", "", "error");
+    }
     try {
       const { error, paymentMethod } = await stripe.createPaymentMethod({
         type: "card",
         card: elements.getElement(CardElement),
       });
-      setLoading(true);
+
       if (error) {
         console.log("[error]", error);
       } else {
@@ -76,7 +100,6 @@ const CheckOut = (props) => {
   // orderId, payment, direction, clothes, userId
   useEffect(() => {
     if (paymentSuccess) {
-      setLoading(false);
       setTimeout(() => {
         props.history.push(`/`);
       }, 3000);
@@ -132,7 +155,11 @@ const CheckOut = (props) => {
           <Accordion.Collapse eventKey="1">
             <Card.Body>
               <Form>
-                <CardElement />
+                <CardElement
+                  onChange={(e) => {
+                    cardHandler(e);
+                  }}
+                />
               </Form>
             </Card.Body>
           </Accordion.Collapse>
@@ -199,6 +226,7 @@ const CheckOut = (props) => {
                     <Card.Body>
                       <Row>
                         <Button
+                          className={loadingPayment ? "disabled" : ""}
                           variant="primary"
                           onClick={() => {
                             paymentHandler();
