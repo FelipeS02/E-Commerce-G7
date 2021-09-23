@@ -6,7 +6,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import SearchResults from "./components/SearchResults/SearchResults";
 import { useDispatch } from "react-redux";
 import { getCategories } from "./actions/ProductActions";
-// import AdminPanel from "./components/AdminPanel/AdminPanel";
 import ProductDetail from "./components/ProductDetail/ProductDetail";
 import UserProfile from "./components/UserProfile/UserProfile";
 import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
@@ -17,7 +16,7 @@ import GenreResults from "./components/SearchResults/GenreResults";
 import ListDetail from "./components/AdminPanel/orderFilterList"
 import NewAdminPanel from "./components/AdminPanel/NewAdminPanel"
 import ProductList from "./components/AdminPanel/productList"
-import PanelTitle from "./components/AdminPanel/PanelTitle";
+import LogoScrean from "./components/AdminPanel/LogoScrean";
 import OrderHistory from "./components/OrderHistory/OrderHistory.js"
 import CheckOut from "./components/Checkout/CheckOut";
 import { Elements } from "@stripe/react-stripe-js";
@@ -39,10 +38,9 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/search/name/:name?" component={SearchResults} />
         <Route exact path="/search/genre/:genre?" component={GenreResults} />
-        {/* <Route exact path="/admin" component={AdminPanel} /> */}
-        <Route path="/admin" component={PanelTitle}/>
-        <div style={{display: 'flex', backgroundColor: '#E4ECE8'}}>
+        <div style={{display: 'flex', backgroundColor: '#D3D7D2'}}>
           <Route path="/admin" component={NewAdminPanel}/>
+          <Route exact path="/admin" component={LogoScrean}/>
           <Route exact path="/admin/listDetail" component={ListDetail} />
           <Route exact path="/admin/listproducts" component={ProductList} />
           <Route exact path="/admin/createClothe" component={creatheClothe} />
