@@ -9,13 +9,15 @@ const {
 
 router.post("/", async (req, res) => {
   try {
-    const { userId, clotheId, score, review } = req.body.data;
+    const { userId, clotheId, score, review } = req.body;
+    
     if (
       validate(userId) &&
       typeof clotheId === "number" &&
       typeof score === "number" &&
       typeof review === "string"
     ) {
+      console.log('entreo acá y estaban bien los datos')
       const user = await User.findByPk(userId);
       const [clothe, clotheReview] = await Promise.all([
         await Clothe.findByPk(clotheId),

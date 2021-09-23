@@ -2,6 +2,7 @@ import {
   GET_ORDERS,
   ORDERS_FAIL,
   ORDER_STATE_UPDATE,
+  ORDER_REVIEW
 } from "../constants/ordersConstants.js";
 
 const initialState = { orders: [] };
@@ -25,6 +26,11 @@ export default function orderReducer(state = initialState, action) {
       return {
         ...state,
         message: action.payload,
+      };
+
+    case ORDER_REVIEW:
+      return {
+        ...state
       };
 
     default:

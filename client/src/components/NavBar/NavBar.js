@@ -117,7 +117,11 @@ const NavBar = () => {
                     >
                       {t("NavBar.Perfil")}
                     </NavDropdown.Item>
-                    <NavDropdown.Item eventKey="4.2">
+                    <NavDropdown.Item 
+                    eventKey="4.2"
+                    as={Link}
+                    to="/user/userProfile/orderHistory"
+                    >
                       {t("NavBar.Mis-Pedidos")}
                     </NavDropdown.Item>
                     <NavDropdown.Item eventKey="4.3">

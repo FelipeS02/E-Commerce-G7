@@ -22,6 +22,7 @@ import OrderHistory from "./components/OrderHistory/OrderHistory.js"
 import CheckOut from "./components/Checkout/CheckOut";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
+import Review from "./components/Review/Review.js";
 
 const stripePromise = loadStripe(
   "pk_test_51Jb4lZCUIIDXCqbkKXri5uz0jgOhwsWSGfXIjayHYBbF1WbUbFyYN9IG87QIIWgxzJbu38Oe1SmF2jounkyUbKYA00aSTtx30h"
@@ -54,6 +55,7 @@ function App() {
           component={SearchResults}
         />
         <Route exact path="/search/details/:id" component={ProductDetail} />
+        <Route exact path="/search/review" component={Review} /> 
         <PrivateRoute exact path="/user/userProfile" component={UserProfile} />
         <PrivateRoute exact path="/user/userProfile/orderHistory" component={OrderHistory} />
         <Elements stripe={stripePromise}>

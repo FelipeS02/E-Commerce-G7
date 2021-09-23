@@ -1,8 +1,10 @@
 import axios from "axios";
+import { Form } from "react-bootstrap";
 import {
   GET_ORDERS,
   ORDERS_FAIL,
-  ORDER_STATE_UPDATE
+  ORDER_STATE_UPDATE,
+  ORDER_REVIEW
 } from "../constants/ordersConstants.js";
 
 export const getAllOrders = () => {
@@ -46,3 +48,17 @@ export const getOrders = (id,status) => async (dispatch) => {
     });
   }
 };
+
+export const reviewUser = (form) => async (dispatch) => {
+	console.log(form,'soy el form de la action')
+	try {
+	  await axios.post(`/clothe/clothe-review`,form);
+	  console.log(form);
+	  dispatch({
+		type: ORDER_REVIEW,
+		payload: form
+	  });
+	} catch (error) {
+		console.log(error);
+	}
+  };
