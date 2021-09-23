@@ -18,5 +18,23 @@ router.get("/:userId", checkScopes(["read:admin"]), async (req, res) => {
     return res.json(responseMessage(ERROR, message));
   }
 });
+router.get("/:userId?role=addAdmin", checkScopes(["read:admin"]), async (req, res) => {
+  const { userId } = req.params;
+  try {
+    await User.update({ isAdmin: true }, userId);
+  } catch (err) {
+    const { message } = err;
+    return res.json(responseMessage(ERROR, message));
+  }
+});
+router.get("/:userId?role=removeAdmin", checkScopes(["read:admin"]), async (req, res) => {
+  const { userId } = req.params;
+  try {
+    await User.update({ isAdmin: false }, userId);
+  } catch (err) {
+    const { message } = err;
+    return res.json(responseMessage(ERROR, message));
+  }
+});
 
 module.exports = router;

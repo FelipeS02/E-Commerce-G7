@@ -201,7 +201,7 @@ function AdminPanel(){
                 title: "¡Hecho!",
                 text: "Tu producto ha sido creado correctamente.",
                 icon: "success",
-              });
+            });
             setInput({
                 name: '',
                 price: 0,
@@ -219,13 +219,12 @@ function AdminPanel(){
             title: "¡Atención!",
             text: "Faltan ítems para poder crear tu producto.",
             icon: "error",
-          });
+        });
     }
 
     return (
-        <div style={{display: 'flexbox', width: "100%", margin: '1.5rem' }} >
-            <div style={{backgroundColor: '#E4ECE8' }}>
-                <h1 style={{marginBottom: '3rem'}}>Crear Producto</h1>
+        <div style={{display: 'flexbox', width: "70%", margin: '2.5%' }} >
+            <div style={{backgroundColor: '#D3D7D2' }}>
                 <Form onSubmit={handleSubmit}>
                     <Form.Group  className="mb-3">
                         <Form.Label>Nombre:</Form.Label>

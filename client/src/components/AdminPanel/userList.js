@@ -2,7 +2,7 @@ import React, { Component, forwardRef } from "react";
 import { connect } from "react-redux";
 import MaterialTable, {MTableToolbar} from "material-table";
 import {  Save, AddBox, ArrowDownward, Check, ChevronLeft, Search, ChevronRight, Clear, DeleteOutline, Edit, FilterList, FirstPage, LastPage, Remove, SaveAlt, ViewColumn } from '@material-ui/icons';
-import { getAllOrders, orderStateUpdate } from "../../actions/orderActions";
+import { getAllUsers, userSetAdmin } from "../../actions/authActions";
 
 
 const tableIcons = {
@@ -26,9 +26,9 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
 };
 
-class ListDetail extends Component {
+class UserList extends Component {
     componentDidMount(){
-        this.props.getAllOrders()
+        this.props.getAllUsers()
     }
 
     render() {
@@ -47,34 +47,34 @@ class ListDetail extends Component {
                 }}
                 icons={tableIcons}
                 columns={[
-                    { title: 'Numero de orden', field: 'id',  filtering: false },
-                    { title: 'Estado de orden', field: 'state', lookup: { 'CARRITO': 'EN PROCESO', "CONFIRMADO": "CONFIRMADO", "DESPACHADO": "DESPACHADO", "CANCELADO": "CANCELADO", "ENTREGADO": "ENTREGADO"} },
-                    { title: 'Total compra ($)', field: 'total', type: 'numeric',  filtering: false },
-                    { title: 'Ultima actualización', field: 'birthCity',  filtering: false },
+                    { title: 'Id usuario', field: 'id',  filtering: false },
+                    { title: 'Nombre usuario', field: 'name', filtering: false },
+                    { title: 'Email', field: 'email',  filtering: false },
+                    { title: 'isAdmin', field: 'isAdmin', lookup: { 'true': 'TRUE', "false": "FALSE" }},
                 ]}
                 actions={[
                     {
                         icon: 'ShowTitle',
-                        tooltip: 'Cancelar Pedido',
+                        tooltip: 'set admin',
                         onClick: async (event, rowData) => {
-                            await this.props.orderStateUpdate(rowData.id, 'CANCELADO')
-                            this.props.getAllOrders()
+                            await this.props.userSetAdmin(rowData.id, rowData.email, 'addAdmin')
+                            this.props.getAllUsers()
                         }
                     },
                     {
                         icon: 'ShowTitle',
-                        tooltip: 'Despachar Pedido',
+                        tooltip: 'remove admin',
                         onClick: async (event, rowData) => {
-                            await this.props.orderStateUpdate(rowData.id, 'DESPACHADO')
-                            this.props.getAllOrders()
+                            await this.props.userSetAdmin(rowData.id, rowData.email, 'removeAdmin')
+                            this.props.getAllUsers()
                         }
                     },
                     {
                         icon: 'ShowTitle',
                         tooltip: 'Entregado',
                         onClick: async (event, rowData) => {
-                            await this.props.orderStateUpdate(rowData.id, 'ENTREGADO')
-                            this.props.getAllOrders()
+                            // await this.props.orderStateUpdate(rowData.id, 'ENTREGADO')
+                            this.props.getAllUsers()
                         }
                     }
                 ]}
@@ -109,15 +109,15 @@ class ListDetail extends Component {
 }
 
 function mapStateToProps(state){
-    return { Data: state.orderState.orders.data}
+    return { Data: state.userState.allUsers}
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        getAllOrders: () => dispatch(getAllOrders()),
-        orderStateUpdate: (id, state) => dispatch(orderStateUpdate(id, state))
+        getAllUsers: () => dispatch(getAllUsers()),
+        userSetAdmin: (id, email, set) => dispatch(userSetAdmin(id, email, set))
     };
 }
 
 
-export default connect(mapStateToProps, mapDispatchToProps)(ListDetail);
+export default connect(mapStateToProps, mapDispatchToProps)(UserList);

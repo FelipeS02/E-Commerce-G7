@@ -112,4 +112,25 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  try {
+    let isAdmin = req.user.permissions.includes(
+      "read:admin" || "write:admin" || "delete:admin"
+    )
+      ? true
+      : false;
+    const allUserExists = await User.findAll();
+    if (allUserExists)
+      return res.json(
+        responseMessage(SUCCESS, {
+          message: "Usuario existente",
+          allUserData: allUserExists 
+        })
+      );
+  } catch (err) {
+    const { message } = err;
+    return res.json(responseMessage(ERROR, message));
+  }
+});
+
 module.exports = router;

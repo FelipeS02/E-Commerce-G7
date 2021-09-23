@@ -99,7 +99,28 @@ const NavBar = () => {
                 }
                 id="nav-dropdown"
               >
-                {isAuthenticated ? (
+                {isAuthenticated ? 
+                userInfo && userInfo.isAdmin ? (
+                  <>
+                    <NavDropdown.Item as={Link} to="/admin" eventKey="4.1">
+                      Admin Panel
+                    </NavDropdown.Item>
+                    <NavDropdown.Item
+                      eventKey="4.2"
+                      as={Link}
+                      to="/user/userProfile"
+                    >
+                      {t("NavBar.Perfil")}
+                    </NavDropdown.Item>
+                    <NavDropdown.Item eventKey="4.3">
+                      {t("NavBar.Mis-Pedidos")}
+                    </NavDropdown.Item>
+                    <NavDropdown.Item eventKey="4.4">
+                      {t("NavBar.Deseos")}
+                    </NavDropdown.Item>
+                    <NavDropdown.Item eventKey="4.5"></NavDropdown.Item>
+                  </>
+                ):(
                   <>
                     <NavDropdown.Item
                       eventKey="4.1"
@@ -122,13 +143,6 @@ const NavBar = () => {
                   </NavDropdown.Item>
                 )}
               </NavDropdown>
-              {userInfo && userInfo.isAdmin && (
-                <NavDropdown title="Admin" id="nav-dropdown">
-                  <NavDropdown.Item as={Link} to="/admin" eventKey="4.1">
-                    Panel
-                  </NavDropdown.Item>
-                </NavDropdown>
-              )}
               {!isAuthenticated ? <Login /> : <LogOut />}
 
               <Nav.Link onClick={() => i18n.changeLanguage("es")}>ES</Nav.Link>

@@ -2,12 +2,18 @@ import {
   GET_ORDERS,
   ORDERS_FAIL,
   ORDER_STATE_UPDATE,
+  GET_ALL_ORDERS
 } from "../constants/ordersConstants.js";
 
 const initialState = { orders: [] };
 
 export default function orderReducer(state = initialState, action) {
   switch (action.type) {
+    case GET_ALL_ORDERS:
+      return {
+        ...state,
+        orders: action.payload
+      };
     case GET_ORDERS:
       return {
         ...state,

@@ -15,7 +15,8 @@ import CartScreen from "./components/Cart/CartScreen";
 import GenreResults from "./components/SearchResults/GenreResults";
 import ListDetail from "./components/AdminPanel/orderFilterList"
 import NewAdminPanel from "./components/AdminPanel/NewAdminPanel"
-import ProductList from "./components/AdminPanel/productList"
+import ProductList from "./components/AdminPanel/productList";
+import UserList from "./components/AdminPanel/userList"
 import LogoScrean from "./components/AdminPanel/LogoScrean";
 import OrderHistory from "./components/OrderHistory/OrderHistory.js"
 import CheckOut from "./components/Checkout/CheckOut";
@@ -45,6 +46,7 @@ function App() {
           <Route exact path="/admin/listproducts" component={ProductList} />
           <Route exact path="/admin/createClothe" component={creatheClothe} />
           <Route exact path="/admin/editClothe/:id" component={editClothe} />
+          <Route exact path="/admin/listUsers" component={UserList} />
         </div>
         <Route
           exact

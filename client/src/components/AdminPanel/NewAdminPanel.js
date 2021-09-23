@@ -1,10 +1,15 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { Link } from "react-router-dom";
+import { useDispatch } from 'react-redux';
+import { getAllUsers } from "../../actions/authActions";
 import "./NewAdminPanel.css"
 import { Button } from "react-bootstrap"
 
 function NewAdminPanel(){
-    
+    const dispatch = useDispatch();
+    useEffect(() => {
+        dispatch(getAllUsers());
+    },[]);
 
     return(
         <div className='panel_home d-grid gap-2'>

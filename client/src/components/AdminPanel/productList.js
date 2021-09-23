@@ -33,7 +33,7 @@ class ProductList extends Component {
     }
     render() {
         return (
-            <div style={{ width: "100%", margin: '1.5rem' }}>
+            <div style={{ width: "70%", margin: '2.5%' }}>
                 <MaterialTable
                     components={{
                         Toolbar: props => (
