@@ -44,8 +44,8 @@ function App() {
         <div style={{display: 'flex', backgroundColor: '#D3D7D2'}}>
           <Route path="/admin" component={NewAdminPanel}/>
           <Route exact path="/admin" component={LogoScrean}/>
-          {/* <Route exact path="/admin/listDetail" component={ListDetail} /> */}
-          <Route exact path="/admin/listDetail" component={TablaPrueba} />
+          <Route exact path="/admin/listDetail" component={ListDetail} />
+          {/* <Route exact path="/admin/listDetail" component={TablaPrueba} /> */}
           <Route exact path="/admin/listproducts" component={ProductList} />
           <Route exact path="/admin/createClothe" component={creatheClothe} />
           <Route exact path="/admin/editClothe/:id" component={editClothe} />

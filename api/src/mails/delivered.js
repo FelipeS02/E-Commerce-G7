@@ -1,4 +1,4 @@
-const delivered = (direction, orderId) => {
+const delivered = (direction) => {
     return `
     <html>
 <head>
@@ -183,7 +183,7 @@ const delivered = (direction, orderId) => {
                                         </p>
                                         <p
                                             style="font-size: 16px; font-weight: 400; line-height: 24px; color: #777777;">
-                                            Puedes dejarnos tu opinion <a href="https://e-commerce-g7.vercel.app/review/${orderId}" target="_blank">aqui</a>.
+                                            Puedes dejarnos tu opinion <a href="https://e-commerce-g7.vercel.app/user/userProfile/orderHistory" target="_blank">aqui</a>.
                                         </p>
                                     </td>
                                 </tr>

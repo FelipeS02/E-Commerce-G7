@@ -78,7 +78,7 @@ router.get("/:orderId", async (req, res) => {
         if (currentOrder.state === "DESPACHADO" || currentOrder.state === "CONFIRMADO") {
           await currentOrder.update({ state: stateOrder });
           const currentUser = await User.findByPk(currentOrder.userId);
-          const bodyMail = delivered(currentOrder.direction, currentOrder.id)
+          const bodyMail = delivered(currentOrder.direction)
           await sendMail(
             currentUser.email,
             "Orden entregada correctamente!",

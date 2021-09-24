@@ -50,7 +50,6 @@ export const removingUserInfo = () => (dispatch) => {
 };
 
 export const getAllUsers = () => async (dispatch) => {
-
   try {
     const { data } = await axios.get("/login");
     if (data.statusCode !== 200) {
@@ -71,8 +70,40 @@ export const getAllUsers = () => async (dispatch) => {
   }
 };
 
-export const userSetAdmin = (id, email, set) => async (dispatch) => {
+export const resetPassword = (email) => async (dispatch) => {
+  try {
+    await axios.get(`/admin/users-control/reset-password/${email}`);
+  } catch (e) {
+    return dispatch({
+      type: USER_INFO_FAIL,
+      payload: e.message,
+    });
+  }
+}
 
+export const blockUser = (email) => async (dispatch) => {
+  try {
+    await axios.get(`/admin/users-control/block-user/${email}`);
+  } catch (e) {
+    return dispatch({
+      type: USER_INFO_FAIL,
+      payload: e.message,
+    });
+  }
+}
+
+export const unblockUser = (email) => async (dispatch) => {
+  try {
+    await axios.get(`/admin/users-control/unblock-user/${email}`);
+  } catch (e) {
+    return dispatch({
+      type: USER_INFO_FAIL,
+      payload: e.message,
+    });
+  }
+};
+
+export const userSetAdmin = (id, email, set) => async (dispatch) => {
   try {
     console.log('useradmin !!!!', set)
     if (set === "addAdmin") {

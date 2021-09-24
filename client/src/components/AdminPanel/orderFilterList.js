@@ -59,6 +59,7 @@ class ListDetail extends Component {
   }
   render() {
     const { t, Data } = this.props;
+    console.log(Data);
     if (Data?.length > 0) {
       return (
         <div style={{ width: "70%", margin: "2.5%", marginLeft: "7.5%" }}>
@@ -86,6 +87,7 @@ class ListDetail extends Component {
                 title: t("ListaOrdenes.Estado"),
                 field: "state",
                 lookup: {
+                  CARRITO: "EN PROCESO",
                   CONFIRMADO: "CONFIRMADO",
                   DESPACHADO: "DESPACHADO",
                   CANCELADO: "CANCELADO",
@@ -95,7 +97,7 @@ class ListDetail extends Component {
               {
                 title: t("ListaOrdenes.Total"),
                 field: "total",
-                type: "numeric",
+                type: "currency",
                 filtering: false,
               },
               {
@@ -105,32 +107,38 @@ class ListDetail extends Component {
               },
             ]}
             actions={[
-              {
+              (rowData) => ({
                 icon: Cancel,
                 tooltip: t("ListaOrdenes.Cancelar"),
                 onClick: async (event, rowData) => {
                   await this.props.orderStateUpdate(rowData.id, "CANCELADO");
                   this.props.getAllOrders();
                 },
-              },
-              {
+                disabled:
+                  rowData.state === "DESPACHADO" || rowData.state === "ENTREGADO",
+              }),
+              (rowData) => ({
                 icon: LocalShipping,
                 tooltip: t("ListaOrdenes.Despachar"),
                 onClick: async (event, rowData) => {
                   await this.props.orderStateUpdate(rowData.id, "DESPACHADO");
                   this.props.getAllOrders();
                 },
-              },
-              {
+                disabled:
+                  rowData.state === "CARRITO" || rowData.state === "ENTREGADO",
+              }),
+              (rowData) => ({
                 icon: MarkunreadMailbox,
                 tooltip: t("ListaOrdenes.Entregado"),
                 onClick: async (event, rowData) => {
                   await this.props.orderStateUpdate(rowData.id, "ENTREGADO");
                   this.props.getAllOrders();
                 },
-              },
+                disabled:
+                  rowData.state === "CARRITO" || rowData.state === "ENTREGADO",
+              }),
             ]}
-            data={this.props?.Data?.filter((e) => e.state !== "CARRITO")}
+            data={this.props?.Data}
             title={t("ListaOrdenes.Titulo")}
             detailPanel={(rowData) => {
               return (

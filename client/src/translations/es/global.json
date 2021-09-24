@@ -37,11 +37,14 @@
 	},
 
 	"Listado-Users": {
+		"ResetPassword": "Renovar Contraseña",
+		"BlockUser": "Bloquear Usuario",
+		"UnblockUser": "Desbloquear Usuario",
 		"Id": "Id de usuario",
 		"Nombre": "Nombre de usuario",
 		"Email": "Email",
-		"SetAdmin": "set admin",
-		"RemoveAdmin": "remove admin",
+		"SetAdmin": "Agregar Administrador",
+		"RemoveAdmin": "Eliminar Administrador",
 		"Entregado": "Entregado",
 		"ListaOrdenes": "Lista de ordenes",
 		"Prendas": "Prendas",

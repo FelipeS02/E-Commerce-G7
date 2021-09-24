@@ -1,6 +1,8 @@
 import React, { Component, forwardRef } from "react";
 import { connect } from "react-redux";
 import MaterialTable, { MTableToolbar } from "material-table";
+import { BsFillLockFill, BsFillUnlockFill } from "react-icons/bs";
+import { FaShieldAlt, FaTimes, FaKey } from "react-icons/fa";
 import {
   Save,
   AddBox,
@@ -19,7 +21,13 @@ import {
   SaveAlt,
   ViewColumn,
 } from "@material-ui/icons";
-import { getAllUsers, userSetAdmin } from "../../actions/authActions";
+import {
+  getAllUsers,
+  userSetAdmin,
+  resetPassword,
+  blockUser,
+  unblockUser,
+} from "../../actions/authActions";
 import { withTranslation } from "react-i18next";
 
 const tableIcons = {
@@ -53,9 +61,9 @@ class UserList extends Component {
   }
 
   render() {
-        const { t } = this.props;
+    const { t } = this.props;
     return (
-      <div style={{ width: "70%", margin: "2.5%", marginLeft: "7.5%"}}>
+      <div style={{ width: "70%", margin: "2.5%", marginLeft: "7.5%" }}>
         <MaterialTable
           components={{
             Toolbar: (props) => (
@@ -72,8 +80,16 @@ class UserList extends Component {
           icons={tableIcons}
           columns={[
             { title: t("Listado-Users.Id"), field: "id", filtering: false },
-            { title: t("Listado-Users.Nombre"), field: "name", filtering: false },
-            { title: t("Listado-Users.Email"), field: "email", filtering: false },
+            {
+              title: t("Listado-Users.Nombre"),
+              field: "name",
+              filtering: false,
+            },
+            {
+              title: t("Listado-Users.Email"),
+              field: "email",
+              filtering: false,
+            },
             {
               title: "isAdmin",
               field: "isAdmin",
@@ -81,9 +97,9 @@ class UserList extends Component {
             },
           ]}
           actions={[
-            {
-              icon: "ShowTitle",
-              tooltip: t("Listado-Users.setAdmin"),
+            (rowData) => ({
+              icon: FaShieldAlt,
+              tooltip: t("Listado-Users.SetAdmin"),
               onClick: async (event, rowData) => {
                 await this.props.userSetAdmin(
                   rowData.id,
@@ -92,9 +108,10 @@ class UserList extends Component {
                 );
                 this.props.getAllUsers();
               },
-            },
-            {
-              icon: "ShowTitle",
+              disabled: rowData.isAdmin === true,
+            }),
+            (rowData) => ({
+              icon: FaTimes,
               tooltip: t("Listado-Users.RemoveAdmin"),
               onClick: async (event, rowData) => {
                 await this.props.userSetAdmin(
@@ -102,102 +119,37 @@ class UserList extends Component {
                   rowData.email,
                   "removeAdmin"
                 );
-                this.props.getAllUsers();
+                await this.props.getAllUsers();
+              },
+              disabled: rowData.isAdmin === false,
+            }),
+            {
+              icon: FaKey,
+              tooltip: t("Listado-Users.ResetPassword"),
+              onClick: async (event, rowData) => {
+                await this.props.resetPassword(rowData.email);
+                await this.props.getAllUsers();
+              },
+            },
+            {
+              icon: BsFillLockFill,
+              tooltip: t("Listado-Users.BlockUser"),
+              onClick: async (event, rowData) => {
+                await this.props.blockUser(rowData.email);
+                await this.props.getAllUsers();
+              },
+            },
+            {
+              icon: BsFillUnlockFill,
+              tooltip: t("Listado-Users.UnblockUser"),
+              onClick: async (event, rowData) => {
+                await this.props.unblockUser(rowData.email);
+                await this.props.getAllUsers();
               },
             },
           ]}
           data={this.props?.Data}
           title={t("Listado-Users.ListaOrdenes")}
-          detailPanel={(rowData) => {
-            return (
-              <table style={{ textAlign: "center", margin: "1rem" }}>
-                <tr>
-                  <th
-                    style={{
-                      border: "1px solid black",
-                      width: "25rem",
-                      background: "#C5F3F3",
-                    }}
-                  >
-                    {t("Listado-Users.Prendas")}
-                  </th>
-                  <th
-                    style={{
-                      border: "1px solid black",
-                      width: "3rem",
-                      background: "#C5F3F3",
-                    }}
-                  >
-                    {t("Listado-Users.Talle")}
-                  </th>
-                  <th
-                    style={{
-                      border: "1px solid black",
-                      width: "3rem",
-                      background: "#C5F3F3",
-                    }}
-                  >
-                    {t("Listado-Users.Cant")}
-                  </th>
-                  <th
-                    style={{
-                      border: "1px solid black",
-                      width: "6rem",
-                      background: "#C5F3F3",
-                    }}
-                  >
-                    {t("Listado-Users.Precio")}
-                  </th>
-                  <th
-                    style={{
-                      border: "1px solid black",
-                      width: "7rem",
-                      background: "#C5F3F3",
-                    }}
-                  >
-                    {t("Listado-Users.Total")}
-                  </th>
-                </tr>
-                {rowData.clothes.map((c) => (
-                  <tr>
-                    <th
-                      style={{
-                        border: "1px solid black",
-                        width: "25rem",
-                        textAlign: "left",
-                      }}
-                    >
-                      {c.name}
-                    </th>
-                    <th style={{ border: "1px solid black", width: "2rem" }}>
-                      {c.quantity_and_size.size}
-                    </th>
-                    <th style={{ border: "1px solid black", width: "2rem" }}>
-                      {c.quantity_and_size.quantity}
-                    </th>
-                    <th
-                      style={{
-                        border: "1px solid black",
-                        width: "5rem",
-                        textAlign: "right",
-                      }}
-                    >
-                      {c.price}
-                    </th>
-                    <th
-                      style={{
-                        border: "1px solid black",
-                        width: "6rem",
-                        textAlign: "right",
-                      }}
-                    >
-                      {c.price * c.quantity_and_size.quantity}
-                    </th>
-                  </tr>
-                ))}
-              </table>
-            );
-          }}
         />
       </div>
     );
@@ -210,8 +162,11 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
+    resetPassword: (email) => dispatch(resetPassword(email)),
     getAllUsers: () => dispatch(getAllUsers()),
     userSetAdmin: (id, email, set) => dispatch(userSetAdmin(id, email, set)),
+    blockUser: (email) => dispatch(blockUser(email)),
+    unblockUser: (email) => dispatch(unblockUser(email)),
   };
 }
 

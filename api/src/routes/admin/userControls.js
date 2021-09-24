@@ -59,7 +59,7 @@ router.get(
     try {
       const { email } = req.params;
       const userId = await getUserId(email);
-      var data = {
+      let data = {
         email: email,
         connection: "Username-Password-Authentication",
       };
@@ -193,7 +193,6 @@ router.get(
         { id: userId },
         { blocked: true }
       );
-      console.log(response);
       // User deleted.
       return res
         .status(200)

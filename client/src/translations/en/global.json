@@ -57,11 +57,14 @@
 	},
 
 	"Listado-Users": {
+		"ResetPassword": "Reset Password",
+		"BlockUser": "Block User",
+		"UnblockUser": "Unlock User",
 		"Id": "User Id",
 		"Nombre": "User name",
 		"Email": "Email",
-		"SetAdmin": "set admin",
-		"RemoveAdmin": "remove admin",
+		"SetAdmin": "Set admin",
+		"RemoveAdmin": "Remove admin",
 		"Entregado": "Delivered",
 		"ListaOrdenes": "Order list",
 		"Prendas": "Products",
