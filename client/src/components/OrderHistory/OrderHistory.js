@@ -9,8 +9,12 @@ import { BASE_IMG_URL } from "../../constants/productConstants";
 import { Button, Container, Table, Carousel } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Review from "../Review/Review.js";
+import { useTranslation } from "react-i18next";
+
+
 
 const OrderHistory = () => {
+    const [t, i18n] = useTranslation("global");
   const [show, setShow] = useState(false);
   const [data, setData] = useState({
     quantity: 0,
@@ -105,9 +109,9 @@ const OrderHistory = () => {
       {orders.length === 0 ? (
         <div class="jumbotron jumbotron-fluid">
           <div class="container">
-            <h1 class="display-4">¡Aun no hay ninguna orden para mostrar!</h1>
+            <h1 class="display-4">{t("History.Nohay")}</h1>
             <p class="lead">
-              Vuelve cuando hayas realizado el pago de almenos una orden.
+              {t("History.Vuelve")}
             </p>
           </div>
         </div>
@@ -116,10 +120,10 @@ const OrderHistory = () => {
           <Table variant="light" striped bordered>
             <thead className="thead-dark">
               <tr>
-                <th>Número de orden</th>
-                <th>Prendas</th>
-                <th>Direccion</th>
-                <th>Forma de pago</th>
+                <th>{t("History.N-Orden")}</th>
+                <th>{t("History.Prendas")}</th>
+                <th>{t("History.Direcc")}</th>
+                <th>{t("History.F-Pago")}</th>
               </tr>
             </thead>
             <tbody>
@@ -176,7 +180,7 @@ const OrderHistory = () => {
           </Table>
           <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-              <Modal.Title>Detalle de la orden</Modal.Title>
+              <Modal.Title>{t("History.Detalle")}</Modal.Title>
             </Modal.Header>
             <Modal.Body>
               <Carousel variant="dark">
@@ -203,21 +207,21 @@ const OrderHistory = () => {
               </Carousel>
               <br></br>
               <Link to={`/search/details/${data.id}`}>{data.name}</Link>
-              <div>Talle:{" " + data.size}</div>
-              <div>Cantidad:{" " + data.quantity}</div>
-              <div>Fecha de la compra:{" " + data.date}</div>
-              <div>Hora de la compra:{" " + data.time}</div>
+              <div>{t("History.Talle")}:{" " + data.size}</div>
+              <div>{t("History.Cantidad")}:{" " + data.quantity}</div>
+              <div>{t("History.Fecha-Compra")}:{" " + data.date}</div>
+              <div>{t("History.Hora-Compra")}:{" " + data.time}</div>
               {data.isReceived ? (
                 data.isReviewed === false ? (
                   <Review clotheId={data.id} userId={id} />
                 ) : (
                   <h6 style={{ color: "green" }}>
-                    Ya has hecho una reseña de esta prenda <FaStar />
+                    {t("History.R-Hecha")}<FaStar />
                   </h6>
                 )
               ) : (
                 <h6 style={{ color: "GrayText" }}>
-                  Podras dejar tu opinion cuando el producto sea entregado.
+                  {t("History.Opi")}
                 </h6>
               )}
             </Modal.Body>

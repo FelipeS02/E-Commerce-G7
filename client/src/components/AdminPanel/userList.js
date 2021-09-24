@@ -20,6 +20,7 @@ import {
   ViewColumn,
 } from "@material-ui/icons";
 import { getAllUsers, userSetAdmin } from "../../actions/authActions";
+import { withTranslation } from "react-i18next";
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -52,6 +53,7 @@ class UserList extends Component {
   }
 
   render() {
+        const { t } = this.props;
     return (
       <div style={{ width: "70%", margin: "2.5%", marginLeft: "7.5%"}}>
         <MaterialTable
@@ -69,9 +71,9 @@ class UserList extends Component {
           }}
           icons={tableIcons}
           columns={[
-            { title: "Id usuario", field: "id", filtering: false },
-            { title: "Nombre usuario", field: "name", filtering: false },
-            { title: "Email", field: "email", filtering: false },
+            { title: t("Listado-Users.Id"), field: "id", filtering: false },
+            { title: t("Listado-Users.Nombre"), field: "name", filtering: false },
+            { title: t("Listado-Users.Email"), field: "email", filtering: false },
             {
               title: "isAdmin",
               field: "isAdmin",
@@ -81,7 +83,7 @@ class UserList extends Component {
           actions={[
             {
               icon: "ShowTitle",
-              tooltip: "set admin",
+              tooltip: t("Listado-Users.setAdmin"),
               onClick: async (event, rowData) => {
                 await this.props.userSetAdmin(
                   rowData.id,
@@ -93,7 +95,7 @@ class UserList extends Component {
             },
             {
               icon: "ShowTitle",
-              tooltip: "remove admin",
+              tooltip: t("Listado-Users.RemoveAdmin"),
               onClick: async (event, rowData) => {
                 await this.props.userSetAdmin(
                   rowData.id,
@@ -105,7 +107,7 @@ class UserList extends Component {
             },
             {
               icon: "ShowTitle",
-              tooltip: "Entregado",
+              tooltip: t("Listado-Users.Entregado"),
               onClick: async (event, rowData) => {
                 // await this.props.orderStateUpdate(rowData.id, 'ENTREGADO')
                 this.props.getAllUsers();
@@ -113,7 +115,7 @@ class UserList extends Component {
             },
           ]}
           data={this.props.Data}
-          title="Lista de ordenes"
+          title={t("Listado-Users.ListaOrdenes")}
           detailPanel={(rowData) => {
             return (
               <table style={{ textAlign: "center", margin: "1rem" }}>
@@ -125,7 +127,7 @@ class UserList extends Component {
                       background: "#C5F3F3",
                     }}
                   >
-                    Prenda
+                    {t("Listado-Users.Prendas")}
                   </th>
                   <th
                     style={{
@@ -134,7 +136,7 @@ class UserList extends Component {
                       background: "#C5F3F3",
                     }}
                   >
-                    Talle
+                    {t("Listado-Users.Talle")}
                   </th>
                   <th
                     style={{
@@ -143,7 +145,7 @@ class UserList extends Component {
                       background: "#C5F3F3",
                     }}
                   >
-                    Cant
+                    {t("Listado-Users.Cant")}
                   </th>
                   <th
                     style={{
@@ -152,7 +154,7 @@ class UserList extends Component {
                       background: "#C5F3F3",
                     }}
                   >
-                    Precio
+                    {t("Listado-Users.Precio")}
                   </th>
                   <th
                     style={{
@@ -161,7 +163,7 @@ class UserList extends Component {
                       background: "#C5F3F3",
                     }}
                   >
-                    Total
+                    {t("Listado-Users.Total")}
                   </th>
                 </tr>
                 {rowData.clothes.map((c) => (
@@ -221,4 +223,7 @@ function mapDispatchToProps(dispatch) {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(UserList);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withTranslation("global")(UserList));

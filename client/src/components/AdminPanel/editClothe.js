@@ -10,10 +10,12 @@ import { Link, useHistory } from "react-router-dom";
 import { Form, Button } from "react-bootstrap";
 import { validate } from "./validateCreate";
 import swal from "sweetalert";
+import { useTranslation } from "react-i18next";
+
 
 export default function EditClothe(props) {
   const { id } = props.match.params;
-
+  const [t, i18n] = useTranslation("global");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -145,18 +147,18 @@ export default function EditClothe(props) {
 
   const deletePrenda = () => {
     swal({
-      title: "¿Estás seguro de querer eliminar este producto?",
-      text: "Una vez eliminado, no hay manera de recuperarlo",
+      title: t("CrearPrenda.Seguro?"),
+      text: t("CrearPrenda.UnaVez"),
       icon: "warning",
       buttons: true,
       dangerMode: true,
     }).then((willDelete) => {
       if (willDelete) {
         dispatch(deleteClothe(id));
-        swal("¡Hecho! Tu producto ha sido eliminado");
+        swal(t("CrearPrenda.ElimBien"));
         history.push("/admin");
       } else {
-        swal("Tu producto NO ha sido borrado");
+        swal(t("CrearPrenda.NoBorro"));
         history.push("/admin");
       }
     });
@@ -274,8 +276,8 @@ export default function EditClothe(props) {
     });
     dispatch(editClothe(data, id));
     swal({
-      title: "¡Hecho!",
-      text: "Tu producto se ha actualizado de manera correcta.",
+      title: t("CrearPrenda.Hecho"),
+      text: t("CrearPrenda.Exitoso"),
       icon: "success",
     });
     setInput({
@@ -299,7 +301,7 @@ export default function EditClothe(props) {
         <button onClick={getDetail}></button>
         <Form onSubmit={handleSubmit}>
           <Form.Group className="mb-3">
-            <Form.Label>Nombre:</Form.Label>
+            <Form.Label>{t("CrearPrenda.Nombre")}:</Form.Label>
             <Form.Control
               type="text"
               name="name"
@@ -309,7 +311,7 @@ export default function EditClothe(props) {
             {/* {errors.name && (<p className="danger">{errors.name}</p>)} */}
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Precio:</Form.Label>
+            <Form.Label>{t("CrearPrenda.Precio")}:</Form.Label>
             <Form.Control
               type="number"
               name="price"
@@ -319,7 +321,7 @@ export default function EditClothe(props) {
             {/* {errors.price && (<p className="danger">{errors.price}</p>)} */}
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Color:</Form.Label>
+            <Form.Label>{t("CrearPrenda.Color")}:</Form.Label>
             <Form.Control
               type="text"
               name="color"
@@ -329,7 +331,7 @@ export default function EditClothe(props) {
             {/* {errors.color && (<p className="danger">{errors.color}</p>)} */}
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Género:</Form.Label>
+            <Form.Label>{t("CrearPrenda.Genero")}:</Form.Label>
             <div>
               <select
                 style={{ padding: "0.6rem" }}
@@ -356,7 +358,7 @@ export default function EditClothe(props) {
             </div>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Detalles:</Form.Label>
+            <Form.Label>{t("CrearPrenda.Detalles")}:</Form.Label>
             <Form.Control
               as="textarea"
               rows={3}
@@ -368,7 +370,7 @@ export default function EditClothe(props) {
             {/* {errors.detail && (<p className="danger">{errors.detail}</p>)} */}
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Tipos:</Form.Label>
+            <Form.Label>{t("CrearPrenda.Tipos")}:</Form.Label>
             <div>
               <select
                 style={{ padding: "0.6rem" }}
@@ -395,7 +397,7 @@ export default function EditClothe(props) {
             </div>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Talles:</Form.Label>
+            <Form.Label>{t("CrearPrenda.Talles")}:</Form.Label>
             {/* {errors.sizeStock && (<p className="danger">{errors.sizeStock}</p>)} */}
             {input.sizeStock.map((talle, idx) => (
               <Form.Group className="mb-3" key={`talle${idx}`}>
@@ -433,11 +435,11 @@ export default function EditClothe(props) {
               </Form.Group>
             ))}
             <Button variant="dark" type="button" onClick={handleAddSizeStock}>
-              Agregar talle
+              {t("CrearPrenda.Agregar-Talle")}
             </Button>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Label>Categorias:</Form.Label>
+            <Form.Label>{t("CrearPrenda.Categorias")}:</Form.Label>
             {category?.map((cat) => (
               <span style={{ padding: "1rem" }} key={cat}>
                 <label>{cat}</label>
@@ -487,16 +489,16 @@ export default function EditClothe(props) {
                 type="button"
                 onClick={handleAddNewCategory}
               >
-                Agregar nueva categoria
+                {t("CrearPrenda.Agregar-Categoria")}
               </Button>
             </Form.Group>
           </Form.Group>
           <Button variant="dark" type="submit">
-            SUBMIT
+            {t("CrearPrenda.Confirmar")}
           </Button>
           <Link style={{ marginLeft: "2rem" }} to="/admin">
             <Button variant="danger" type="submit">
-              CANCEL
+              {t("CrearPrenda.Cancelar")}
             </Button>
           </Link>
 
@@ -505,7 +507,7 @@ export default function EditClothe(props) {
             onClick={deletePrenda}
             style={{ marginTop: "2rem", display: "block" }}
           >
-            Eliminar Prenda
+            {t("CrearPrenda.Eliminar")}
           </Button>
         </Form>
       </div>

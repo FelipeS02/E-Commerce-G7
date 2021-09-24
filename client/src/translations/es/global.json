@@ -9,11 +9,62 @@
 	},
 
 	"Panel": {
-		"Titulo": "Panel de administrador",
 		"Crear": "Crear Prenda",
 		"Listado": "Listado de prendas",
 		"Ordenes": "Listado de ordenes",
 		"Usuarios": "Listado de usuarios"
+	},
+
+	"Checkout": {
+		"Verf-Mail": "Verificar los datos de la dirección de envío",
+		"Verf-Tarjeta": "Verificar los datos de la tarjeta",
+		"Verf-Tarjeta-Direcc": "Verificar los datos de la dirección de envío y la tarjeta",
+		"NoHayProd": "No hay productos en tu carrito",
+		"Direcc" : "Dirección de envio",
+		"In-Direcc": "Ingrese una dirección",
+		"Ciudad": "Ciudad",
+		"In-Ciudad": "Ingrese una ciudad",
+		"Prov": "Provincia",
+		"In-Prov": "Seleccion una provincia",
+		"Zip": "Ingrese un Zip",
+		"D-Tarjeta": "Datos de tarjeta",
+		"Resumen": "Resumen de la orden",
+		"Precio": "Precio",
+		"Talle": "Talle",
+		"Articulos": "Articulos",
+		"Total": "Total",
+		"Pagar": "Pagar"
+	},
+
+	"Listado-Users": {
+		"Id": "Id de usuario",
+		"Nombre": "Nombre de usuario",
+		"Email": "Email",
+		"SetAdmin": "set admin",
+		"RemoveAdmin": "remove admin",
+		"Entregado": "Entregado",
+		"ListaOrdenes": "Lista de ordenes",
+		"Prendas": "Prendas",
+		"Talle": "Talles",
+		"Cant": "Cantidad",
+		"Precio": "Precio",
+		"Total": "Total"
+	},
+
+	"History":{
+		"NoHay": "¡Aun no hay ninguna orden para mostrar!",
+		"Vuelve": "Vuelve cuando hayas realizado el pago de almenos una orden.",
+		"N-Orden": "Numero de orden",
+		"Prendas": "Prendas",
+		"Direcc": "Direccion",
+		"F-Pago": "Forma de pago",
+		"Detalle": "Detalle de la orden",
+		"Talle": "Talle",
+		"Cantidad": "Cantidad",
+		"Fecha-Compra": "Fecha de la compra",
+		"Hora-Compra": "Hora de la compra",
+		"R-Hecha": "Ya has hecho una reseña de esta prenda",
+		"Opi": "Podras dejar tu opinion cuando el producto sea entregado."
 	},
 
 	"CrearPrenda": {
@@ -31,9 +82,16 @@
 		"Confirmar": "CONFIRMAR",
 		"Cancelar": "Cancelar",
 		"Exitoso": "Tu producto ha sido creado correctamente.",
+		"Exitoso-E": "Tu producto ha sido editado correctamente.",
 		"Atencion": "¡Atención!",
 		"Faltan": "Faltan ítems para poder crear tu producto.",
-		"Hecho": "¡Hecho!"
+		"Hecho": "¡Hecho!",
+		"Eliminar": "Eliminar Prenda",
+		"Actualizar": "Tu producto ha sido actualizado correctamente",
+		"Seguro?" : "¿Estas seguro que quieres eliminar esta prenda?",
+		"UnaVez": "Una vez eliminado, no hay manera de recuperarlo",
+		"ElimBien": "¡Hecho! Tu producto ha sido eliminado",
+		"NoBorro": "Tu producto NO ha sido borrado"
 	},
 
 

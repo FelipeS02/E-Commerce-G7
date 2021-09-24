@@ -17,22 +17,22 @@ function NewAdminPanel() {
     <div className="panel_home d-grid gap-2" style={{width: "15%"}}>
       <Link className="panel_home_link" to="/admin/createClothe">
         <Button variant="outline-success">
-          <b>Crear producto</b>
+          <b>{t("Panel.Crear")}</b>
         </Button>
       </Link>
       <Link className="panel_home_link" to="/admin/listproducts">
         <Button variant="outline-success">
-          <b>Productos</b>
+          <b>{t("Panel.Listado")}</b>
         </Button>
       </Link>
       <Link className="panel_home_link" to="/admin/listDetail">
         <Button variant="outline-success">
-          <b>Ordenes</b>
+          <b>{t("Panel.Ordenes")}</b>
         </Button>
       </Link>
       <Link className="panel_home_link" to="/admin/listUsers">
         <Button variant="outline-success">
-          <b>Usuarios</b>
+          <b>{t("Panel.Usuarios")}</b>
         </Button>
       </Link>
     </div>
