@@ -10,7 +10,7 @@ import { Row, Col } from "react-bootstrap";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
 import PaginationC from "../Pagination/PaginationC";
 import CardP from "../ProductCard/CardP";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const GenreResults = () => {
   const [t, i18n] = useTranslation("global");
@@ -57,12 +57,15 @@ const GenreResults = () => {
           ) : errorCategories ? (
             <h1>{errorCategories}</h1>
           ) : (
-            <SideBarFilter />
+            <SideBarFilter disabledGenre="true" />
           )}
         </Col>
         <Col>
           <Row>
-            <h1>{products.length}{t("Results.Resultados")}</h1>
+            <h1>
+              {products.length}
+              {t("Results.Resultados")}
+            </h1>
           </Row>
           <Row className="d-flex align-content-center flex-wrap justify-content-between">
             {error === "" && products.allClothes ? (

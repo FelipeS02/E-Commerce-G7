@@ -25,21 +25,115 @@ import swal from "sweetalert";
 import { getOrder } from "../../actions/cartAccions";
 
 const CheckOut = (props) => {
+  // ------- begin form  and card validation------
+
   const [formValidation, setFormValidation] = useState({
-    hasBeenTouched: false,
-    isCompleted: false,
+    address: "",
+    city: "",
+    state: "",
+    zip: "",
+  });
+  const [inputValidation, setInputValidation] = useState({
+    isAddressTouch: false,
+    isCityTouch: false,
+    isStateTouch: false,
+    isZipTouch: false,
+    cardInfoisCompleted: false,
   });
 
+  const enteredAddress = formValidation.address.trim() !== "";
+  const enteredCity = formValidation.city.trim() !== "";
+  const enteredState = formValidation.state.trim() !== "";
+  const enteredZip = formValidation.zip.trim() !== "";
+
+  const addressIsValid = !enteredAddress && inputValidation.isAddressTouch;
+
+  const cityIsValid = !enteredCity && inputValidation.isCityTouch;
+
+  const stateIsValid = !enteredState && inputValidation.isStateTouch;
+
+  const zipIsValid = !enteredZip && inputValidation.isZipTouch;
+
+  const onBlurHandlerValidation = (e) => {
+    console.log(e.target.name);
+    setInputValidation((prevState) => {
+      if (e.target.name === "address")
+        return {
+          ...prevState,
+          isAddressTouch: true,
+        };
+      if (e.target.name === "city")
+        return {
+          ...prevState,
+          isCityTouch: true,
+        };
+      if (e.target.name === "state")
+        return {
+          ...prevState,
+          isStateTouch: true,
+        };
+      if (e.target.name === "zip")
+        return {
+          ...prevState,
+          isZipTouch: true,
+        };
+    });
+  };
+
+  let isFormValid = false;
+  if (addressIsValid && cityIsValid && stateIsValid && zipIsValid) {
+    isFormValid = true;
+  }
+
   const cardHandler = (e) => {
-    console.log("sonethinbg");
-    console.log("e completed", e.complete);
-    setFormValidation((prevState) => {
+    setInputValidation((prevState) => {
       return {
         ...prevState,
-        isCompleted: e.complete,
+        cardInfoisCompleted: e.complete,
       };
     });
   };
+
+  const inputHandler = (e) => {
+    console.log(e.target.name);
+    if (e.target.name === "address") {
+      setFormValidation((prevState) => {
+        return {
+          ...prevState,
+          address: e.target.value,
+        };
+      });
+    }
+
+    if (e.target.name === "city") {
+      setFormValidation((prevState) => {
+        return {
+          ...prevState,
+          city: e.target.value,
+        };
+      });
+    }
+
+    if (e.target.name === "state") {
+      setFormValidation((prevState) => {
+        return {
+          ...prevState,
+          state: e.target.value,
+        };
+      });
+    }
+
+    if (e.target.name === "zip") {
+      setFormValidation((prevState) => {
+        return {
+          ...prevState,
+          zip: e.target.value,
+        };
+      });
+    }
+  };
+
+  // ------- end form  and card validation------
   const provincias = [
     "Buenos Aires",
     "Catamarca",
@@ -48,6 +142,22 @@ const CheckOut = (props) => {
     "Córdoba",
     "Corrientes",
     "Entre Ríos",
+    "Formosa",
+    "Jujuy",
+    "La Pampa",
+    "La Rioja",
+    "Mendoza",
+    "Misiones",
+    "Neuquén",
+    "Río Negro",
+    "Salta",
+    "San Juan",
+    "San Luis",
+    "Santa Cruz",
+    "Santa Fe",
+    "Santiago del Estero",
+    "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+    "Tucumán",
   ];
   const stripe = useStripe();
   const elements = useElements();
@@ -66,9 +176,23 @@ const CheckOut = (props) => {
   const { userInfo } = userState;
 
   const paymentHandler = async () => {
-    if (!formValidation.isCompleted) {
+    if (!addressIsValid || !cityIsValid || !stateIsValid || zipIsValid) {
+      return swal("Verificar los datos de la dirección de envío", "", "error");
+    }
+    if (!formValidation.cardInfoisCompleted) {
       return swal("Verificar los datos de la tarjeta", "", "error");
     }
+    if (
+      !formValidation.cardInfoisCompleted &&
+      (!addressIsValid || !cityIsValid || !stateIsValid || zipIsValid)
+    ) {
+      return swal(
+        "Verificar los datos de la dirección de envío y la tarjeta",
+        "",
+        "error"
+      );
+    }
+
     try {
       const { error, paymentMethod } = await stripe.createPaymentMethod({
         type: "card",
@@ -108,6 +232,7 @@ const CheckOut = (props) => {
   if (totalItems === 0) {
     return <h1>No hay productos en tu carrito</h1>;
   }
+
   return (
     <Container className="my-5">
       <Accordion defaultActiveKey="0">
@@ -117,31 +242,74 @@ const CheckOut = (props) => {
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
-              <Form>
+              <Form noValidate>
                 <Form.Group controlId="formGridAddress1">
                   <Form.Label>Dirección</Form.Label>
-                  <Form.Control placeholder="1234 Main St" />
+                  <Form.Control
+                    placeholder="1234 Main St"
+                    required
+                    isInvalid={addressIsValid ? true : false}
+                    name="address"
+                    value={formValidation.address}
+                    onChange={inputHandler}
+                    onBlur={onBlurHandlerValidation}
+                  />
+
+                  <Form.Control.Feedback type="invalid">
+                    Ingrese una dirección
+                  </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Row>
                   <Form.Group as={Col} controlId="formGridCity">
                     <Form.Label>Ciudad</Form.Label>
-                    <Form.Control />
+                    <Form.Control
+                      required
+                      name="city"
+                      isInvalid={cityIsValid ? true : false}
+                      value={formValidation.city}
+                      onChange={inputHandler}
+                      onBlur={onBlurHandlerValidation}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Ingrese una ciudad
+                    </Form.Control.Feedback>
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="formGridState">
                     <Form.Label>Provincia</Form.Label>
-                    <Form.Control as="select" defaultValue="Selecciona...">
-                      <option>Selecciona...</option>
+                    <Form.Control
+                      as="select"
+                      defaultValue="Selecciona..."
+                      required
+                      name="state"
+                      onChange={inputHandler}
+                      onBlur={onBlurHandlerValidation}
+                      isInvalid={stateIsValid ? true : false}
+                    >
+                      <option value="">Selecciona...</option>
                       {provincias.map((provincia, index) => (
                         <option>{`Provincia de ${provincia}`}</option>
                       ))}
                     </Form.Control>
+                    <Form.Control.Feedback type="invalid">
+                      Seleccione una provincia
+                    </Form.Control.Feedback>
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="formGridZip">
                     <Form.Label>Zip</Form.Label>
-                    <Form.Control />
+                    <Form.Control
+                      name="zip"
+                      value={formValidation.zip}
+                      isInvalid={zipIsValid ? true : false}
+                      onChange={inputHandler}
+                      onBlur={onBlurHandlerValidation}
+                      required
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Ingrese un ZIP
+                    </Form.Control.Feedback>
                   </Form.Group>
                 </Form.Row>
               </Form>
