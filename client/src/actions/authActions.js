@@ -8,7 +8,6 @@ import {
 } from "../constants/productConstants";
 
 export const getAccessToken = (token) => {
-  console.log("setting access token in header");
   if (token) {
     axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
   } else {

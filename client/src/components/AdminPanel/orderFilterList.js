@@ -1,6 +1,8 @@
 import React, { Component, forwardRef } from "react";
 import { connect } from "react-redux";
 import MaterialTable, { MTableToolbar } from "material-table";
+import { Table } from "react-bootstrap";
+import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Save,
   AddBox,
@@ -18,9 +20,13 @@ import {
   Remove,
   SaveAlt,
   ViewColumn,
+  Cancel,
+  LocalShipping,
+  MarkunreadMailbox,
 } from "@material-ui/icons";
 import { getAllOrders, orderStateUpdate } from "../../actions/orderActions";
 import { withTranslation } from "react-i18next";
+import LogoScrean from "./LogoScrean";
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -51,175 +57,127 @@ class ListDetail extends Component {
   componentDidMount() {
     this.props.getAllOrders();
   }
-
   render() {
-    const { t } = this.props;
-    return (
-      <div style={{ width: "70%", margin: "2.5%", marginLeft: "7.5%"}}>
-        <MaterialTable
-          components={{
-            Toolbar: (props) => (
-              <div style={{ backgroundColor: "#A8F2CA" }}>
-                <MTableToolbar {...props} />
-              </div>
-            ),
+    const { t, Data } = this.props;
+    if (Data?.length > 0) {
+      return (
+        <div style={{ width: "70%", margin: "2.5%", marginLeft: "7.5%" }}>
+          <MaterialTable
+            components={{
+              Toolbar: (props) => (
+                <div style={{ backgroundColor: "#A8F2CA" }}>
+                  <MTableToolbar {...props} />
+                </div>
+              ),
+            }}
+            options={{
+              filtering: true,
+              pageSize: 7,
+              pageSizeOptions: [7, 10, 14],
+            }}
+            icons={tableIcons}
+            columns={[
+              {
+                title: t("ListaOrdenes.NumOrden"),
+                field: "id",
+                filtering: false,
+              },
+              {
+                title: t("ListaOrdenes.Estado"),
+                field: "state",
+                lookup: {
+                  CONFIRMADO: "CONFIRMADO",
+                  DESPACHADO: "DESPACHADO",
+                  CANCELADO: "CANCELADO",
+                  ENTREGADO: "ENTREGADO",
+                },
+              },
+              {
+                title: t("ListaOrdenes.Total"),
+                field: "total",
+                type: "numeric",
+                filtering: false,
+              },
+              {
+                title: t("ListaOrdenes.UltAct"),
+                field: "birthCity",
+                filtering: false,
+              },
+            ]}
+            actions={[
+              {
+                icon: Cancel,
+                tooltip: t("ListaOrdenes.Cancelar"),
+                onClick: async (event, rowData) => {
+                  await this.props.orderStateUpdate(rowData.id, "CANCELADO");
+                  this.props.getAllOrders();
+                },
+              },
+              {
+                icon: LocalShipping,
+                tooltip: t("ListaOrdenes.Despachar"),
+                onClick: async (event, rowData) => {
+                  await this.props.orderStateUpdate(rowData.id, "DESPACHADO");
+                  this.props.getAllOrders();
+                },
+              },
+              {
+                icon: MarkunreadMailbox,
+                tooltip: t("ListaOrdenes.Entregado"),
+                onClick: async (event, rowData) => {
+                  await this.props.orderStateUpdate(rowData.id, "ENTREGADO");
+                  this.props.getAllOrders();
+                },
+              },
+            ]}
+            data={this.props?.Data?.filter((e) => e.state !== "CARRITO")}
+            title={t("ListaOrdenes.Titulo")}
+            detailPanel={(rowData) => {
+              return (
+                <Table variant="light" striped bordered>
+                  <thead className="thead-dark">
+                    <tr>
+                      <th>{t("History.Clothe")}</th>
+                      <th>{t("History.Talle")}</th>
+                      <th>{t("History.Cantidad")}</th>
+                      <th>{t("History.Price")}</th>
+                      <th>Total</th>
+                    </tr>
+                  </thead>
+                  {rowData.clothes.map((c) => (
+                    <tbody>
+                      <tr>
+                        <td>{c.name}</td>
+                        <td>{c.quantity_and_size.size}</td>
+                        <td>{c.quantity_and_size.quantity}</td>
+                        <td>{c.price}</td>
+                        <td>{c.price * c.quantity_and_size.quantity}</td>
+                      </tr>
+                    </tbody>
+                  ))}
+                </Table>
+              );
+            }}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginLeft: "20%",
           }}
-          options={{
-            filtering: true,
-            pageSize: 7,
-            pageSizeOptions: [7, 10, 14],
-          }}
-          icons={tableIcons}
-          columns={[
-            {
-              title: t("ListaOrdenes.NumOrden"),
-              field: "id",
-              filtering: false,
-            },
-            {
-              title: t("ListaOrdenes.Estado"),
-              field: "state",
-              lookup: {
-                CARRITO: "EN PROCESO",
-                CONFIRMADO: "CONFIRMADO",
-                DESPACHADO: "DESPACHADO",
-                CANCELADO: "CANCELADO",
-                ENTREGADO: "ENTREGADO",
-              },
-            },
-            {
-              title: t("ListaOrdenes.Total"),
-              field: "total",
-              type: "numeric",
-              filtering: false,
-            },
-            {
-              title: t("ListaOrdenes.UltAct"),
-              field: "birthCity",
-              filtering: false,
-            },
-          ]}
-          actions={[
-            {
-              icon: "ShowTitle",
-              tooltip: t("ListaOrdenes.Cancelar"),
-              onClick: async (event, rowData) => {
-                await this.props.orderStateUpdate(rowData.id, "CANCELADO");
-                this.props.getAllOrders();
-              },
-            },
-            {
-              icon: "ShowTitle",
-              tooltip: t("ListaOrdenes.Despachar"),
-              onClick: async (event, rowData) => {
-                await this.props.orderStateUpdate(rowData.id, "DESPACHADO");
-                this.props.getAllOrders();
-              },
-            },
-            {
-              icon: "ShowTitle",
-              tooltip: t("ListaOrdenes.Entregado"),
-              onClick: async (event, rowData) => {
-                await this.props.orderStateUpdate(rowData.id, "ENTREGADO");
-                this.props.getAllOrders();
-              },
-            },
-          ]}
-          data={this.props.Data}
-          title={t("ListaOrdenes.Titulo")}
-          detailPanel={(rowData) => {
-            return (
-              <table style={{ textAlign: "center", margin: "1rem" }}>
-                <tr>
-                  <th
-                    style={{
-                      border: "1px solid black",
-                      width: "25rem",
-                      background: "#C5F3F3",
-                    }}
-                  >
-                    Prenda
-                  </th>
-                  <th
-                    style={{
-                      border: "1px solid black",
-                      width: "3rem",
-                      background: "#C5F3F3",
-                    }}
-                  >
-                    Talle
-                  </th>
-                  <th
-                    style={{
-                      border: "1px solid black",
-                      width: "3rem",
-                      background: "#C5F3F3",
-                    }}
-                  >
-                    Cant
-                  </th>
-                  <th
-                    style={{
-                      border: "1px solid black",
-                      width: "6rem",
-                      background: "#C5F3F3",
-                    }}
-                  >
-                    Precio
-                  </th>
-                  <th
-                    style={{
-                      border: "1px solid black",
-                      width: "7rem",
-                      background: "#C5F3F3",
-                    }}
-                  >
-                    Total
-                  </th>
-                </tr>
-                {rowData.clothes.map((c) => (
-                  <tr>
-                    <th
-                      style={{
-                        border: "1px solid black",
-                        width: "25rem",
-                        textAlign: "left",
-                      }}
-                    >
-                      {c.name}
-                    </th>
-                    <th style={{ border: "1px solid black", width: "2rem" }}>
-                      {c.quantity_and_size.size}
-                    </th>
-                    <th style={{ border: "1px solid black", width: "2rem" }}>
-                      {c.quantity_and_size.quantity}
-                    </th>
-                    <th
-                      style={{
-                        border: "1px solid black",
-                        width: "5rem",
-                        textAlign: "right",
-                      }}
-                    >
-                      {c.price}
-                    </th>
-                    <th
-                      style={{
-                        border: "1px solid black",
-                        width: "6rem",
-                        textAlign: "right",
-                      }}
-                    >
-                      {c.price * c.quantity_and_size.quantity}
-                    </th>
-                  </tr>
-                ))}
-              </table>
-            );
-          }}
-        />
-      </div>
-    );
+        >
+          <LogoScrean />
+          <h1 style={{ paddingTop: "20px", marginLeft: "50px" }}>
+            {t("History.NoHay")}
+          </h1>
+        </div>
+      );
+    }
   }
 }
 

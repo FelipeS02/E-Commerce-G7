@@ -1,4 +1,3 @@
-import { compose } from "redux";
 import React, { Component, forwardRef } from "react";
 import { connect } from "react-redux";
 import MaterialTable, { MTableToolbar } from "material-table";
@@ -22,8 +21,8 @@ import {
 } from "@material-ui/icons";
 import { getProductsAdmin } from "../../actions/ProductActions";
 import { Link } from "react-router-dom";
-
 import { withTranslation } from "react-i18next";
+import LogoScrean from "./LogoScrean";
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -55,53 +54,71 @@ class ProductList extends Component {
     this.props.getProductsAdmin();
   }
   render() {
-    const { t } = this.props;
-    return (
-      <div
-        style={{
-          width: "70%",
-          margin: "2.5%",
-          marginLeft: "7.5%",
-        }}
-      >
-        <MaterialTable
-          components={{
-            Toolbar: (props) => (
-              <div style={{ backgroundColor: "#A8F2CA" }}>
-                <MTableToolbar {...props} />
-              </div>
-            ),
+    const { t, Products } = this.props;
+    if (Products?.length > 0) {
+      return (
+        <div
+          style={{
+            width: "70%",
+            margin: "2.5%",
+            marginLeft: "7.5%",
           }}
-          icons={tableIcons}
-          options={{
-            pageSize: 10,
-            pageSizeOptions: [10, 15, 20],
-          }}
-          columns={[
-            { title: "Id", field: "id" },
-            { title: t("ListaPrendas.Nombre"), field: "name" },
-            {
-              title: t("ListaPrendas.Precio"),
-              field: "price",
-              type: "numeric",
-            },
-          ]}
-          actions={[
-            (rowData) => ({
-              icon: () => (
-                <Link to={`/admin/editClothe/${rowData.id}`}>
-                  {t("ListaPrendas.Editar")}
-                </Link>
+        >
+          <MaterialTable
+            components={{
+              Toolbar: (props) => (
+                <div style={{ backgroundColor: "#A8F2CA" }}>
+                  <MTableToolbar {...props} />
+                </div>
               ),
-              tooltip: t("ListaPrendas.EditarProd"),
-              onClick: rowData,
-            }),
-          ]}
-          data={this.props.Products}
-          title={t("ListaPrendas.Titulo")}
-        />
-      </div>
-    );
+            }}
+            icons={tableIcons}
+            options={{
+              pageSize: 10,
+              pageSizeOptions: [10, 15, 20],
+            }}
+            columns={[
+              { title: "Id", field: "id", type:"numeric" },
+              { title: t("ListaPrendas.Nombre"), field: "name" },
+              {
+                title: t("ListaPrendas.Precio"),
+                field: "price",
+                type: "numeric",
+              },
+            ]}
+            actions={[
+              (rowData) => ({
+                icon: () => (
+                  <Link to={`/admin/editClothe/${rowData.id}`}>
+                    <Edit style={{color: "gray"}}/>
+                  </Link>
+                ),
+                tooltip: t("ListaPrendas.EditarProd"),
+                onClick: rowData,
+              }),
+            ]}
+            data={this.props.Products}
+            title={t("ListaPrendas.Titulo")}
+          />
+        </div>
+      );
+    } else {
+      return (
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            marginLeft: "20%",
+          }}
+        >
+          <LogoScrean/>
+          <h1 style={{ paddingTop: "20px", marginLeft: "50px" }}>
+            {t("History.NoHay")}
+          </h1>
+        </div>
+      );
+    }
   }
 }
 

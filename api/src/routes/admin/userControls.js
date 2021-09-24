@@ -133,28 +133,23 @@ router.get(
   }
 );
 
-router.get(
-  "/delete-user/:email",
-
-  async (req, res) => {
+router.get("/delete-user/:email", async (req, res) => {
+  try {
     const { email } = req.params;
     const userId = await getUserId(email);
-
-    try {
-      if (!userId) {
-        throw new Error("Usuario no encontrado");
-      }
-      const response = await auth0.deleteUser({ id: userId });
-      console.log(response);
-      // User deleted.
-      return res.status(202).send("Se elimino al usuario correctamente");
-    } catch (err) {
-      const { message } = err;
-      console.log(message);
-      return res.json(responseMessage(ERROR, message));
+    if (!userId) {
+      throw new Error("Usuario no encontrado");
     }
+    const response = await auth0.deleteUser({ id: userId });
+    console.log(response);
+    // User deleted.
+    return res.status(202).send("Se elimino al usuario correctamente");
+  } catch (err) {
+    const { message } = err;
+    console.log(message);
+    return res.json(responseMessage(ERROR, message));
   }
-);
+});
 
 router.get(
   "/block-user/:email",

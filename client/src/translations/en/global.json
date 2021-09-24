@@ -38,6 +38,8 @@
 	},
 
 	"History":{
+		"Clothe": "Clothe",
+		"Price": "Price",
 		"Order-name": "Order",
 		"NoHay": "¡There is no order to display yet!",
 		"Vuelve": "Come back when you have paid for at least one order.",

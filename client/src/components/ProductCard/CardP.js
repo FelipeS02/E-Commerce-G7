@@ -16,7 +16,7 @@ const CardP = (props) => {
     maxValue: 0,
   });
   const userInfo = useSelector((state) => state.userState.userInfo);
-  const addToCardHandler = () => {
+  const addToCardHandler = async () => {
     dispatch(addToCart(userSelected, id, userInfo.id, props));
   };
 

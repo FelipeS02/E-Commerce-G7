@@ -32,6 +32,7 @@ const OrderHistory = () => {
     CONFIRMADO: "#007bff",
     CANCELADO: "red",
   };
+  
   const dispatch = useDispatch();
   const userState = useSelector((state) => state.userState);
   const id = userState.userInfo.id;
@@ -94,7 +95,7 @@ const OrderHistory = () => {
       {orders.length === 0 ? (
         <div class="jumbotron jumbotron-fluid">
           <div class="container">
-            <h1 class="display-4">{t("History.Nohay")}</h1>
+            <h1 class="display-4">{t("History.NoHay")}</h1>
             <p class="lead">{t("History.Vuelve")}</p>
           </div>
         </div>

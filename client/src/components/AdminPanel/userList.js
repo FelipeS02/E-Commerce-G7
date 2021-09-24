@@ -105,16 +105,8 @@ class UserList extends Component {
                 this.props.getAllUsers();
               },
             },
-            {
-              icon: "ShowTitle",
-              tooltip: t("Listado-Users.Entregado"),
-              onClick: async (event, rowData) => {
-                // await this.props.orderStateUpdate(rowData.id, 'ENTREGADO')
-                this.props.getAllUsers();
-              },
-            },
           ]}
-          data={this.props.Data}
+          data={this.props?.Data}
           title={t("Listado-Users.ListaOrdenes")}
           detailPanel={(rowData) => {
             return (

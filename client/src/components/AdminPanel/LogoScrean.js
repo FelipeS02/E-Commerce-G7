@@ -8,7 +8,7 @@ function LogoScrean() {
       className="logoAdminPanel"
       style={{
         height: "50rem",
-        width: "75%",
+        width: "100%",
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
@@ -24,6 +24,7 @@ function LogoScrean() {
           height="auto"
           className="d-inline-block align-top"
           alt="Logo"
+          style={{marginTop: "10%"}}
         />
       </div>
     </div>
