@@ -14,7 +14,7 @@ function NewAdminPanel() {
   }, [dispatch]);
 
   return (
-    <div className="panel_home d-grid gap-2">
+    <div className="panel_home d-grid gap-2" style={{width: "15%"}}>
       <Link className="panel_home_link" to="/admin/createClothe">
         <Button variant="outline-success">
           <b>Crear producto</b>
