@@ -38,7 +38,6 @@ const SideBarFilter = (props) => {
         active={size}
       />
       <FilterGroup
-        className="disabled"
         title={t("SideBarFilter.Genero")}
         type="genre"
         items={genres}

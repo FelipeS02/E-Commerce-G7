@@ -1,13 +1,20 @@
 .panel_home{
-	background-color: #ADC0B7;
+	background-color: #343a40;
+	min-width: min-content;
+	min-height: min-content;
+	min-height: 50rem;
+	height: auto;
 	width: 25%;
 	align-items: baseline;
 	align-content: flex-start;
 }
-
+.panel_home b{
+	color: white;
+}
 .panel_home button{
 	margin: 5%;
-	max-width: 90%;
+	margin-bottom: 0;
+	min-width: 90%;
 	width: 90%;
 }
 

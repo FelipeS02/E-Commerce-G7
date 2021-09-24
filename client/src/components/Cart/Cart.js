@@ -13,8 +13,7 @@ import { FaShoppingCart, FaRegTrashAlt } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
 import { getOrder, removeFromCart } from "../../actions/cartAccions";
 import { BASE_IMG_URL } from "../../constants/productConstants";
-import {useTranslation} from "react-i18next";
-
+import { useTranslation } from "react-i18next";
 
 const Cart = () => {
   const [t, i18n] = useTranslation("global");

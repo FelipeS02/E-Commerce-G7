@@ -19,8 +19,7 @@ import {
   SaveAlt,
   ViewColumn,
 } from "@material-ui/icons";
-import { getAllOrders, orderStateUpdate } from "../../actions/orderActions";
-import { withTranslation } from "react-i18next";
+import { getAllUsers, userSetAdmin } from "../../actions/authActions";
 
 const tableIcons = {
   Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -47,13 +46,12 @@ const tableIcons = {
   ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
 };
 
-class ListDetail extends Component {
+class UserList extends Component {
   componentDidMount() {
-    this.props.getAllOrders();
+    this.props.getAllUsers();
   }
 
   render() {
-    const { t } = this.props;
     return (
       <div style={{ width: "70%", margin: "2.5%", marginLeft: "7.5%"}}>
         <MaterialTable
@@ -66,67 +64,56 @@ class ListDetail extends Component {
           }}
           options={{
             filtering: true,
-            pageSize: 7,
-            pageSizeOptions: [7, 10, 14],
+            pageSize: 10,
+            pageSizeOptions: [10, 15, 20],
           }}
           icons={tableIcons}
           columns={[
+            { title: "Id usuario", field: "id", filtering: false },
+            { title: "Nombre usuario", field: "name", filtering: false },
+            { title: "Email", field: "email", filtering: false },
             {
-              title: t("ListaOrdenes.NumOrden"),
-              field: "id",
-              filtering: false,
-            },
-            {
-              title: t("ListaOrdenes.Estado"),
-              field: "state",
-              lookup: {
-                CARRITO: "EN PROCESO",
-                CONFIRMADO: "CONFIRMADO",
-                DESPACHADO: "DESPACHADO",
-                CANCELADO: "CANCELADO",
-                ENTREGADO: "ENTREGADO",
-              },
-            },
-            {
-              title: t("ListaOrdenes.Total"),
-              field: "total",
-              type: "numeric",
-              filtering: false,
-            },
-            {
-              title: t("ListaOrdenes.UltAct"),
-              field: "birthCity",
-              filtering: false,
+              title: "isAdmin",
+              field: "isAdmin",
+              lookup: { true: "TRUE", false: "FALSE" },
             },
           ]}
           actions={[
             {
               icon: "ShowTitle",
-              tooltip: t("ListaOrdenes.Cancelar"),
+              tooltip: "set admin",
               onClick: async (event, rowData) => {
-                await this.props.orderStateUpdate(rowData.id, "CANCELADO");
-                this.props.getAllOrders();
+                await this.props.userSetAdmin(
+                  rowData.id,
+                  rowData.email,
+                  "addAdmin"
+                );
+                this.props.getAllUsers();
               },
             },
             {
               icon: "ShowTitle",
-              tooltip: t("ListaOrdenes.Despachar"),
+              tooltip: "remove admin",
               onClick: async (event, rowData) => {
-                await this.props.orderStateUpdate(rowData.id, "DESPACHADO");
-                this.props.getAllOrders();
+                await this.props.userSetAdmin(
+                  rowData.id,
+                  rowData.email,
+                  "removeAdmin"
+                );
+                this.props.getAllUsers();
               },
             },
             {
               icon: "ShowTitle",
-              tooltip: t("ListaOrdenes.Entregado"),
+              tooltip: "Entregado",
               onClick: async (event, rowData) => {
-                await this.props.orderStateUpdate(rowData.id, "ENTREGADO");
-                this.props.getAllOrders();
+                // await this.props.orderStateUpdate(rowData.id, 'ENTREGADO')
+                this.props.getAllUsers();
               },
             },
           ]}
           data={this.props.Data}
-          title={t("ListaOrdenes.Titulo")}
+          title="Lista de ordenes"
           detailPanel={(rowData) => {
             return (
               <table style={{ textAlign: "center", margin: "1rem" }}>
@@ -224,17 +211,14 @@ class ListDetail extends Component {
 }
 
 function mapStateToProps(state) {
-  return { Data: state.orderState.orders.data };
+  return { Data: state.userState.allUsers };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    getAllOrders: () => dispatch(getAllOrders()),
-    orderStateUpdate: (id, state) => dispatch(orderStateUpdate(id, state)),
+    getAllUsers: () => dispatch(getAllUsers()),
+    userSetAdmin: (id, email, set) => dispatch(userSetAdmin(id, email, set)),
   };
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(withTranslation("global")(ListDetail));
+export default connect(mapStateToProps, mapDispatchToProps)(UserList);
