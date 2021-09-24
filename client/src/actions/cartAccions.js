@@ -16,7 +16,7 @@ export const addToCart = (obj, id, userId, clothe) => async (dispatch) => {
       if (data.statusCode !== 200) {
         throw new Error(`${data.data}`);
       }
-      swal("Prenda se agrego correctamente al carrito", "", "success");
+      await swal("Prenda agregada correctamente al carrito", "", "success");
 
       return dispatch(getOrder(userId, "CARRITO"));
     } catch (err) {
@@ -114,10 +114,10 @@ export const getOrder = (userId, status) => async (dispatch) => {
         } catch (err) {
           console.log(err);
         }
-        swal("¡Hecho! Se agregaron los productos a tu carrito");
+        await swal("¡Hecho! Se agregaron los productos a tu carrito");
       } else {
         window.localStorage.clear();
-        swal("Los producto no se agregaron a tu carrito");
+        await swal("Los producto no se agregaron a tu carrito");
         try {
           window.localStorage.clear();
           const { data } = await axios.get(

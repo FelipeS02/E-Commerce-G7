@@ -22,11 +22,11 @@ const Review = (props) => {
   const data = {};
   const [review, setReview] = useState("");
 
-  function handleText(e) {
+  const handleText = (e) =>{
     setReview(e.target.value);
   }
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     data.clotheId = clotheId;
@@ -35,8 +35,7 @@ const Review = (props) => {
     data.review = review;
 
     dispatch(reviewUser(data));
-    swal("Gracias por dejarnos tu opinón");
-    history.push("/");
+    await swal("Gracias por dejarnos tu opinón");
   }
 
   return (

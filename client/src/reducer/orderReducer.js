@@ -19,7 +19,7 @@ export default function orderReducer(state = initialState, action) {
     case GET_ORDERS:
       return {
         ...state,
-        orders: action.payload.orders.filter((e) => e.state !== "CARRITO"),
+        orders: action.payload,
       };
     case ORDERS_FAIL:
       return {

@@ -57,7 +57,13 @@ class ProductList extends Component {
   render() {
     const { t } = this.props;
     return (
-      <div style={{ width: "70%", margin: "2.5%" }}>
+      <div
+        style={{
+          width: "70%",
+          margin: "2.5%",
+          marginLeft: "7.5%",
+        }}
+      >
         <MaterialTable
           components={{
             Toolbar: (props) => (
@@ -67,6 +73,10 @@ class ProductList extends Component {
             ),
           }}
           icons={tableIcons}
+          options={{
+            pageSize: 10,
+            pageSizeOptions: [10, 15, 20],
+          }}
           columns={[
             { title: "Id", field: "id" },
             { title: t("ListaPrendas.Nombre"), field: "name" },

@@ -52,7 +52,7 @@ const Home = (props) => {
     <div>
       <Carousel variant="dark">
         {imgUrl.map((item, index) => (
-          <Carousel.Item interval={5000} key={index}>
+          <Carousel.Item interval={3000} key={index}>
             <img className="d-block w-100" src={item} alt={index} />
           </Carousel.Item>
         ))}
@@ -77,7 +77,11 @@ const Home = (props) => {
               />
             ))
           ) : (
-            <h1>{t("Results.Sin-Resultados")}</h1>
+            <div class="jumbotron jumbotron-fluid">
+              <div class="container">
+                <h1 class="display-4">{t("Results.Sin-Resultados")}</h1>
+              </div>
+            </div>
           )}
         </Col>
       </Row>

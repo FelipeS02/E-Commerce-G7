@@ -57,7 +57,7 @@ const GenreResults = () => {
           ) : errorCategories ? (
             <h1>{errorCategories}</h1>
           ) : (
-            <SideBarFilter />
+            <SideBarFilter disabledGenre="true" />
           )}
         </Col>
         <Col>
