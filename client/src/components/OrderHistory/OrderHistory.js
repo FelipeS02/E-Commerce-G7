@@ -101,119 +101,134 @@ const OrderHistory = () => {
   };
 
   return (
-    <Container className="mw-100" style={{ marginTop: "1%" }}>
-      <Table variant="light" striped bordered>
-        <thead className="thead-dark">
-          <tr>
-            <th>Número de orden</th>
-            <th>Prendas</th>
-            <th>Direccion</th>
-            <th>Forma de pago</th>
-          </tr>
-        </thead>
-        <tbody>
-          {orders?.orders?.map((order, index) => (
-            <tr key={index}>
-              <td>
-                {`Orden ${order.id}`}{" "}
-                <h6 style={{ color: `${colours[order.state]}` }}>
-                  {order.state}
-                </h6>
-              </td>
-              <td>
-                {order.clothes?.map((clothe, i) => (
-                  <Button
-                    key={i}
-                    variant="info"
-                    onClick={(e) =>
-                      handleShow(
-                        e,
-                        checkReviewed(
-                          clothe.id,
-                          userState.userInfo.id,
-                          orders.reviews
-                        ),
-                        checkState(order.state)
-                      )
-                    }
-                    value={JSON.stringify({ clothe, date: order.updatedAt })}
-                    style={{ margin: "4px", color: "black" }}
-                  >
-                    <h6>{clothe.name}</h6>
-                  </Button>
-                ))}
-              </td>
-              <td>
-                <h6>{order.direction}</h6>
-              </td>
-              <td>
-                <h6>
-                  {order.payment.includes("Efectivo / Transferencia") ? (
-                    <FaMoneyBillWave />
-                  ) : (
-                    <FaCreditCard />
-                  )}{" "}
-                  {order.payment}
-                </h6>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </Table>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Detalle de la orden</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <Carousel variant="dark">
-            {data.referenceImg &&
-              data.referenceImg.map((item, index) => (
-                <Carousel.Item
-                  interval={2000}
-                  key={index}
-                  style={{ height: "500px" }}
-                >
-                  <img
-                    src={`${BASE_IMG_URL}/uploads/${item.name}`}
-                    alt={`ClothePhoto${index}`}
-                    style={{
-                      "max-height": "500px",
-                      position: "absolute",
-                      top: "0",
-                      left: "15%",
-                      objectFit: "cover",
-                    }}
-                  />
-                </Carousel.Item>
+    <div>
+      {orders.length === 0 ? (
+        <div class="jumbotron jumbotron-fluid">
+          <div class="container">
+            <h1 class="display-4">Aun no hay ninguna orden para mostrar</h1>
+            <p class="lead">
+              Vuelve cuando hayas realizado el pago de almenos una orden
+            </p>
+          </div>
+        </div>
+      ) : (
+        <Container className="mw-100" style={{ marginTop: "1%" }}>
+          <Table variant="light" striped bordered>
+            <thead className="thead-dark">
+              <tr>
+                <th>Número de orden</th>
+                <th>Prendas</th>
+                <th>Direccion</th>
+                <th>Forma de pago</th>
+              </tr>
+            </thead>
+            <tbody>
+              {orders?.orders?.map((order, index) => (
+                <tr key={index}>
+                  <td>
+                    {`Orden ${order.id}`}{" "}
+                    <h6 style={{ color: `${colours[order.state]}` }}>
+                      {order.state}
+                    </h6>
+                  </td>
+                  <td>
+                    {order.clothes?.map((clothe, i) => (
+                      <Button
+                        key={i}
+                        variant="info"
+                        onClick={(e) =>
+                          handleShow(
+                            e,
+                            checkReviewed(
+                              clothe.id,
+                              userState.userInfo.id,
+                              orders.reviews
+                            ),
+                            checkState(order.state)
+                          )
+                        }
+                        value={JSON.stringify({
+                          clothe,
+                          date: order.updatedAt,
+                        })}
+                        style={{ margin: "4px", color: "black" }}
+                      >
+                        <h6>{clothe.name}</h6>
+                      </Button>
+                    ))}
+                  </td>
+                  <td>
+                    <h6>{order.direction}</h6>
+                  </td>
+                  <td>
+                    <h6>
+                      {order.payment.includes("Efectivo / Transferencia") ? (
+                        <FaMoneyBillWave />
+                      ) : (
+                        <FaCreditCard />
+                      )}{" "}
+                      {order.payment}
+                    </h6>
+                  </td>
+                </tr>
               ))}
-          </Carousel>
-          <br></br>
-          <Link to={`/search/details/${data.id}`}>{data.name}</Link>
-          <div>Talle:{" " + data.size}</div>
-          <div>Cantidad:{" " + data.quantity}</div>
-          <div>Fecha de la compra:{" " + data.date}</div>
-          <div>Hora de la compra:{" " + data.time}</div>
-          {data.isReceived ? (
-            data.isReviewed === false ? (
-              <Review clotheId={data.id} userId={id} />
-            ) : (
-              <h6 style={{ color: "green" }}>
-                Ya has hecho una reseña de esta prenda <FaStar />
-              </h6>
-            )
-          ) : (
-            <h6 style={{ color: "GrayText" }}>
-              Podras dejar tu opinion cuando el producto sea entregado.
-            </h6>
-          )}
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            OK
-          </Button>
-        </Modal.Footer>
-      </Modal>
-    </Container>
-  );
-};
+            </tbody>
+          </Table>
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Detalle de la orden</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>
+              <Carousel variant="dark">
+                {data.referenceImg &&
+                  data.referenceImg.map((item, index) => (
+                    <Carousel.Item
+                      interval={2000}
+                      key={index}
+                      style={{ height: "500px" }}
+                    >
+                      <img
+                        src={`${BASE_IMG_URL}/uploads/${item.name}`}
+                        alt={`ClothePhoto${index}`}
+                        style={{
+                          "max-height": "500px",
+                          position: "absolute",
+                          top: "0",
+                          left: "15%",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </Carousel.Item>
+                  ))}
+              </Carousel>
+              <br></br>
+              <Link to={`/search/details/${data.id}`}>{data.name}</Link>
+              <div>Talle:{" " + data.size}</div>
+              <div>Cantidad:{" " + data.quantity}</div>
+              <div>Fecha de la compra:{" " + data.date}</div>
+              <div>Hora de la compra:{" " + data.time}</div>
+              {data.isReceived ? (
+                data.isReviewed === false ? (
+                  <Review clotheId={data.id} userId={id} />
+                ) : (
+                  <h6 style={{ color: "green" }}>
+                    Ya has hecho una reseña de esta prenda <FaStar />
+                  </h6>
+                )
+              ) : (
+                <h6 style={{ color: "GrayText" }}>
+                  Podras dejar tu opinion cuando el producto sea entregado.
+                </h6>
+              )}
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={handleClose}>
+                OK
+              </Button>
+            </Modal.Footer>
+          </Modal>
+        </Container>
+      )}
+    </div>
+  );};
 export default OrderHistory;
