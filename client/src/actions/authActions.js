@@ -73,12 +73,14 @@ export const getAllUsers = () => async (dispatch) => {
 };
 
 export const userSetAdmin = (id, email, set) => async (dispatch) => {
+
   try {
+    console.log('useradmin !!!!', set)
     if (set === "addAdmin") {
       const { data } = await axios.get(
         `/admin/users-control/assign-role/${email}`
       );
-      console.log(data.data.message);
+      console.log('add admind', data);
       if (data.statusCode !== 200) {
         return dispatch({
           type: USER_INFO_FAIL,
@@ -89,12 +91,12 @@ export const userSetAdmin = (id, email, set) => async (dispatch) => {
         type: GET_USERS,
         payload: data.data.allUserData,
       });
-
     } else if (set === "removeAdmin") {
+      console.log('borrar usuario')
       const { data } = await axios.get(
         `/admin/users-control/remove-role/${email}`
       );
-
+        console.log('remove admind', data)
       if (data.statusCode !== 200) {
         return dispatch({
           type: USER_INFO_FAIL,
