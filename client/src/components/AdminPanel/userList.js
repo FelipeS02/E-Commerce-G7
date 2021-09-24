@@ -53,7 +53,7 @@ class UserList extends Component {
 
   render() {
     return (
-      <div style={{ width: "70%", margin: "2.5%" }}>
+      <div style={{ width: "70%", margin: "2.5%", marginLeft: "7.5%"}}>
         <MaterialTable
           components={{
             Toolbar: (props) => (
@@ -64,6 +64,8 @@ class UserList extends Component {
           }}
           options={{
             filtering: true,
+            pageSize: 10,
+            pageSizeOptions: [10, 15, 20],
           }}
           icons={tableIcons}
           columns={[

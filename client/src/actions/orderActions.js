@@ -41,10 +41,13 @@ export const getOrders = (id, status) => async (dispatch) => {
     const data = await axios.get(
       `/clothe/users-orders?userId=${id}&orderStatus=${status}`
     );
-    console.log(data.data.data[0], "aca esta lo que estoy buscando");
+    const newData = {
+      orders: data.data.data[0].orders.filter((e) => e.state !== "CARRITO"),
+      reviews: data.data.data[0].reviews
+    }
     dispatch({
       type: GET_ORDERS,
-      payload: data.data.data[0],
+      payload: newData,
     });
   } catch (error) {
     dispatch({
@@ -55,10 +58,8 @@ export const getOrders = (id, status) => async (dispatch) => {
 };
 
 export const reviewUser = (form) => async (dispatch) => {
-  console.log(form, "soy el form de la action");
   try {
     await axios.post(`/clothe/clothe-review`, form);
-    console.log(form);
     dispatch({
       type: ORDER_REVIEW,
       payload: form,

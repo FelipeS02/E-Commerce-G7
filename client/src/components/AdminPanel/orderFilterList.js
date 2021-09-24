@@ -55,7 +55,7 @@ class ListDetail extends Component {
   render() {
     const { t } = this.props;
     return (
-      <div style={{ width: "70%", margin: "2.5%" }}>
+      <div style={{ width: "70%", margin: "2.5%", marginLeft: "7.5%"}}>
         <MaterialTable
           components={{
             Toolbar: (props) => (
@@ -66,6 +66,8 @@ class ListDetail extends Component {
           }}
           options={{
             filtering: true,
+            pageSize: 7,
+            pageSizeOptions: [7, 10, 14],
           }}
           icons={tableIcons}
           columns={[
