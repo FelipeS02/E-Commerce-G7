@@ -16,6 +16,42 @@
 		"EditarProd": "Edit Product"
 	},
 
+	"Checkout": {
+		"Verf-Mail": "Verify the data of the shipping address",
+		"Verf-Tarjeta": "Verify card details",
+		"Verf-Tarjeta-Direcc": "Verify the data of the shipping address and the card",
+		"NoHayProd": "There are no products in your cart",
+		"Direcc" : "Shipping Address",
+		"In-Direcc": "Please enter an address",
+		"Ciudad": "City",
+		"In-Ciudad": "Please enter a city",
+		"Prov": "Province",
+		"In-Prov": "Select a province",
+		"Zip": "Enter a Zip",
+		"D-Tarjeta": "Card details",
+		"Resumen": "Order summary",
+		"Precio": "Price",
+		"Talle": "Size",
+		"Articulos": "Articles",
+		"Total": "Total",
+		"Pagar": "Pay"
+	},
+
+	"Listado-Users": {
+		"Id": "User Id",
+		"Nombre": "User name",
+		"Email": "Email",
+		"SetAdmin": "set admin",
+		"RemoveAdmin": "remove admin",
+		"Entregado": "Delivered",
+		"ListaOrdenes": "Order list",
+		"Prendas": "Products",
+		"Talle": "Sizes",
+		"Cant": "Quant",
+		"Precio": "Price",
+		"Total": "Total"
+	},
+
 	"ListaOrdenes": {
 		"Titulo": "Order List",
 		"NumOrden": "Order number",

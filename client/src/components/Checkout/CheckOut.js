@@ -23,10 +23,12 @@ import { useDispatch, useSelector } from "react-redux";
 import { confirmPayment } from "../../actions/paymentAccions";
 import swal from "sweetalert";
 import { getOrder } from "../../actions/cartAccions";
+import { useTranslation } from "react-i18next";
+
 
 const CheckOut = (props) => {
   // ------- begin form  and card validation------
-
+  const [t, i18n] = useTranslation("global");
   const [formValidation, setFormValidation] = useState({
     address: "",
     city: "",
@@ -177,17 +179,17 @@ const CheckOut = (props) => {
 
   const paymentHandler = async () => {
     if (!addressIsValid || !cityIsValid || !stateIsValid || zipIsValid) {
-      return swal("Verificar los datos de la dirección de envío", "", "error");
+      return swal(t("Checkout.Verf-Mail"), "", "error");
     }
     if (!formValidation.cardInfoisCompleted) {
-      return swal("Verificar los datos de la tarjeta", "", "error");
+      return swal(t("Checkout.Verf-Tarjeta"), "", "error");
     }
     if (
       !formValidation.cardInfoisCompleted &&
       (!addressIsValid || !cityIsValid || !stateIsValid || zipIsValid)
     ) {
       return swal(
-        "Verificar los datos de la dirección de envío y la tarjeta",
+        t("Checkout.Verf-Tarjeta-Direcc"),
         "",
         "error"
       );
@@ -230,7 +232,7 @@ const CheckOut = (props) => {
     }
   }, [paymentSuccess, props.history]);
   if (totalItems === 0) {
-    return <h1>No hay productos en tu carrito</h1>;
+    return <h1>{t("Checkout.NoHayProd")}</h1>;
   }
 
   return (
@@ -238,7 +240,7 @@ const CheckOut = (props) => {
       <Accordion defaultActiveKey="0">
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="0">
-            <FaAddressCard /> Dirección de envio
+            <FaAddressCard /> {t("Checkout.Direcc")}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="0">
             <Card.Body>
@@ -256,13 +258,13 @@ const CheckOut = (props) => {
                   />
 
                   <Form.Control.Feedback type="invalid">
-                    Ingrese una dirección
+                    {t("Checkout.In-Direcc")}
                   </Form.Control.Feedback>
                 </Form.Group>
 
                 <Form.Row>
                   <Form.Group as={Col} controlId="formGridCity">
-                    <Form.Label>Ciudad</Form.Label>
+                    <Form.Label>{t("Checkout.Ciudad")}</Form.Label>
                     <Form.Control
                       required
                       name="city"
@@ -272,12 +274,12 @@ const CheckOut = (props) => {
                       onBlur={onBlurHandlerValidation}
                     />
                     <Form.Control.Feedback type="invalid">
-                      Ingrese una ciudad
+                      {t("Checkout.In-Ciudad")}
                     </Form.Control.Feedback>
                   </Form.Group>
 
                   <Form.Group as={Col} controlId="formGridState">
-                    <Form.Label>Provincia</Form.Label>
+                    <Form.Label>{t("Checkout.Prov")}</Form.Label>
                     <Form.Control
                       as="select"
                       defaultValue="Selecciona..."
@@ -293,7 +295,7 @@ const CheckOut = (props) => {
                       ))}
                     </Form.Control>
                     <Form.Control.Feedback type="invalid">
-                      Seleccione una provincia
+                      {t("Checkout.In-Prov")}
                     </Form.Control.Feedback>
                   </Form.Group>
 
@@ -308,7 +310,7 @@ const CheckOut = (props) => {
                       required
                     />
                     <Form.Control.Feedback type="invalid">
-                      Ingrese un ZIP
+                      {t("Checkout.Zip")}
                     </Form.Control.Feedback>
                   </Form.Group>
                 </Form.Row>
@@ -318,7 +320,7 @@ const CheckOut = (props) => {
         </Card>
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="1">
-            Datos de tarjeta
+            {t("Checkout.D-Tarjeta")}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="1">
             <Card.Body>
@@ -334,7 +336,7 @@ const CheckOut = (props) => {
         </Card>
         <Card>
           <Accordion.Toggle as={Card.Header} eventKey="2">
-            Resumen de la orden
+            {t("Checkout.Resumen")}
           </Accordion.Toggle>
           <Accordion.Collapse eventKey="2">
             <Card.Body>
@@ -355,10 +357,10 @@ const CheckOut = (props) => {
                               <h6>{item.name}</h6>
                             </Row>
                             <Row>
-                              <h6>Precio: ${item.price}</h6>
+                              <h6>{t("Checkout.Precio")}: ${item.price}</h6>
                             </Row>
                             <Row>
-                              <h6>Talle: {item.quantity_and_size.size}</h6>
+                              <h6>{t("Checkout.Talle")}: {item.quantity_and_size.size}</h6>
                             </Row>
                           </Col>
                           <Col>
@@ -386,7 +388,7 @@ const CheckOut = (props) => {
                         </Col>
                         <Col>
                           <h6>
-                            Total: ${totalItems === 0 ? 0 : carTotalAmount}
+                            {t("Checkout.Total")}: ${totalItems === 0 ? 0 : carTotalAmount}
                           </h6>
                         </Col>
                       </Row>
@@ -403,7 +405,7 @@ const CheckOut = (props) => {
                           {loadingPayment ? (
                             <Spinner animation="border" variant="light" />
                           ) : (
-                            "Pagar"
+                            t("Checkout.Pagar")
                           )}
                         </Button>
                       </Row>
