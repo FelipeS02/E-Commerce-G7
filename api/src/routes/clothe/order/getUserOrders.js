@@ -2,7 +2,7 @@ const { Router } = require("express");
 const router = Router();
 const { validate } = require("uuid");
 const { Op } = require("sequelize");
-const { User, Order, Clothe, Size, Media } = require("../../../db");
+const { User, Order, Clothe, Size, Media, Review } = require("../../../db");
 const {
   responseMessage,
   statusCodes: { SUCCESS, ERROR },
@@ -73,7 +73,7 @@ router.get("/", async (req, res) => {
           id: userId,
         },
         attributes: ["id", "name", "email"],
-        include: {
+        include: [{
           model: Order,
           attributes: ["id", "state", "total", "payment", "direction", "updatedAt"],
           through: { attributes: [] },
@@ -90,7 +90,7 @@ router.get("/", async (req, res) => {
               attributes: ["quantity", "size"],
             },
           },
-        },
+        },{model: Review}]
       });
     } else if (userId === "" && validStatus.includes(orderStatus)) {
       response = await User.findAll({

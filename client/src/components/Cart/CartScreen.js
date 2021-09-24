@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { BASE_IMG_URL } from "../../constants/productConstants";
 import { FaRegTrashAlt, FaArrowLeft } from "react-icons/fa";
 import { addToCart, getOrder, removeFromCart } from "../../actions/cartAccions";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 const CartScreen = () => {
   const dispatch = useDispatch();
   const cartState = useSelector((state) => state.cartState);
@@ -52,10 +52,14 @@ const CartScreen = () => {
                       <h6>{item.name}</h6>
                     </Row>
                     <Row>
-                      <h6>{t("CartScreen.Precio")}: ${item.price}</h6>
+                      <h6>
+                        {t("CartScreen.Precio")}: ${item.price}
+                      </h6>
                     </Row>
                     <Row>
-                      <h6>{t("CartScreen.Talle")}: {item.quantity_and_size.size}</h6>
+                      <h6>
+                        {t("CartScreen.Talle")}: {item.quantity_and_size.size}
+                      </h6>
                     </Row>
                   </Col>
                   <Col>
@@ -100,10 +104,15 @@ const CartScreen = () => {
             <Card.Body>
               <Row>
                 <Col>
-                  <h6>{totalItems} {t("CartScreen.Articulos")}</h6>
+                  <h6>
+                    {totalItems} {t("CartScreen.Articulos")}
+                  </h6>
                 </Col>
                 <Col>
-                  <h6>{t("CartScreen.Total")}: ${totalItems === 0 ? 0 : carTotalAmount}</h6>
+                  <h6>
+                    {t("CartScreen.Total")}: $
+                    {totalItems === 0 ? 0 : carTotalAmount}
+                  </h6>
                 </Col>
               </Row>
             </Card.Body>

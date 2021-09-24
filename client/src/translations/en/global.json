@@ -16,6 +16,59 @@
 		"EditarProd": "Edit Product"
 	},
 
+	"Checkout": {
+		"Verf-Mail": "Verify the data of the shipping address",
+		"Verf-Tarjeta": "Verify card details",
+		"Verf-Tarjeta-Direcc": "Verify the data of the shipping address and the card",
+		"NoHayProd": "There are no products in your cart",
+		"Direcc" : "Shipping Address",
+		"In-Direcc": "Please enter an address",
+		"Ciudad": "City",
+		"In-Ciudad": "Please enter a city",
+		"Prov": "Province",
+		"In-Prov": "Select a province",
+		"Zip": "Enter a Zip",
+		"D-Tarjeta": "Card details",
+		"Resumen": "Order summary",
+		"Precio": "Price",
+		"Talle": "Size",
+		"Articulos": "Articles",
+		"Total": "Total",
+		"Pagar": "Pay"
+	},
+
+	"History":{
+		"Order-name": "Order",
+		"NoHay": "¡There is no order to display yet!",
+		"Vuelve": "Come back when you have paid for at least one order.",
+		"N-Orden": "Order number",
+		"Prendas": "Clothes",
+		"Direcc": "Direction",
+		"F-Pago": "Payment Method",
+		"Detalle": "Order detail",
+		"Talle": "Size",
+		"Cantidad": "Quantity",
+		"Fecha-Compra": "Purchase date",
+		"Hora-Compra": "Purchase time",
+		"R-Hecha": "You have already reviewed this clothe",
+		"Opi": "You can leave your opinion when the product is delivered."
+	},
+
+	"Listado-Users": {
+		"Id": "User Id",
+		"Nombre": "User name",
+		"Email": "Email",
+		"SetAdmin": "set admin",
+		"RemoveAdmin": "remove admin",
+		"Entregado": "Delivered",
+		"ListaOrdenes": "Order list",
+		"Prendas": "Products",
+		"Talle": "Sizes",
+		"Cant": "Quant",
+		"Precio": "Price",
+		"Total": "Total"
+	},
+
 	"ListaOrdenes": {
 		"Titulo": "Order List",
 		"NumOrden": "Order number",
@@ -28,7 +81,6 @@
 	},
 
 	"Panel": {
-		"Titulo": "Admin panel",
 		"Crear": "Create clothe",
 		"Listado": "Clothing list",
 		"Ordenes": "Order list",
@@ -50,9 +102,16 @@
 		"Confirmar": "SUBMIT",
 		"Cancelar": "Cancel",
 		"Exitoso": "Your product has been created successfully",
+		"Exitoso-E": "Your product has been editad successfully.",
 		"Atencion": "¡Alert!",
 		"Faltan": "Items are missing to create your product",
-		"Hecho": "¡Done!"
+		"Hecho": "¡Done!",
+		"Eliminar": "Delete clothe",
+		"Actualizar": "Your product has been removed successfully",
+		"Seguro?" : "Are you sure you want to remove this product?",
+		"UnaVez": "Once deleted, there is no way to get it back",
+		"ElimBien": "Done! Your product has been removed",
+		"NoBorro": "Your product has NOT been deleted"
 	},
 
 	"Login": {

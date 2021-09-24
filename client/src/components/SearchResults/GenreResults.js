@@ -6,11 +6,11 @@ import {
   getProducts,
   setFilters,
 } from "../../actions/ProductActions";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
 import PaginationC from "../Pagination/PaginationC";
 import CardP from "../ProductCard/CardP";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const GenreResults = () => {
   const [t, i18n] = useTranslation("global");
@@ -57,29 +57,34 @@ const GenreResults = () => {
           ) : errorCategories ? (
             <h1>{errorCategories}</h1>
           ) : (
-            <SideBarFilter />
+            <SideBarFilter disabledGenre="true" />
           )}
         </Col>
         <Col>
           <Row>
-            <h1>{products.length}{t("Results.Resultados")}</h1>
+            <h1>
+              {products.length}
+              {t("Results.Resultados")}
+            </h1>
           </Row>
-          <Row className="d-flex align-content-center flex-wrap justify-content-between">
-            {error === "" && products.allClothes ? (
-              products.allClothes.map((product, index) => (
-                <CardP
-                  key={index}
-                  id={product.id}
-                  name={product.name}
-                  price={product.price}
-                  picture={product.media[0].name}
-                  sizes={product.sizes}
-                />
-              ))
-            ) : (
-              <h1>{t("Results.Sin-Resultados")}</h1>
-            )}
-          </Row>
+          <Container className="d-flex justify-content-center align-items-center ">
+            <Row>
+              {error === "" && products.allClothes ? (
+                products.allClothes.map((product, index) => (
+                  <CardP
+                    key={index}
+                    id={product.id}
+                    name={product.name}
+                    price={product.price}
+                    picture={product.media[0].name}
+                    sizes={product.sizes}
+                  />
+                ))
+              ) : (
+                <h1>{t("Results.Sin-Resultados")}</h1>
+              )}
+            </Row>
+          </Container>
         </Col>
       </Row>
       <PaginationC total={products.total} />

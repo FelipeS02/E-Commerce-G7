@@ -12,7 +12,7 @@ import SearchBar from "../SearchBar/SearchBar";
 import Logo from "./logo.png";
 
 // Translation
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 import {
   addingUserToDB,
@@ -61,8 +61,8 @@ const NavBar = () => {
         <Navbar.Brand as={Link} to="/">
           <img
             src={Logo}
-            width="30"
-            height="30"
+            width="50"
+            height="50"
             className="d-inline-block align-top"
             alt="Logo"
           />
@@ -108,48 +108,49 @@ const NavBar = () => {
                 }
                 id="nav-dropdown"
               >
-                {isAuthenticated ? 
-                userInfo && userInfo.isAdmin ? (
-                  <>
-                    <NavDropdown.Item as={Link} to="/admin" eventKey="4.1">
-                      Admin Panel
-                    </NavDropdown.Item>
-                    <NavDropdown.Item
-                      eventKey="4.2"
-                      as={Link}
-                      to="/user/userProfile"
-                    >
-                      {t("NavBar.Perfil")}
-                    </NavDropdown.Item>
-                    <NavDropdown.Item eventKey="4.3">
-                      {t("NavBar.Mis-Pedidos")}
-                    </NavDropdown.Item>
-                    <NavDropdown.Item eventKey="4.4">
-                      {t("NavBar.Deseos")}
-                    </NavDropdown.Item>
-                    <NavDropdown.Item eventKey="4.5"></NavDropdown.Item>
-                  </>
-                ):(
-                  <>
-                    <NavDropdown.Item
-                      eventKey="4.1"
-                      as={Link}
-                      to="/user/userProfile"
-                    >
-                      {t("NavBar.Perfil")}
-                    </NavDropdown.Item>
-                    <NavDropdown.Item 
-                    eventKey="4.2"
-                    as={Link}
-                    to="/user/userProfile/orderHistory"
-                    >
-                      {t("NavBar.Mis-Pedidos")}
-                    </NavDropdown.Item>
-                    <NavDropdown.Item eventKey="4.3">
-                      {t("NavBar.Deseos")}
-                    </NavDropdown.Item>
-                    <NavDropdown.Item eventKey="4.4"></NavDropdown.Item>
-                  </>
+                {isAuthenticated ? (
+                  userInfo && userInfo.isAdmin ? (
+                    <>
+                      <NavDropdown.Item as={Link} to="/admin" eventKey="4.1">
+                        Admin Panel
+                      </NavDropdown.Item>
+                      {/* <NavDropdown.Item
+                        eventKey="4.2"
+                        as={Link}
+                        to="/user/userProfile"
+                      >
+                        {t("NavBar.Perfil")}
+                      </NavDropdown.Item> */}
+                      <NavDropdown.Item eventKey="4.3">
+                        {t("NavBar.Mis-Pedidos")}
+                      </NavDropdown.Item>
+                      <NavDropdown.Item eventKey="4.4">
+                        {t("NavBar.Deseos")}
+                      </NavDropdown.Item>
+                      <NavDropdown.Item eventKey="4.5"></NavDropdown.Item>
+                    </>
+                  ) : (
+                    <>
+                      {/* <NavDropdown.Item
+                        eventKey="4.1"
+                        as={Link}
+                        to="/user/userProfile"
+                      >
+                        {t("NavBar.Perfil")}
+                      </NavDropdown.Item> */}
+                      <NavDropdown.Item
+                        eventKey="4.2"
+                        as={Link}
+                        to="/user/userProfile/orderHistory"
+                      >
+                        {t("NavBar.Mis-Pedidos")}
+                      </NavDropdown.Item>
+                      <NavDropdown.Item eventKey="4.3">
+                        {t("NavBar.Deseos")}
+                      </NavDropdown.Item>
+                      <NavDropdown.Item eventKey="4.4"></NavDropdown.Item>
+                    </>
+                  )
                 ) : (
                   <NavDropdown.Item eventKey="4.4">
                     {t("NavBar.Inicia")}
@@ -160,19 +161,18 @@ const NavBar = () => {
 
               <Container>
                 <NavDropdown
-                  title={<HiTranslate color="white" size ="1.3rem" />}
+                  title={<HiTranslate color="white" size="1.3rem" />}
                 >
-                  
-                <>
-                  <NavDropdown.Item onClick={() => i18n.changeLanguage("es")}>
-                    ES
-                  </NavDropdown.Item>   
+                  <>
+                    <NavDropdown.Item onClick={() => i18n.changeLanguage("es")}>
+                      ES
+                    </NavDropdown.Item>
 
-                  <NavDropdown.Item onClick={() => i18n.changeLanguage("en")}>
-                    EN
-                  </NavDropdown.Item>  
-                </>            
-                </NavDropdown>         
+                    <NavDropdown.Item onClick={() => i18n.changeLanguage("en")}>
+                      EN
+                    </NavDropdown.Item>
+                  </>
+                </NavDropdown>
               </Container>
             </Nav>
           </Container>

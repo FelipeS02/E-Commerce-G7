@@ -6,12 +6,13 @@ import {
   getCategories,
   getProducts,
 } from "../../actions/ProductActions";
+
 import Footer from "../Footer/Footer";
 import PaginationC from "../Pagination/PaginationC";
 import CardP from "../ProductCard/CardP";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
 import Loading from "../Loading/Loading";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 
 const Home = (props) => {
   const dispatch = useDispatch();
@@ -50,9 +51,9 @@ const Home = (props) => {
 
   return (
     <div>
-      <Carousel variant="dark">
+      <Carousel variant="dark" className="carousel-dark">
         {imgUrl.map((item, index) => (
-          <Carousel.Item interval={1000} key={index}>
+          <Carousel.Item interval={3000} key={index}>
             <img className="d-block w-100" src={item} alt={index} />
           </Carousel.Item>
         ))}
@@ -64,22 +65,28 @@ const Home = (props) => {
         <Col lg="2" className="justify-content-center">
           <SideBarFilter></SideBarFilter>
         </Col>
-        <Col className="d-flex align-content-center flex-wrap justify-content-between">
-          {error === "" && products.allClothes ? (
-            products.allClothes.map((product, index) => (
-              <CardP
-                key={index}
-                id={product.id}
-                name={product.name}
-                price={product.price}
-                picture={product.media[0].name}
-                sizes={product.sizes}
-              />
-            ))
-          ) : (
-            <h1>{t("Results.Sin-Resultados")}</h1>
-          )}
-        </Col>
+        <Container className="d-flex justify-content-center align-items-center ">
+          <Row>
+            {error === "" && products.allClothes ? (
+              products.allClothes.map((product, index) => (
+                <CardP
+                  key={index}
+                  id={product.id}
+                  name={product.name}
+                  price={product.price}
+                  picture={product.media[0].name}
+                  sizes={product.sizes}
+                />
+              ))
+            ) : (
+              <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                  <h1 class="display-4">{t("Results.Sin-Resultados")}</h1>
+                </div>
+              </div>
+            )}
+          </Row>
+        </Container>
       </Row>
       <PaginationC />
       <Footer />

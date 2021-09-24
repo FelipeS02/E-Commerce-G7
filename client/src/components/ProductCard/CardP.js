@@ -55,17 +55,19 @@ const CardP = (props) => {
         width: "20rem",
         boxShadow: "0px 0px 6px 2px rgba(0, 0, 0, 0.5)",
       }}
-      className="my-4"
+      className="my-4 mx-4"
     >
-      <Card.Img variant="top" src={`${BASE_IMG_URL}/uploads/${picture}`} />
-
+      <a href={`/search/details/${id}`}>
+        <Card.Img variant="top" src={`${BASE_IMG_URL}/uploads/${picture}`} />
+      </a>
       <Card.Body className="justify-content-center card text-center">
         <Card.Title as={Link} to={`/search/details/${id}`}>
           {name}
         </Card.Title>
-        <Card.Text>${price}</Card.Text>
-
-        <Talle sizes={sizes} talleHandler={talleHandler}/>
+        <Card.Text>
+          <h6>${price}</h6>
+        </Card.Text>
+        <Talle sizes={sizes} talleHandler={talleHandler} />
       </Card.Body>
       <Card.Footer>
         <AddToCar

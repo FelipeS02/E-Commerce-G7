@@ -17,7 +17,6 @@ router.post("/", async (req, res) => {
       typeof score === "number" &&
       typeof review === "string"
     ) {
-      console.log('entreo acá y estaban bien los datos')
       const user = await User.findByPk(userId);
       const [clothe, clotheReview] = await Promise.all([
         await Clothe.findByPk(clotheId),
@@ -36,5 +35,20 @@ router.post("/", async (req, res) => {
     return res.json(responseMessage(ERROR, message));
   }
 });
+
+router.get("/get-reviews", async (req, res) => {
+
+  try {
+      const { clotheId } = req.query;
+
+      const response = await Review.findAll({ where : {clotheId : clotheId}});
+      return res.json(response);
+      
+  } catch (err) {
+    const { message } = err;
+    return res.json(responseMessage(ERROR, message));
+  }
+
+})
 
 module.exports = router;
