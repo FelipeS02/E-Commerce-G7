@@ -36,19 +36,25 @@ const getUserId = async (email) => {
   return response[0].user_id;
 };
 
-router.get("/getAll", checkScopes(["write:admin"]), async (req, res) => {
-  try {
-    const allUsers = await User.findAll();
-    return res.json(responseMessage(SUCCESS, allUsers));
-  } catch (err) {
-    const { message } = err;
-    return res.json(responseMessage(ERROR, message));
+router.get(
+  "/getAll",
+  // checkScopes(["write:admin"]),
+  async (req, res) => {
+    try {
+      const allUsers = await User.findAll();
+      console.log(allUsers);
+      return res.json(responseMessage(SUCCESS, allUsers));
+    } catch (err) {
+      const { message } = err;
+      console.log(err);
+      return res.json(responseMessage(ERROR, message));
+    }
   }
-});
+);
 
 router.get(
   "/reset-password/:email",
-  checkScopes(["write:admin"]),
+  // checkScopes(["write:admin"]),
   async (req, res) => {
     try {
       const { email } = req.params;
@@ -61,10 +67,10 @@ router.get(
         data,
         function (err, message) {
           if (err) {
-            res.status(404).send(err);
+            throw new Error(err);
           }
           return res
-            .status(202)
+            .status(200)
             .json(
               responseMessage(
                 SUCCESS,
@@ -82,14 +88,14 @@ router.get(
 
 router.get(
   "/assign-role/:email",
-
+  // checkScopes(["write:admin"]),
   async (req, res) => {
     try {
       const { email } = req.params;
       let data = { roles: ["rol_0MhYgg7pbFmDUIWV"] };
       auth0.users.getByEmail(email, function (err, users) {
         if (err) {
-          console.log(err);
+          throw new Error(err);
         }
         let params = { id: users[0].user_id };
         auth0.assignRolestoUser(params, data, async function (err) {
@@ -101,9 +107,14 @@ router.get(
               );
           }
           await User.update({ isAdmin: true }, { where: { email } });
-          res
-            .status(202)
-            .send("Se ha añadido el rol de admin correctamente al usuario");
+          return res
+            .status(200)
+            .json(
+              responseMessage(
+                SUCCESS,
+                "Se ha añadido el rol de admin correctamente al usuario"
+              )
+            );
         });
       });
     } catch (err) {
@@ -115,7 +126,7 @@ router.get(
 
 router.get(
   "/remove-role/:email",
-
+  // checkScopes(["write:admin"]),
   async (req, res) => {
     try {
       const { email } = req.params;
@@ -124,7 +135,11 @@ router.get(
       let data = { roles: ["rol_0MhYgg7pbFmDUIWV"] };
       await auth0.removeRolesFromUser(params, data);
       await User.update({ isAdmin: false }, { where: { email } });
-      res.status(202).send("Se elimino el rol de admin al usuario");
+      return res
+        .status(200)
+        .json(
+          responseMessage(SUCCESS, "Se elimino el rol de admin al usuario")
+        );
     } catch (err) {
       res
         .status(404)
@@ -137,8 +152,20 @@ router.get("/delete-user/:email", async (req, res) => {
   try {
     const { email } = req.params;
     const userId = await getUserId(email);
-    if (!userId) {
-      throw new Error("Usuario no encontrado");
+    try {
+      if (!userId) {
+        throw new Error("Usuario no encontrado");
+      }
+      const response = await auth0.deleteUser({ id: userId });
+      console.log(response);
+      // User deleted.
+      return res
+        .status(200)
+        .json(responseMessage(SUCCESS, "Se elimino al usuario correctamente"));
+    } catch (err) {
+      const { message } = err;
+      console.log(message);
+      return res.json(responseMessage(ERROR, message));
     }
     const response = await auth0.deleteUser({ id: userId });
     console.log(response);
@@ -168,7 +195,9 @@ router.get(
       );
       console.log(response);
       // User deleted.
-      return res.status(202).send("Se bloqueo al usuario correctamente");
+      return res
+        .status(200)
+        .json(responseMessage(SUCCESS, "Se bloqueo al usuario correctamente"));
     } catch (err) {
       const { message } = err;
       console.log(message);
@@ -193,7 +222,11 @@ router.get(
       );
       console.log(response);
       // User deleted.
-      return res.status(202).send("Se desbloqueo al usuario correctamente");
+      return res
+        .status(200)
+        .json(
+          responseMessage(SUCCESS, "Se desbloqueo al usuario correctamente")
+        );
     } catch (err) {
       const { message } = err;
       console.log(message);
@@ -201,4 +234,5 @@ router.get(
     }
   }
 );
+
 module.exports = router;
