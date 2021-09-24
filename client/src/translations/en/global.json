@@ -37,6 +37,22 @@
 		"Pagar": "Pay"
 	},
 
+	"History":{
+		"NoHay": "¡There is no order to display yet!",
+		"Vuelve": "Come back when you have paid for at least one order.",
+		"N-Orden": "Order number",
+		"Prendas": "Clothes",
+		"Direcc": "Direction",
+		"F-Pago": "Way to pay",
+		"Detalle": "Order detail",
+		"Talle": "Size",
+		"Cantidad": "Quantity",
+		"Fecha-Compra": "Purchase date",
+		"Hora-Compra": "Purchase time",
+		"R-Hecha": "You have already reviewed this clothe",
+		"Opi": "You can leave your opinion when the product is delivered."
+	},
+
 	"Listado-Users": {
 		"Id": "User Id",
 		"Nombre": "User name",
