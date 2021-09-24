@@ -55,7 +55,7 @@ const CardP = (props) => {
         width: "20rem",
         boxShadow: "0px 0px 6px 2px rgba(0, 0, 0, 0.5)",
       }}
-      className="my-4"
+      className="my-4 mx-4"
     >
       <a href={`/search/details/${id}`}>
         <Card.Img variant="top" src={`${BASE_IMG_URL}/uploads/${picture}`} />

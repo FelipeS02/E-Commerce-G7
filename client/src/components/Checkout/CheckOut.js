@@ -49,7 +49,6 @@ const CheckOut = (props) => {
   const enteredZip = formValidation.zip.trim() !== "";
 
   const addressIsValid = !enteredAddress && inputValidation.isAddressTouch;
-
   const cityIsValid = !enteredCity && inputValidation.isCityTouch;
 
   const stateIsValid = !enteredState && inputValidation.isStateTouch;
@@ -57,7 +56,6 @@ const CheckOut = (props) => {
   const zipIsValid = !enteredZip && inputValidation.isZipTouch;
 
   const onBlurHandlerValidation = (e) => {
-    console.log(e.target.name);
     setInputValidation((prevState) => {
       if (e.target.name === "address")
         return {
@@ -83,7 +81,7 @@ const CheckOut = (props) => {
   };
 
   let isFormValid = false;
-  if (addressIsValid && cityIsValid && stateIsValid && zipIsValid) {
+  if (enteredAddress && enteredCity && enteredState && enteredZip) {
     isFormValid = true;
   }
 
@@ -97,7 +95,6 @@ const CheckOut = (props) => {
   };
 
   const inputHandler = (e) => {
-    console.log(e.target.name);
     if (e.target.name === "address") {
       setFormValidation((prevState) => {
         return {
@@ -178,21 +175,20 @@ const CheckOut = (props) => {
   const { userInfo } = userState;
 
   const paymentHandler = async () => {
-    if (!addressIsValid || !cityIsValid || !stateIsValid || zipIsValid) {
-      return swal(t("Checkout.Verf-Mail"), "", "error");
-    }
-    if (!formValidation.cardInfoisCompleted) {
-      return swal(t("Checkout.Verf-Tarjeta"), "", "error");
-    }
-    if (
-      !formValidation.cardInfoisCompleted &&
-      (!addressIsValid || !cityIsValid || !stateIsValid || zipIsValid)
-    ) {
+
+    if (!inputValidation.cardInfoisCompleted && !isFormValid) {
+
       return swal(
         t("Checkout.Verf-Tarjeta-Direcc"),
         "",
         "error"
       );
+    }
+    if (!isFormValid) {
+      return swal("Verificar los datos de la dirección de envío", "", "error");
+    }
+    if (!inputValidation.cardInfoisCompleted) {
+      return swal("Verificar los datos de la tarjeta", "", "error");
     }
 
     try {
@@ -202,18 +198,27 @@ const CheckOut = (props) => {
       });
 
       if (error) {
-        console.log("[error]", error);
+        throw new Error(error);
       } else {
         const { id } = paymentMethod;
         elements.getElement(CardElement).clear();
-
+        setInputValidation((prevState) => {
+          return {
+            ...prevState,
+            isAddressTouch: false,
+            isCityTouch: false,
+            isStateTouch: false,
+            isZipTouch: false,
+            cardInfoisCompleted: false,
+          };
+        });
         dispatch(
           confirmPayment(
             id,
             carTotalAmount,
             orderId,
             "MercadoPago",
-            "3448, La Rioja, Buenos Aires",
+            `${formValidation.address} ${formValidation.city} ${formValidation.state} ${formValidation.zip}`,
             carItems,
             userInfo.id
           )
@@ -221,6 +226,11 @@ const CheckOut = (props) => {
       }
     } catch (err) {
       console.log(err);
+      return swal(
+        "Uppss, parece que algo salio mal, intenta nuevamente",
+        err,
+        "error"
+      );
     }
   };
   // orderId, payment, direction, clothes, userId
@@ -250,7 +260,7 @@ const CheckOut = (props) => {
                   <Form.Control
                     placeholder="1234 Main St"
                     required
-                    isInvalid={addressIsValid ? true : false}
+                    isInvalid={!addressIsValid ? false : true}
                     name="address"
                     value={formValidation.address}
                     onChange={inputHandler}
@@ -268,7 +278,7 @@ const CheckOut = (props) => {
                     <Form.Control
                       required
                       name="city"
-                      isInvalid={cityIsValid ? true : false}
+                      isInvalid={!cityIsValid ? false : true}
                       value={formValidation.city}
                       onChange={inputHandler}
                       onBlur={onBlurHandlerValidation}
@@ -287,7 +297,7 @@ const CheckOut = (props) => {
                       name="state"
                       onChange={inputHandler}
                       onBlur={onBlurHandlerValidation}
-                      isInvalid={stateIsValid ? true : false}
+                      isInvalid={!stateIsValid ? false : true}
                     >
                       <option value="">Selecciona...</option>
                       {provincias.map((provincia, index) => (
@@ -304,7 +314,7 @@ const CheckOut = (props) => {
                     <Form.Control
                       name="zip"
                       value={formValidation.zip}
-                      isInvalid={zipIsValid ? true : false}
+                      isInvalid={!zipIsValid ? false : true}
                       onChange={inputHandler}
                       onBlur={onBlurHandlerValidation}
                       required
