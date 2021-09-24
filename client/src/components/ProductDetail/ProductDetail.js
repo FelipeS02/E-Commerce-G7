@@ -68,7 +68,7 @@ const ProductDetail = () => {
     <Container className="my-5">
       <Row>
         <Col>
-          <Carousel fade>
+          <Carousel fade className="carousel-dark">
             {media?.map((item) => (
               <Carousel.Item>
                 <img
@@ -95,7 +95,7 @@ const ProductDetail = () => {
             itemHandler={itemHandler}
             quantity={userSelected.quantity}
           />
-          <ShowReview clotheId={id}/>
+          <ShowReview clotheId={id} />
         </Col>
       </Row>
     </Container>
