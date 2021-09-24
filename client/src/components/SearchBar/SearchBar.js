@@ -20,7 +20,7 @@ const SearchBar = (props) => {
         onChange={(e) => {
           setUserInput(e.target.value);
         }}
-        style={{ borderTopRightRadius: "0px", borderBottomRightRadius: "0px" }}
+        style={{ borderTopRightRadius: "0px", borderBottomRightRadius: "0px", "cursor": "text" }}
       />
       <Button
         variant="outline-success"

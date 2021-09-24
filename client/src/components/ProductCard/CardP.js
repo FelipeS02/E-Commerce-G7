@@ -57,14 +57,16 @@ const CardP = (props) => {
       }}
       className="my-4"
     >
-      <Card.Img variant="top" src={`${BASE_IMG_URL}/uploads/${picture}`} />
-
+      <a href={`/search/details/${id}`}>
+        <Card.Img variant="top" src={`${BASE_IMG_URL}/uploads/${picture}`} />
+      </a>
       <Card.Body className="justify-content-center card text-center">
         <Card.Title as={Link} to={`/search/details/${id}`}>
           {name}
         </Card.Title>
-        <Card.Text>${price}</Card.Text>
-
+        <Card.Text>
+          <h6>${price}</h6>
+        </Card.Text>
         <Talle sizes={sizes} talleHandler={talleHandler} />
       </Card.Body>
       <Card.Footer>

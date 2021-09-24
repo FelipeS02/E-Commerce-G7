@@ -17,7 +17,6 @@ router.post("/", async (req, res) => {
       typeof score === "number" &&
       typeof review === "string"
     ) {
-      console.log('entreo acá y estaban bien los datos')
       const user = await User.findByPk(userId);
       const [clothe, clotheReview] = await Promise.all([
         await Clothe.findByPk(clotheId),
