@@ -28,7 +28,6 @@
 	},
 
 	"Panel": {
-		"Titulo": "Admin panel",
 		"Crear": "Create clothe",
 		"Listado": "Clothing list",
 		"Ordenes": "Order list",
@@ -50,9 +49,16 @@
 		"Confirmar": "SUBMIT",
 		"Cancelar": "Cancel",
 		"Exitoso": "Your product has been created successfully",
+		"Exitoso-E": "Your product has been editad successfully.",
 		"Atencion": "¡Alert!",
 		"Faltan": "Items are missing to create your product",
-		"Hecho": "¡Done!"
+		"Hecho": "¡Done!",
+		"Eliminar": "Delete clothe",
+		"Actualizar": "Your product has been removed successfully",
+		"Seguro?" : "Are you sure you want to remove this product?",
+		"UnaVez": "Once deleted, there is no way to get it back",
+		"ElimBien": "Done! Your product has been removed",
+		"NoBorro": "Your product has NOT been deleted"
 	},
 
 	"Login": {

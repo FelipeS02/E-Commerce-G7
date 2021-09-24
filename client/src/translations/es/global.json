@@ -9,7 +9,6 @@
 	},
 
 	"Panel": {
-		"Titulo": "Panel de administrador",
 		"Crear": "Crear Prenda",
 		"Listado": "Listado de prendas",
 		"Ordenes": "Listado de ordenes",
@@ -31,9 +30,16 @@
 		"Confirmar": "CONFIRMAR",
 		"Cancelar": "Cancelar",
 		"Exitoso": "Tu producto ha sido creado correctamente.",
+		"Exitoso-E": "Tu producto ha sido editado correctamente.",
 		"Atencion": "¡Atención!",
 		"Faltan": "Faltan ítems para poder crear tu producto.",
-		"Hecho": "¡Hecho!"
+		"Hecho": "¡Hecho!",
+		"Eliminar": "Eliminar Prenda",
+		"Actualizar": "Tu producto ha sido actualizado correctamente",
+		"Seguro?" : "¿Estas seguro que quieres eliminar esta prenda?",
+		"UnaVez": "Una vez eliminado, no hay manera de recuperarlo",
+		"ElimBien": "¡Hecho! Tu producto ha sido eliminado",
+		"NoBorro": "Tu producto NO ha sido borrado"
 	},
 
 
