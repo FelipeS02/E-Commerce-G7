@@ -108,49 +108,21 @@ const NavBar = () => {
                 }
                 id="nav-dropdown"
               >
+                {isAuthenticated && userInfo && userInfo.isAdmin && (
+                  <>
+                    <NavDropdown.Item as={Link} to="/admin" eventKey="4.1">
+                      Admin Panel
+                    </NavDropdown.Item>
+                  </>
+                )}
                 {isAuthenticated ? (
-                  userInfo && userInfo.isAdmin ? (
-                    <>
-                      <NavDropdown.Item as={Link} to="/admin" eventKey="4.1">
-                        Admin Panel
-                      </NavDropdown.Item>
-                      {/* <NavDropdown.Item
-                        eventKey="4.2"
-                        as={Link}
-                        to="/user/userProfile"
-                      >
-                        {t("NavBar.Perfil")}
-                      </NavDropdown.Item> */}
-                      <NavDropdown.Item eventKey="4.3">
-                        {t("NavBar.Mis-Pedidos")}
-                      </NavDropdown.Item>
-                      <NavDropdown.Item eventKey="4.4">
-                        {t("NavBar.Deseos")}
-                      </NavDropdown.Item>
-                      <NavDropdown.Item eventKey="4.5"></NavDropdown.Item>
-                    </>
-                  ) : (
-                    <>
-                      {/* <NavDropdown.Item
-                        eventKey="4.1"
-                        as={Link}
-                        to="/user/userProfile"
-                      >
-                        {t("NavBar.Perfil")}
-                      </NavDropdown.Item> */}
-                      <NavDropdown.Item
-                        eventKey="4.2"
-                        as={Link}
-                        to="/user/userProfile/orderHistory"
-                      >
-                        {t("NavBar.Mis-Pedidos")}
-                      </NavDropdown.Item>
-                      <NavDropdown.Item eventKey="4.3">
-                        {t("NavBar.Deseos")}
-                      </NavDropdown.Item>
-                      <NavDropdown.Item eventKey="4.4"></NavDropdown.Item>
-                    </>
-                  )
+                  <NavDropdown.Item
+                    eventKey="4.2"
+                    as={Link}
+                    to="/user/userProfile/orderHistory"
+                  >
+                    {t("NavBar.Mis-Pedidos")}
+                  </NavDropdown.Item>
                 ) : (
                   <NavDropdown.Item eventKey="4.4">
                     {t("NavBar.Inicia")}
