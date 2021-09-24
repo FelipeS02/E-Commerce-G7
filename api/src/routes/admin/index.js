@@ -7,6 +7,7 @@ const createClothe = require("./createClothe.js");
 const orderUpdate = require("./orderUpdate.js");
 const userControls = require("./userControls.js");
 const updateClothe = require("./updateClothe.js");
+const setAdmin = require("./setAdmins.js")
 
 // Use de Routes
 router.use("/charge-database", chargeDb);
@@ -14,5 +15,6 @@ router.use("/create-clothe", createClothe);
 router.use("/order-update", orderUpdate);
 router.use("/users-control", userControls);
 router.use("/update-clothe", updateClothe);
+router.use("/set-admin", setAdmin);
 
 module.exports = router;
