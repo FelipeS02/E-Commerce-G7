@@ -105,9 +105,9 @@ const OrderHistory = () => {
       {orders.length === 0 ? (
         <div class="jumbotron jumbotron-fluid">
           <div class="container">
-            <h1 class="display-4">Aun no hay ninguna orden para mostrar</h1>
+            <h1 class="display-4">¡Aun no hay ninguna orden para mostrar!</h1>
             <p class="lead">
-              Vuelve cuando hayas realizado el pago de almenos una orden
+              Vuelve cuando hayas realizado el pago de almenos una orden.
             </p>
           </div>
         </div>
