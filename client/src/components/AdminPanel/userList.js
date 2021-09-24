@@ -57,6 +57,7 @@ class UserList extends Component {
                         icon: 'ShowTitle',
                         tooltip: 'set admin',
                         onClick: async (event, rowData) => {
+                            console.log('empezamos')
                             await this.props.userSetAdmin(rowData.id, rowData.email, 'addAdmin')
                             this.props.getAllUsers()
                         }
