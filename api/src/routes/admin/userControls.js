@@ -10,24 +10,6 @@ const {
 const jwtAuthz = require("express-jwt-authz");
 const checkScopes = (permissions) => jwtAuthz(permissions);
 
-
-// var ManagementClient = require("auth0").ManagementClient;
-// var AuthenticationClient = require("auth0").AuthenticationClient;
-
-// var auth0 = new ManagementClient({
-//   domain: "dev-1ik4n80w.us.auth0.com",
-//   clientId: "Gq8GYRK0GoSXddVzrJrV2gsRPevzwmEG",
-//   clientSecret:
-//     "3KJs37MBspryPS_offY-GsWCRkQRWOESPYsqnzGlGM2JhNpYtOL4ULKF_1A4tstS",
-//   scope: "read:users update:users",
-// });
-
-// var authenticationClient = new AuthenticationClient({
-//   domain: "dev-1ik4n80w.us.auth0.com",
-//   clientId: "Gq8GYRK0GoSXddVzrJrV2gsRPevzwmEG",
-//   clientSecret:
-//     "3KJs37MBspryPS_offY-GsWCRkQRWOESPYsqnzGlGM2JhNpYtOL4ULKF_1A4tstS",
-
 let ManagementClient = require("auth0").ManagementClient;
 let AuthenticationClient = require("auth0").AuthenticationClient;
 
@@ -48,6 +30,9 @@ let authenticationClient = new AuthenticationClient({
 
 const getUserId = async (email) => {
   const response = await auth0.users.getByEmail(email);
+  if (!response.length > 0) {
+    return undefined;
+  }
   return response[0].user_id;
 };
 
@@ -59,89 +44,7 @@ router.get("/getAll", checkScopes(["write:admin"]), async (req, res) => {
     const { message } = err;
     return res.json(responseMessage(ERROR, message));
   }
-  // auth0.getUsers(function (err, users) {
-  //   if (err) {
-  //     // handle error.
-  //     console.log(err);
-  //   }
-  //   res.send(users);
-  // });
 });
-router.get(
-  "/reset-password/:email",
-  checkScopes(["write:admin"]),
-  async (req, res) => {
-    const { email } = req.params;
-    const userId = await getUserId(email);
-    var data = {
-      email: email,
-      connection: "Username-Password-Authentication",
-    };
-
-    authenticationClient.requestChangePasswordEmail(
-      data,
-      function (err, message) {
-        if (err) {
-          res.status(404).send(err);
-        }
-        res
-          .status(202)
-          .send(
-            "Se ha enviado un correo al usuario para resetear su contraseña"
-          );
-      }
-    );
-  }
-);
-
-router.get(
-  "/assign-role/:email",
-  checkScopes(["write:admin"]),
-  async (req, res) => {
-    const { email } = req.params;
-    var data = { roles: ["rol_0MhYgg7pbFmDUIWV"] };
-
-    auth0.users.getByEmail(email, function (err, users) {
-      if (err) {
-        console.log(err);
-      }
-      console.log(`${users[0].user_id}`);
-      var params = { id: users[0].user_id };
-      auth0.assignRolestoUser(params, data, function (err) {
-        if (err) {
-          return res
-            .status(404)
-            .send(
-              "No fue posible añadir el rol de admin al usuario, intente nuevamente"
-            );
-        }
-        res
-          .status(202)
-          .send("Se ha añadido el rol de admin correctamente al usuario");
-      });
-    });
-  }
-);
-
-router.get(
-  "/remove-role/:email",
-  checkScopes(["write:admin"]),
-  async (req, res) => {
-    const { email } = req.params;
-    const userId = await getUserId(email);
-    console.log(userId);
-    var params = { id: userId };
-    var data = { roles: ["rol_0MhYgg7pbFmDUIWV"] };
-    try {
-      await auth0.removeRolesFromUser(params, data);
-      res.status(202).send("Se elimino el rol de admin al usuario");
-    } catch (err) {
-      res
-        .status(404)
-        .send("No fue posible eliminar el rol de admin al usuario");
-    }
-  }
-);
 
 router.get(
   "/reset-password/:email",
@@ -179,18 +82,17 @@ router.get(
 
 router.get(
   "/assign-role/:email",
-  checkScopes(["write:admin"]),
+
   async (req, res) => {
     try {
       const { email } = req.params;
-      await User.update({ isAdmin: true }, { where: { email } });
       let data = { roles: ["rol_0MhYgg7pbFmDUIWV"] };
       auth0.users.getByEmail(email, function (err, users) {
         if (err) {
           console.log(err);
         }
         let params = { id: users[0].user_id };
-        auth0.assignRolestoUser(params, data, function (err) {
+        auth0.assignRolestoUser(params, data, async function (err) {
           if (err) {
             return res
               .status(404)
@@ -198,6 +100,7 @@ router.get(
                 "No fue posible añadir el rol de admin al usuario, intente nuevamente"
               );
           }
+          await User.update({ isAdmin: true }, { where: { email } });
           res
             .status(202)
             .send("Se ha añadido el rol de admin correctamente al usuario");
@@ -212,15 +115,15 @@ router.get(
 
 router.get(
   "/remove-role/:email",
-  checkScopes(["write:admin"]),
+
   async (req, res) => {
     try {
       const { email } = req.params;
-      await User.update({ isAdmin: false }, { where: { email } });
       const userId = await getUserId(email);
       let params = { id: userId };
       let data = { roles: ["rol_0MhYgg7pbFmDUIWV"] };
       await auth0.removeRolesFromUser(params, data);
+      await User.update({ isAdmin: false }, { where: { email } });
       res.status(202).send("Se elimino el rol de admin al usuario");
     } catch (err) {
       res
@@ -230,4 +133,77 @@ router.get(
   }
 );
 
+router.get(
+  "/delete-user/:email",
+
+  async (req, res) => {
+    const { email } = req.params;
+    const userId = await getUserId(email);
+
+    try {
+      if (!userId) {
+        throw new Error("Usuario no encontrado");
+      }
+      const response = await auth0.deleteUser({ id: userId });
+      console.log(response);
+      // User deleted.
+      return res.status(202).send("Se elimino al usuario correctamente");
+    } catch (err) {
+      const { message } = err;
+      console.log(message);
+      return res.json(responseMessage(ERROR, message));
+    }
+  }
+);
+
+router.get(
+  "/block-user/:email",
+
+  async (req, res) => {
+    const { email } = req.params;
+    const userId = await getUserId(email);
+
+    try {
+      if (!userId) {
+        throw new Error("Usuario no encontrado");
+      }
+      const response = await auth0.updateUser(
+        { id: userId },
+        { blocked: true }
+      );
+      console.log(response);
+      // User deleted.
+      return res.status(202).send("Se bloqueo al usuario correctamente");
+    } catch (err) {
+      const { message } = err;
+      console.log(message);
+      return res.json(responseMessage(ERROR, message));
+    }
+  }
+);
+router.get(
+  "/unblock-user/:email",
+
+  async (req, res) => {
+    const { email } = req.params;
+    const userId = await getUserId(email);
+
+    try {
+      if (!userId) {
+        throw new Error("Usuario no encontrado");
+      }
+      const response = await auth0.updateUser(
+        { id: userId },
+        { blocked: false }
+      );
+      console.log(response);
+      // User deleted.
+      return res.status(202).send("Se desbloqueo al usuario correctamente");
+    } catch (err) {
+      const { message } = err;
+      console.log(message);
+      return res.json(responseMessage(ERROR, message));
+    }
+  }
+);
 module.exports = router;
