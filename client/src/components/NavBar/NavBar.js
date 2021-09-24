@@ -114,13 +114,13 @@ const NavBar = () => {
                       <NavDropdown.Item as={Link} to="/admin" eventKey="4.1">
                         Admin Panel
                       </NavDropdown.Item>
-                      <NavDropdown.Item
+                      {/* <NavDropdown.Item
                         eventKey="4.2"
                         as={Link}
                         to="/user/userProfile"
                       >
                         {t("NavBar.Perfil")}
-                      </NavDropdown.Item>
+                      </NavDropdown.Item> */}
                       <NavDropdown.Item eventKey="4.3">
                         {t("NavBar.Mis-Pedidos")}
                       </NavDropdown.Item>
@@ -131,13 +131,13 @@ const NavBar = () => {
                     </>
                   ) : (
                     <>
-                      <NavDropdown.Item
+                      {/* <NavDropdown.Item
                         eventKey="4.1"
                         as={Link}
                         to="/user/userProfile"
                       >
                         {t("NavBar.Perfil")}
-                      </NavDropdown.Item>
+                      </NavDropdown.Item> */}
                       <NavDropdown.Item
                         eventKey="4.2"
                         as={Link}
