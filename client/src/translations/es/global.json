@@ -52,6 +52,7 @@
 	},
 
 	"History":{
+		"Order-name": "Orden",
 		"NoHay": "¡Aun no hay ninguna orden para mostrar!",
 		"Vuelve": "Vuelve cuando hayas realizado el pago de almenos una orden.",
 		"N-Orden": "Numero de orden",

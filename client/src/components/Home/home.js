@@ -6,6 +6,7 @@ import {
   getCategories,
   getProducts,
 } from "../../actions/ProductActions";
+
 import Footer from "../Footer/Footer";
 import PaginationC from "../Pagination/PaginationC";
 import CardP from "../ProductCard/CardP";

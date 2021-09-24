@@ -11,17 +11,15 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Review from "../Review/Review.js";
 import { useTranslation } from "react-i18next";
 
-
-
 const OrderHistory = () => {
-    const [t, i18n] = useTranslation("global");
+  const [t, i18n] = useTranslation("global");
   const [show, setShow] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const [data, setData] = useState({
     quantity: 0,
     id: 0,
     name: "",
-    date: "",
-    time: "",
     size: "",
     isReviewed: false,
     isReceived: false,
@@ -34,12 +32,9 @@ const OrderHistory = () => {
     CONFIRMADO: "#007bff",
     CANCELADO: "red",
   };
-  const userState = useSelector((state) => state.userState);
-  const orderState = useSelector((state) => state.orderState);
   const dispatch = useDispatch();
+  const userState = useSelector((state) => state.userState);
   const id = userState.userInfo.id;
-  const { loginUserInfo } = userState;
-  const orders = orderState.orders;
 
   useEffect(() => {
     if (id) {
@@ -47,45 +42,35 @@ const OrderHistory = () => {
     }
   }, [dispatch, id]);
 
+  const orderState = useSelector((state) => state.orderState);
+  const { loginUserInfo } = userState;
+  const orders = orderState.orders;
+
   if (loginUserInfo) {
     return <Loading />;
   }
 
-  const handleClose = () => setShow(false);
-  const handleShow = (e, flag, stateFlag) => {
-    setShow(true);
-    let obj = JSON.parse(e.target.value);
-    let date = new Date(obj.date);
-    let year = date.getFullYear();
-    let month = date.getMonth() + 1;
-    let getDate = date.getDate();
-
-    if (month < 10) month = "0" + month;
-    if (getDate < 10) getDate = "0" + getDate;
-
-    const dateFormat = year + "-" + month + "-" + getDate;
-
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-
-    if (minutes < 10) minutes = "0" + minutes;
-    if (hours < 10) hours = "0" + hours;
-
-    const timeFormat = hours + ":" + minutes;
-
-    setData({
-      quantity: obj.clothe.quantity_and_size.quantity,
-      id: obj.clothe.id,
-      name: obj.clothe.name,
-      date: dateFormat,
-      time: timeFormat,
-      size: obj.clothe.quantity_and_size.size,
-      isReceived: stateFlag,
-      isReviewed: flag,
-      referenceImg: obj.clothe.media,
-    });
+  const handleClose = () => {
+    setLoading(true);
+    setShow(false);
   };
-
+  const handleShow = (clothe, orderState) => {
+    setShow(true);
+    setData({
+      quantity: clothe.quantity_and_size.quantity,
+      id: clothe.id,
+      name: clothe.name,
+      size: clothe.quantity_and_size.size,
+      isReceived: checkState(orderState),
+      isReviewed: checkReviewed(
+        clothe.id,
+        userState.userInfo.id,
+        orders.reviews
+      ),
+      referenceImg: clothe.media,
+    });
+    setLoading(false);
+  };
   const checkState = (state) => {
     if (state === "ENTREGADO") {
       return true;
@@ -110,9 +95,7 @@ const OrderHistory = () => {
         <div class="jumbotron jumbotron-fluid">
           <div class="container">
             <h1 class="display-4">{t("History.Nohay")}</h1>
-            <p class="lead">
-              {t("History.Vuelve")}
-            </p>
+            <p class="lead">{t("History.Vuelve")}</p>
           </div>
         </div>
       ) : (
@@ -130,7 +113,7 @@ const OrderHistory = () => {
               {orders?.orders?.map((order, index) => (
                 <tr key={index}>
                   <td>
-                    {`Orden ${order.id}`}{" "}
+                    {`${t("History.Order-name")} ${order.id}`}{" "}
                     <h6 style={{ color: `${colours[order.state]}` }}>
                       {order.state}
                     </h6>
@@ -140,21 +123,7 @@ const OrderHistory = () => {
                       <Button
                         key={i}
                         variant="info"
-                        onClick={(e) =>
-                          handleShow(
-                            e,
-                            checkReviewed(
-                              clothe.id,
-                              userState.userInfo.id,
-                              orders.reviews
-                            ),
-                            checkState(order.state)
-                          )
-                        }
-                        value={JSON.stringify({
-                          clothe,
-                          date: order.updatedAt,
-                        })}
+                        onClick={(e) => handleShow(clothe, order.state)}
                         style={{ margin: "4px", color: "black" }}
                       >
                         <h6>{clothe.name}</h6>
@@ -179,60 +148,68 @@ const OrderHistory = () => {
             </tbody>
           </Table>
           <Modal show={show} onHide={handleClose}>
-            <Modal.Header closeButton>
-              <Modal.Title>{t("History.Detalle")}</Modal.Title>
-            </Modal.Header>
-            <Modal.Body>
-              <Carousel variant="dark">
-                {data.referenceImg &&
-                  data.referenceImg.map((item, index) => (
-                    <Carousel.Item
-                      interval={2000}
-                      key={index}
-                      style={{ height: "500px" }}
-                    >
-                      <img
-                        src={`${BASE_IMG_URL}/uploads/${item.name}`}
-                        alt={`ClothePhoto${index}`}
-                        style={{
-                          "max-height": "500px",
-                          position: "absolute",
-                          top: "0",
-                          left: "15%",
-                          objectFit: "cover",
-                        }}
-                      />
-                    </Carousel.Item>
-                  ))}
-              </Carousel>
-              <br></br>
-              <Link to={`/search/details/${data.id}`}>{data.name}</Link>
-              <div>{t("History.Talle")}:{" " + data.size}</div>
-              <div>{t("History.Cantidad")}:{" " + data.quantity}</div>
-              <div>{t("History.Fecha-Compra")}:{" " + data.date}</div>
-              <div>{t("History.Hora-Compra")}:{" " + data.time}</div>
-              {data.isReceived ? (
-                data.isReviewed === false ? (
-                  <Review clotheId={data.id} userId={id} />
-                ) : (
-                  <h6 style={{ color: "green" }}>
-                    {t("History.R-Hecha")}<FaStar />
-                  </h6>
-                )
-              ) : (
-                <h6 style={{ color: "GrayText" }}>
-                  {t("History.Opi")}
-                </h6>
-              )}
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={handleClose}>
-                OK
-              </Button>
-            </Modal.Footer>
+            {loading ? (
+              <Loading />
+            ) : (
+              <>
+                <Modal.Header closeButton>
+                  <Modal.Title>{t("History.Detalle")}</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                  <Carousel variant="dark">
+                    {data.referenceImg &&
+                      data.referenceImg.map((item, index) => (
+                        <Carousel.Item
+                          interval={2000}
+                          key={index}
+                          style={{ height: "500px" }}
+                        >
+                          <img
+                            src={`${BASE_IMG_URL}/uploads/${item.name}`}
+                            alt={`ClothePhoto${index}`}
+                            style={{
+                              "max-height": "500px",
+                              position: "absolute",
+                              top: "0",
+                              left: "15%",
+                              objectFit: "cover",
+                            }}
+                          />
+                        </Carousel.Item>
+                      ))}
+                  </Carousel>
+                  <br></br>
+                  <Link to={`/search/details/${data.id}`}>{data.name}</Link>
+                  <div>
+                    {t("History.Talle")}:{" " + data.size}
+                  </div>
+                  <div>
+                    {t("History.Cantidad")}:{" " + data.quantity}
+                  </div>
+                  {data.isReceived ? (
+                    data.isReviewed === false ? (
+                      <Review clotheId={data.id} userId={id} />
+                    ) : (
+                      <h6 style={{ color: "green" }}>
+                        {t("History.R-Hecha")}
+                        <FaStar />
+                      </h6>
+                    )
+                  ) : (
+                    <h6 style={{ color: "GrayText" }}>{t("History.Opi")}</h6>
+                  )}
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    OK
+                  </Button>
+                </Modal.Footer>
+              </>
+            )}
           </Modal>
         </Container>
       )}
     </div>
-  );};
+  );
+};
 export default OrderHistory;

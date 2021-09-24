@@ -38,12 +38,13 @@
 	},
 
 	"History":{
+		"Order-name": "Order",
 		"NoHay": "¡There is no order to display yet!",
 		"Vuelve": "Come back when you have paid for at least one order.",
 		"N-Orden": "Order number",
 		"Prendas": "Clothes",
 		"Direcc": "Direction",
-		"F-Pago": "Way to pay",
+		"F-Pago": "Payment Method",
 		"Detalle": "Order detail",
 		"Talle": "Size",
 		"Cantidad": "Quantity",
