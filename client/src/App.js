@@ -13,13 +13,13 @@ import creatheClothe from "./components/AdminPanel/createClothe.js";
 import editClothe from "./components/AdminPanel/editClothe.js";
 import CartScreen from "./components/Cart/CartScreen";
 import GenreResults from "./components/SearchResults/GenreResults";
-import ListDetail from "./components/AdminPanel/orderFilterList"
+import ListDetail from "./components/AdminPanel/orderFilterList";
 import NewAdminPanel from "./components/AdminPanel/NewAdminPanel";
 import TablaPrueba from "./components/AdminPanel/TablaPrueba";
 import ProductList from "./components/AdminPanel/productList";
-import UserList from "./components/AdminPanel/userList"
+import UserList from "./components/AdminPanel/userList";
 import LogoScrean from "./components/AdminPanel/LogoScrean";
-import OrderHistory from "./components/OrderHistory/OrderHistory.js"
+import OrderHistory from "./components/OrderHistory/OrderHistory.js";
 import CheckOut from "./components/Checkout/CheckOut";
 import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
@@ -41,9 +41,9 @@ function App() {
         <Route exact path="/" component={Home} />
         <Route exact path="/search/name/:name?" component={SearchResults} />
         <Route exact path="/search/genre/:genre?" component={GenreResults} />
-        <div style={{display: 'flex', backgroundColor: '#D3D7D2'}}>
-          <Route path="/admin" component={NewAdminPanel}/>
-          <Route exact path="/admin" component={LogoScrean}/>
+        <div style={{ display: "flex", backgroundColor: "#D3D7D2" }}>
+          <Route path="/admin" component={NewAdminPanel} />
+          <Route exact path="/admin" component={LogoScrean} />
           <Route exact path="/admin/listDetail" component={ListDetail} />
           {/* <Route exact path="/admin/listDetail" component={TablaPrueba} /> */}
           <Route exact path="/admin/listproducts" component={ProductList} />
@@ -57,11 +57,15 @@ function App() {
           component={SearchResults}
         />
         <Route exact path="/search/details/:id" component={ProductDetail} />
-        <Route exact path="/search/review" component={Review} /> 
+        <Route exact path="/search/review" component={Review} />
         <PrivateRoute exact path="/user/userProfile" component={UserProfile} />
-        <PrivateRoute exact path="/user/userProfile/orderHistory" component={OrderHistory} />
+        <PrivateRoute
+          exact
+          path="/user/userProfile/orderHistory"
+          component={OrderHistory}
+        />
         <Elements stripe={stripePromise}>
-          <Route exact path="/user/checkout" component={CheckOut} />
+          <PrivateRoute exact path="/user/checkout" component={CheckOut} />
         </Elements>
         <Route exact path="/cart" component={CartScreen} />
       </BrowserRouter>
