@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import { cleanFilters, getProducts } from "../../actions/ProductActions";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
 import PaginationC from "../Pagination/PaginationC";
 import CardP from "../ProductCard/CardP";
@@ -57,22 +57,24 @@ const SearchResults = () => {
           <Row>
             <h1>{products.length}Resultados</h1>
           </Row>
-          <Row className="d-flex align-content-center flex-wrap justify-content-between">
-            {error === "" && products.allClothes ? (
-              products.allClothes.map((product, index) => (
-                <CardP
-                  key={index}
-                  id={product.id}
-                  name={product.name}
-                  price={product.price}
-                  picture={product.media[0].name}
-                  sizes={product.sizes}
-                />
-              ))
-            ) : (
-              <h1>No se encontrarón resultados...</h1>
-            )}
-          </Row>
+          <Container className="d-flex justify-content-center align-items-center ">
+            <Row>
+              {error === "" && products.allClothes ? (
+                products.allClothes.map((product, index) => (
+                  <CardP
+                    key={index}
+                    id={product.id}
+                    name={product.name}
+                    price={product.price}
+                    picture={product.media[0].name}
+                    sizes={product.sizes}
+                  />
+                ))
+              ) : (
+                <h1>No se encontrarón resultados...</h1>
+              )}
+            </Row>
+          </Container>
         </Col>
       </Row>
       <PaginationC total={products.total} />
