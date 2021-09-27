@@ -70,7 +70,8 @@ router.get("/:orderId", async (req, res) => {
           await currentOrder.update({ state: stateOrder });
           const currentUser = await User.findByPk(currentOrder.userId);
           const bodyMail = dispatch(currentOrder.direction);
-          await sendMail(currentUser.email, "Orden despachada correctamente!", bodyMail)
+          const emailResult = await sendMail(currentUser.email, "Orden despachada correctamente!", bodyMail)
+          console.log(emailResult)
         } else {
           return res.json(responseMessage(ERROR, "No se puede despachar una orden sin confirmar"))
         }
