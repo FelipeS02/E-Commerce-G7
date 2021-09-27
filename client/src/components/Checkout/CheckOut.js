@@ -217,7 +217,7 @@ const CheckOut = (props) => {
             id,
             carTotalAmount,
             orderId,
-            "MercadoPago",
+            "Tarjeta de Credito / Debito",
             `${formValidation.address} ${formValidation.city} ${formValidation.state} ${formValidation.zip}`,
             carItems,
             userInfo.id
@@ -242,7 +242,14 @@ const CheckOut = (props) => {
     }
   }, [paymentSuccess, props.history]);
   if (totalItems === 0) {
-    return <h1>{t("Checkout.NoHayProd")}</h1>;
+    return (
+      <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+          <h1 class="display-4">{t("Checkout.NoHayProd")}</h1>
+        </div>
+      </div>
+    );
+
   }
 
   return (
