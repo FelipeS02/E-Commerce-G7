@@ -11,13 +11,13 @@ const {
   statusCodes: { SUCCESS, ERROR },
 } = require("../../../controller/responseMessages");
 
-const oAuth2client = await new google.auth.OAuth2(
+const oAuth2client = new google.auth.OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
   REDIRECT_URI
 );
 
-await oAuth2client.setCredentials({
+oAuth2client.setCredentials({
   refresh_token: REFRESH_TOKEN,
 });
 
