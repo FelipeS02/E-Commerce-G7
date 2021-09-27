@@ -11,20 +11,20 @@ const {
   statusCodes: { SUCCESS, ERROR },
 } = require("../../../controller/responseMessages");
 
-const oAuth2client = new google.auth.OAuth2(
+const oAuth2client = await new google.auth.OAuth2(
   CLIENT_ID,
   CLIENT_SECRET,
   REDIRECT_URI
 );
 
-oAuth2client.setCredentials({
+await oAuth2client.setCredentials({
   refresh_token: REFRESH_TOKEN,
 });
 
 const sendMail = async (email, mailBody) => {
   try {
     const accessToken = await oAuth2client.getAccessToken();
-    const transporter = nodemailer.createTransport({
+    const transporter = await nodemailer.createTransport({
       service: "gmail",
       auth: {
         type: "OAuth2",
