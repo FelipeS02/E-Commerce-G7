@@ -29,5 +29,5 @@ export const PAYMENT_LOADING = "PAYMENT_LOADING";
 
 export const BASE_IMG_URL =
   process.env.NODE_ENV === "production"
-    ? "https://e-commerce-api-g7.herokuapp.com"
+    ? "https://e-commerce-g7.herokuapp.com"
     : "http://localhost:3001";

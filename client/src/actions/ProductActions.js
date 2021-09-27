@@ -161,10 +161,6 @@ export function editClothe(form, id) {
   return async function (dispatch) {
     try {
       await Axios.put(`/admin/update-clothe/${id}`, form);
-      console.log(
-        form,
-        "-------soy el formulario para actualizar los datos de un rpoducto"
-      );
       return dispatch({
         type: EDIT_CLOTHE,
         payload: form,
