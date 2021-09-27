@@ -35,9 +35,6 @@ const storage = multer.diskStorage({
   },
 });
 
-//mailgun
-
-
 // server.use(jwtCheck);
 server.use(
   multer({
