@@ -20,6 +20,12 @@ const Home = (props) => {
   const filterState = useSelector((state) => state.filterState);
   const { loading, products, error } = productsState;
   const { category, size, type, genre } = filterState.filters;
+  const productCategories = useSelector((state) => state.productCategories);
+  const {
+    loading: loadingCategories,
+    error: errorCategories,
+    categories,
+  } = productCategories;
   const { offset, current } = filterState;
   const [t, i18n] = useTranslation("global");
 
@@ -59,35 +65,45 @@ const Home = (props) => {
       <PaginationC total={products.total} />
 
       <Row className="mx-3">
-        <Col lg="2" className="justify-content-center">
-          <SideBarFilter></SideBarFilter>
-        </Col>
-        <Container className="d-flex justify-content-center align-items-center ">
-          {loading ? (
+        <Col lg="2">
+          {loadingCategories ? (
             <Loading />
+          ) : errorCategories ? (
+            <h1>{errorCategories}</h1>
           ) : (
-            <Row>
-              {error === "" && products.allClothes ? (
-                products.allClothes.map((product, index) => (
-                  <CardP
-                    key={index}
-                    id={product.id}
-                    name={product.name}
-                    price={product.price}
-                    picture={product.media[0].name}
-                    sizes={product.sizes}
-                  />
-                ))
-              ) : (
-                <div class="jumbotron jumbotron-fluid">
-                  <div class="container">
-                    <h1 class="display-4">{t("Results.Sin-Resultados")}</h1>
-                  </div>
-                </div>
-              )}
-            </Row>
+            <SideBarFilter disabledGenre="true" />
           )}
-        </Container>
+        </Col>
+        {loading ? (
+          <Loading />
+        ) : (
+          <Col>
+            <Row>
+              <h1>
+                {products.length}
+                {t("Results.Resultados")}
+              </h1>
+            </Row>
+            <Container className="d-flex justify-content-center align-items-center ">
+              <Row>
+                {error === "" && products.allClothes ? (
+                  products.allClothes.map((product, index) => (
+                    <CardP
+                      key={index}
+                      id={product.id}
+                      name={product.name}
+                      price={product.price}
+                      picture={product.media[0].name}
+                      sizes={product.sizes}
+                    />
+                  ))
+                ) : (
+                  <h1>{t("Results.Sin-Resultados")}</h1>
+                )}
+              </Row>
+            </Container>
+          </Col>
+        )}
       </Row>
       <PaginationC />
       <Footer />
