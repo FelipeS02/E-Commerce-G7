@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../actions/cartAccions";
 import { BASE_IMG_URL } from "../../constants/productConstants";
 import { Link } from "react-router-dom";
+import "./CardP.css"
 
 const CardP = (props) => {
   const dispatch = useDispatch();

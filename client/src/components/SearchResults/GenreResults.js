@@ -5,6 +5,7 @@ import {
   cleanFilters,
   getProducts,
   setFilters,
+  setCurrentPage
 } from "../../actions/ProductActions";
 import { Row, Col, Container } from "react-bootstrap";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
@@ -31,6 +32,7 @@ const GenreResults = () => {
     dispatch(cleanFilters());
   }, []);
   useEffect(() => {
+    dispatch(setCurrentPage({current:1}))
     dispatch(setFilters({ name: "genre", value: genre }));
     dispatch(
       getProducts(
