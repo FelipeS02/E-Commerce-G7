@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { addToCart } from "../../actions/cartAccions";
 import { BASE_IMG_URL } from "../../constants/productConstants";
 import { Link } from "react-router-dom";
-import "./CardP.css"
+import "./CardP.css";
 
 const CardP = (props) => {
   const dispatch = useDispatch();
@@ -15,6 +15,7 @@ const CardP = (props) => {
     size: "",
     quantity: 0,
     maxValue: 0,
+    isSizeSelected: false,
   });
   const userInfo = useSelector((state) => state.userState.userInfo);
   const addToCardHandler = async () => {
@@ -29,6 +30,7 @@ const CardP = (props) => {
           size: "",
           maxValue: 0,
           quantity: 0,
+          isSizeSelected: false,
         };
       });
     }
@@ -39,6 +41,7 @@ const CardP = (props) => {
         maxValue: sizes[index].stock,
         quantity:
           prevState.maxValue > sizes[index].stock ? sizes[index].stock : "1",
+        isSizeSelected: true,
       };
     });
   };
@@ -76,6 +79,7 @@ const CardP = (props) => {
           maxValue={userSelected.maxValue}
           itemHandler={itemHandler}
           quantity={userSelected.quantity}
+          isSizeSelected={userSelected.isSizeSelected}
         />
       </Card.Footer>
     </Card>

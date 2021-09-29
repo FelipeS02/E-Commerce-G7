@@ -38,16 +38,13 @@ const Home = (props) => {
   useEffect(() => {
     dispatch(cleanFilters());
   }, [dispatch]);
-  useEffect(() => {});
+
   const imgUrl = [
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dw5ea30e6a/01sept/full1lotto.jpg?sw=1440&sfrm=png",
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dwbd6473ec/01sept/full2futbol.jpg?sw=1440&sfrm=png",
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dw3956c245/01sept/full3invierno.jpg?sw=1440&sfrm=png",
     "https://www.stockcenter.com.ar/dw/image/v2/BDTF_PRD/on/demandware.static/-/Sites-StockCenter-Library/default/dw322c4343/01sept/full4nike.jpg?sw=1440&sfrm=png",
   ];
-  if (loading) {
-    return <Loading />;
-  }
 
   return (
     <div>
@@ -66,26 +63,30 @@ const Home = (props) => {
           <SideBarFilter></SideBarFilter>
         </Col>
         <Container className="d-flex justify-content-center align-items-center ">
-          <Row>
-            {error === "" && products.allClothes ? (
-              products.allClothes.map((product, index) => (
-                <CardP
-                  key={index}
-                  id={product.id}
-                  name={product.name}
-                  price={product.price}
-                  picture={product.media[0].name}
-                  sizes={product.sizes}
-                />
-              ))
-            ) : (
-              <div class="jumbotron jumbotron-fluid">
-                <div class="container">
-                  <h1 class="display-4">{t("Results.Sin-Resultados")}</h1>
+          {loading ? (
+            <Loading />
+          ) : (
+            <Row>
+              {error === "" && products.allClothes ? (
+                products.allClothes.map((product, index) => (
+                  <CardP
+                    key={index}
+                    id={product.id}
+                    name={product.name}
+                    price={product.price}
+                    picture={product.media[0].name}
+                    sizes={product.sizes}
+                  />
+                ))
+              ) : (
+                <div class="jumbotron jumbotron-fluid">
+                  <div class="container">
+                    <h1 class="display-4">{t("Results.Sin-Resultados")}</h1>
+                  </div>
                 </div>
-              </div>
-            )}
-          </Row>
+              )}
+            </Row>
+          )}
         </Container>
       </Row>
       <PaginationC />
