@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { ListGroup } from "react-bootstrap";
 import { useDispatch } from "react-redux";
 import "./FilterGroup.css";
-import { setFilters } from "../../actions/ProductActions";
+import { setFilters, setCurrentPage } from "../../actions/ProductActions";
 const FilterGroup = (props) => {
   const dispatch = useDispatch();
   const { title, items, type, active, disabledGenre } = props;
@@ -10,6 +10,7 @@ const FilterGroup = (props) => {
   const toggleHandler = (e) => {
     e.preventDefault();
     if (!disabledGenre) {
+      dispatch(setCurrentPage({current:1}))
       dispatch(setFilters({ name: type, value: e.target.id }));
     }
   };
