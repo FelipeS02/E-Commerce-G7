@@ -115,7 +115,7 @@ class ListDetail extends Component {
                   this.props.getAllOrders();
                 },
                 disabled:
-                  rowData.state === "DESPACHADO" || rowData.state === "ENTREGADO",
+                  rowData.state === "DESPACHADO" || rowData.state === "ENTREGADO" || rowData.state === "CANCELADO",
               }),
               (rowData) => ({
                 icon: LocalShipping,
@@ -125,7 +125,7 @@ class ListDetail extends Component {
                   this.props.getAllOrders();
                 },
                 disabled:
-                  rowData.state === "CARRITO" || rowData.state === "ENTREGADO",
+                  rowData.state === "CARRITO" || rowData.state === "ENTREGADO" || rowData.state === "CANCELADO",
               }),
               (rowData) => ({
                 icon: MarkunreadMailbox,
@@ -135,7 +135,7 @@ class ListDetail extends Component {
                   this.props.getAllOrders();
                 },
                 disabled:
-                  rowData.state === "CARRITO" || rowData.state === "ENTREGADO",
+                  rowData.state === "CARRITO" || rowData.state === "ENTREGADO" || rowData.state === "CANCELADO",
               }),
             ]}
             data={this.props?.Data}

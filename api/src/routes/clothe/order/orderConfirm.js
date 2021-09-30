@@ -87,7 +87,7 @@ router.post("/", async (req, res) => {
       },
     } = req;
 
-    const validPayment = ["Efectivo / Transferencia", "MercadoPago"];
+    const validPayment = ["Efectivo / Transferencia", "Tarjeta de Credito / Debito"];
 
     if (
       direction !== "" &&
