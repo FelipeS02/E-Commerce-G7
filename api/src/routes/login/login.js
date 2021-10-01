@@ -12,8 +12,8 @@ const {
 } = require("../../controller/responseMessages");
 
 const oAuth2client = new google.auth.OAuth2(
-  "442745087475-a8vvt5vg3ughsl01bhrgv2h71729epgv.apps.googleusercontent.com",
-  "azR8VAYZaKOcck_uQOBjX_Ca",
+  "642529140412-5vjvo8c5fnk0rl77pmunucjbhccfvndm.apps.googleusercontent.com",
+  "D9gS5zXhloL87UqN_pU0fxdh",
   "https://developers.google.com/oauthplayground"
 );
 
@@ -31,8 +31,8 @@ const sendMail = async (email, name, id) => {
         type: "OAuth2",
         user: "henrycommerceg7@gmail.com",
         clientId:
-          "442745087475-a8vvt5vg3ughsl01bhrgv2h71729epgv.apps.googleusercontent.com",
-        clientSecret: "azR8VAYZaKOcck_uQOBjX_Ca",
+          "642529140412-5vjvo8c5fnk0rl77pmunucjbhccfvndm.apps.googleusercontent.com",
+        clientSecret: "D9gS5zXhloL87UqN_pU0fxdh",
         refreshToken:
           "1//04O0DJaV45CxlCgYIARAAGAQSNwF-L9IrDjq5_ROHyvYTyR1qA5S6KP-YQBS3gagsngKF5n-LpGZvJ_dNLPrxhNZ4cM_5SQmwQCY",
         accessToken,
