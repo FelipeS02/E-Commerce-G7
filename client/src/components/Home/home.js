@@ -71,7 +71,7 @@ const Home = (props) => {
           ) : errorCategories ? (
             <h1>{errorCategories}</h1>
           ) : (
-            <SideBarFilter disabledGenre="true" />
+            <SideBarFilter />
           )}
         </Col>
         {loading ? (
