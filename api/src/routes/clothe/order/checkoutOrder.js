@@ -15,7 +15,6 @@ router.post("/", async (req, res) => {
       description: "ecommerce7-henry",
       confirm: true,
     });
-    console.log(payment);
     res.send({ message: "succesful payment", status: 202 });
   } catch (err) {
     res.send({ message: err, status: 404 });

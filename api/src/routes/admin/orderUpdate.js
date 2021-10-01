@@ -13,13 +13,13 @@ const {
 } = require("../../controller/responseMessages");
 
 const oAuth2client = new google.auth.OAuth2(
-  CLIENT_ID,
-  CLIENT_SECRET,
-  REDIRECT_URI
+  "442745087475-a8vvt5vg3ughsl01bhrgv2h71729epgv.apps.googleusercontent.com",
+  "azR8VAYZaKOcck_uQOBjX_Ca",
+  "https://developers.google.com/oauthplayground"
 );
 
 oAuth2client.setCredentials({
-  refresh_token: REFRESH_TOKEN,
+  refresh_token: "1//04O0DJaV45CxlCgYIARAAGAQSNwF-L9IrDjq5_ROHyvYTyR1qA5S6KP-YQBS3gagsngKF5n-LpGZvJ_dNLPrxhNZ4cM_5SQmwQCY",
 });
 
 const sendMail = async (email, message, mailBody) => {
@@ -30,9 +30,11 @@ const sendMail = async (email, message, mailBody) => {
       auth: {
         type: "OAuth2",
         user: "henrycommerceg7@gmail.com",
-        clientId: CLIENT_ID,
-        clientSecret: CLIENT_SECRET,
-        refreshToken: REFRESH_TOKEN,
+        clientId:
+          "442745087475-a8vvt5vg3ughsl01bhrgv2h71729epgv.apps.googleusercontent.com",
+        clientSecret: "azR8VAYZaKOcck_uQOBjX_Ca",
+        refreshToken:
+          "1//04O0DJaV45CxlCgYIARAAGAQSNwF-L9IrDjq5_ROHyvYTyR1qA5S6KP-YQBS3gagsngKF5n-LpGZvJ_dNLPrxhNZ4cM_5SQmwQCY",
         accessToken,
       },
     });
