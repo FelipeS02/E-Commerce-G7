@@ -78,12 +78,6 @@ const Home = (props) => {
           <Loading />
         ) : (
           <Col>
-            <Row>
-              <h1>
-                {products.length}
-                {t("Results.Resultados")}
-              </h1>
-            </Row>
             <Container className="d-flex justify-content-center align-items-center ">
               <Row>
                 {error === "" && products.allClothes ? (

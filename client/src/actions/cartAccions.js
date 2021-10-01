@@ -44,6 +44,7 @@ export const addToCart = (obj, id, userId, clothe) => async (dispatch) => {
       newCarritoLS[id] = newClothe;
       window.localStorage.setItem("henryShopG7", JSON.stringify(newCarritoLS));
     }
+    swal("Prenda agregada correctamente al carrito", "", "success");
     return dispatch(getOrder(null, "CARRITO"));
   }
 };
