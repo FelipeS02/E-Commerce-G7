@@ -36,10 +36,8 @@ const SearchResults = () => {
   }, [dispatch, name, offset, category, type, size, genre]);
   useEffect(() => {
     dispatch(cleanFilters());
-  }, []);
-  if (loading) {
-    return <Loading />;
-  }
+  }, [dispatch]);
+
   return (
     <>
       <PaginationC total={products.total} />
@@ -53,29 +51,33 @@ const SearchResults = () => {
             <SideBarFilter />
           )}
         </Col>
-        <Col>
-          <Row>
-            <h1>{products.length}Resultados</h1>
-          </Row>
-          <Container className="d-flex justify-content-center align-items-center ">
+        {loading ? (
+          <Loading />
+        ) : (
+          <Col>
             <Row>
-              {error === "" && products.allClothes ? (
-                products.allClothes.map((product, index) => (
-                  <CardP
-                    key={index}
-                    id={product.id}
-                    name={product.name}
-                    price={product.price}
-                    picture={product.media[0].name}
-                    sizes={product.sizes}
-                  />
-                ))
-              ) : (
-                <h1>No se encontrarón resultados...</h1>
-              )}
+              <h1>{products.length}Resultados</h1>
             </Row>
-          </Container>
-        </Col>
+            <Container className="d-flex justify-content-center align-items-center ">
+              <Row>
+                {error === "" && products.allClothes ? (
+                  products.allClothes.map((product, index) => (
+                    <CardP
+                      key={index}
+                      id={product.id}
+                      name={product.name}
+                      price={product.price}
+                      picture={product.media[0].name}
+                      sizes={product.sizes}
+                    />
+                  ))
+                ) : (
+                  <h1>No se encontrarón resultados...</h1>
+                )}
+              </Row>
+            </Container>
+          </Col>
+        )}
       </Row>
       <PaginationC total={products.total} />
     </>

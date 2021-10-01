@@ -5,12 +5,14 @@ import {
   cleanFilters,
   getProducts,
   setFilters,
+  setCurrentPage,
 } from "../../actions/ProductActions";
 import { Row, Col, Container } from "react-bootstrap";
 import SideBarFilter from "../SideBarFilter/SideBarFilter";
 import PaginationC from "../Pagination/PaginationC";
 import CardP from "../ProductCard/CardP";
 import { useTranslation } from "react-i18next";
+import Loading from "../Loading/Loading";
 
 const GenreResults = () => {
   const [t, i18n] = useTranslation("global");
@@ -29,7 +31,8 @@ const GenreResults = () => {
   const { category, size, type } = filterState.filters;
   useEffect(() => {
     dispatch(cleanFilters());
-  }, []);
+    dispatch(setCurrentPage({ current: 1 }));
+  }, [dispatch]);
   useEffect(() => {
     dispatch(setFilters({ name: "genre", value: genre }));
     dispatch(
@@ -44,48 +47,49 @@ const GenreResults = () => {
     );
   }, [dispatch, offset, category, type, size, genre]);
 
-  if (loading) {
-    return <div>{t("Loading.Loading")}</div>;
-  }
   return (
     <>
       <PaginationC total={products.total} />
       <Row className="mx-3">
         <Col lg="2">
           {loadingCategories ? (
-            <h1>Loading..</h1>
+            <Loading />
           ) : errorCategories ? (
             <h1>{errorCategories}</h1>
           ) : (
             <SideBarFilter disabledGenre="true" />
           )}
         </Col>
-        <Col>
-          <Row>
-            <h1>
-              {products.length}
-              {t("Results.Resultados")}
-            </h1>
-          </Row>
-          <Container className="d-flex justify-content-center align-items-center ">
+        {loading ? (
+          <Loading />
+        ) : (
+          <Col>
             <Row>
-              {error === "" && products.allClothes ? (
-                products.allClothes.map((product, index) => (
-                  <CardP
-                    key={index}
-                    id={product.id}
-                    name={product.name}
-                    price={product.price}
-                    picture={product.media[0].name}
-                    sizes={product.sizes}
-                  />
-                ))
-              ) : (
-                <h1>{t("Results.Sin-Resultados")}</h1>
-              )}
+              <h1>
+                {products.length}
+                {t("Results.Resultados")}
+              </h1>
             </Row>
-          </Container>
-        </Col>
+            <Container className="d-flex justify-content-center align-items-center ">
+              <Row>
+                {error === "" && products.allClothes ? (
+                  products.allClothes.map((product, index) => (
+                    <CardP
+                      key={index}
+                      id={product.id}
+                      name={product.name}
+                      price={product.price}
+                      picture={product.media[0].name}
+                      sizes={product.sizes}
+                    />
+                  ))
+                ) : (
+                  <h1>{t("Results.Sin-Resultados")}</h1>
+                )}
+              </Row>
+            </Container>
+          </Col>
+        )}
       </Row>
       <PaginationC total={products.total} />
     </>

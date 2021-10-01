@@ -32,14 +32,14 @@ const ShowReview = (props) => {
             onClick={() => setOpen(!open)}
             aria-controls="example-fade-text"
             aria-expanded={open}>
-            Review
+            Reseñas
         </Button>
              
               
                   { reviews?.length === 0 ? 
                     ( <Fade in={open}>
                   <div id="example-fade-text">
-                  <h4 className='m-3 '> PRODUCTO SIN REVIEW</h4>
+                  <h4 className='m-3 '> PRODUCTO SIN RESEÑA</h4>
                       </div>
                       </Fade>) :
                         (<Fade in={open} className="border border-primary-5">
